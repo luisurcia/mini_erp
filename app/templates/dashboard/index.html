@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+{% block title %}Dashboard{% endblock %}
+{% block content %}
+<h1 class="h3 mb-4">Dashboard</h1>
+
+<div class="row g-3 mb-4">
+  <div class="col-sm-6 col-lg-3">
+    <div class="card stat-card p-3">
+      <div class="text-muted small">Active products</div>
+      <div class="stat-value">{{ stats.active_products }}</div>
+    </div>
+  </div>
+  <div class="col-sm-6 col-lg-3">
+    <div class="card stat-card stat-warning p-3">
+      <div class="text-muted small">Low stock alerts</div>
+      <div class="stat-value">{{ stats.low_stock_count }}</div>
+    </div>
+  </div>
+  <div class="col-sm-6 col-lg-3">
+    <div class="card stat-card p-3">
+      <div class="text-muted small">Open opportunities</div>
+      <div class="stat-value">{{ stats.open_opportunities }}</div>
+    </div>
+  </div>
+  <div class="col-sm-6 col-lg-3">
+    <div class="card stat-card p-3">
+      <div class="text-muted small">Revenue this month</div>
+      <div class="stat-value">${{ "%.2f"|format(stats.revenue_this_month) }}</div>
+    </div>
+  </div>
+</div>
+
+<div class="row g-4">
+  <div class="col-lg-6">
+    <div class="card p-3">
+      <h2 class="h5">Low stock</h2>
+      {% if low_stock_items %}
+      <table class="table table-sm mb-0">
+        <thead><tr><th>Product</th><th>On hand</th><th>Reorder level</th></tr></thead>
+        <tbody>
+        {% for item in low_stock_items %}
+          <tr>
+            <td>{{ item.product.display_name }}</td>
+            <td>{{ item.quantity_on_hand }}</td>
+            <td>{{ item.reorder_level }}</td>
+          </tr>
+        {% endfor %}
+        </tbody>
+      </table>
+      {% else %}
+      <p class="text-muted mb-0">Everything is well stocked.</p>
+      {% endif %}
+    </div>
+  </div>
+  <div class="col-lg-6">
+    <div class="card p-3">
+      <h2 class="h5">Open opportunities</h2>
+      {% if recent_opportunities %}
+      <table class="table table-sm mb-0">
+        <thead><tr><th>Customer</th><th>Product</th><th>Stage</th></tr></thead>
+        <tbody>
+        {% for opp in recent_opportunities %}
+          <tr>
+            <td>{{ opp.customer.name }}</td>
+            <td>{{ opp.product.display_name if opp.product else "-" }}</td>
+            <td><span class="badge badge-stage-{{ opp.stage }}">{{ opp.stage }}</span></td>
+          </tr>
+        {% endfor %}
+        </tbody>
+      </table>
+      {% else %}
+      <p class="text-muted mb-0">No open requests right now.</p>
+      {% endif %}
+    </div>
+  </div>
+</div>
+{% endblock %}

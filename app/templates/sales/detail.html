@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block title %}Sale #{{ sale.id }}{% endblock %}
+{% block content %}
+<h1 class="h3 mb-3">Sale #{{ sale.id }}</h1>
+<div class="card p-4">
+  <p><strong>Customer:</strong> {{ sale.customer.name }}</p>
+  <p><strong>Date:</strong> {{ sale.sale_date.strftime("%Y-%m-%d %H:%M") }}</p>
+  <p><strong>Status:</strong> <span class="badge bg-secondary">{{ sale.status }}</span></p>
+  {% if sale.notes %}<p><strong>Notes:</strong> {{ sale.notes }}</p>{% endif %}
+
+  <table class="table mt-3">
+    <thead><tr><th>Product</th><th>Qty</th><th>Unit price</th><th>Subtotal</th></tr></thead>
+    <tbody>
+      {% for item in sale.items %}
+      <tr>
+        <td>{{ item.product.display_name }}</td>
+        <td>{{ item.quantity }}</td>
+        <td>${{ "%.2f"|format(item.unit_price) }}</td>
+        <td>${{ "%.2f"|format(item.subtotal) }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+    <tfoot>
+      <tr><th colspan="3" class="text-end">Total</th><th>${{ "%.2f"|format(sale.total_amount) }}</th></tr>
+    </tfoot>
+  </table>
+</div>
+<a class="btn btn-outline-secondary mt-3" href="{{ url_for('sales.index') }}">Back to sales</a>
+{% endblock %}

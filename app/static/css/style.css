@@ -1,0 +1,81 @@
+:root {
+  --kombucha-green: #3f6b4a;
+  --kombucha-green-dark: #2c4d34;
+  --kombucha-amber: #d98f3b;
+  --kombucha-amber-dark: #b8752a;
+  --kombucha-cream: #faf5ec;
+  --kombucha-rose: #c65b6c;
+}
+
+body {
+  background-color: var(--kombucha-cream);
+}
+
+.kombucha-navbar {
+  background-color: var(--kombucha-green-dark);
+}
+
+.kombucha-navbar .navbar-brand,
+.kombucha-navbar .nav-link {
+  color: #f3ead9;
+}
+
+.kombucha-navbar .nav-link:hover {
+  color: var(--kombucha-amber);
+}
+
+.btn-primary {
+  background-color: var(--kombucha-green);
+  border-color: var(--kombucha-green);
+}
+
+.btn-primary:hover,
+.btn-primary:focus {
+  background-color: var(--kombucha-green-dark);
+  border-color: var(--kombucha-green-dark);
+}
+
+.btn-warning {
+  background-color: var(--kombucha-amber);
+  border-color: var(--kombucha-amber-dark);
+  color: #2c1f0e;
+}
+
+.card {
+  border: none;
+  border-radius: 0.75rem;
+  box-shadow: 0 2px 10px rgba(44, 77, 52, 0.08);
+}
+
+.stat-card {
+  background: white;
+  border-left: 4px solid var(--kombucha-green);
+}
+
+.stat-card .stat-value {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--kombucha-green-dark);
+}
+
+.stat-card.stat-warning {
+  border-left-color: var(--kombucha-amber);
+}
+
+.table-low-stock {
+  background-color: #fdf2e3 !important;
+}
+
+.badge-stage-new { background-color: #6c757d; }
+.badge-stage-contacted { background-color: #3f7fbf; }
+.badge-stage-quoted { background-color: var(--kombucha-amber-dark); }
+.badge-stage-won { background-color: var(--kombucha-green); }
+.badge-stage-lost { background-color: var(--kombucha-rose); }
+
+a {
+  color: var(--kombucha-green-dark);
+}
+
+a:hover {
+  color: var(--kombucha-amber-dark);
+}
