@@ -108,7 +108,7 @@ def _seed_opportunities(customers: dict[str, Customer], products: dict[str, Prod
         product_id=products["Ginger Lemon"].id,
         quantity_requested=12,
         source=Opportunity.SOURCE_INSTAGRAM,
-        notes="DM'd @kombucha_scoby asking about pricing for a birthday event.",
+        notes="DM'd asking about pricing for a birthday event.",
     )
     opp2 = opportunity_service.create(
         customer_id=customers["green_leaf"].id,
