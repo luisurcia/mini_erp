@@ -17,6 +17,11 @@ repositories → services → routes), SQLAlchemy, and Bootstrap 5.
   about wholesale pricing) with a stage pipeline
   (new → contacted → quoted → won/lost), and a one-click **Convert to
   Sale**.
+- **Users & roles** — self-service password change, plus admin-only user
+  management (create/edit/delete). Three roles: **admin** (everything,
+  including user management), **editor** (create/update records), and
+  **viewer** (read-only). Enforced both in routes (403 on violation) and
+  in the UI (write controls hidden for viewers).
 
 ## Setup
 
@@ -36,6 +41,10 @@ To create/reset the admin user without demo data:
 ```bash
 flask --app wsgi create-admin
 ```
+
+Upgrading a database created before roles existed (e.g. after pulling
+this feature)? `init-db` and `seed-demo` both backfill the new `role`
+column automatically — just re-run whichever one you use.
 
 ## Run
 
@@ -59,9 +68,12 @@ pytest
 app/
   models/        SQLAlchemy models (BaseModel + domain entities)
   repositories/   generic + domain-specific data access
-  services/       business logic (stock rules, sale creation, pipeline)
+  services/       business logic (stock rules, sale creation, pipeline,
+                  user management)
   blueprints/     routes + forms, one per module (auth, dashboard,
-                  inventory, sales, opportunities)
+                  inventory, sales, opportunities, users)
+  permissions.py  role-based route decorators (admin_required, editor_required)
+  schema.py       lightweight in-place upgrades for existing SQLite DBs
   templates/      Jinja2 templates (Bootstrap 5)
   static/css/     kombucha-themed styling
   seed.py         demo data
