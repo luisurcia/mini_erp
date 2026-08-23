@@ -6,6 +6,7 @@ from app.repositories.inventory_repository import (
 from app.repositories.opportunity_repository import OpportunityRepository
 from app.repositories.product_repository import FlavorRepository, ProductRepository
 from app.repositories.sales_repository import SalesRepository
+from app.repositories.user_repository import UserRepository
 
 __all__ = [
     "CustomerRepository",
@@ -15,4 +16,5 @@ __all__ = [
     "FlavorRepository",
     "ProductRepository",
     "SalesRepository",
+    "UserRepository",
 ]

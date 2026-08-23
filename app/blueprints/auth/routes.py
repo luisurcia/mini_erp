@@ -2,7 +2,8 @@ from flask import flash, redirect, render_template, url_for
 from flask_login import current_user, login_required, login_user, logout_user
 
 from app.blueprints.auth import bp
-from app.blueprints.auth.forms import LoginForm
+from app.blueprints.auth.forms import ChangePasswordForm, LoginForm
+from app.extensions import db
 from app.models.user import User
 
 
@@ -27,3 +28,19 @@ def login():
 def logout():
     logout_user()
     return redirect(url_for("auth.login"))
+
+
+@bp.route("/change-password", methods=["GET", "POST"])
+@login_required
+def change_password():
+    form = ChangePasswordForm()
+    if form.validate_on_submit():
+        if not current_user.check_password(form.current_password.data):
+            flash("Current password is incorrect.", "danger")
+        else:
+            current_user.set_password(form.new_password.data)
+            db.session.commit()
+            flash("Password changed.", "success")
+            return redirect(url_for("dashboard.index"))
+
+    return render_template("auth/change_password.html", form=form)

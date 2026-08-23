@@ -5,6 +5,7 @@ from app.blueprints.inventory import bp
 from app.blueprints.inventory.forms import ProductForm, RestockForm
 from app.exceptions import MiniErpError
 from app.models.product import Product
+from app.permissions import editor_required
 from app.repositories.product_repository import FlavorRepository, ProductRepository
 from app.services.inventory_service import InventoryService
 
@@ -18,6 +19,7 @@ def index():
 
 @bp.route("/new", methods=["GET", "POST"])
 @login_required
+@editor_required
 def new_product():
     form = ProductForm()
     form.flavor_id.choices = _flavor_choices()
@@ -47,6 +49,7 @@ def new_product():
 
 @bp.route("/<int:product_id>/edit", methods=["GET", "POST"])
 @login_required
+@editor_required
 def edit_product(product_id):
     product = ProductRepository().get(product_id)
     if product is None:
@@ -78,6 +81,7 @@ def edit_product(product_id):
 
 @bp.route("/<int:product_id>/restock", methods=["GET", "POST"])
 @login_required
+@editor_required
 def restock(product_id):
     product = ProductRepository().get(product_id)
     if product is None:

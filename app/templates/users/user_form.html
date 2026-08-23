@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% from 'bootstrap5/form.html' import render_form %}
+{% block title %}{{ "New user" if mode == "new" else "Edit user" }}{% endblock %}
+{% block content %}
+<div class="row justify-content-center">
+  <div class="col-md-6">
+    <div class="card p-4">
+      <h1 class="h4 mb-3">{{ "New user" if mode == "new" else "Edit " + user.username }}</h1>
+      {% if mode == "edit" %}
+      <p class="text-muted">Leave the password fields blank to keep the current password.</p>
+      {% endif %}
+      {{ render_form(form) }}
+    </div>
+  </div>
+</div>
+{% endblock %}

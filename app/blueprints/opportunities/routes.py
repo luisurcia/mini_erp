@@ -5,6 +5,7 @@ from app.blueprints.opportunities import bp
 from app.blueprints.opportunities.forms import OpportunityForm, StageForm
 from app.exceptions import MiniErpError
 from app.models.opportunity import Opportunity
+from app.permissions import editor_required
 from app.repositories.customer_repository import CustomerRepository
 from app.repositories.opportunity_repository import OpportunityRepository
 from app.repositories.product_repository import ProductRepository
@@ -28,6 +29,7 @@ def index():
 
 @bp.route("/new", methods=["GET", "POST"])
 @login_required
+@editor_required
 def new_opportunity():
     form = OpportunityForm()
     form.customer_id.choices = _customer_choices()
@@ -49,6 +51,7 @@ def new_opportunity():
 
 @bp.route("/<int:opportunity_id>/stage", methods=["POST"])
 @login_required
+@editor_required
 def update_stage(opportunity_id):
     form = StageForm()
     if form.validate_on_submit():
@@ -62,6 +65,7 @@ def update_stage(opportunity_id):
 
 @bp.route("/<int:opportunity_id>/convert", methods=["POST"])
 @login_required
+@editor_required
 def convert(opportunity_id):
     try:
         sale = OpportunityService().convert_to_sale(opportunity_id)

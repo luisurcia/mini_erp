@@ -1,0 +1,23 @@
+from sqlalchemy import inspect, text
+
+from app.extensions import db
+from app.models.user import User
+
+
+def ensure_user_role_column() -> None:
+    """Backfill `users.role` for databases created before roles existed.
+
+    db.create_all() only creates missing tables, not missing columns on
+    tables that already exist, so pre-existing databases need this to pick
+    up the role column added alongside user management.
+    """
+    inspector = inspect(db.engine)
+    columns = {column["name"] for column in inspector.get_columns("users")}
+    if "role" not in columns:
+        db.session.execute(
+            text(
+                "ALTER TABLE users ADD COLUMN role VARCHAR(20) "
+                f"NOT NULL DEFAULT '{User.ROLE_ADMIN}'"
+            )
+        )
+        db.session.commit()

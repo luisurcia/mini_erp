@@ -5,6 +5,7 @@ from app.blueprints.sales import bp
 from app.blueprints.sales.forms import SaleMetaForm
 from app.exceptions import MiniErpError
 from app.models.sales import Sale
+from app.permissions import editor_required
 from app.repositories.customer_repository import CustomerRepository
 from app.repositories.product_repository import ProductRepository
 from app.repositories.sales_repository import SalesRepository
@@ -20,6 +21,7 @@ def index():
 
 @bp.route("/new", methods=["GET", "POST"])
 @login_required
+@editor_required
 def new_sale():
     form = SaleMetaForm()
     form.customer_id.choices = _customer_choices()
