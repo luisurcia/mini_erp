@@ -18,6 +18,20 @@ def ensure_product_short_name_column() -> None:
         db.session.commit()
 
 
+def ensure_sale_invoice_number_column() -> None:
+    """Backfill `sales.invoice_number` for databases created before it existed.
+
+    db.create_all() only creates missing tables, not missing columns on
+    tables that already exist, so pre-existing databases need this to pick
+    up the invoice_number column.
+    """
+    inspector = inspect(db.engine)
+    columns = {column["name"] for column in inspector.get_columns("sales")}
+    if "invoice_number" not in columns:
+        db.session.execute(text("ALTER TABLE sales ADD COLUMN invoice_number VARCHAR(40)"))
+        db.session.commit()
+
+
 def ensure_user_role_column() -> None:
     """Backfill `users.role` for databases created before roles existed.
 

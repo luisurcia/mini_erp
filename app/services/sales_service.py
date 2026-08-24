@@ -28,6 +28,7 @@ class SalesService:
         status: str = Sale.STATUS_COMPLETED,
         sale_date: datetime | None = None,
         notes: str | None = None,
+        invoice_number: str | None = None,
     ) -> Sale:
         if not items:
             raise ValueError("A sale needs at least one line item")
@@ -37,6 +38,7 @@ class SalesService:
             status=status,
             sale_date=sale_date or datetime.now(timezone.utc),
             notes=notes,
+            invoice_number=invoice_number,
         )
 
         for line in items:

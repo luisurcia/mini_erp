@@ -3,7 +3,11 @@ from flask import Flask
 
 from app.extensions import db
 from app.models.user import User
-from app.schema import ensure_product_short_name_column, ensure_user_role_column
+from app.schema import (
+    ensure_product_short_name_column,
+    ensure_sale_invoice_number_column,
+    ensure_user_role_column,
+)
 
 
 def register_cli(app: Flask) -> None:
@@ -13,6 +17,7 @@ def register_cli(app: Flask) -> None:
         db.create_all()
         ensure_user_role_column()
         ensure_product_short_name_column()
+        ensure_sale_invoice_number_column()
         click.echo("Database tables created.")
 
     @app.cli.command("seed-demo")
@@ -23,6 +28,7 @@ def register_cli(app: Flask) -> None:
         db.create_all()
         ensure_user_role_column()
         ensure_product_short_name_column()
+        ensure_sale_invoice_number_column()
         seed_demo_data(app)
         click.echo("Demo data seeded.")
 
