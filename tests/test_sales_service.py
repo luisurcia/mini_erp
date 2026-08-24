@@ -3,6 +3,8 @@ from datetime import datetime, timezone
 from decimal import Decimal
 
 from app.exceptions import InsufficientStockError
+from app.extensions import db
+from app.models.company import Company
 from app.services.inventory_service import InventoryService
 from app.services.sales_service import SalesService
 
@@ -41,6 +43,34 @@ def test_record_sale_requires_at_least_one_item(app, customer):
     service = SalesService()
     with pytest.raises(ValueError):
         service.record_sale(customer_id=customer.id, items=[])
+
+
+def test_record_sale_without_tax_leaves_total_equal_to_subtotal(app, customer, product):
+    sale = SalesService().record_sale(
+        customer_id=customer.id, items=[{"product_id": product.id, "quantity": 3}]
+    )
+
+    assert sale.tax_applied is False
+    assert sale.tax_amount == Decimal("0")
+    assert sale.total_amount == sale.subtotal_amount == Decimal("13.50")
+
+
+def test_record_sale_with_tax_applies_configured_rate(app, customer, product):
+    company = Company.get_settings()
+    company.tax_rate = Decimal("19.00")
+    db.session.commit()
+
+    sale = SalesService().record_sale(
+        customer_id=customer.id,
+        items=[{"product_id": product.id, "quantity": 3}],
+        include_tax=True,
+    )
+
+    assert sale.tax_applied is True
+    assert sale.tax_rate_applied == Decimal("19.00")
+    assert sale.subtotal_amount == Decimal("13.50")
+    assert sale.tax_amount == Decimal("2.56")
+    assert sale.total_amount == Decimal("16.06")
 
 
 def test_sales_by_product_returns_amount_and_percentage(app, customer, product):

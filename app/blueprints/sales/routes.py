@@ -4,6 +4,7 @@ from flask_login import login_required
 from app.blueprints.sales import bp
 from app.blueprints.sales.forms import SaleMetaForm
 from app.exceptions import MiniErpError
+from app.models.company import Company
 from app.models.sales import Sale
 from app.permissions import editor_required
 from app.repositories.customer_repository import CustomerRepository
@@ -29,6 +30,8 @@ def new_sale():
         (Sale.STATUS_COMPLETED, "Completed"),
         (Sale.STATUS_PENDING, "Pending"),
     ]
+    if not form.is_submitted():
+        form.include_tax.data = Company.get_settings().tax_enabled_default
     products = ProductRepository().get_active()
 
     if form.validate_on_submit():
@@ -43,6 +46,7 @@ def new_sale():
                     status=form.status.data,
                     notes=form.notes.data,
                     invoice_number=form.invoice_number.data or None,
+                    include_tax=form.include_tax.data,
                 )
                 flash(f"Sale #{sale.id} recorded.", "success")
                 return redirect(url_for("sales.detail", sale_id=sale.id))

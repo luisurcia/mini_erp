@@ -1,3 +1,5 @@
+from decimal import Decimal
+
 from app.extensions import db
 from app.models.base import BaseModel
 
@@ -15,6 +17,9 @@ class Sale(BaseModel):
     total_amount = db.Column(db.Numeric(10, 2), nullable=False, default=0)
     invoice_number = db.Column(db.String(40), nullable=True)
     notes = db.Column(db.String(255), nullable=True)
+    tax_applied = db.Column(db.Boolean, nullable=False, default=False)
+    tax_rate_applied = db.Column(db.Numeric(5, 2), nullable=True)
+    tax_amount = db.Column(db.Numeric(10, 2), nullable=False, default=0)
 
     customer = db.relationship("Customer")
     items = db.relationship(
@@ -22,8 +27,19 @@ class Sale(BaseModel):
     )
     opportunity = db.relationship("Opportunity", back_populates="sale", uselist=False)
 
+    @property
+    def subtotal_amount(self):
+        return sum((item.subtotal for item in self.items), start=Decimal("0"))
+
     def recalculate_total(self) -> None:
-        self.total_amount = sum((item.subtotal for item in self.items), start=0)
+        subtotal = self.subtotal_amount
+        if self.tax_applied and self.tax_rate_applied is not None:
+            self.tax_amount = (subtotal * self.tax_rate_applied / Decimal("100")).quantize(
+                Decimal("0.01")
+            )
+        else:
+            self.tax_amount = Decimal("0")
+        self.total_amount = subtotal + self.tax_amount
 
     def __repr__(self) -> str:
         return f"<Sale #{self.id} customer_id={self.customer_id} total={self.total_amount}>"

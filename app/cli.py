@@ -2,10 +2,12 @@ import click
 from flask import Flask
 
 from app.extensions import db
+from app.models.company import Company  # noqa: F401 (registers table for create_all)
 from app.models.user import User
 from app.schema import (
     ensure_product_short_name_column,
     ensure_sale_invoice_number_column,
+    ensure_sale_tax_columns,
     ensure_user_role_column,
 )
 
@@ -18,6 +20,7 @@ def register_cli(app: Flask) -> None:
         ensure_user_role_column()
         ensure_product_short_name_column()
         ensure_sale_invoice_number_column()
+        ensure_sale_tax_columns()
         click.echo("Database tables created.")
 
     @app.cli.command("seed-demo")
@@ -29,6 +32,7 @@ def register_cli(app: Flask) -> None:
         ensure_user_role_column()
         ensure_product_short_name_column()
         ensure_sale_invoice_number_column()
+        ensure_sale_tax_columns()
         seed_demo_data(app)
         click.echo("Demo data seeded.")
 

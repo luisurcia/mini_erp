@@ -3,6 +3,7 @@ from datetime import datetime, timezone
 from decimal import Decimal
 
 from app.exceptions import NotFoundError
+from app.models.company import Company
 from app.models.inventory import StockMovement
 from app.models.sales import Sale, SaleItem
 from app.repositories.product_repository import ProductRepository
@@ -31,6 +32,7 @@ class SalesService:
         sale_date: datetime | None = None,
         notes: str | None = None,
         invoice_number: str | None = None,
+        include_tax: bool = False,
     ) -> Sale:
         if not items:
             raise ValueError("A sale needs at least one line item")
@@ -41,6 +43,8 @@ class SalesService:
             sale_date=sale_date or datetime.now(timezone.utc),
             notes=notes,
             invoice_number=invoice_number,
+            tax_applied=include_tax,
+            tax_rate_applied=Company.get_settings().tax_rate if include_tax else None,
         )
 
         for line in items:
