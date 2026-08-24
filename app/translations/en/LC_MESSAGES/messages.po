@@ -1,0 +1,738 @@
+# English translations for PROJECT.
+# Copyright (C) 2026 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2026-08-24 17:58-0400\n"
+"PO-Revision-Date: 2026-08-24 17:58-0400\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: en\n"
+"Language-Team: en <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.18.0\n"
+
+#: app/__init__.py:55 app/blueprints/sales/routes.py:31
+msgid "Completed"
+msgstr "Completed"
+
+#: app/__init__.py:56 app/blueprints/sales/routes.py:32
+msgid "Pending"
+msgstr "Pending"
+
+#: app/__init__.py:57
+msgid "Cancelled"
+msgstr "Cancelled"
+
+#: app/__init__.py:68 app/blueprints/opportunities/forms.py:34
+msgid "New"
+msgstr "New"
+
+#: app/__init__.py:69 app/blueprints/opportunities/forms.py:35
+msgid "Contacted"
+msgstr "Contacted"
+
+#: app/__init__.py:70 app/blueprints/opportunities/forms.py:36
+msgid "Quoted"
+msgstr "Quoted"
+
+#: app/__init__.py:71
+msgid "Won"
+msgstr "Won"
+
+#: app/__init__.py:72 app/blueprints/opportunities/forms.py:37
+msgid "Lost"
+msgstr "Lost"
+
+#: app/__init__.py:83 app/blueprints/opportunities/forms.py:20
+msgid "Instagram DM"
+msgstr "Instagram DM"
+
+#: app/__init__.py:84 app/blueprints/opportunities/forms.py:21
+msgid "Website"
+msgstr "Website"
+
+#: app/__init__.py:85 app/blueprints/opportunities/forms.py:22
+msgid "Referral"
+msgstr "Referral"
+
+#: app/__init__.py:86 app/blueprints/opportunities/forms.py:23
+msgid "Other"
+msgstr "Other"
+
+#: app/blueprints/auth/forms.py:8 app/blueprints/users/forms.py:17
+#: app/templates/users/index.html:11
+msgid "Username"
+msgstr "Username"
+
+#: app/blueprints/auth/forms.py:9 app/blueprints/users/forms.py:25
+msgid "Password"
+msgstr "Password"
+
+#: app/blueprints/auth/forms.py:10 app/templates/auth/login.html:3
+msgid "Log in"
+msgstr "Log in"
+
+#: app/blueprints/auth/forms.py:14
+msgid "Current password"
+msgstr "Current password"
+
+#: app/blueprints/auth/forms.py:16
+msgid "New password"
+msgstr "New password"
+
+#: app/blueprints/auth/forms.py:19
+msgid "Confirm new password"
+msgstr "Confirm new password"
+
+#: app/blueprints/auth/forms.py:22 app/blueprints/users/forms.py:29
+msgid "Passwords must match."
+msgstr "Passwords must match."
+
+#: app/blueprints/auth/forms.py:25 app/templates/auth/change_password.html:3
+#: app/templates/auth/change_password.html:8 app/templates/base.html:31
+msgid "Change password"
+msgstr "Change password"
+
+#: app/blueprints/auth/routes.py:22
+msgid "Invalid username or password."
+msgstr "Invalid username or password."
+
+#: app/blueprints/auth/routes.py:40
+msgid "Current password is incorrect."
+msgstr "Current password is incorrect."
+
+#: app/blueprints/auth/routes.py:44
+msgid "Password changed."
+msgstr "Password changed."
+
+#: app/blueprints/company/forms.py:11
+msgid "Tax rate (%)"
+msgstr "Tax rate (%)"
+
+#: app/blueprints/company/forms.py:13
+msgid "Include tax by default on new sales"
+msgstr "Include tax by default on new sales"
+
+#: app/blueprints/company/forms.py:15
+msgid "Language"
+msgstr "Language"
+
+#: app/blueprints/company/forms.py:19
+msgid "Save settings"
+msgstr "Save settings"
+
+#: app/blueprints/company/routes.py:24
+msgid "Company settings updated."
+msgstr "Company settings updated."
+
+#: app/blueprints/dashboard/routes.py:17
+msgid "Jan"
+msgstr "Jan"
+
+#: app/blueprints/dashboard/routes.py:17
+msgid "Feb"
+msgstr "Feb"
+
+#: app/blueprints/dashboard/routes.py:17
+msgid "Mar"
+msgstr "Mar"
+
+#: app/blueprints/dashboard/routes.py:17
+msgid "Apr"
+msgstr "Apr"
+
+#: app/blueprints/dashboard/routes.py:17
+msgid "May"
+msgstr "May"
+
+#: app/blueprints/dashboard/routes.py:17
+msgid "Jun"
+msgstr "Jun"
+
+#: app/blueprints/dashboard/routes.py:18
+msgid "Jul"
+msgstr "Jul"
+
+#: app/blueprints/dashboard/routes.py:18
+msgid "Aug"
+msgstr "Aug"
+
+#: app/blueprints/dashboard/routes.py:18
+msgid "Sep"
+msgstr "Sep"
+
+#: app/blueprints/dashboard/routes.py:18
+msgid "Oct"
+msgstr "Oct"
+
+#: app/blueprints/dashboard/routes.py:18
+msgid "Nov"
+msgstr "Nov"
+
+#: app/blueprints/dashboard/routes.py:18
+msgid "Dec"
+msgstr "Dec"
+
+#: app/blueprints/inventory/forms.py:16
+msgid "Flavor"
+msgstr "Flavor"
+
+#: app/blueprints/inventory/forms.py:17
+msgid "Product name"
+msgstr "Product name"
+
+#: app/blueprints/inventory/forms.py:19 app/templates/inventory/index.html:16
+msgid "Short name"
+msgstr "Short name"
+
+#: app/blueprints/inventory/forms.py:21 app/templates/inventory/index.html:17
+msgid "SKU"
+msgstr "SKU"
+
+#: app/blueprints/inventory/forms.py:23
+msgid "Size (ml)"
+msgstr "Size (ml)"
+
+#: app/blueprints/inventory/forms.py:26 app/templates/sales/detail.html:13
+msgid "Unit price"
+msgstr "Unit price"
+
+#: app/blueprints/inventory/forms.py:29
+msgid "Initial stock"
+msgstr "Initial stock"
+
+#: app/blueprints/inventory/forms.py:32 app/templates/dashboard/index.html:100
+#: app/templates/inventory/index.html:21
+msgid "Reorder level"
+msgstr "Reorder level"
+
+#: app/blueprints/inventory/forms.py:34
+msgid "Active"
+msgstr "Active"
+
+#: app/blueprints/inventory/forms.py:35
+msgid "Save product"
+msgstr "Save product"
+
+#: app/blueprints/inventory/forms.py:40
+msgid "Quantity to add"
+msgstr "Quantity to add"
+
+#: app/blueprints/inventory/forms.py:42 app/templates/inventory/history.html:7
+msgid "Note"
+msgstr "Note"
+
+#: app/blueprints/inventory/forms.py:43 app/templates/inventory/index.html:47
+#: app/templates/inventory/restock_form.html:3
+msgid "Restock"
+msgstr "Restock"
+
+#: app/blueprints/inventory/routes.py:46
+#, python-format
+msgid "Product '%(name)s' created."
+msgstr "Product '%(name)s' created."
+
+#: app/blueprints/inventory/routes.py:58 app/blueprints/inventory/routes.py:91
+#: app/blueprints/inventory/routes.py:118
+msgid "Product not found."
+msgstr "Product not found."
+
+#: app/blueprints/inventory/routes.py:77
+#, python-format
+msgid "Product '%(name)s' updated."
+msgstr "Product '%(name)s' updated."
+
+#: app/blueprints/inventory/routes.py:100
+#, python-format
+msgid "Restocked %(qty)s units of %(name)s."
+msgstr "Restocked %(qty)s units of %(name)s."
+
+#: app/blueprints/opportunities/forms.py:10 app/blueprints/sales/forms.py:11
+#: app/templates/dashboard/index.html:121
+#: app/templates/opportunities/index.html:22 app/templates/sales/index.html:13
+msgid "Customer"
+msgstr "Customer"
+
+#: app/blueprints/opportunities/forms.py:12
+msgid "Product interested in"
+msgstr "Product interested in"
+
+#: app/blueprints/opportunities/forms.py:15
+msgid "Quantity requested"
+msgstr "Quantity requested"
+
+#: app/blueprints/opportunities/forms.py:18
+#: app/templates/opportunities/index.html:22
+msgid "Source"
+msgstr "Source"
+
+#: app/blueprints/opportunities/forms.py:26 app/blueprints/sales/forms.py:17
+msgid "Notes"
+msgstr "Notes"
+
+#: app/blueprints/opportunities/forms.py:27
+msgid "Save request"
+msgstr "Save request"
+
+#: app/blueprints/opportunities/forms.py:32
+#: app/templates/dashboard/index.html:121
+#: app/templates/opportunities/index.html:22
+msgid "Stage"
+msgstr "Stage"
+
+#: app/blueprints/opportunities/forms.py:40
+msgid "Update stage"
+msgstr "Update stage"
+
+#: app/blueprints/opportunities/routes.py:47
+msgid "Opportunity created."
+msgstr "Opportunity created."
+
+#: app/blueprints/opportunities/routes.py:61
+msgid "Stage updated."
+msgstr "Stage updated."
+
+#: app/blueprints/opportunities/routes.py:73
+#, python-format
+msgid "Converted to Sale #%(id)s."
+msgstr "Converted to Sale #%(id)s."
+
+#: app/blueprints/sales/forms.py:12 app/templates/inventory/index.html:22
+#: app/templates/sales/index.html:13
+msgid "Status"
+msgstr "Status"
+
+#: app/blueprints/sales/forms.py:14
+msgid "Invoice number"
+msgstr "Invoice number"
+
+#: app/blueprints/sales/forms.py:16
+msgid "Include tax (IVA)"
+msgstr "Include tax (IVA)"
+
+#: app/blueprints/sales/forms.py:18
+msgid "Record sale"
+msgstr "Record sale"
+
+#: app/blueprints/sales/routes.py:41
+msgid "Add at least one product line to the sale."
+msgstr "Add at least one product line to the sale."
+
+#: app/blueprints/sales/routes.py:52
+#, python-format
+msgid "Sale #%(id)s recorded."
+msgstr "Sale #%(id)s recorded."
+
+#: app/blueprints/sales/routes.py:65
+msgid "Sale not found."
+msgstr "Sale not found."
+
+#: app/blueprints/users/forms.py:9
+msgid "Admin"
+msgstr "Admin"
+
+#: app/blueprints/users/forms.py:10
+msgid "Editor"
+msgstr "Editor"
+
+#: app/blueprints/users/forms.py:11
+msgid "Viewer"
+msgstr "Viewer"
+
+#: app/blueprints/users/forms.py:20 app/templates/users/index.html:11
+msgid "Role"
+msgstr "Role"
+
+#: app/blueprints/users/forms.py:28
+msgid "Confirm password"
+msgstr "Confirm password"
+
+#: app/blueprints/users/forms.py:31
+msgid "Save user"
+msgstr "Save user"
+
+#: app/blueprints/users/routes.py:28
+msgid "Password is required for a new user."
+msgstr "Password is required for a new user."
+
+#: app/blueprints/users/routes.py:36
+#, python-format
+msgid "User '%(name)s' created."
+msgstr "User '%(name)s' created."
+
+#: app/blueprints/users/routes.py:50 app/blueprints/users/routes.py:80
+msgid "User not found."
+msgstr "User not found."
+
+#: app/blueprints/users/routes.py:66
+#, python-format
+msgid "User '%(name)s' updated."
+msgstr "User '%(name)s' updated."
+
+#: app/blueprints/users/routes.py:82
+msgid "You cannot delete your own account."
+msgstr "You cannot delete your own account."
+
+#: app/blueprints/users/routes.py:86
+#, python-format
+msgid "User '%(name)s' deleted."
+msgstr "User '%(name)s' deleted."
+
+#: app/templates/base.html:20 app/templates/dashboard/index.html:2
+#: app/templates/dashboard/index.html:4
+msgid "Dashboard"
+msgstr "Dashboard"
+
+#: app/templates/base.html:21 app/templates/inventory/index.html:2
+#: app/templates/inventory/index.html:5
+msgid "Inventory"
+msgstr "Inventory"
+
+#: app/templates/base.html:22 app/templates/dashboard/index.html:173
+#: app/templates/sales/index.html:2 app/templates/sales/index.html:5
+msgid "Sales"
+msgstr "Sales"
+
+#: app/templates/base.html:23 app/templates/opportunities/index.html:2
+#: app/templates/opportunities/index.html:5
+msgid "Opportunities"
+msgstr "Opportunities"
+
+#: app/templates/base.html:25 app/templates/users/index.html:2
+#: app/templates/users/index.html:5
+msgid "Users"
+msgstr "Users"
+
+#: app/templates/base.html:26
+msgid "Company"
+msgstr "Company"
+
+#: app/templates/base.html:32
+msgid "Log out"
+msgstr "Log out"
+
+#: app/templates/company/settings.html:3 app/templates/company/settings.html:8
+msgid "Company settings"
+msgstr "Company settings"
+
+#: app/templates/dashboard/index.html:9
+msgid "Active products"
+msgstr "Active products"
+
+#: app/templates/dashboard/index.html:15
+msgid "Low stock alerts"
+msgstr "Low stock alerts"
+
+#: app/templates/dashboard/index.html:21 app/templates/dashboard/index.html:118
+msgid "Open opportunities"
+msgstr "Open opportunities"
+
+#: app/templates/dashboard/index.html:27
+msgid "Revenue this month"
+msgstr "Revenue this month"
+
+#: app/templates/dashboard/index.html:33
+#, python-format
+msgid "Invoices (%(year)s)"
+msgstr "Invoices (%(year)s)"
+
+#: app/templates/dashboard/index.html:39
+msgid "Average total per sale"
+msgstr "Average total per sale"
+
+#: app/templates/dashboard/index.html:45
+#, python-format
+msgid "Total sold in %(year)s"
+msgstr "Total sold in %(year)s"
+
+#: app/templates/dashboard/index.html:54
+msgid "Year"
+msgstr "Year"
+
+#: app/templates/dashboard/index.html:62
+msgid "Month (product chart)"
+msgstr "Month (product chart)"
+
+#: app/templates/dashboard/index.html:64
+msgid "All months"
+msgstr "All months"
+
+#: app/templates/dashboard/index.html:76
+msgid "Sales share per product"
+msgstr "Sales share per product"
+
+#: app/templates/dashboard/index.html:82
+#, python-format
+msgid "Sales per month (%(year)s)"
+msgstr "Sales per month (%(year)s)"
+
+#: app/templates/dashboard/index.html:88
+#, python-format
+msgid "Bottles sold per month (%(year)s)"
+msgstr "Bottles sold per month (%(year)s)"
+
+#: app/templates/dashboard/index.html:97 app/templates/inventory/index.html:40
+msgid "Low stock"
+msgstr "Low stock"
+
+#: app/templates/dashboard/index.html:100
+#: app/templates/dashboard/index.html:121
+#: app/templates/opportunities/index.html:22 app/templates/sales/detail.html:13
+#: app/templates/sales/sale_form.html:19
+msgid "Product"
+msgstr "Product"
+
+#: app/templates/dashboard/index.html:100 app/templates/inventory/index.html:20
+msgid "On hand"
+msgstr "On hand"
+
+#: app/templates/dashboard/index.html:112
+msgid "Everything is well stocked."
+msgstr "Everything is well stocked."
+
+#: app/templates/dashboard/index.html:133
+msgid "No open requests right now."
+msgstr "No open requests right now."
+
+#: app/templates/dashboard/index.html:182
+msgid "Bottles"
+msgstr "Bottles"
+
+#: app/templates/errors/403.html:2
+msgid "Forbidden"
+msgstr "Forbidden"
+
+#: app/templates/errors/403.html:5
+msgid "403 - Forbidden"
+msgstr "403 - Forbidden"
+
+#: app/templates/errors/403.html:6
+msgid "You don't have permission to access this page."
+msgstr "You don't have permission to access this page."
+
+#: app/templates/errors/403.html:7
+msgid "Back to dashboard"
+msgstr "Back to dashboard"
+
+#: app/templates/inventory/history.html:2
+msgid "Stock history"
+msgstr "Stock history"
+
+#: app/templates/inventory/history.html:4
+#, python-format
+msgid "Stock history: %(name)s"
+msgstr "Stock history: %(name)s"
+
+#: app/templates/inventory/history.html:7 app/templates/sales/index.html:13
+msgid "Date"
+msgstr "Date"
+
+#: app/templates/inventory/history.html:7
+msgid "Change"
+msgstr "Change"
+
+#: app/templates/inventory/history.html:7
+msgid "Reason"
+msgstr "Reason"
+
+#: app/templates/inventory/history.html:19
+msgid "No movements yet."
+msgstr "No movements yet."
+
+#: app/templates/inventory/history.html:24
+msgid "Back to inventory"
+msgstr "Back to inventory"
+
+#: app/templates/inventory/index.html:7
+#: app/templates/inventory/product_form.html:3
+#: app/templates/inventory/product_form.html:5
+msgid "New product"
+msgstr "New product"
+
+#: app/templates/inventory/index.html:15
+msgid "Flavor / Product"
+msgstr "Flavor / Product"
+
+#: app/templates/inventory/index.html:18
+msgid "Size"
+msgstr "Size"
+
+#: app/templates/inventory/index.html:19
+msgid "Price"
+msgstr "Price"
+
+#: app/templates/inventory/index.html:38
+msgid "Inactive"
+msgstr "Inactive"
+
+#: app/templates/inventory/index.html:42
+msgid "OK"
+msgstr "OK"
+
+#: app/templates/inventory/index.html:48 app/templates/users/index.html:18
+msgid "Edit"
+msgstr "Edit"
+
+#: app/templates/inventory/index.html:50
+msgid "History"
+msgstr "History"
+
+#: app/templates/inventory/index.html:54
+msgid "No products yet."
+msgstr "No products yet."
+
+#: app/templates/inventory/product_form.html:3
+#: app/templates/inventory/product_form.html:5
+msgid "Edit product"
+msgstr "Edit product"
+
+#: app/templates/inventory/restock_form.html:5
+#, python-format
+msgid "Restock: %(name)s"
+msgstr "Restock: %(name)s"
+
+#: app/templates/inventory/restock_form.html:6
+#, python-format
+msgid "Currently on hand: %(qty)s"
+msgstr "Currently on hand: %(qty)s"
+
+#: app/templates/opportunities/index.html:7
+msgid "New request"
+msgstr "New request"
+
+#: app/templates/opportunities/index.html:12
+msgid "All"
+msgstr "All"
+
+#: app/templates/opportunities/index.html:22 app/templates/sales/detail.html:13
+msgid "Qty"
+msgstr "Qty"
+
+#: app/templates/opportunities/index.html:42
+msgid "Update"
+msgstr "Update"
+
+#: app/templates/opportunities/index.html:47
+msgid "Convert to Sale"
+msgstr "Convert to Sale"
+
+#: app/templates/opportunities/index.html:52
+msgid "closed"
+msgstr "closed"
+
+#: app/templates/opportunities/index.html:57
+msgid "No opportunities yet."
+msgstr "No opportunities yet."
+
+#: app/templates/opportunities/opportunity_form.html:3
+msgid "New opportunity"
+msgstr "New opportunity"
+
+#: app/templates/opportunities/opportunity_form.html:5
+msgid "New request / opportunity"
+msgstr "New request / opportunity"
+
+#: app/templates/sales/detail.html:2 app/templates/sales/detail.html:4
+#, python-format
+msgid "Sale #%(id)s"
+msgstr "Sale #%(id)s"
+
+#: app/templates/sales/detail.html:6
+msgid "Customer:"
+msgstr "Customer:"
+
+#: app/templates/sales/detail.html:7
+msgid "Date:"
+msgstr "Date:"
+
+#: app/templates/sales/detail.html:8
+msgid "Status:"
+msgstr "Status:"
+
+#: app/templates/sales/detail.html:9
+msgid "Invoice number:"
+msgstr "Invoice number:"
+
+#: app/templates/sales/detail.html:10
+msgid "Notes:"
+msgstr "Notes:"
+
+#: app/templates/sales/detail.html:13 app/templates/sales/detail.html:25
+msgid "Subtotal"
+msgstr "Subtotal"
+
+#: app/templates/sales/detail.html:27
+#, python-format
+msgid "IVA (%(rate)s%%)"
+msgstr "IVA (%(rate)s%%)"
+
+#: app/templates/sales/detail.html:29 app/templates/sales/index.html:13
+msgid "Total"
+msgstr "Total"
+
+#: app/templates/sales/detail.html:33
+msgid "Back to sales"
+msgstr "Back to sales"
+
+#: app/templates/sales/index.html:7 app/templates/sales/sale_form.html:3
+#: app/templates/sales/sale_form.html:5
+msgid "New sale"
+msgstr "New sale"
+
+#: app/templates/sales/index.html:13
+msgid "Invoice #"
+msgstr "Invoice #"
+
+#: app/templates/sales/index.html:23
+msgid "View"
+msgstr "View"
+
+#: app/templates/sales/index.html:26
+msgid "No sales recorded yet."
+msgstr "No sales recorded yet."
+
+#: app/templates/sales/sale_form.html:17
+msgid "Line items"
+msgstr "Line items"
+
+#: app/templates/sales/sale_form.html:19
+msgid "Quantity"
+msgstr "Quantity"
+
+#: app/templates/sales/sale_form.html:34
+msgid "Add line"
+msgstr "Add line"
+
+#: app/templates/users/index.html:6 app/templates/users/user_form.html:3
+#: app/templates/users/user_form.html:8
+msgid "New user"
+msgstr "New user"
+
+#: app/templates/users/index.html:21
+msgid "Delete"
+msgstr "Delete"
+
+#: app/templates/users/index.html:27
+msgid "No users yet."
+msgstr "No users yet."
+
+#: app/templates/users/user_form.html:3
+msgid "Edit user"
+msgstr "Edit user"
+
+#: app/templates/users/user_form.html:8
+#, python-format
+msgid "Edit %(name)s"
+msgstr "Edit %(name)s"
+
+#: app/templates/users/user_form.html:10
+msgid "Leave the password fields blank to keep the current password."
+msgstr "Leave the password fields blank to keep the current password."
+

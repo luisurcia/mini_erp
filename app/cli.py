@@ -5,6 +5,7 @@ from app.extensions import db
 from app.models.company import Company  # noqa: F401 (registers table for create_all)
 from app.models.user import User
 from app.schema import (
+    ensure_company_language_column,
     ensure_product_short_name_column,
     ensure_sale_invoice_number_column,
     ensure_sale_tax_columns,
@@ -21,6 +22,7 @@ def register_cli(app: Flask) -> None:
         ensure_product_short_name_column()
         ensure_sale_invoice_number_column()
         ensure_sale_tax_columns()
+        ensure_company_language_column()
         click.echo("Database tables created.")
 
     @app.cli.command("seed-demo")
@@ -33,6 +35,7 @@ def register_cli(app: Flask) -> None:
         ensure_product_short_name_column()
         ensure_sale_invoice_number_column()
         ensure_sale_tax_columns()
+        ensure_company_language_column()
         seed_demo_data(app)
         click.echo("Demo data seeded.")
 

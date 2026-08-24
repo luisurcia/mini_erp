@@ -1,4 +1,5 @@
 from flask import flash, redirect, render_template, url_for
+from flask_babel import gettext as _
 from flask_login import current_user, login_required
 
 from app.blueprints.users import bp
@@ -24,7 +25,7 @@ def new_user():
     form = UserForm()
     if form.validate_on_submit():
         if not form.password.data:
-            flash("Password is required for a new user.", "danger")
+            flash(_("Password is required for a new user."), "danger")
         else:
             try:
                 user = UserService().create_user(
@@ -32,7 +33,7 @@ def new_user():
                     password=form.password.data,
                     role=form.role.data,
                 )
-                flash(f"User '{user.username}' created.", "success")
+                flash(_("User '%(name)s' created.", name=user.username), "success")
                 return redirect(url_for("users.index"))
             except MiniErpError as exc:
                 flash(str(exc), "danger")
@@ -46,7 +47,7 @@ def new_user():
 def edit_user(user_id):
     user = UserRepository().get(user_id)
     if user is None:
-        flash("User not found.", "danger")
+        flash(_("User not found."), "danger")
         return redirect(url_for("users.index"))
 
     form = UserForm(obj=user)
@@ -62,7 +63,7 @@ def edit_user(user_id):
                 role=form.role.data,
                 password=form.password.data or None,
             )
-            flash(f"User '{form.username.data}' updated.", "success")
+            flash(_("User '%(name)s' updated.", name=form.username.data), "success")
             return redirect(url_for("users.index"))
         except MiniErpError as exc:
             flash(str(exc), "danger")
@@ -76,13 +77,13 @@ def edit_user(user_id):
 def delete_user(user_id):
     user = UserRepository().get(user_id)
     if user is None:
-        flash("User not found.", "danger")
+        flash(_("User not found."), "danger")
     elif user.id == current_user.id:
-        flash("You cannot delete your own account.", "danger")
+        flash(_("You cannot delete your own account."), "danger")
     else:
         try:
             UserService().delete_user(user)
-            flash(f"User '{user.username}' deleted.", "success")
+            flash(_("User '%(name)s' deleted.", name=user.username), "success")
         except MiniErpError as exc:
             flash(str(exc), "danger")
     return redirect(url_for("users.index"))

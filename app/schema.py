@@ -54,6 +54,22 @@ def ensure_sale_tax_columns() -> None:
     db.session.commit()
 
 
+def ensure_company_language_column() -> None:
+    """Backfill `company_settings.language` for databases created before it existed.
+
+    db.create_all() only creates missing tables, not missing columns on
+    tables that already exist, so pre-existing databases need this to pick
+    up the language column.
+    """
+    inspector = inspect(db.engine)
+    columns = {column["name"] for column in inspector.get_columns("company_settings")}
+    if "language" not in columns:
+        db.session.execute(
+            text("ALTER TABLE company_settings ADD COLUMN language VARCHAR(5) NOT NULL DEFAULT 'es'")
+        )
+        db.session.commit()
+
+
 def ensure_user_role_column() -> None:
     """Backfill `users.role` for databases created before roles existed.
 

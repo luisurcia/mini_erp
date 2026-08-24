@@ -1,4 +1,5 @@
 from flask import flash, redirect, render_template, request, url_for
+from flask_babel import gettext as _
 from flask_login import login_required
 
 from app.blueprints.sales import bp
@@ -27,8 +28,8 @@ def new_sale():
     form = SaleMetaForm()
     form.customer_id.choices = _customer_choices()
     form.status.choices = [
-        (Sale.STATUS_COMPLETED, "Completed"),
-        (Sale.STATUS_PENDING, "Pending"),
+        (Sale.STATUS_COMPLETED, _("Completed")),
+        (Sale.STATUS_PENDING, _("Pending")),
     ]
     if not form.is_submitted():
         form.include_tax.data = Company.get_settings().tax_enabled_default
@@ -37,7 +38,7 @@ def new_sale():
     if form.validate_on_submit():
         items = _parse_line_items()
         if not items:
-            flash("Add at least one product line to the sale.", "danger")
+            flash(_("Add at least one product line to the sale."), "danger")
         else:
             try:
                 sale = SalesService().record_sale(
@@ -48,7 +49,7 @@ def new_sale():
                     invoice_number=form.invoice_number.data or None,
                     include_tax=form.include_tax.data,
                 )
-                flash(f"Sale #{sale.id} recorded.", "success")
+                flash(_("Sale #%(id)s recorded.", id=sale.id), "success")
                 return redirect(url_for("sales.detail", sale_id=sale.id))
             except MiniErpError as exc:
                 flash(str(exc), "danger")
@@ -61,7 +62,7 @@ def new_sale():
 def detail(sale_id):
     sale = SalesRepository().get(sale_id)
     if sale is None:
-        flash("Sale not found.", "danger")
+        flash(_("Sale not found."), "danger")
         return redirect(url_for("sales.index"))
     return render_template("sales/detail.html", sale=sale)
 

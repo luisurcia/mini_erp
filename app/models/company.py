@@ -5,12 +5,17 @@ from app.models.base import BaseModel
 
 
 class Company(BaseModel):
-    """Single-row company configuration (tax settings, etc.)."""
+    """Single-row company configuration (tax settings, language, etc.)."""
 
     __tablename__ = "company_settings"
 
+    LANGUAGE_ES = "es"
+    LANGUAGE_EN = "en"
+    LANGUAGES = [LANGUAGE_ES, LANGUAGE_EN]
+
     tax_rate = db.Column(db.Numeric(5, 2), nullable=False, default=Decimal("19.00"))
     tax_enabled_default = db.Column(db.Boolean, nullable=False, default=True)
+    language = db.Column(db.String(5), nullable=False, default=LANGUAGE_ES)
 
     @classmethod
     def get_settings(cls) -> "Company":
