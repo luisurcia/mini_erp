@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-08-24 17:58-0400\n"
+"POT-Creation-Date: 2026-08-24 19:21-0400\n"
 "PO-Revision-Date: 2026-08-24 17:58-0400\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: en\n"
@@ -96,7 +96,7 @@ msgid "Passwords must match."
 msgstr "Passwords must match."
 
 #: app/blueprints/auth/forms.py:25 app/templates/auth/change_password.html:3
-#: app/templates/auth/change_password.html:8 app/templates/base.html:31
+#: app/templates/auth/change_password.html:8 app/templates/base.html:32
 msgid "Change password"
 msgstr "Change password"
 
@@ -131,6 +131,45 @@ msgstr "Save settings"
 #: app/blueprints/company/routes.py:24
 msgid "Company settings updated."
 msgstr "Company settings updated."
+
+#: app/blueprints/customers/forms.py:8 app/templates/customers/index.html:15
+msgid "Name"
+msgstr "Name"
+
+#: app/blueprints/customers/forms.py:9 app/templates/customers/index.html:16
+msgid "Email"
+msgstr "Email"
+
+#: app/blueprints/customers/forms.py:10 app/templates/customers/index.html:17
+msgid "Phone"
+msgstr "Phone"
+
+#: app/blueprints/customers/forms.py:12 app/templates/customers/index.html:18
+msgid "Instagram handle"
+msgstr "Instagram handle"
+
+#: app/blueprints/customers/forms.py:14
+#: app/blueprints/opportunities/forms.py:26 app/blueprints/sales/forms.py:17
+msgid "Notes"
+msgstr "Notes"
+
+#: app/blueprints/customers/forms.py:15
+msgid "Save customer"
+msgstr "Save customer"
+
+#: app/blueprints/customers/routes.py:35
+#, python-format
+msgid "Customer '%(name)s' created."
+msgstr "Customer '%(name)s' created."
+
+#: app/blueprints/customers/routes.py:47
+msgid "Customer not found."
+msgstr "Customer not found."
+
+#: app/blueprints/customers/routes.py:59
+#, python-format
+msgid "Customer '%(name)s' updated."
+msgstr "Customer '%(name)s' updated."
 
 #: app/blueprints/dashboard/routes.py:17
 msgid "Jan"
@@ -273,10 +312,6 @@ msgstr "Quantity requested"
 msgid "Source"
 msgstr "Source"
 
-#: app/blueprints/opportunities/forms.py:26 app/blueprints/sales/forms.py:17
-msgid "Notes"
-msgstr "Notes"
-
 #: app/blueprints/opportunities/forms.py:27
 msgid "Save request"
 msgstr "Save request"
@@ -405,22 +440,47 @@ msgstr "Sales"
 msgid "Opportunities"
 msgstr "Opportunities"
 
-#: app/templates/base.html:25 app/templates/users/index.html:2
+#: app/templates/base.html:24 app/templates/customers/index.html:2
+#: app/templates/customers/index.html:5
+msgid "Customers"
+msgstr "Customers"
+
+#: app/templates/base.html:26 app/templates/users/index.html:2
 #: app/templates/users/index.html:5
 msgid "Users"
 msgstr "Users"
 
-#: app/templates/base.html:26
+#: app/templates/base.html:27
 msgid "Company"
 msgstr "Company"
 
-#: app/templates/base.html:32
+#: app/templates/base.html:33
 msgid "Log out"
 msgstr "Log out"
 
 #: app/templates/company/settings.html:3 app/templates/company/settings.html:8
 msgid "Company settings"
 msgstr "Company settings"
+
+#: app/templates/customers/customer_form.html:3
+#: app/templates/customers/customer_form.html:5
+msgid "Edit customer"
+msgstr "Edit customer"
+
+#: app/templates/customers/customer_form.html:3
+#: app/templates/customers/customer_form.html:5
+#: app/templates/customers/index.html:7
+msgid "New customer"
+msgstr "New customer"
+
+#: app/templates/customers/index.html:31 app/templates/inventory/index.html:48
+#: app/templates/users/index.html:18
+msgid "Edit"
+msgstr "Edit"
+
+#: app/templates/customers/index.html:36
+msgid "No customers yet."
+msgstr "No customers yet."
 
 #: app/templates/dashboard/index.html:9
 msgid "Active products"
@@ -575,10 +635,6 @@ msgstr "Inactive"
 #: app/templates/inventory/index.html:42
 msgid "OK"
 msgstr "OK"
-
-#: app/templates/inventory/index.html:48 app/templates/users/index.html:18
-msgid "Edit"
-msgstr "Edit"
 
 #: app/templates/inventory/index.html:50
 msgid "History"
