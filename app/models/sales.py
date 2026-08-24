@@ -13,6 +13,7 @@ class Sale(BaseModel):
     status = db.Column(db.String(20), nullable=False, default=STATUS_COMPLETED)
     sale_date = db.Column(db.DateTime, nullable=False)
     total_amount = db.Column(db.Numeric(10, 2), nullable=False, default=0)
+    invoice_number = db.Column(db.String(40), nullable=True)
     notes = db.Column(db.String(255), nullable=True)
 
     customer = db.relationship("Customer")

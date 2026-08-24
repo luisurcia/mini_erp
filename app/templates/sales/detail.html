@@ -6,6 +6,7 @@
   <p><strong>Customer:</strong> {{ sale.customer.name }}</p>
   <p><strong>Date:</strong> {{ sale.sale_date.strftime("%Y-%m-%d %H:%M") }}</p>
   <p><strong>Status:</strong> <span class="badge bg-secondary">{{ sale.status }}</span></p>
+  <p><strong>Invoice number:</strong> {{ sale.invoice_number or "-" }}</p>
   {% if sale.notes %}<p><strong>Notes:</strong> {{ sale.notes }}</p>{% endif %}
 
   <table class="table mt-3">

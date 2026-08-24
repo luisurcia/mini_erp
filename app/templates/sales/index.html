@@ -10,19 +10,20 @@
 
 <div class="card p-3">
   <table class="table align-middle mb-0">
-    <thead><tr><th>#</th><th>Date</th><th>Customer</th><th>Status</th><th>Total</th><th></th></tr></thead>
+    <thead><tr><th>#</th><th>Date</th><th>Customer</th><th>Invoice #</th><th>Status</th><th>Total</th><th></th></tr></thead>
     <tbody>
       {% for sale in sales %}
       <tr>
         <td>{{ sale.id }}</td>
         <td>{{ sale.sale_date.strftime("%Y-%m-%d") }}</td>
         <td>{{ sale.customer.name }}</td>
+        <td>{{ sale.invoice_number or "-" }}</td>
         <td><span class="badge bg-secondary">{{ sale.status }}</span></td>
         <td>${{ "%.2f"|format(sale.total_amount) }}</td>
         <td class="text-end"><a class="btn btn-sm btn-outline-secondary" href="{{ url_for('sales.detail', sale_id=sale.id) }}">View</a></td>
       </tr>
       {% else %}
-      <tr><td colspan="6" class="text-muted text-center py-4">No sales recorded yet.</td></tr>
+      <tr><td colspan="7" class="text-muted text-center py-4">No sales recorded yet.</td></tr>
       {% endfor %}
     </tbody>
   </table>

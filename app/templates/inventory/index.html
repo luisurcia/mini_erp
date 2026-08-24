@@ -13,6 +13,7 @@
     <thead>
       <tr>
         <th>Flavor / Product</th>
+        <th>Short name</th>
         <th>SKU</th>
         <th>Size</th>
         <th>Price</th>
@@ -26,6 +27,7 @@
       {% for product in products %}
       <tr class="{{ 'table-low-stock' if product.inventory_item and product.inventory_item.is_low_stock else '' }}">
         <td>{{ product.display_name }}</td>
+        <td>{{ product.short_name or "-" }}</td>
         <td>{{ product.sku }}</td>
         <td>{{ product.size_ml }} ml</td>
         <td>${{ "%.2f"|format(product.unit_price) }}</td>
@@ -49,7 +51,7 @@
         </td>
       </tr>
       {% else %}
-      <tr><td colspan="8" class="text-muted text-center py-4">No products yet.</td></tr>
+      <tr><td colspan="9" class="text-muted text-center py-4">No products yet.</td></tr>
       {% endfor %}
     </tbody>
   </table>

@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
-from wtforms import SelectField, TextAreaField, SubmitField
-from wtforms.validators import Optional
+from wtforms import SelectField, StringField, TextAreaField, SubmitField
+from wtforms.validators import Length, Optional
 
 
 class SaleMetaForm(FlaskForm):
@@ -9,5 +9,8 @@ class SaleMetaForm(FlaskForm):
 
     customer_id = SelectField("Customer", coerce=int)
     status = SelectField("Status")
+    invoice_number = StringField(
+        "Invoice number", validators=[Optional(), Length(max=40)]
+    )
     notes = TextAreaField("Notes", validators=[Optional()])
     submit = SubmitField("Record sale")

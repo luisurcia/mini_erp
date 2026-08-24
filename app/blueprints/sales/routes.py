@@ -42,6 +42,7 @@ def new_sale():
                     items=items,
                     status=form.status.data,
                     notes=form.notes.data,
+                    invoice_number=form.invoice_number.data or None,
                 )
                 flash(f"Sale #{sale.id} recorded.", "success")
                 return redirect(url_for("sales.detail", sale_id=sale.id))

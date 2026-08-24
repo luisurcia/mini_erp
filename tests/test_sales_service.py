@@ -1,4 +1,5 @@
 import pytest
+from datetime import datetime, timezone
 from decimal import Decimal
 
 from app.exceptions import InsufficientStockError
@@ -40,3 +41,66 @@ def test_record_sale_requires_at_least_one_item(app, customer):
     service = SalesService()
     with pytest.raises(ValueError):
         service.record_sale(customer_id=customer.id, items=[])
+
+
+def test_sales_by_product_returns_amount_and_percentage(app, customer, product):
+    service = SalesService()
+    sale = service.record_sale(
+        customer_id=customer.id, items=[{"product_id": product.id, "quantity": 2}]
+    )
+
+    result = service.sales_by_product([sale])
+
+    assert result == [
+        {"product": product.display_name, "amount": 9.0, "percentage": 100.0}
+    ]
+
+
+def test_monthly_sales_counts_and_bottles_bucket_by_sale_month(app, customer, product):
+    service = SalesService()
+    sale_jan = service.record_sale(
+        customer_id=customer.id,
+        items=[{"product_id": product.id, "quantity": 1}],
+        sale_date=datetime(2026, 1, 15, tzinfo=timezone.utc),
+    )
+    sale_mar = service.record_sale(
+        customer_id=customer.id,
+        items=[{"product_id": product.id, "quantity": 4}],
+        sale_date=datetime(2026, 3, 5, tzinfo=timezone.utc),
+    )
+
+    counts = service.monthly_sales_counts([sale_jan, sale_mar])
+    bottles = service.monthly_bottles_sold([sale_jan, sale_mar])
+
+    assert counts == [1, 0, 1] + [0] * 9
+    assert bottles == [1, 0, 4] + [0] * 9
+
+
+def test_invoice_count_counts_only_sales_with_invoice_number(app, customer, product):
+    service = SalesService()
+    with_invoice = service.record_sale(
+        customer_id=customer.id,
+        items=[{"product_id": product.id, "quantity": 1}],
+        invoice_number="F-001",
+    )
+    without_invoice = service.record_sale(
+        customer_id=customer.id, items=[{"product_id": product.id, "quantity": 1}]
+    )
+
+    assert service.invoice_count([with_invoice, without_invoice]) == 1
+
+
+def test_average_sale_total(app, customer, product):
+    service = SalesService()
+    sale1 = service.record_sale(
+        customer_id=customer.id, items=[{"product_id": product.id, "quantity": 1}]
+    )
+    sale2 = service.record_sale(
+        customer_id=customer.id, items=[{"product_id": product.id, "quantity": 3}]
+    )
+
+    assert service.average_sale_total([sale1, sale2]) == Decimal("9.00")
+
+
+def test_average_sale_total_with_no_sales_returns_zero(app):
+    assert SalesService().average_sale_total([]) == Decimal("0")

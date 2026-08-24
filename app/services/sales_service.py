@@ -1,4 +1,6 @@
+from collections import defaultdict
 from datetime import datetime, timezone
+from decimal import Decimal
 
 from app.exceptions import NotFoundError
 from app.models.inventory import StockMovement
@@ -28,6 +30,7 @@ class SalesService:
         status: str = Sale.STATUS_COMPLETED,
         sale_date: datetime | None = None,
         notes: str | None = None,
+        invoice_number: str | None = None,
     ) -> Sale:
         if not items:
             raise ValueError("A sale needs at least one line item")
@@ -37,6 +40,7 @@ class SalesService:
             status=status,
             sale_date=sale_date or datetime.now(timezone.utc),
             notes=notes,
+            invoice_number=invoice_number,
         )
 
         for line in items:
@@ -65,3 +69,43 @@ class SalesService:
 
     def total_revenue(self, sales: list[Sale]):
         return sum((sale.total_amount for sale in sales), start=0)
+
+    def average_sale_total(self, sales: list[Sale]):
+        if not sales:
+            return Decimal("0")
+        return self.total_revenue(sales) / len(sales)
+
+    def invoice_count(self, sales: list[Sale]) -> int:
+        return sum(1 for sale in sales if sale.invoice_number)
+
+    def sales_by_product(self, sales: list[Sale]) -> list[dict]:
+        """Revenue and share of total per product, across the given sales."""
+        totals: dict[str, Decimal] = defaultdict(lambda: Decimal("0"))
+        for sale in sales:
+            for item in sale.items:
+                totals[item.product.display_name] += item.subtotal
+
+        grand_total = sum(totals.values(), start=Decimal("0"))
+        return [
+            {
+                "product": name,
+                "amount": float(amount),
+                "percentage": float(amount / grand_total * 100) if grand_total else 0,
+            }
+            for name, amount in sorted(totals.items(), key=lambda kv: kv[1], reverse=True)
+        ]
+
+    def monthly_sales_counts(self, sales: list[Sale]) -> list[int]:
+        """Count of sales per calendar month (Jan..Dec) for the given sales."""
+        counts = [0] * 12
+        for sale in sales:
+            counts[sale.sale_date.month - 1] += 1
+        return counts
+
+    def monthly_bottles_sold(self, sales: list[Sale]) -> list[int]:
+        """Sum of item quantities per calendar month (Jan..Dec) for the given sales."""
+        totals = [0] * 12
+        for sale in sales:
+            for item in sale.items:
+                totals[sale.sale_date.month - 1] += item.quantity
+        return totals

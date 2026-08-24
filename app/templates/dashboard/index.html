@@ -28,6 +28,67 @@
       <div class="stat-value">${{ "%.2f"|format(stats.revenue_this_month) }}</div>
     </div>
   </div>
+  <div class="col-sm-6 col-lg-3">
+    <div class="card stat-card p-3">
+      <div class="text-muted small">Invoices ({{ selected_year }})</div>
+      <div class="stat-value">{{ stats.invoice_count }}</div>
+    </div>
+  </div>
+  <div class="col-sm-6 col-lg-3">
+    <div class="card stat-card p-3">
+      <div class="text-muted small">Average total per sale</div>
+      <div class="stat-value">${{ "%.2f"|format(stats.average_sale_total) }}</div>
+    </div>
+  </div>
+  <div class="col-sm-6 col-lg-3">
+    <div class="card stat-card p-3">
+      <div class="text-muted small">Total sold in {{ selected_year }}</div>
+      <div class="stat-value">${{ "%.2f"|format(stats.total_sold_year) }}</div>
+    </div>
+  </div>
+</div>
+
+<div class="card p-3 mb-4">
+  <form method="get" class="row g-2 align-items-end">
+    <div class="col-auto">
+      <label class="form-label small text-muted mb-0" for="year">Year</label>
+      <select class="form-select" id="year" name="year" onchange="this.form.submit()">
+        {% for y in available_years %}
+        <option value="{{ y }}" {{ "selected" if y == selected_year else "" }}>{{ y }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="col-auto">
+      <label class="form-label small text-muted mb-0" for="month">Month (product chart)</label>
+      <select class="form-select" id="month" name="month" onchange="this.form.submit()">
+        <option value="">All months</option>
+        {% for name in month_names %}
+        <option value="{{ loop.index }}" {{ "selected" if loop.index == selected_month else "" }}>{{ name }}</option>
+        {% endfor %}
+      </select>
+    </div>
+  </form>
+</div>
+
+<div class="row g-4 mb-4">
+  <div class="col-lg-4">
+    <div class="card p-3">
+      <h2 class="h5">Sales share per product</h2>
+      <canvas id="productSalesChart" height="220"></canvas>
+    </div>
+  </div>
+  <div class="col-lg-4">
+    <div class="card p-3">
+      <h2 class="h5">Sales per month ({{ selected_year }})</h2>
+      <canvas id="salesPerMonthChart" height="220"></canvas>
+    </div>
+  </div>
+  <div class="col-lg-4">
+    <div class="card p-3">
+      <h2 class="h5">Bottles sold per month ({{ selected_year }})</h2>
+      <canvas id="bottlesPerMonthChart" height="220"></canvas>
+    </div>
+  </div>
 </div>
 
 <div class="row g-4">
@@ -74,4 +135,53 @@
     </div>
   </div>
 </div>
+{% endblock %}
+
+{% block scripts %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4"></script>
+<script>
+const productSales = {{ charts.product_sales | tojson }};
+new Chart(document.getElementById("productSalesChart"), {
+  type: "pie",
+  data: {
+    labels: productSales.map((p) => p.product),
+    datasets: [{
+      data: productSales.map((p) => p.amount),
+      backgroundColor: ["#2f6b4f", "#d9a441", "#a3c9a8", "#7a5c3e", "#c96a4e", "#5b8a72"],
+    }],
+  },
+  options: {
+    plugins: {
+      tooltip: {
+        callbacks: {
+          label: (ctx) => {
+            const pct = productSales[ctx.dataIndex].percentage.toFixed(1);
+            return `${ctx.label}: $${ctx.parsed.toFixed(2)} (${pct}%)`;
+          },
+        },
+      },
+    },
+  },
+});
+
+const monthLabels = {{ month_names | tojson }};
+
+new Chart(document.getElementById("salesPerMonthChart"), {
+  type: "bar",
+  data: {
+    labels: monthLabels,
+    datasets: [{ label: "Sales", data: {{ charts.monthly_counts | tojson }}, backgroundColor: "#2f6b4f" }],
+  },
+  options: { scales: { y: { beginAtZero: true, ticks: { precision: 0 } } } },
+});
+
+new Chart(document.getElementById("bottlesPerMonthChart"), {
+  type: "bar",
+  data: {
+    labels: monthLabels,
+    datasets: [{ label: "Bottles", data: {{ charts.monthly_bottles | tojson }}, backgroundColor: "#d9a441" }],
+  },
+  options: { scales: { y: { beginAtZero: true, ticks: { precision: 0 } } } },
+});
+</script>
 {% endblock %}

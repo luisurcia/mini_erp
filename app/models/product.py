@@ -19,6 +19,7 @@ class Product(BaseModel):
 
     flavor_id = db.Column(db.Integer, db.ForeignKey("flavors.id"), nullable=False)
     name = db.Column(db.String(120), nullable=False)
+    short_name = db.Column(db.String(3), nullable=True)
     sku = db.Column(db.String(40), unique=True, nullable=False)
     size_ml = db.Column(db.Integer, nullable=False, default=355)
     unit_price = db.Column(db.Numeric(10, 2), nullable=False)
