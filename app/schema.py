@@ -32,6 +32,28 @@ def ensure_sale_invoice_number_column() -> None:
         db.session.commit()
 
 
+def ensure_sale_tax_columns() -> None:
+    """Backfill `sales.tax_*` columns for databases created before IVA support.
+
+    db.create_all() only creates missing tables, not missing columns on
+    tables that already exist, so pre-existing databases need this to pick
+    up the tax_applied, tax_rate_applied and tax_amount columns.
+    """
+    inspector = inspect(db.engine)
+    columns = {column["name"] for column in inspector.get_columns("sales")}
+    if "tax_applied" not in columns:
+        db.session.execute(
+            text("ALTER TABLE sales ADD COLUMN tax_applied BOOLEAN NOT NULL DEFAULT 0")
+        )
+    if "tax_rate_applied" not in columns:
+        db.session.execute(text("ALTER TABLE sales ADD COLUMN tax_rate_applied NUMERIC(5, 2)"))
+    if "tax_amount" not in columns:
+        db.session.execute(
+            text("ALTER TABLE sales ADD COLUMN tax_amount NUMERIC(10, 2) NOT NULL DEFAULT 0")
+        )
+    db.session.commit()
+
+
 def ensure_user_role_column() -> None:
     """Backfill `users.role` for databases created before roles existed.
 
