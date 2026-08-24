@@ -1,4 +1,5 @@
 from flask import flash, redirect, render_template, url_for
+from flask_babel import gettext as _
 from flask_login import current_user, login_required, login_user, logout_user
 
 from app.blueprints.auth import bp
@@ -18,7 +19,7 @@ def login():
         if user is not None and user.check_password(form.password.data):
             login_user(user)
             return redirect(url_for("dashboard.index"))
-        flash("Invalid username or password.", "danger")
+        flash(_("Invalid username or password."), "danger")
 
     return render_template("auth/login.html", form=form)
 
@@ -36,11 +37,11 @@ def change_password():
     form = ChangePasswordForm()
     if form.validate_on_submit():
         if not current_user.check_password(form.current_password.data):
-            flash("Current password is incorrect.", "danger")
+            flash(_("Current password is incorrect."), "danger")
         else:
             current_user.set_password(form.new_password.data)
             db.session.commit()
-            flash("Password changed.", "success")
+            flash(_("Password changed."), "success")
             return redirect(url_for("dashboard.index"))
 
     return render_template("auth/change_password.html", form=form)

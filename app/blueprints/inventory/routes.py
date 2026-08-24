@@ -1,4 +1,5 @@
 from flask import flash, redirect, render_template, url_for
+from flask_babel import gettext as _
 from flask_login import login_required
 
 from app.blueprints.inventory import bp
@@ -42,7 +43,7 @@ def new_product():
             initial_qty=form.initial_qty.data or 0,
             reorder_level=form.reorder_level.data,
         )
-        flash(f"Product '{product.display_name}' created.", "success")
+        flash(_("Product '%(name)s' created.", name=product.display_name), "success")
         return redirect(url_for("inventory.index"))
 
     return render_template("inventory/product_form.html", form=form, mode="new")
@@ -54,7 +55,7 @@ def new_product():
 def edit_product(product_id):
     product = ProductRepository().get(product_id)
     if product is None:
-        flash("Product not found.", "danger")
+        flash(_("Product not found."), "danger")
         return redirect(url_for("inventory.index"))
 
     form = ProductForm(obj=product)
@@ -73,7 +74,7 @@ def edit_product(product_id):
         product.is_active = form.is_active.data
         product.inventory_item.reorder_level = form.reorder_level.data
         ProductRepository().commit()
-        flash(f"Product '{product.display_name}' updated.", "success")
+        flash(_("Product '%(name)s' updated.", name=product.display_name), "success")
         return redirect(url_for("inventory.index"))
 
     return render_template(
@@ -87,14 +88,21 @@ def edit_product(product_id):
 def restock(product_id):
     product = ProductRepository().get(product_id)
     if product is None:
-        flash("Product not found.", "danger")
+        flash(_("Product not found."), "danger")
         return redirect(url_for("inventory.index"))
 
     form = RestockForm()
     if form.validate_on_submit():
         try:
             InventoryService().restock(product_id, form.quantity.data, note=form.note.data)
-            flash(f"Restocked {form.quantity.data} units of {product.display_name}.", "success")
+            flash(
+                _(
+                    "Restocked %(qty)s units of %(name)s.",
+                    qty=form.quantity.data,
+                    name=product.display_name,
+                ),
+                "success",
+            )
             return redirect(url_for("inventory.index"))
         except MiniErpError as exc:
             flash(str(exc), "danger")
@@ -107,7 +115,7 @@ def restock(product_id):
 def history(product_id):
     product = ProductRepository().get(product_id)
     if product is None:
-        flash("Product not found.", "danger")
+        flash(_("Product not found."), "danger")
         return redirect(url_for("inventory.index"))
 
     movements = InventoryService().movement_history(product_id)

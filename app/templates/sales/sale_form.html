@@ -1,8 +1,8 @@
 {% extends "base.html" %}
 {% from 'bootstrap5/form.html' import render_field %}
-{% block title %}New sale{% endblock %}
+{% block title %}{{ _("New sale") }}{% endblock %}
 {% block content %}
-<h1 class="h3 mb-3">New sale</h1>
+<h1 class="h3 mb-3">{{ _("New sale") }}</h1>
 <div class="card p-4">
   <form method="post" novalidate>
     {{ form.hidden_tag() }}
@@ -14,9 +14,9 @@
     {{ render_field(form.include_tax) }}
     {{ render_field(form.notes) }}
 
-    <h2 class="h6 mt-4">Line items</h2>
+    <h2 class="h6 mt-4">{{ _("Line items") }}</h2>
     <table class="table" id="line-items-table">
-      <thead><tr><th>Product</th><th style="width: 140px;">Quantity</th><th></th></tr></thead>
+      <thead><tr><th>{{ _("Product") }}</th><th style="width: 140px;">{{ _("Quantity") }}</th><th></th></tr></thead>
       <tbody id="line-items-body">
         <tr class="line-item-row">
           <td>
@@ -31,7 +31,7 @@
         </tr>
       </tbody>
     </table>
-    <button type="button" id="add-row" class="btn btn-sm btn-outline-secondary mb-3">+ Add line</button>
+    <button type="button" id="add-row" class="btn btn-sm btn-outline-secondary mb-3">+ {{ _("Add line") }}</button>
     <div>{{ form.submit(class="btn btn-primary") }}</div>
   </form>
 </div>

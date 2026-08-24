@@ -1,16 +1,16 @@
 {% extends "base.html" %}
-{% block title %}Sale #{{ sale.id }}{% endblock %}
+{% block title %}{{ _("Sale #%(id)s", id=sale.id) }}{% endblock %}
 {% block content %}
-<h1 class="h3 mb-3">Sale #{{ sale.id }}</h1>
+<h1 class="h3 mb-3">{{ _("Sale #%(id)s", id=sale.id) }}</h1>
 <div class="card p-4">
-  <p><strong>Customer:</strong> {{ sale.customer.name }}</p>
-  <p><strong>Date:</strong> {{ sale.sale_date.strftime("%Y-%m-%d %H:%M") }}</p>
-  <p><strong>Status:</strong> <span class="badge bg-secondary">{{ sale.status }}</span></p>
-  <p><strong>Invoice number:</strong> {{ sale.invoice_number or "-" }}</p>
-  {% if sale.notes %}<p><strong>Notes:</strong> {{ sale.notes }}</p>{% endif %}
+  <p><strong>{{ _("Customer:") }}</strong> {{ sale.customer.name }}</p>
+  <p><strong>{{ _("Date:") }}</strong> {{ sale.sale_date.strftime("%Y-%m-%d %H:%M") }}</p>
+  <p><strong>{{ _("Status:") }}</strong> <span class="badge bg-secondary">{{ sale_status_label(sale.status) }}</span></p>
+  <p><strong>{{ _("Invoice number:") }}</strong> {{ sale.invoice_number or "-" }}</p>
+  {% if sale.notes %}<p><strong>{{ _("Notes:") }}</strong> {{ sale.notes }}</p>{% endif %}
 
   <table class="table mt-3">
-    <thead><tr><th>Product</th><th>Qty</th><th>Unit price</th><th>Subtotal</th></tr></thead>
+    <thead><tr><th>{{ _("Product") }}</th><th>{{ _("Qty") }}</th><th>{{ _("Unit price") }}</th><th>{{ _("Subtotal") }}</th></tr></thead>
     <tbody>
       {% for item in sale.items %}
       <tr>
@@ -22,13 +22,13 @@
       {% endfor %}
     </tbody>
     <tfoot>
-      <tr><th colspan="3" class="text-end">Subtotal</th><th>${{ "%.2f"|format(sale.subtotal_amount) }}</th></tr>
+      <tr><th colspan="3" class="text-end">{{ _("Subtotal") }}</th><th>${{ "%.2f"|format(sale.subtotal_amount) }}</th></tr>
       {% if sale.tax_applied %}
-      <tr><th colspan="3" class="text-end">IVA ({{ sale.tax_rate_applied }}%)</th><th>${{ "%.2f"|format(sale.tax_amount) }}</th></tr>
+      <tr><th colspan="3" class="text-end">{{ _("IVA (%(rate)s%%)", rate=sale.tax_rate_applied) }}</th><th>${{ "%.2f"|format(sale.tax_amount) }}</th></tr>
       {% endif %}
-      <tr><th colspan="3" class="text-end">Total</th><th>${{ "%.2f"|format(sale.total_amount) }}</th></tr>
+      <tr><th colspan="3" class="text-end">{{ _("Total") }}</th><th>${{ "%.2f"|format(sale.total_amount) }}</th></tr>
     </tfoot>
   </table>
 </div>
-<a class="btn btn-outline-secondary mt-3" href="{{ url_for('sales.index') }}">Back to sales</a>
+<a class="btn btn-outline-secondary mt-3" href="{{ url_for('sales.index') }}">{{ _("Back to sales") }}</a>
 {% endblock %}

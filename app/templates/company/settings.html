@@ -1,11 +1,11 @@
 {% extends "base.html" %}
 {% from 'bootstrap5/form.html' import render_form %}
-{% block title %}Company settings{% endblock %}
+{% block title %}{{ _("Company settings") }}{% endblock %}
 {% block content %}
 <div class="row justify-content-center">
   <div class="col-md-6">
     <div class="card p-4">
-      <h1 class="h4 mb-3">Company settings</h1>
+      <h1 class="h4 mb-3">{{ _("Company settings") }}</h1>
       {{ render_form(form) }}
     </div>
   </div>

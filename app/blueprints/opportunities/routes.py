@@ -1,4 +1,5 @@
 from flask import flash, redirect, render_template, request, url_for
+from flask_babel import gettext as _
 from flask_login import login_required
 
 from app.blueprints.opportunities import bp
@@ -43,7 +44,7 @@ def new_opportunity():
             source=form.source.data,
             notes=form.notes.data,
         )
-        flash("Opportunity created.", "success")
+        flash(_("Opportunity created."), "success")
         return redirect(url_for("opportunities.index"))
 
     return render_template("opportunities/opportunity_form.html", form=form)
@@ -57,7 +58,7 @@ def update_stage(opportunity_id):
     if form.validate_on_submit():
         try:
             OpportunityService().update_stage(opportunity_id, form.stage.data)
-            flash("Stage updated.", "success")
+            flash(_("Stage updated."), "success")
         except MiniErpError as exc:
             flash(str(exc), "danger")
     return redirect(url_for("opportunities.index"))
@@ -69,7 +70,7 @@ def update_stage(opportunity_id):
 def convert(opportunity_id):
     try:
         sale = OpportunityService().convert_to_sale(opportunity_id)
-        flash(f"Converted to Sale #{sale.id}.", "success")
+        flash(_("Converted to Sale #%(id)s.", id=sale.id), "success")
         return redirect(url_for("sales.detail", sale_id=sale.id))
     except MiniErpError as exc:
         flash(str(exc), "danger")

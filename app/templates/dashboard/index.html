@@ -1,48 +1,48 @@
 {% extends "base.html" %}
-{% block title %}Dashboard{% endblock %}
+{% block title %}{{ _("Dashboard") }}{% endblock %}
 {% block content %}
-<h1 class="h3 mb-4">Dashboard</h1>
+<h1 class="h3 mb-4">{{ _("Dashboard") }}</h1>
 
 <div class="row g-3 mb-4">
   <div class="col-sm-6 col-lg-3">
     <div class="card stat-card p-3">
-      <div class="text-muted small">Active products</div>
+      <div class="text-muted small">{{ _("Active products") }}</div>
       <div class="stat-value">{{ stats.active_products }}</div>
     </div>
   </div>
   <div class="col-sm-6 col-lg-3">
     <div class="card stat-card stat-warning p-3">
-      <div class="text-muted small">Low stock alerts</div>
+      <div class="text-muted small">{{ _("Low stock alerts") }}</div>
       <div class="stat-value">{{ stats.low_stock_count }}</div>
     </div>
   </div>
   <div class="col-sm-6 col-lg-3">
     <div class="card stat-card p-3">
-      <div class="text-muted small">Open opportunities</div>
+      <div class="text-muted small">{{ _("Open opportunities") }}</div>
       <div class="stat-value">{{ stats.open_opportunities }}</div>
     </div>
   </div>
   <div class="col-sm-6 col-lg-3">
     <div class="card stat-card p-3">
-      <div class="text-muted small">Revenue this month</div>
+      <div class="text-muted small">{{ _("Revenue this month") }}</div>
       <div class="stat-value">${{ "%.2f"|format(stats.revenue_this_month) }}</div>
     </div>
   </div>
   <div class="col-sm-6 col-lg-3">
     <div class="card stat-card p-3">
-      <div class="text-muted small">Invoices ({{ selected_year }})</div>
+      <div class="text-muted small">{{ _("Invoices (%(year)s)", year=selected_year) }}</div>
       <div class="stat-value">{{ stats.invoice_count }}</div>
     </div>
   </div>
   <div class="col-sm-6 col-lg-3">
     <div class="card stat-card p-3">
-      <div class="text-muted small">Average total per sale</div>
+      <div class="text-muted small">{{ _("Average total per sale") }}</div>
       <div class="stat-value">${{ "%.2f"|format(stats.average_sale_total) }}</div>
     </div>
   </div>
   <div class="col-sm-6 col-lg-3">
     <div class="card stat-card p-3">
-      <div class="text-muted small">Total sold in {{ selected_year }}</div>
+      <div class="text-muted small">{{ _("Total sold in %(year)s", year=selected_year) }}</div>
       <div class="stat-value">${{ "%.2f"|format(stats.total_sold_year) }}</div>
     </div>
   </div>
@@ -51,7 +51,7 @@
 <div class="card p-3 mb-4">
   <form method="get" class="row g-2 align-items-end">
     <div class="col-auto">
-      <label class="form-label small text-muted mb-0" for="year">Year</label>
+      <label class="form-label small text-muted mb-0" for="year">{{ _("Year") }}</label>
       <select class="form-select" id="year" name="year" onchange="this.form.submit()">
         {% for y in available_years %}
         <option value="{{ y }}" {{ "selected" if y == selected_year else "" }}>{{ y }}</option>
@@ -59,9 +59,9 @@
       </select>
     </div>
     <div class="col-auto">
-      <label class="form-label small text-muted mb-0" for="month">Month (product chart)</label>
+      <label class="form-label small text-muted mb-0" for="month">{{ _("Month (product chart)") }}</label>
       <select class="form-select" id="month" name="month" onchange="this.form.submit()">
-        <option value="">All months</option>
+        <option value="">{{ _("All months") }}</option>
         {% for name in month_names %}
         <option value="{{ loop.index }}" {{ "selected" if loop.index == selected_month else "" }}>{{ name }}</option>
         {% endfor %}
@@ -73,19 +73,19 @@
 <div class="row g-4 mb-4">
   <div class="col-lg-4">
     <div class="card p-3">
-      <h2 class="h5">Sales share per product</h2>
+      <h2 class="h5">{{ _("Sales share per product") }}</h2>
       <canvas id="productSalesChart" height="220"></canvas>
     </div>
   </div>
   <div class="col-lg-4">
     <div class="card p-3">
-      <h2 class="h5">Sales per month ({{ selected_year }})</h2>
+      <h2 class="h5">{{ _("Sales per month (%(year)s)", year=selected_year) }}</h2>
       <canvas id="salesPerMonthChart" height="220"></canvas>
     </div>
   </div>
   <div class="col-lg-4">
     <div class="card p-3">
-      <h2 class="h5">Bottles sold per month ({{ selected_year }})</h2>
+      <h2 class="h5">{{ _("Bottles sold per month (%(year)s)", year=selected_year) }}</h2>
       <canvas id="bottlesPerMonthChart" height="220"></canvas>
     </div>
   </div>
@@ -94,10 +94,10 @@
 <div class="row g-4">
   <div class="col-lg-6">
     <div class="card p-3">
-      <h2 class="h5">Low stock</h2>
+      <h2 class="h5">{{ _("Low stock") }}</h2>
       {% if low_stock_items %}
       <table class="table table-sm mb-0">
-        <thead><tr><th>Product</th><th>On hand</th><th>Reorder level</th></tr></thead>
+        <thead><tr><th>{{ _("Product") }}</th><th>{{ _("On hand") }}</th><th>{{ _("Reorder level") }}</th></tr></thead>
         <tbody>
         {% for item in low_stock_items %}
           <tr>
@@ -109,16 +109,16 @@
         </tbody>
       </table>
       {% else %}
-      <p class="text-muted mb-0">Everything is well stocked.</p>
+      <p class="text-muted mb-0">{{ _("Everything is well stocked.") }}</p>
       {% endif %}
     </div>
   </div>
   <div class="col-lg-6">
     <div class="card p-3">
-      <h2 class="h5">Open opportunities</h2>
+      <h2 class="h5">{{ _("Open opportunities") }}</h2>
       {% if recent_opportunities %}
       <table class="table table-sm mb-0">
-        <thead><tr><th>Customer</th><th>Product</th><th>Stage</th></tr></thead>
+        <thead><tr><th>{{ _("Customer") }}</th><th>{{ _("Product") }}</th><th>{{ _("Stage") }}</th></tr></thead>
         <tbody>
         {% for opp in recent_opportunities %}
           <tr>
@@ -130,7 +130,7 @@
         </tbody>
       </table>
       {% else %}
-      <p class="text-muted mb-0">No open requests right now.</p>
+      <p class="text-muted mb-0">{{ _("No open requests right now.") }}</p>
       {% endif %}
     </div>
   </div>
@@ -170,7 +170,7 @@ new Chart(document.getElementById("salesPerMonthChart"), {
   type: "bar",
   data: {
     labels: monthLabels,
-    datasets: [{ label: "Sales", data: {{ charts.monthly_counts | tojson }}, backgroundColor: "#2f6b4f" }],
+    datasets: [{ label: {{ _("Sales")|tojson }}, data: {{ charts.monthly_counts | tojson }}, backgroundColor: "#2f6b4f" }],
   },
   options: { scales: { y: { beginAtZero: true, ticks: { precision: 0 } } } },
 });
@@ -179,7 +179,7 @@ new Chart(document.getElementById("bottlesPerMonthChart"), {
   type: "bar",
   data: {
     labels: monthLabels,
-    datasets: [{ label: "Bottles", data: {{ charts.monthly_bottles | tojson }}, backgroundColor: "#d9a441" }],
+    datasets: [{ label: {{ _("Bottles")|tojson }}, data: {{ charts.monthly_bottles | tojson }}, backgroundColor: "#d9a441" }],
   },
   options: { scales: { y: { beginAtZero: true, ticks: { precision: 0 } } } },
 });

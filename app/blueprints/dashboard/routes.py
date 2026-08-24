@@ -1,6 +1,7 @@
 from datetime import datetime, timezone
 
 from flask import render_template, request
+from flask_babel import gettext as _
 from flask_login import login_required
 
 from app.blueprints.dashboard import bp
@@ -10,10 +11,12 @@ from app.services.inventory_service import InventoryService
 from app.services.opportunity_service import OpportunityService
 from app.services.sales_service import SalesService
 
-MONTH_NAMES = [
-    "Jan", "Feb", "Mar", "Apr", "May", "Jun",
-    "Jul", "Aug", "Sep", "Oct", "Nov", "Dec",
-]
+
+def _month_names() -> list[str]:
+    return [
+        _("Jan"), _("Feb"), _("Mar"), _("Apr"), _("May"), _("Jun"),
+        _("Jul"), _("Aug"), _("Sep"), _("Oct"), _("Nov"), _("Dec"),
+    ]
 
 
 @bp.route("/")
@@ -69,5 +72,5 @@ def index():
         available_years=available_years,
         selected_year=selected_year,
         selected_month=selected_month,
-        month_names=MONTH_NAMES,
+        month_names=_month_names(),
     )

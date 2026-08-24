@@ -12,6 +12,8 @@ class Config:
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     ADMIN_USERNAME = os.environ.get("ADMIN_USERNAME", "admin")
     ADMIN_PASSWORD = os.environ.get("ADMIN_PASSWORD", "kombucha123")
+    BABEL_DEFAULT_LOCALE = "es"
+    BABEL_TRANSLATION_DIRECTORIES = str(BASE_DIR / "app" / "translations")
 
 
 class TestConfig(Config):
