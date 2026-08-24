@@ -28,6 +28,7 @@ def new_product():
         product = Product(
             flavor_id=form.flavor_id.data,
             name=form.name.data,
+            short_name=form.short_name.data or None,
             sku=form.sku.data,
             size_ml=form.size_ml.data,
             unit_price=form.unit_price.data,
@@ -65,6 +66,7 @@ def edit_product(product_id):
     if form.validate_on_submit():
         product.flavor_id = form.flavor_id.data
         product.name = form.name.data
+        product.short_name = form.short_name.data or None
         product.sku = form.sku.data
         product.size_ml = form.size_ml.data
         product.unit_price = form.unit_price.data

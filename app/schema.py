@@ -4,6 +4,20 @@ from app.extensions import db
 from app.models.user import User
 
 
+def ensure_product_short_name_column() -> None:
+    """Backfill `products.short_name` for databases created before it existed.
+
+    db.create_all() only creates missing tables, not missing columns on
+    tables that already exist, so pre-existing databases need this to pick
+    up the short_name column.
+    """
+    inspector = inspect(db.engine)
+    columns = {column["name"] for column in inspector.get_columns("products")}
+    if "short_name" not in columns:
+        db.session.execute(text("ALTER TABLE products ADD COLUMN short_name VARCHAR(3)"))
+        db.session.commit()
+
+
 def ensure_user_role_column() -> None:
     """Backfill `users.role` for databases created before roles existed.
 

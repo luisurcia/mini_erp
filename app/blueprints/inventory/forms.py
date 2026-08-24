@@ -8,12 +8,15 @@ from wtforms import (
     SubmitField,
     TextAreaField,
 )
-from wtforms.validators import DataRequired, NumberRange, Optional
+from wtforms.validators import DataRequired, Length, NumberRange, Optional
 
 
 class ProductForm(FlaskForm):
     flavor_id = SelectField("Flavor", coerce=int, validators=[DataRequired()])
     name = StringField("Product name", validators=[DataRequired()])
+    short_name = StringField(
+        "Short name", validators=[Optional(), Length(max=3)]
+    )
     sku = StringField("SKU", validators=[DataRequired()])
     size_ml = IntegerField("Size (ml)", default=355, validators=[DataRequired(), NumberRange(min=1)])
     unit_price = DecimalField("Unit price", places=2, validators=[DataRequired(), NumberRange(min=0)])
