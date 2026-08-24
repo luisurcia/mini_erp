@@ -97,6 +97,7 @@ def _user_role_label(role: str) -> str:
 def _register_blueprints(app: Flask) -> None:
     from app.blueprints.auth import bp as auth_bp
     from app.blueprints.company import bp as company_bp
+    from app.blueprints.customers import bp as customers_bp
     from app.blueprints.dashboard import bp as dashboard_bp
     from app.blueprints.inventory import bp as inventory_bp
     from app.blueprints.opportunities import bp as opportunities_bp
@@ -108,5 +109,6 @@ def _register_blueprints(app: Flask) -> None:
     app.register_blueprint(inventory_bp, url_prefix="/inventory")
     app.register_blueprint(sales_bp, url_prefix="/sales")
     app.register_blueprint(opportunities_bp, url_prefix="/opportunities")
+    app.register_blueprint(customers_bp, url_prefix="/customers")
     app.register_blueprint(users_bp, url_prefix="/users")
     app.register_blueprint(company_bp, url_prefix="/company")

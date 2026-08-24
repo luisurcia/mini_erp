@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block title %}{{ _("Customers") }}{% endblock %}
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-3">
+  <h1 class="h3 mb-0">{{ _("Customers") }}</h1>
+  {% if current_user.can_edit %}
+  <a class="btn btn-primary" href="{{ url_for('customers.new_customer') }}">+ {{ _("New customer") }}</a>
+  {% endif %}
+</div>
+
+<div class="card p-3">
+  <table class="table align-middle mb-0">
+    <thead>
+      <tr>
+        <th>{{ _("Name") }}</th>
+        <th>{{ _("Email") }}</th>
+        <th>{{ _("Phone") }}</th>
+        <th>{{ _("Instagram handle") }}</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for customer in customers %}
+      <tr>
+        <td>{{ customer.name }}</td>
+        <td>{{ customer.email or "-" }}</td>
+        <td>{{ customer.phone or "-" }}</td>
+        <td>{{ customer.instagram_handle or "-" }}</td>
+        <td class="text-end">
+          {% if current_user.can_edit %}
+          <a class="btn btn-sm btn-outline-secondary" href="{{ url_for('customers.edit_customer', customer_id=customer.id) }}">{{ _("Edit") }}</a>
+          {% endif %}
+        </td>
+      </tr>
+      {% else %}
+      <tr><td colspan="5" class="text-muted text-center py-4">{{ _("No customers yet.") }}</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}
