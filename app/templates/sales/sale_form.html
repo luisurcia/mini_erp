@@ -22,7 +22,7 @@
           <td>
             <select name="product_id[]" class="form-select">
               {% for product in products %}
-              <option value="{{ product.id }}">{{ product.display_name }} (${{ "%.2f"|format(product.unit_price) }})</option>
+              <option value="{{ product.id }}">{{ product.flavor.name }} - {{ product.name }}{% if settings.product_size_enabled %} ({{ product.size_ml }}ml){% endif %} (${{ "%.2f"|format(product.unit_price) }})</option>
               {% endfor %}
             </select>
           </td>
@@ -41,7 +41,7 @@
     <td>
       <select name="product_id[]" class="form-select">
         {% for product in products %}
-        <option value="{{ product.id }}">{{ product.display_name }} (${{ "%.2f"|format(product.unit_price) }})</option>
+        <option value="{{ product.id }}">{{ product.flavor.name }} - {{ product.name }}{% if settings.product_size_enabled %} ({{ product.size_ml }}ml){% endif %} (${{ "%.2f"|format(product.unit_price) }})</option>
         {% endfor %}
       </select>
     </td>
