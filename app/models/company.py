@@ -17,6 +17,13 @@ class Company(BaseModel):
     tax_enabled_default = db.Column(db.Boolean, nullable=False, default=True)
     language = db.Column(db.String(5), nullable=False, default=LANGUAGE_ES)
 
+    # Per-field visibility on the "new/edit product" form. Unit price is
+    # never toggleable: Sales reads it directly off the product, so a
+    # product without one can't be sold.
+    product_short_name_enabled = db.Column(db.Boolean, nullable=False, default=True)
+    product_size_enabled = db.Column(db.Boolean, nullable=False, default=True)
+    product_sku_enabled = db.Column(db.Boolean, nullable=False, default=True)
+
     @classmethod
     def get_settings(cls) -> "Company":
         settings = cls.query.first()

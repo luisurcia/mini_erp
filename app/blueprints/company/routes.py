@@ -19,6 +19,9 @@ def settings():
     if form.validate_on_submit():
         company.tax_rate = form.tax_rate.data
         company.tax_enabled_default = form.tax_enabled_default.data
+        company.product_short_name_enabled = form.product_short_name_enabled.data
+        company.product_size_enabled = form.product_size_enabled.data
+        company.product_sku_enabled = form.product_sku_enabled.data
         company.language = form.language.data
         db.session.commit()
         flash(_("Company settings updated."), "success")

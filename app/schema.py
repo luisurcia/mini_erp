@@ -70,6 +70,27 @@ def ensure_company_language_column() -> None:
         db.session.commit()
 
 
+def ensure_company_product_field_toggles() -> None:
+    """Backfill the product-form visibility toggles for databases created
+    before per-field simplification existed.
+
+    Defaults to 1 (shown) for every toggle, so upgrading an existing
+    database doesn't silently hide fields that were always there.
+    """
+    inspector = inspect(db.engine)
+    columns = {column["name"] for column in inspector.get_columns("company_settings")}
+    for name in (
+        "product_short_name_enabled",
+        "product_size_enabled",
+        "product_sku_enabled",
+    ):
+        if name not in columns:
+            db.session.execute(
+                text(f"ALTER TABLE company_settings ADD COLUMN {name} BOOLEAN NOT NULL DEFAULT 1")
+            )
+    db.session.commit()
+
+
 def ensure_user_role_column() -> None:
     """Backfill `users.role` for databases created before roles existed.
 
