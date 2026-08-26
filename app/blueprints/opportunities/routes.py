@@ -4,6 +4,7 @@ from flask_login import login_required
 
 from app.blueprints.opportunities import bp
 from app.blueprints.opportunities.forms import OpportunityForm, StageForm
+from app.display import product_label
 from app.exceptions import MiniErpError
 from app.models.opportunity import Opportunity
 from app.permissions import editor_required
@@ -82,4 +83,4 @@ def _customer_choices():
 
 
 def _product_choices():
-    return [(p.id, p.display_name) for p in ProductRepository().get_active()]
+    return [(p.id, product_label(p)) for p in ProductRepository().get_active()]

@@ -25,7 +25,7 @@
       {% for opp in opportunities %}
       <tr>
         <td>{{ opp.customer.name }}</td>
-        <td>{{ opp.product.display_name if opp.product else "-" }}</td>
+        <td>{{ product_label(opp.product) if opp.product else "-" }}</td>
         <td>{{ opp.quantity_requested }}</td>
         <td>{{ opportunity_source_label(opp.source) }}</td>
         <td><span class="badge badge-stage-{{ opp.stage }}">{{ opportunity_stage_label(opp.stage) }}</span></td>

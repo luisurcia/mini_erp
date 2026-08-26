@@ -34,7 +34,6 @@ def new_sale():
     if not form.is_submitted():
         form.include_tax.data = Company.get_settings().tax_enabled_default
     products = ProductRepository().get_active()
-    settings = Company.get_settings()
 
     if form.validate_on_submit():
         items = _parse_line_items()
@@ -55,9 +54,7 @@ def new_sale():
             except MiniErpError as exc:
                 flash(str(exc), "danger")
 
-    return render_template(
-        "sales/sale_form.html", form=form, products=products, settings=settings
-    )
+    return render_template("sales/sale_form.html", form=form, products=products)
 
 
 @bp.route("/<int:sale_id>")

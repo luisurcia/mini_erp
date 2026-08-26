@@ -2,6 +2,7 @@ from collections import defaultdict
 from datetime import datetime, timezone
 from decimal import Decimal
 
+from app.display import product_label
 from app.exceptions import NotFoundError
 from app.models.company import Company
 from app.models.inventory import StockMovement
@@ -84,10 +85,11 @@ class SalesService:
 
     def sales_by_product(self, sales: list[Sale]) -> list[dict]:
         """Revenue and share of total per product, across the given sales."""
+        settings = Company.get_settings()
         totals: dict[str, Decimal] = defaultdict(lambda: Decimal("0"))
         for sale in sales:
             for item in sale.items:
-                totals[item.product.display_name] += item.subtotal
+                totals[product_label(item.product, settings)] += item.subtotal
 
         grand_total = sum(totals.values(), start=Decimal("0"))
         return [
