@@ -22,6 +22,12 @@ repositories → services → routes), SQLAlchemy, and Bootstrap 5.
   including user management), **editor** (create/update records), and
   **viewer** (read-only). Enforced both in routes (403 on violation) and
   in the UI (write controls hidden for viewers).
+- **Company settings** — tax rate/default and interface language for the
+  whole install, plus per-field toggles to simplify the New Product form
+  (Short Name, Size, SKU can each be turned off — Unit Price always
+  stays required). Whichever fields are hidden also disappear from every
+  product picker/grid/chart across the app (Inventory, Sales,
+  Opportunities, Dashboard), not just the form.
 
 ## Setup
 
@@ -59,8 +65,13 @@ Visit http://127.0.0.1:5000 and log in with the admin credentials from
 ## Tests
 
 ```bash
+pip install -r requirements-dev.txt   # adds pytest-cov, ruff on top of requirements.txt
 pytest
+ruff check .
 ```
+
+Both run in CI (`.github/workflows/ci.yml`) on every push/PR — see
+CI/CD below.
 
 ## Deployment
 
@@ -92,6 +103,10 @@ with:
 ```bash
 ssh -i ~/.ssh/garageerp_deploy -p 21098 titoeyzy@198.54.116.189
 ```
+
+This is for **manual/human** access only. CI/CD (below) authenticates
+with its own separate `kombuchaerp_deploy` key, scoped to this repo —
+see CI/CD for that one.
 
 ### Deploying a new release
 
@@ -150,18 +165,16 @@ so a broken deploy never shows green.
 `200`, or `503` if the DB check fails. No auth required — it's meant to
 be curled by CI/uptime checks, not browsed.
 
-**One-time setup needed before this pipeline can actually deploy**
-(not done yet — the workflow exists but has nothing to authenticate
-with):
+**One-time setup, done 2026-08-26** (documented for reference — same
+idea as "First-time setup" below, just for CI instead of the app
+itself):
 
-1. Generate a deploy key dedicated to this repo (don't reuse
-   `garageerp_deploy` here, per #13):
-   ```bash
-   ssh-keygen -t ed25519 -f kombuchaerp_deploy -C "kombuchaerp-ci"
-   ```
-2. Import the **public** half into cPanel → *Security → SSH Access →
-   Manage SSH Keys → Import Key*, then authorize it.
-3. Add the **private** half and connection details as repo secrets
+1. Generated a deploy key dedicated to this repo, separate from the
+   shared `garageerp_deploy` one used for manual access (per #13):
+   `ssh-keygen -t ed25519 -f kombuchaerp_deploy -C "kombuchaerp-ci"`.
+2. Imported the **public** half into cPanel → *Security → SSH Access →
+   Manage SSH Keys → Import Key*, and authorized it.
+3. Added the **private** half and connection details as repo secrets
    (`Settings → Secrets and variables → Actions`):
 
    | Secret | Value |
@@ -171,10 +184,16 @@ with):
    | `SSH_PRIVATE_KEY` | Private half of `kombuchaerp_deploy` from step 1 |
 
 4. The `deploy` job targets a GitHub **Environment** named `production`
-   (`github.com/luisurcia/mini_erp/settings/environments`) — create it
-   if it doesn't exist yet. That's also where to add protection rules
-   (e.g. required reviewer before deploying) if wanted; none are set by
-   default.
+   (`github.com/luisurcia/mini_erp/settings/environments`) — it was
+   auto-created (no protection rules) the first time the workflow
+   referenced it; add rules there (e.g. required reviewer before
+   deploying) if ever wanted.
+
+Verified end-to-end the same day: pushed #13's commit, `test` passed,
+`deploy` connected with the new key, ran the backup/pull/restart
+sequence, and the post-restart `/kombuchaerp/health` check passed —
+confirmed independently with a direct `curl` against production
+afterward too.
 
 ### First-time setup (already done — documented for reference)
 
