@@ -1,4 +1,4 @@
-from datetime import datetime, timedelta, timezone
+from datetime import UTC, datetime, timedelta
 
 from flask import Flask
 
@@ -131,7 +131,7 @@ def _seed_opportunities(customers: dict[str, Customer], products: dict[str, Prod
 
 def _seed_sales(customers: dict[str, Customer], products: dict[str, Product]) -> None:
     sales_service = SalesService()
-    now = datetime.now(timezone.utc)
+    now = datetime.now(UTC)
 
     sales_service.record_sale(
         customer_id=customers["green_leaf"].id,

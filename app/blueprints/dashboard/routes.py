@@ -1,4 +1,4 @@
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 
 from flask import render_template, request
 from flask_babel import gettext as _
@@ -28,7 +28,7 @@ def index():
     opportunity_service = OpportunityService()
     sales_service = SalesService()
 
-    now = datetime.now(timezone.utc)
+    now = datetime.now(UTC)
     month_start = now.replace(day=1, hour=0, minute=0, second=0, microsecond=0)
     sales_this_month = sales_repo.completed_between(month_start, now)
 

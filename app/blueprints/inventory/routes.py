@@ -67,10 +67,11 @@ def new_product():
             if settings.product_sku_enabled
             else _generate_sku(form.name.data, size_ml)
         )
+        short_name = form.short_name.data or None if settings.product_short_name_enabled else None
         product = Product(
             flavor_id=form.flavor_id.data,
             name=form.name.data,
-            short_name=(form.short_name.data or None) if settings.product_short_name_enabled else None,
+            short_name=short_name,
             sku=sku,
             size_ml=size_ml,
             unit_price=form.unit_price.data,

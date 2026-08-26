@@ -25,6 +25,19 @@ def create_app(config_class: type = Config) -> Flask:
     def forbidden(_error):
         return render_template("errors/403.html"), 403
 
+    @app.get("/health")
+    def health_check():
+        """Unauthenticated liveness check — CI curls this after a deploy
+        restart to confirm the app actually came back up before going green."""
+        try:
+            db.session.execute(db.text("SELECT 1"))
+            db_status = "ok"
+        except Exception:
+            app.logger.critical("health_check_db_failure", exc_info=True)
+            db_status = "error"
+        status_code = 200 if db_status == "ok" else 503
+        return {"status": db_status, "database": db_status}, status_code
+
     @app.context_processor
     def inject_locale():
         return {"current_locale": str(get_locale())}

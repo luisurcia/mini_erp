@@ -39,7 +39,7 @@ def test_update_user_password_only_changes_when_provided(app):
 
 def test_delete_user_removes_it(app):
     service = UserService()
-    admin = service.create_user("admin1", "password123", User.ROLE_ADMIN)
+    service.create_user("admin1", "password123", User.ROLE_ADMIN)
     victim = service.create_user("victim", "password123", User.ROLE_VIEWER)
     service.delete_user(victim)
     assert User.query.filter_by(username="victim").first() is None

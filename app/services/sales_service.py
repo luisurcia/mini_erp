@@ -1,5 +1,5 @@
 from collections import defaultdict
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from decimal import Decimal
 
 from app.display import product_label
@@ -41,7 +41,7 @@ class SalesService:
         sale = Sale(
             customer_id=customer_id,
             status=status,
-            sale_date=sale_date or datetime.now(timezone.utc),
+            sale_date=sale_date or datetime.now(UTC),
             notes=notes,
             invoice_number=invoice_number,
             tax_applied=include_tax,

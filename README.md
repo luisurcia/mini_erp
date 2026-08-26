@@ -95,7 +95,11 @@ ssh -i ~/.ssh/garageerp_deploy -p 21098 titoeyzy@198.54.116.189
 
 ### Deploying a new release
 
-Once a release PR is merged to `main` on GitHub:
+Pushing to `main` triggers `.github/workflows/ci.yml`, which runs lint +
+tests and — if they pass — deploys automatically (see **CI/CD** below).
+The steps below are what that pipeline runs on the server; keep them
+around for a one-off manual deploy (e.g. CI is down, or you're deploying
+something that isn't in `main` yet).
 
 ```bash
 ssh -i ~/.ssh/garageerp_deploy -p 21098 titoeyzy@198.54.116.189
@@ -131,9 +135,46 @@ curl -s -o /dev/null -w '%{http_code}\n' https://titourcia.com/kombuchaerp/auth/
 tail -30 ~/kombuchaerp/stderr.log
 ```
 
-There is no CI/CD pipeline for this repo yet (unlike `garageerp`, which
-auto-deploys on push to `main` via GitHub Actions) — deploys are manual
-for now.
+### CI/CD
+
+`.github/workflows/ci.yml` runs a `test` job on every push/PR (`ruff
+check .`, then `pytest`), and a `deploy` job only on push to `main` and
+only if `test` passed. `deploy` runs the same steps as the manual
+process above over SSH — backup, `git pull --ff-only`, install
+dependencies, `flask init-db`, `cloudlinux-selector restart` — and
+**fails the pipeline if `GET /health` doesn't respond `200` afterward**,
+so a broken deploy never shows green.
+
+`/health` (added for this) checks the app can reach the database
+(`SELECT 1`) and returns `{"status": "ok", "database": "ok"}` with a
+`200`, or `503` if the DB check fails. No auth required — it's meant to
+be curled by CI/uptime checks, not browsed.
+
+**One-time setup needed before this pipeline can actually deploy**
+(not done yet — the workflow exists but has nothing to authenticate
+with):
+
+1. Generate a deploy key dedicated to this repo (don't reuse
+   `garageerp_deploy` here, per #13):
+   ```bash
+   ssh-keygen -t ed25519 -f kombuchaerp_deploy -C "kombuchaerp-ci"
+   ```
+2. Import the **public** half into cPanel → *Security → SSH Access →
+   Manage SSH Keys → Import Key*, then authorize it.
+3. Add the **private** half and connection details as repo secrets
+   (`Settings → Secrets and variables → Actions`):
+
+   | Secret | Value |
+   |---|---|
+   | `SSH_HOST` | `198.54.116.189` |
+   | `SSH_USER` | `titoeyzy` |
+   | `SSH_PRIVATE_KEY` | Private half of `kombuchaerp_deploy` from step 1 |
+
+4. The `deploy` job targets a GitHub **Environment** named `production`
+   (`github.com/luisurcia/mini_erp/settings/environments`) — create it
+   if it doesn't exist yet. That's also where to add protection rules
+   (e.g. required reviewer before deploying) if wanted; none are set by
+   default.
 
 ### First-time setup (already done — documented for reference)
 

@@ -75,7 +75,7 @@ def _parse_line_items() -> list[dict]:
     product_ids = request.form.getlist("product_id[]")
     quantities = request.form.getlist("quantity[]")
     items = []
-    for product_id, quantity in zip(product_ids, quantities):
+    for product_id, quantity in zip(product_ids, quantities, strict=False):
         if not product_id or not quantity:
             continue
         qty = int(quantity)

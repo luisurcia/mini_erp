@@ -38,4 +38,7 @@ class StockMovement(BaseModel):
     product = db.relationship("Product")
 
     def __repr__(self) -> str:
-        return f"<StockMovement product_id={self.product_id} change={self.change_qty} ({self.reason})>"
+        return (
+            f"<StockMovement product_id={self.product_id} "
+            f"change={self.change_qty} ({self.reason})>"
+        )

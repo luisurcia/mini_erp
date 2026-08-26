@@ -65,7 +65,10 @@ def ensure_company_language_column() -> None:
     columns = {column["name"] for column in inspector.get_columns("company_settings")}
     if "language" not in columns:
         db.session.execute(
-            text("ALTER TABLE company_settings ADD COLUMN language VARCHAR(5) NOT NULL DEFAULT 'es'")
+            text(
+                "ALTER TABLE company_settings ADD COLUMN language "
+                "VARCHAR(5) NOT NULL DEFAULT 'es'"
+            )
         )
         db.session.commit()
 

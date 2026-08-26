@@ -1,6 +1,7 @@
-import pytest
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from decimal import Decimal
+
+import pytest
 
 from app.exceptions import InsufficientStockError
 from app.extensions import db
@@ -20,7 +21,6 @@ def test_record_sale_creates_sale_and_consumes_stock(app, customer, product):
     assert sale.total_amount == Decimal("13.50")
     assert len(sale.items) == 1
 
-    remaining = InventoryService().low_stock_report()
     item = InventoryService().inventory_repo.get_by_product(product.id)
     assert item.quantity_on_hand == 47
 
@@ -91,12 +91,12 @@ def test_monthly_sales_counts_and_bottles_bucket_by_sale_month(app, customer, pr
     sale_jan = service.record_sale(
         customer_id=customer.id,
         items=[{"product_id": product.id, "quantity": 1}],
-        sale_date=datetime(2026, 1, 15, tzinfo=timezone.utc),
+        sale_date=datetime(2026, 1, 15, tzinfo=UTC),
     )
     sale_mar = service.record_sale(
         customer_id=customer.id,
         items=[{"product_id": product.id, "quantity": 4}],
-        sale_date=datetime(2026, 3, 5, tzinfo=timezone.utc),
+        sale_date=datetime(2026, 3, 5, tzinfo=UTC),
     )
 
     counts = service.monthly_sales_counts([sale_jan, sale_mar])

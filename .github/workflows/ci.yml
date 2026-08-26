@@ -1,0 +1,93 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: "pip"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements-dev.txt
+
+      - name: Lint with ruff
+        run: ruff check .
+
+      - name: Run tests with pytest
+        run: pytest --cov=app --cov-report=term-missing
+
+  deploy:
+    name: Deploy to production
+    needs: test
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    environment: production
+    steps:
+      - name: Set up SSH key
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+          SSH_HOST: ${{ secrets.SSH_HOST }}
+        run: |
+          mkdir -p ~/.ssh
+          chmod 700 ~/.ssh
+          printf '%s\n' "$SSH_PRIVATE_KEY" > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+          ssh-keyscan -p 21098 -H "$SSH_HOST" >> ~/.ssh/known_hosts 2>/dev/null
+
+      # Production: cPanel shared hosting (server120.web-hosting.com), no
+      # root/sudo/systemctl — the app runs as a cPanel "Python App"
+      # (CloudLinux Python Selector, on top of Passenger) in
+      # ~/kombuchaerp, not a VPS. "Restarting" means
+      # `cloudlinux-selector restart`. There's no Flask-Migrate here
+      # either (unlike garageerp) — schema upgrades go through this
+      # repo's own `flask init-db`, which only ever adds missing
+      # tables/columns, never touches existing data. See README.md ->
+      # Deployment for the manual version of these same steps.
+      - name: Deploy over SSH (backup, pull, dependencies, schema, restart)
+        env:
+          SSH_HOST: ${{ secrets.SSH_HOST }}
+          SSH_USER: ${{ secrets.SSH_USER }}
+        run: |
+          ssh -p 21098 -i ~/.ssh/deploy_key "$SSH_USER@$SSH_HOST" '
+            set -e
+            cd ~/kombuchaerp
+
+            ~/kombuchaerp/deploy/backup_sqlite.sh
+
+            git pull --ff-only origin main
+
+            cloudlinux-selector install-modules --json --interpreter python \
+              --user "$(whoami)" --app-root "$HOME/kombuchaerp" \
+              --requirements-file requirements.txt
+
+            source ~/virtualenv/kombuchaerp/3.12/bin/activate
+            export FLASK_APP=wsgi.py
+            flask init-db
+
+            cloudlinux-selector restart --json --interpreter python \
+              --user "$(whoami)" --app-root "$HOME/kombuchaerp"
+          '
+
+      - name: Verify /kombuchaerp/health after restart
+        run: |
+          sleep 5
+          status=$(curl -s -o /dev/null -w "%{http_code}" https://titourcia.com/kombuchaerp/health)
+          echo "health check status: $status"
+          if [ "$status" != "200" ]; then
+            echo "Deploy restarted the service but /kombuchaerp/health did not return 200."
+            exit 1
+          fi
