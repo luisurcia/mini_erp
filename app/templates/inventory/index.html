@@ -26,7 +26,7 @@
     <tbody>
       {% for product in products %}
       <tr class="{{ 'table-low-stock' if product.inventory_item and product.inventory_item.is_low_stock else '' }}">
-        <td>{{ product.display_name }}</td>
+        <td>{{ product_label(product) }}</td>
         {% if settings.product_short_name_enabled %}<td>{{ product.short_name or "-" }}</td>{% endif %}
         {% if settings.product_sku_enabled %}<td>{{ product.sku }}</td>{% endif %}
         {% if settings.product_size_enabled %}<td>{{ product.size_ml }} ml</td>{% endif %}
