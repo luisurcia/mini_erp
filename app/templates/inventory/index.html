@@ -13,9 +13,9 @@
     <thead>
       <tr>
         <th>{{ _("Flavor / Product") }}</th>
-        <th>{{ _("Short name") }}</th>
-        <th>{{ _("SKU") }}</th>
-        <th>{{ _("Size") }}</th>
+        {% if settings.product_short_name_enabled %}<th>{{ _("Short name") }}</th>{% endif %}
+        {% if settings.product_sku_enabled %}<th>{{ _("SKU") }}</th>{% endif %}
+        {% if settings.product_size_enabled %}<th>{{ _("Size") }}</th>{% endif %}
         <th>{{ _("Price") }}</th>
         <th>{{ _("On hand") }}</th>
         <th>{{ _("Reorder level") }}</th>
@@ -27,9 +27,9 @@
       {% for product in products %}
       <tr class="{{ 'table-low-stock' if product.inventory_item and product.inventory_item.is_low_stock else '' }}">
         <td>{{ product.display_name }}</td>
-        <td>{{ product.short_name or "-" }}</td>
-        <td>{{ product.sku }}</td>
-        <td>{{ product.size_ml }} ml</td>
+        {% if settings.product_short_name_enabled %}<td>{{ product.short_name or "-" }}</td>{% endif %}
+        {% if settings.product_sku_enabled %}<td>{{ product.sku }}</td>{% endif %}
+        {% if settings.product_size_enabled %}<td>{{ product.size_ml }} ml</td>{% endif %}
         <td>${{ "%.2f"|format(product.unit_price) }}</td>
         <td>{{ product.inventory_item.quantity_on_hand if product.inventory_item else "-" }}</td>
         <td>{{ product.inventory_item.reorder_level if product.inventory_item else "-" }}</td>
@@ -51,7 +51,7 @@
         </td>
       </tr>
       {% else %}
-      <tr><td colspan="9" class="text-muted text-center py-4">{{ _("No products yet.") }}</td></tr>
+      <tr><td colspan="100%" class="text-muted text-center py-4">{{ _("No products yet.") }}</td></tr>
       {% endfor %}
     </tbody>
   </table>

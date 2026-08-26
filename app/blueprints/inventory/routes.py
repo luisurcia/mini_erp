@@ -22,7 +22,8 @@ DEFAULT_SIZE_ML = 355
 @login_required
 def index():
     products = ProductRepository().get_all()
-    return render_template("inventory/index.html", products=products)
+    settings = Company.get_settings()
+    return render_template("inventory/index.html", products=products, settings=settings)
 
 
 def _apply_product_field_visibility(form: ProductForm, settings: Company) -> None:
