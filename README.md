@@ -256,10 +256,15 @@ git clone --branch client/scoby https://github.com/luisurcia/mini_erp.git ~/scob
 
 # 2. Create the Python App (also generates passenger_wsgi.py and the
 #    Passenger block in ~/public_html/scobyerp/.htaccess automatically —
-#    don't hand-edit either).
+#    don't hand-edit either). --version is required: without it this
+#    silently defaults to the system's Python (3.6 here), not 3.12.
 cloudlinux-selector create --json --interpreter python \
   --user titoeyzy --app-root /home/titoeyzy/scobyerp \
-  --app-uri scobyerp --startup-file wsgi.py --entry-point app
+  --app-uri scobyerp --version 3.12 --startup-file wsgi.py --entry-point app
+
+# 2b. `create` overwrites wsgi.py with its own placeholder
+#     ("It works!") stub — restore the repo's real one.
+cd ~/scobyerp && git checkout -- wsgi.py
 
 # 3. Install dependencies into the new virtualenv.
 cloudlinux-selector install-modules --json --interpreter python \
@@ -272,7 +277,12 @@ cloudlinux-selector set --json --interpreter python \
   --user titoeyzy --app-root /home/titoeyzy/scobyerp \
   --env-vars '{"SECRET_KEY": "...", "ADMIN_PASSWORD": "..."}'
 
-# 5. Create the schema and seed Scoby's demo data (customers, products,
+# 5. `instance/` is gitignored, so the fresh clone doesn't have it —
+#    SQLite won't create the missing parent directory for you, it just
+#    fails with "unable to open database file".
+mkdir -p ~/scobyerp/instance
+
+# 6. Create the schema and seed Scoby's demo data (customers, products,
 #    a sale or two) so there's something to look at on first login —
 #    swap for `flask init-db` alone later if a clean slate is wanted
 #    instead.
@@ -280,7 +290,7 @@ source ~/virtualenv/scobyerp/3.12/bin/activate
 export FLASK_APP=wsgi.py
 flask seed-demo
 
-# 6. Restart and verify.
+# 7. Restart and verify.
 cloudlinux-selector restart --json --interpreter python \
   --user titoeyzy --app-root /home/titoeyzy/scobyerp
 curl -s -o /dev/null -w '%{http_code}\n' https://titourcia.com/scobyerp/health
@@ -306,7 +316,13 @@ enough to ship a change — same as `main` does for kombuchaerp.
 Same `deploy/backup_sqlite.sh` script, pointed at scobyerp's own paths via
 env vars (the var names are prefixed `KOMBUCHAERP_` in the script itself,
 but that's just the script's original naming — it works for any app
-directory passed in). Add a second cron line alongside the existing one:
+directory passed in). Add a second cron line alongside the existing one —
+**edit the crontab with `crontab -e`, or write out the full file and load
+it with `crontab <file>`; don't pipe a partial `crontab -l` through
+`| crontab -`** in one shell command, since a subshell hiccup there can
+silently replace the whole crontab with just the new line (this happened
+once during setup and had to be restored from the previously-known-good
+`crontab -l` output — there's no automatic backup of the crontab itself):
 
 ```
 0 2 * * * KOMBUCHAERP_APP_DIR=/home/titoeyzy/scobyerp KOMBUCHAERP_DB_PATH=/home/titoeyzy/scobyerp/instance/mini_erp.db KOMBUCHAERP_BACKUP_DIR=/home/titoeyzy/backups/scobyerp /home/titoeyzy/scobyerp/deploy/backup_sqlite.sh >> /home/titoeyzy/scobyerp/logs/backup.log 2>&1
