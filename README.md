@@ -19,10 +19,11 @@ repositories → services → routes), SQLAlchemy, and Bootstrap 5.
 - **Top customers** — ranks customers by consumption (total spent,
   bottles, number of sales) over a selected year/month or all-time.
 - **Users & roles** — self-service password change, plus admin-only user
-  management (create/edit/delete). Three roles: **admin** (everything,
-  including user management), **editor** (create/update records), and
-  **viewer** (read-only). Enforced both in routes (403 on violation) and
-  in the UI (write controls hidden for viewers).
+  management (create/edit/delete). Roles are per-module rather than a
+  flat access level: **admin** (every module, plus Users/Company),
+  **bodeguero** (Products, Inventory, Supplies), and **venta** (Sales,
+  Products, Top customers, Customers). A module a role can't access is
+  both hidden from the nav and blocked at the route (403).
 - **Company settings** — tax rate/default and interface language for the
   whole install, plus per-field toggles to simplify the New Product form
   (Short Name, Size, SKU can each be turned off — Unit Price always
@@ -339,7 +340,7 @@ app/
                   user management)
   blueprints/     routes + forms, one per module (auth, dashboard,
                   inventory, supplies, sales, top_customers, users)
-  permissions.py  role-based route decorators (admin_required, editor_required)
+  permissions.py  role-based route decorators (admin_required, module_required)
   schema.py       lightweight in-place upgrades for existing SQLite DBs
   templates/      Jinja2 templates (Bootstrap 5)
   static/css/     kombucha-themed styling

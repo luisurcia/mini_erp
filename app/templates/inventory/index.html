@@ -4,9 +4,7 @@
 <div class="d-flex justify-content-between align-items-center mb-3">
   <h1 class="h3 mb-0">{{ _("Inventory") }}</h1>
   <div class="d-flex gap-2">
-    {% if current_user.can_edit %}
     <a class="btn btn-outline-secondary btn-sm" href="{{ url_for('inventory.transfer') }}">{{ _("Transfer stock") }}</a>
-    {% endif %}
     {% if current_user.is_admin %}
     <a class="btn btn-outline-secondary btn-sm" href="{{ url_for('inventory.warehouses') }}">{{ _("Manage warehouses") }}</a>
     {% endif %}
@@ -37,13 +35,9 @@
         {% set item = stock.get((product.id, warehouse.id)) %}
         {% set total.qty = total.qty + (item.quantity_on_hand if item else 0) %}
         <td class="text-end {{ 'table-low-stock' if item and item.is_low_stock else '' }}">
-          {% if current_user.can_edit %}
           <a class="btn btn-sm btn-outline-secondary" href="{{ url_for('inventory.restock', product_id=product.id, warehouse_id=warehouse.id) }}">
             {{ item.quantity_on_hand if item else 0 }}
           </a>
-          {% else %}
-          {{ item.quantity_on_hand if item else 0 }}
-          {% endif %}
         </td>
         {% endfor %}
         <td class="text-end"><strong>{{ total.qty }}</strong></td>

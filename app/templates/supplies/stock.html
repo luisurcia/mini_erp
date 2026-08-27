@@ -30,13 +30,9 @@
         {% set item = stock.get((supply.id, warehouse.id)) %}
         {% set total.qty = total.qty + (item.quantity_on_hand if item else 0) %}
         <td class="text-end {{ 'table-low-stock' if item and item.is_low_stock else '' }}">
-          {% if current_user.can_edit %}
           <a class="btn btn-sm btn-outline-secondary" href="{{ url_for('supplies.restock', supply_id=supply.id, warehouse_id=warehouse.id) }}">
             {{ item.quantity_on_hand if item else 0 }}
           </a>
-          {% else %}
-          {{ item.quantity_on_hand if item else 0 }}
-          {% endif %}
         </td>
         {% endfor %}
         <td class="text-end"><strong>{{ total.qty }}</strong></td>

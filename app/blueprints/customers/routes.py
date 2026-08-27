@@ -5,12 +5,14 @@ from flask_login import login_required
 from app.blueprints.customers import bp
 from app.blueprints.customers.forms import CustomerForm
 from app.models.customer import Customer
-from app.permissions import editor_required
+from app.models.user import User
+from app.permissions import module_required
 from app.repositories.customer_repository import CustomerRepository
 
 
 @bp.route("/")
 @login_required
+@module_required(User.MODULE_CUSTOMERS)
 def index():
     customers = CustomerRepository().get_all()
     return render_template("customers/index.html", customers=customers)
@@ -18,7 +20,7 @@ def index():
 
 @bp.route("/new", methods=["GET", "POST"])
 @login_required
-@editor_required
+@module_required(User.MODULE_CUSTOMERS)
 def new_customer():
     form = CustomerForm()
 
@@ -43,7 +45,7 @@ def new_customer():
 
 @bp.route("/<int:customer_id>/edit", methods=["GET", "POST"])
 @login_required
-@editor_required
+@module_required(User.MODULE_CUSTOMERS)
 def edit_customer(customer_id):
     customer = CustomerRepository().get(customer_id)
     if customer is None:

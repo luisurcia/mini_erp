@@ -18,12 +18,24 @@
       <div class="collapse navbar-collapse" id="navMain">
         <ul class="navbar-nav me-auto">
           <li class="nav-item"><a class="nav-link" href="{{ url_for('dashboard.index') }}">{{ _("Dashboard") }}</a></li>
+          {% if current_user.can_access("products") %}
           <li class="nav-item"><a class="nav-link" href="{{ url_for('products.index') }}">{{ _("Products") }}</a></li>
+          {% endif %}
+          {% if current_user.can_access("inventory") %}
           <li class="nav-item"><a class="nav-link" href="{{ url_for('inventory.index') }}">{{ _("Inventory") }}</a></li>
+          {% endif %}
+          {% if current_user.can_access("supplies") %}
           <li class="nav-item"><a class="nav-link" href="{{ url_for('supplies.index') }}">{{ _("Supplies") }}</a></li>
+          {% endif %}
+          {% if current_user.can_access("sales") %}
           <li class="nav-item"><a class="nav-link" href="{{ url_for('sales.index') }}">{{ _("Sales") }}</a></li>
+          {% endif %}
+          {% if current_user.can_access("top_customers") %}
           <li class="nav-item"><a class="nav-link" href="{{ url_for('top_customers.index') }}">{{ _("Top customers") }}</a></li>
+          {% endif %}
+          {% if current_user.can_access("customers") %}
           <li class="nav-item"><a class="nav-link" href="{{ url_for('customers.index') }}">{{ _("Customers") }}</a></li>
+          {% endif %}
           {% if current_user.is_admin %}
           <li class="nav-item"><a class="nav-link" href="{{ url_for('users.index') }}">{{ _("Users") }}</a></li>
           <li class="nav-item"><a class="nav-link" href="{{ url_for('company.settings') }}">{{ _("Company") }}</a></li>

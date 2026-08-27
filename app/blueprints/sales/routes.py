@@ -10,7 +10,8 @@ from app.blueprints.sales.forms import SaleMetaForm
 from app.display import product_label
 from app.exceptions import MiniErpError
 from app.models.company import Company
-from app.permissions import editor_required
+from app.models.user import User
+from app.permissions import module_required
 from app.repositories.customer_repository import CustomerRepository
 from app.repositories.inventory_repository import InventoryRepository
 from app.repositories.product_repository import ProductRepository
@@ -21,6 +22,7 @@ from app.services.sales_service import SalesService
 
 @bp.route("/")
 @login_required
+@module_required(User.MODULE_SALES)
 def index():
     sales = SalesRepository().get_all()
     return render_template("sales/index.html", sales=sales)
@@ -28,7 +30,7 @@ def index():
 
 @bp.route("/new", methods=["GET", "POST"])
 @login_required
-@editor_required
+@module_required(User.MODULE_SALES)
 def new_sale():
     form = SaleMetaForm()
     form.customer_id.choices = _customer_choices()
@@ -74,6 +76,7 @@ def new_sale():
 
 @bp.route("/<int:sale_id>")
 @login_required
+@module_required(User.MODULE_SALES)
 def detail(sale_id):
     sale = SalesRepository().get(sale_id)
     if sale is None:

@@ -7,8 +7,8 @@ from app.models.user import User
 
 ROLE_LABELS = {
     User.ROLE_ADMIN: _l("Admin"),
-    User.ROLE_EDITOR: _l("Editor"),
-    User.ROLE_VIEWER: _l("Viewer"),
+    User.ROLE_BODEGUERO: _l("Warehouse staff"),
+    User.ROLE_VENTAS: _l("Sales"),
 }
 
 

@@ -9,7 +9,8 @@ from app.blueprints.products.forms import ProductForm
 from app.display import product_label
 from app.models.company import Company
 from app.models.product import Product
-from app.permissions import editor_required
+from app.models.user import User
+from app.permissions import module_required
 from app.repositories.product_repository import FlavorRepository, ProductRepository
 
 # Matches Product.size_ml's own column default — used when a company hides
@@ -19,6 +20,7 @@ DEFAULT_SIZE_ML = 355
 
 @bp.route("/")
 @login_required
+@module_required(User.MODULE_PRODUCTS)
 def index():
     products = ProductRepository().get_all()
     settings = Company.get_settings()
@@ -52,7 +54,7 @@ def _generate_sku(product_name: str, size_ml: int) -> str:
 
 @bp.route("/new", methods=["GET", "POST"])
 @login_required
-@editor_required
+@module_required(User.MODULE_PRODUCTS)
 def new_product():
     settings = Company.get_settings()
     form = ProductForm()
@@ -86,7 +88,7 @@ def new_product():
 
 @bp.route("/<int:product_id>/edit", methods=["GET", "POST"])
 @login_required
-@editor_required
+@module_required(User.MODULE_PRODUCTS)
 def edit_product(product_id):
     product = ProductRepository().get(product_id)
     if product is None:

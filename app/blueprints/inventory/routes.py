@@ -6,8 +6,9 @@ from app.blueprints.inventory import bp
 from app.blueprints.inventory.forms import RestockForm, TransferForm, WarehouseForm
 from app.display import product_label
 from app.exceptions import MiniErpError
+from app.models.user import User
 from app.models.warehouse import Warehouse
-from app.permissions import admin_required, editor_required
+from app.permissions import admin_required, module_required
 from app.repositories.inventory_repository import InventoryRepository
 from app.repositories.product_repository import ProductRepository
 from app.repositories.warehouse_repository import WarehouseRepository
@@ -16,6 +17,7 @@ from app.services.inventory_service import InventoryService
 
 @bp.route("/")
 @login_required
+@module_required(User.MODULE_INVENTORY)
 def index():
     products = ProductRepository().get_all()
     warehouses = WarehouseRepository().get_active()
@@ -42,7 +44,7 @@ def index():
 
 @bp.route("/<int:product_id>/<int:warehouse_id>/restock", methods=["GET", "POST"])
 @login_required
-@editor_required
+@module_required(User.MODULE_INVENTORY)
 def restock(product_id, warehouse_id):
     product = ProductRepository().get(product_id)
     warehouse = WarehouseRepository().get(warehouse_id)
@@ -96,7 +98,7 @@ def restock(product_id, warehouse_id):
 
 @bp.route("/transfer", methods=["GET", "POST"])
 @login_required
-@editor_required
+@module_required(User.MODULE_INVENTORY)
 def transfer():
     form = TransferForm()
     product_choices = [(p.id, product_label(p)) for p in ProductRepository().get_active()]
@@ -136,6 +138,7 @@ def transfer():
 
 @bp.route("/<int:product_id>/history")
 @login_required
+@module_required(User.MODULE_INVENTORY)
 def history(product_id):
     product = ProductRepository().get(product_id)
     if product is None:

@@ -25,6 +25,19 @@ def admin_required(view):
     return roles_required(User.ROLE_ADMIN)(view)
 
 
-def editor_required(view):
-    """Admins and editors may pass; viewers are blocked (read-only)."""
-    return roles_required(User.ROLE_ADMIN, User.ROLE_EDITOR)(view)
+def module_required(module: str):
+    """Restrict a view to users whose role has access to `module` — used
+    on every route (read and write) of a module's blueprint, so a role
+    without access can't reach it directly by URL either, not just from
+    a hidden nav link. See #31."""
+
+    def decorator(view):
+        @wraps(view)
+        def wrapped_view(*args, **kwargs):
+            if not current_user.is_authenticated or not current_user.can_access(module):
+                abort(403)
+            return view(*args, **kwargs)
+
+        return wrapped_view
+
+    return decorator

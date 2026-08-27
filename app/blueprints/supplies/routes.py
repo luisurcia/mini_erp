@@ -7,7 +7,8 @@ from app.blueprints.supplies import bp
 from app.blueprints.supplies.forms import SupplyForm
 from app.exceptions import MiniErpError
 from app.models.supply import Supply
-from app.permissions import editor_required
+from app.models.user import User
+from app.permissions import module_required
 from app.repositories.supply_repository import SupplyItemRepository, SupplyRepository
 from app.repositories.warehouse_repository import WarehouseRepository
 from app.services.supply_service import SupplyService
@@ -15,6 +16,7 @@ from app.services.supply_service import SupplyService
 
 @bp.route("/")
 @login_required
+@module_required(User.MODULE_SUPPLIES)
 def index():
     supplies = SupplyRepository().get_all()
     return render_template("supplies/index.html", supplies=supplies)
@@ -22,7 +24,7 @@ def index():
 
 @bp.route("/new", methods=["GET", "POST"])
 @login_required
-@editor_required
+@module_required(User.MODULE_SUPPLIES)
 def new_supply():
     form = SupplyForm()
 
@@ -43,7 +45,7 @@ def new_supply():
 
 @bp.route("/<int:supply_id>/edit", methods=["GET", "POST"])
 @login_required
-@editor_required
+@module_required(User.MODULE_SUPPLIES)
 def edit_supply(supply_id):
     supply = SupplyRepository().get(supply_id)
     if supply is None:
@@ -66,6 +68,7 @@ def edit_supply(supply_id):
 
 @bp.route("/stock")
 @login_required
+@module_required(User.MODULE_SUPPLIES)
 def stock():
     supplies = SupplyRepository().get_all()
     warehouses = WarehouseRepository().get_active()
@@ -92,7 +95,7 @@ def stock():
 
 @bp.route("/<int:supply_id>/<int:warehouse_id>/restock", methods=["GET", "POST"])
 @login_required
-@editor_required
+@module_required(User.MODULE_SUPPLIES)
 def restock(supply_id, warehouse_id):
     supply = SupplyRepository().get(supply_id)
     warehouse = WarehouseRepository().get(warehouse_id)
@@ -145,6 +148,7 @@ def restock(supply_id, warehouse_id):
 
 @bp.route("/<int:supply_id>/history")
 @login_required
+@module_required(User.MODULE_SUPPLIES)
 def history(supply_id):
     supply = SupplyRepository().get(supply_id)
     if supply is None:

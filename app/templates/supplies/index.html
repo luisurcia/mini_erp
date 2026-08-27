@@ -5,9 +5,7 @@
   <h1 class="h3 mb-0">{{ _("Supplies") }}</h1>
   <div class="d-flex gap-2">
     <a class="btn btn-outline-secondary btn-sm" href="{{ url_for('supplies.stock') }}">{{ _("Stock by warehouse") }}</a>
-    {% if current_user.can_edit %}
     <a class="btn btn-primary btn-sm" href="{{ url_for('supplies.new_supply') }}">+ {{ _("New supply") }}</a>
-    {% endif %}
   </div>
 </div>
 
@@ -36,9 +34,7 @@
           {% endif %}
         </td>
         <td class="text-end">
-          {% if current_user.can_edit %}
           <a class="btn btn-sm btn-outline-secondary" href="{{ url_for('supplies.edit_supply', supply_id=supply.id) }}">{{ _("Edit") }}</a>
-          {% endif %}
         </td>
       </tr>
       {% else %}

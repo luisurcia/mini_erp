@@ -9,9 +9,34 @@ class User(BaseModel, UserMixin):
     __tablename__ = "users"
 
     ROLE_ADMIN = "admin"
-    ROLE_EDITOR = "editor"
-    ROLE_VIEWER = "viewer"
-    ROLES = [ROLE_ADMIN, ROLE_EDITOR, ROLE_VIEWER]
+    ROLE_BODEGUERO = "bodeguero"
+    ROLE_VENTAS = "venta"
+    ROLES = [ROLE_ADMIN, ROLE_BODEGUERO, ROLE_VENTAS]
+
+    # Per-module access — a role sees (and can reach) only these modules'
+    # screens. Users/Company stay admin-only and aren't modeled here; see
+    # admin_required in app/permissions.py. See #31.
+    MODULE_PRODUCTS = "products"
+    MODULE_INVENTORY = "inventory"
+    MODULE_SUPPLIES = "supplies"
+    MODULE_SALES = "sales"
+    MODULE_TOP_CUSTOMERS = "top_customers"
+    MODULE_CUSTOMERS = "customers"
+
+    _ALL_MODULES = {
+        MODULE_PRODUCTS,
+        MODULE_INVENTORY,
+        MODULE_SUPPLIES,
+        MODULE_SALES,
+        MODULE_TOP_CUSTOMERS,
+        MODULE_CUSTOMERS,
+    }
+
+    ROLE_MODULES = {
+        ROLE_ADMIN: _ALL_MODULES,
+        ROLE_BODEGUERO: {MODULE_PRODUCTS, MODULE_INVENTORY, MODULE_SUPPLIES},
+        ROLE_VENTAS: {MODULE_SALES, MODULE_PRODUCTS, MODULE_TOP_CUSTOMERS, MODULE_CUSTOMERS},
+    }
 
     username = db.Column(db.String(80), unique=True, nullable=False)
     password_hash = db.Column(db.String(255), nullable=False)
@@ -27,10 +52,8 @@ class User(BaseModel, UserMixin):
     def is_admin(self) -> bool:
         return self.role == self.ROLE_ADMIN
 
-    @property
-    def can_edit(self) -> bool:
-        """Admins and editors can create/update records; viewers cannot."""
-        return self.role in (self.ROLE_ADMIN, self.ROLE_EDITOR)
+    def can_access(self, module: str) -> bool:
+        return module in self.ROLE_MODULES.get(self.role, set())
 
     def __repr__(self) -> str:
         return f"<User {self.username}>"

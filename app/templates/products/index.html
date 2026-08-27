@@ -3,9 +3,7 @@
 {% block content %}
 <div class="d-flex justify-content-between align-items-center mb-3">
   <h1 class="h3 mb-0">{{ _("Products") }}</h1>
-  {% if current_user.can_edit %}
   <a class="btn btn-primary" href="{{ url_for('products.new_product') }}">+ {{ _("New product") }}</a>
-  {% endif %}
 </div>
 
 <div class="card p-3">
@@ -37,9 +35,7 @@
           {% endif %}
         </td>
         <td class="text-end">
-          {% if current_user.can_edit %}
           <a class="btn btn-sm btn-outline-secondary" href="{{ url_for('products.edit_product', product_id=product.id) }}">{{ _("Edit") }}</a>
-          {% endif %}
         </td>
       </tr>
       {% else %}

@@ -3,6 +3,8 @@ from flask_babel import gettext as _
 from flask_login import login_required
 
 from app.blueprints.top_customers import bp
+from app.models.user import User
+from app.permissions import module_required
 from app.repositories.sales_repository import SalesRepository
 from app.services.sales_service import SalesService
 
@@ -18,6 +20,7 @@ def _month_names() -> list[str]:
 
 @bp.route("/")
 @login_required
+@module_required(User.MODULE_TOP_CUSTOMERS)
 def index():
     sales_repo = SalesRepository()
     sales_service = SalesService()
