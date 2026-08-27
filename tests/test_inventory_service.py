@@ -57,3 +57,41 @@ def test_restock_in_a_different_warehouse_creates_its_own_row(app, product, ware
         product.id, warehouse.id
     )
     assert main_item.quantity_on_hand == 50
+
+
+def test_transfer_moves_stock_between_warehouses(app, product, warehouse):
+    other = Warehouse(name="Other Warehouse", is_active=True)
+    db.session.add(other)
+    db.session.commit()
+
+    service = InventoryService()
+    source, destination = service.transfer(product.id, warehouse.id, other.id, 20, note="rebalance")
+
+    assert source.quantity_on_hand == 30
+    assert destination.quantity_on_hand == 20
+
+    movements = service.movement_history(product.id)
+    transfer_movements = [m for m in movements if m.reason == "transfer"]
+    assert len(transfer_movements) == 2
+    assert {m.change_qty for m in transfer_movements} == {-20, 20}
+
+
+def test_transfer_with_insufficient_stock_raises_and_does_not_partially_apply(
+    app, product, warehouse
+):
+    other = Warehouse(name="Other Warehouse", is_active=True)
+    db.session.add(other)
+    db.session.commit()
+
+    service = InventoryService()
+    with pytest.raises(InsufficientStockError):
+        service.transfer(product.id, warehouse.id, other.id, 999)
+
+    source = service.inventory_repo.get_by_product_and_warehouse(product.id, warehouse.id)
+    assert source.quantity_on_hand == 50
+
+
+def test_transfer_to_same_warehouse_raises(app):
+    service = InventoryService()
+    with pytest.raises(ValueError):
+        service.transfer(1, 1, 1, 5)

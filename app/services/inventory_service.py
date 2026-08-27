@@ -104,6 +104,42 @@ class InventoryService:
         self.inventory_repo.commit()
         return item
 
+    def transfer(
+        self,
+        product_id: int,
+        from_warehouse_id: int,
+        to_warehouse_id: int,
+        quantity: int,
+        note: str | None = None,
+    ) -> tuple[InventoryItem, InventoryItem]:
+        """Move stock from one warehouse to another, recorded as a matched
+        pair of StockMovements (one out, one in) — see #27."""
+        if quantity <= 0:
+            raise ValueError("Transfer quantity must be positive")
+        if from_warehouse_id == to_warehouse_id:
+            raise ValueError("Source and destination warehouse must be different")
+
+        source = self._get_item_or_raise(product_id, from_warehouse_id)
+        if source.quantity_on_hand < quantity:
+            product = self.product_repo.get(product_id)
+            product_name = product.name if product else f"product #{product_id}"
+            raise InsufficientStockError(
+                product_name, quantity, source.quantity_on_hand, source.warehouse.name
+            )
+
+        destination = self._get_or_create_item(product_id, to_warehouse_id)
+
+        source.quantity_on_hand -= quantity
+        destination.quantity_on_hand += quantity
+        self._record_movement(
+            product_id, from_warehouse_id, -quantity, StockMovement.REASON_TRANSFER, note
+        )
+        self._record_movement(
+            product_id, to_warehouse_id, quantity, StockMovement.REASON_TRANSFER, note
+        )
+        self.inventory_repo.commit()
+        return source, destination
+
     def low_stock_report(self) -> list[InventoryItem]:
         return self.inventory_repo.low_stock()
 

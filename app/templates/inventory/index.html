@@ -3,7 +3,14 @@
 {% block content %}
 <div class="d-flex justify-content-between align-items-center mb-3">
   <h1 class="h3 mb-0">{{ _("Inventory") }}</h1>
-  <a href="{{ url_for('inventory.warehouses') }}">{{ _("Manage warehouses") }} &rarr;</a>
+  <div class="d-flex gap-2">
+    {% if current_user.can_edit %}
+    <a class="btn btn-outline-secondary btn-sm" href="{{ url_for('inventory.transfer') }}">{{ _("Transfer stock") }}</a>
+    {% endif %}
+    {% if current_user.is_admin %}
+    <a class="btn btn-outline-secondary btn-sm" href="{{ url_for('inventory.warehouses') }}">{{ _("Manage warehouses") }}</a>
+    {% endif %}
+  </div>
 </div>
 
 <div class="card p-3">

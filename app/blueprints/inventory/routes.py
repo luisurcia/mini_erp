@@ -3,7 +3,7 @@ from flask_babel import gettext as _
 from flask_login import login_required
 
 from app.blueprints.inventory import bp
-from app.blueprints.inventory.forms import RestockForm, WarehouseForm
+from app.blueprints.inventory.forms import RestockForm, TransferForm, WarehouseForm
 from app.display import product_label
 from app.exceptions import MiniErpError
 from app.models.warehouse import Warehouse
@@ -92,6 +92,46 @@ def restock(product_id, warehouse_id):
         warehouse=warehouse,
         on_hand=on_hand,
     )
+
+
+@bp.route("/transfer", methods=["GET", "POST"])
+@login_required
+@editor_required
+def transfer():
+    form = TransferForm()
+    product_choices = [(p.id, product_label(p)) for p in ProductRepository().get_active()]
+    warehouse_choices = [(w.id, w.name) for w in WarehouseRepository().get_active()]
+    form.product_id.choices = product_choices
+    form.from_warehouse_id.choices = warehouse_choices
+    form.to_warehouse_id.choices = warehouse_choices
+
+    if form.validate_on_submit():
+        try:
+            InventoryService().transfer(
+                form.product_id.data,
+                form.from_warehouse_id.data,
+                form.to_warehouse_id.data,
+                form.quantity.data,
+                note=form.note.data,
+            )
+            product = ProductRepository().get(form.product_id.data)
+            from_warehouse = WarehouseRepository().get(form.from_warehouse_id.data)
+            to_warehouse = WarehouseRepository().get(form.to_warehouse_id.data)
+            flash(
+                _(
+                    "Transferred %(qty)s units of %(name)s from %(from_wh)s to %(to_wh)s.",
+                    qty=form.quantity.data,
+                    name=product_label(product),
+                    from_wh=from_warehouse.name,
+                    to_wh=to_warehouse.name,
+                ),
+                "success",
+            )
+            return redirect(url_for("inventory.index"))
+        except MiniErpError as exc:
+            flash(str(exc), "danger")
+
+    return render_template("inventory/transfer_form.html", form=form)
 
 
 @bp.route("/<int:product_id>/history")

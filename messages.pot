@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-08-27 00:41-0400\n"
+"POT-Creation-Date: 2026-08-27 00:56-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -75,6 +75,10 @@ msgstr ""
 
 #: app/__init__.py:123
 msgid "Adjustment"
+msgstr ""
+
+#: app/__init__.py:124 app/blueprints/inventory/forms.py:37
+msgid "Transfer"
 msgstr ""
 
 #: app/blueprints/auth/forms.py:8 app/blueprints/users/forms.py:17
@@ -152,14 +156,14 @@ msgid "Save settings"
 msgstr ""
 
 #: app/blueprints/company/forms.py:32 app/blueprints/customers/forms.py:10
-#: app/blueprints/inventory/forms.py:19
+#: app/blueprints/inventory/forms.py:26
 #: app/templates/company/segments_list.html:13
 #: app/templates/customers/index.html:15
 #: app/templates/inventory/warehouses_list.html:13
 msgid "Name"
 msgstr ""
 
-#: app/blueprints/company/forms.py:33 app/blueprints/inventory/forms.py:20
+#: app/blueprints/company/forms.py:33 app/blueprints/inventory/forms.py:27
 #: app/blueprints/products/forms.py:23
 #: app/templates/company/segments_list.html:24
 #: app/templates/inventory/warehouses_list.html:24
@@ -284,24 +288,47 @@ msgstr ""
 msgid "Dec"
 msgstr ""
 
-#: app/blueprints/inventory/forms.py:9
+#: app/blueprints/inventory/forms.py:16
 msgid "Quantity to add"
 msgstr ""
 
-#: app/blueprints/inventory/forms.py:12 app/templates/dashboard/index.html:100
+#: app/blueprints/inventory/forms.py:19 app/templates/dashboard/index.html:100
 msgid "Reorder level"
 msgstr ""
 
-#: app/blueprints/inventory/forms.py:14 app/templates/inventory/history.html:7
+#: app/blueprints/inventory/forms.py:21 app/blueprints/inventory/forms.py:36
+#: app/templates/inventory/history.html:7
 msgid "Note"
 msgstr ""
 
-#: app/blueprints/inventory/forms.py:15
+#: app/blueprints/inventory/forms.py:22
 msgid "Save"
 msgstr ""
 
-#: app/blueprints/inventory/forms.py:21
+#: app/blueprints/inventory/forms.py:28
 msgid "Save warehouse"
+msgstr ""
+
+#: app/blueprints/inventory/forms.py:32 app/templates/dashboard/index.html:100
+#: app/templates/dashboard/index.html:121
+#: app/templates/opportunities/index.html:22 app/templates/sales/detail.html:13
+msgid "Product"
+msgstr ""
+
+#: app/blueprints/inventory/forms.py:33
+msgid "From warehouse"
+msgstr ""
+
+#: app/blueprints/inventory/forms.py:34
+msgid "To warehouse"
+msgstr ""
+
+#: app/blueprints/inventory/forms.py:35
+msgid "Quantity"
+msgstr ""
+
+#: app/blueprints/inventory/forms.py:41
+msgid "Source and destination warehouse must be different."
 msgstr ""
 
 #: app/blueprints/inventory/routes.py:50
@@ -317,20 +344,25 @@ msgstr ""
 msgid "Reorder level updated."
 msgstr ""
 
-#: app/blueprints/inventory/routes.py:102 app/blueprints/products/routes.py:93
+#: app/blueprints/inventory/routes.py:122
+#, python-format
+msgid "Transferred %(qty)s units of %(name)s from %(from_wh)s to %(to_wh)s."
+msgstr ""
+
+#: app/blueprints/inventory/routes.py:142 app/blueprints/products/routes.py:93
 msgid "Product not found."
 msgstr ""
 
-#: app/blueprints/inventory/routes.py:127
+#: app/blueprints/inventory/routes.py:167
 #, python-format
 msgid "Warehouse '%(name)s' created."
 msgstr ""
 
-#: app/blueprints/inventory/routes.py:139
+#: app/blueprints/inventory/routes.py:179
 msgid "Warehouse not found."
 msgstr ""
 
-#: app/blueprints/inventory/routes.py:148
+#: app/blueprints/inventory/routes.py:188
 #, python-format
 msgid "Warehouse '%(name)s' updated."
 msgstr ""
@@ -571,7 +603,7 @@ msgid "Status"
 msgstr ""
 
 #: app/templates/company/segments_list.html:26
-#: app/templates/inventory/index.html:26
+#: app/templates/inventory/index.html:31
 #: app/templates/inventory/warehouses_list.html:26
 #: app/templates/products/index.html:36
 msgid "Inactive"
@@ -672,12 +704,6 @@ msgid "Low stock"
 msgstr ""
 
 #: app/templates/dashboard/index.html:100
-#: app/templates/dashboard/index.html:121
-#: app/templates/opportunities/index.html:22 app/templates/sales/detail.html:13
-msgid "Product"
-msgstr ""
-
-#: app/templates/dashboard/index.html:100
 msgid "On hand"
 msgstr ""
 
@@ -743,29 +769,35 @@ msgstr ""
 msgid "Back to inventory"
 msgstr ""
 
-#: app/templates/inventory/index.html:6
+#: app/templates/inventory/index.html:8
+#: app/templates/inventory/transfer_form.html:3
+#: app/templates/inventory/transfer_form.html:5
+msgid "Transfer stock"
+msgstr ""
+
+#: app/templates/inventory/index.html:10
 msgid "Manage warehouses"
 msgstr ""
 
-#: app/templates/inventory/index.html:13 app/templates/products/index.html:15
+#: app/templates/inventory/index.html:18 app/templates/products/index.html:15
 msgid "Flavor / Product"
 msgstr ""
 
-#: app/templates/inventory/index.html:17 app/templates/inventory/index.html:54
+#: app/templates/inventory/index.html:22 app/templates/inventory/index.html:59
 #: app/templates/sales/detail.html:30 app/templates/sales/index.html:13
 #: app/templates/sales/sale_form.html:76
 msgid "Total"
 msgstr ""
 
-#: app/templates/inventory/index.html:44
+#: app/templates/inventory/index.html:49
 msgid "History"
 msgstr ""
 
-#: app/templates/inventory/index.html:48 app/templates/products/index.html:46
+#: app/templates/inventory/index.html:53 app/templates/products/index.html:46
 msgid "No products yet."
 msgstr ""
 
-#: app/templates/inventory/index.html:67
+#: app/templates/inventory/index.html:72
 msgid ""
 "Stock at or below the reorder level for that warehouse is highlighted "
 "like this."

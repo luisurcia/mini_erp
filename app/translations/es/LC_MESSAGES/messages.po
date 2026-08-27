@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-08-27 00:41-0400\n"
+"POT-Creation-Date: 2026-08-27 00:56-0400\n"
 "PO-Revision-Date: 2026-08-24 17:58-0400\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: es\n"
@@ -77,6 +77,10 @@ msgstr "Venta"
 #: app/__init__.py:123
 msgid "Adjustment"
 msgstr "Ajuste"
+
+#: app/__init__.py:124 app/blueprints/inventory/forms.py:37
+msgid "Transfer"
+msgstr "Traspaso"
 
 #: app/blueprints/auth/forms.py:8 app/blueprints/users/forms.py:17
 #: app/templates/users/index.html:11
@@ -153,14 +157,14 @@ msgid "Save settings"
 msgstr "Guardar configuración"
 
 #: app/blueprints/company/forms.py:32 app/blueprints/customers/forms.py:10
-#: app/blueprints/inventory/forms.py:19
+#: app/blueprints/inventory/forms.py:26
 #: app/templates/company/segments_list.html:13
 #: app/templates/customers/index.html:15
 #: app/templates/inventory/warehouses_list.html:13
 msgid "Name"
 msgstr "Nombre"
 
-#: app/blueprints/company/forms.py:33 app/blueprints/inventory/forms.py:20
+#: app/blueprints/company/forms.py:33 app/blueprints/inventory/forms.py:27
 #: app/blueprints/products/forms.py:23
 #: app/templates/company/segments_list.html:24
 #: app/templates/inventory/warehouses_list.html:24
@@ -285,25 +289,48 @@ msgstr "Nov"
 msgid "Dec"
 msgstr "Dic"
 
-#: app/blueprints/inventory/forms.py:9
+#: app/blueprints/inventory/forms.py:16
 msgid "Quantity to add"
 msgstr "Cantidad a agregar"
 
-#: app/blueprints/inventory/forms.py:12 app/templates/dashboard/index.html:100
+#: app/blueprints/inventory/forms.py:19 app/templates/dashboard/index.html:100
 msgid "Reorder level"
 msgstr "Nivel de reposición"
 
-#: app/blueprints/inventory/forms.py:14 app/templates/inventory/history.html:7
+#: app/blueprints/inventory/forms.py:21 app/blueprints/inventory/forms.py:36
+#: app/templates/inventory/history.html:7
 msgid "Note"
 msgstr "Nota"
 
-#: app/blueprints/inventory/forms.py:15
+#: app/blueprints/inventory/forms.py:22
 msgid "Save"
 msgstr "Guardar"
 
-#: app/blueprints/inventory/forms.py:21
+#: app/blueprints/inventory/forms.py:28
 msgid "Save warehouse"
 msgstr "Guardar bodega"
+
+#: app/blueprints/inventory/forms.py:32 app/templates/dashboard/index.html:100
+#: app/templates/dashboard/index.html:121
+#: app/templates/opportunities/index.html:22 app/templates/sales/detail.html:13
+msgid "Product"
+msgstr "Producto"
+
+#: app/blueprints/inventory/forms.py:33
+msgid "From warehouse"
+msgstr "Desde bodega"
+
+#: app/blueprints/inventory/forms.py:34
+msgid "To warehouse"
+msgstr "Hacia bodega"
+
+#: app/blueprints/inventory/forms.py:35
+msgid "Quantity"
+msgstr "Cantidad"
+
+#: app/blueprints/inventory/forms.py:41
+msgid "Source and destination warehouse must be different."
+msgstr "La bodega de origen y destino deben ser distintas."
 
 #: app/blueprints/inventory/routes.py:50
 msgid "Product or warehouse not found."
@@ -318,20 +345,25 @@ msgstr "Se reabastecieron %(qty)s unidades de %(name)s en %(warehouse)s."
 msgid "Reorder level updated."
 msgstr "Nivel de reposición actualizado."
 
-#: app/blueprints/inventory/routes.py:102 app/blueprints/products/routes.py:93
+#: app/blueprints/inventory/routes.py:122
+#, python-format
+msgid "Transferred %(qty)s units of %(name)s from %(from_wh)s to %(to_wh)s."
+msgstr "Se traspasaron %(qty)s unidades de %(name)s desde %(from_wh)s hacia %(to_wh)s."
+
+#: app/blueprints/inventory/routes.py:142 app/blueprints/products/routes.py:93
 msgid "Product not found."
 msgstr "Producto no encontrado."
 
-#: app/blueprints/inventory/routes.py:127
+#: app/blueprints/inventory/routes.py:167
 #, python-format
 msgid "Warehouse '%(name)s' created."
 msgstr "Bodega '%(name)s' creada."
 
-#: app/blueprints/inventory/routes.py:139
+#: app/blueprints/inventory/routes.py:179
 msgid "Warehouse not found."
 msgstr "Bodega no encontrada."
 
-#: app/blueprints/inventory/routes.py:148
+#: app/blueprints/inventory/routes.py:188
 #, python-format
 msgid "Warehouse '%(name)s' updated."
 msgstr "Bodega '%(name)s' actualizada."
@@ -572,7 +604,7 @@ msgid "Status"
 msgstr "Estado"
 
 #: app/templates/company/segments_list.html:26
-#: app/templates/inventory/index.html:26
+#: app/templates/inventory/index.html:31
 #: app/templates/inventory/warehouses_list.html:26
 #: app/templates/products/index.html:36
 msgid "Inactive"
@@ -673,12 +705,6 @@ msgid "Low stock"
 msgstr "Stock bajo"
 
 #: app/templates/dashboard/index.html:100
-#: app/templates/dashboard/index.html:121
-#: app/templates/opportunities/index.html:22 app/templates/sales/detail.html:13
-msgid "Product"
-msgstr "Producto"
-
-#: app/templates/dashboard/index.html:100
 msgid "On hand"
 msgstr "Disponible"
 
@@ -744,29 +770,35 @@ msgstr "Aún no hay movimientos."
 msgid "Back to inventory"
 msgstr "Volver al inventario"
 
-#: app/templates/inventory/index.html:6
+#: app/templates/inventory/index.html:8
+#: app/templates/inventory/transfer_form.html:3
+#: app/templates/inventory/transfer_form.html:5
+msgid "Transfer stock"
+msgstr "Traspaso de stock"
+
+#: app/templates/inventory/index.html:10
 msgid "Manage warehouses"
 msgstr "Gestionar bodegas"
 
-#: app/templates/inventory/index.html:13 app/templates/products/index.html:15
+#: app/templates/inventory/index.html:18 app/templates/products/index.html:15
 msgid "Flavor / Product"
 msgstr "Sabor / Producto"
 
-#: app/templates/inventory/index.html:17 app/templates/inventory/index.html:54
+#: app/templates/inventory/index.html:22 app/templates/inventory/index.html:59
 #: app/templates/sales/detail.html:30 app/templates/sales/index.html:13
 #: app/templates/sales/sale_form.html:76
 msgid "Total"
 msgstr "Total"
 
-#: app/templates/inventory/index.html:44
+#: app/templates/inventory/index.html:49
 msgid "History"
 msgstr "Historial"
 
-#: app/templates/inventory/index.html:48 app/templates/products/index.html:46
+#: app/templates/inventory/index.html:53 app/templates/products/index.html:46
 msgid "No products yet."
 msgstr "Aún no hay productos."
 
-#: app/templates/inventory/index.html:67
+#: app/templates/inventory/index.html:72
 msgid ""
 "Stock at or below the reorder level for that warehouse is highlighted "
 "like this."

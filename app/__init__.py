@@ -121,6 +121,7 @@ def _stock_movement_reason_label(reason: str) -> str:
         StockMovement.REASON_RESTOCK: _("Restock"),
         StockMovement.REASON_SALE: _("Sale"),
         StockMovement.REASON_ADJUSTMENT: _("Adjustment"),
+        StockMovement.REASON_TRANSFER: _("Transfer"),
     }
     return labels.get(reason, reason)
 

@@ -42,6 +42,7 @@ class StockMovement(BaseModel):
     REASON_RESTOCK = "restock"
     REASON_SALE = "sale"
     REASON_ADJUSTMENT = "adjustment"
+    REASON_TRANSFER = "transfer"
 
     product_id = db.Column(db.Integer, db.ForeignKey("products.id"), nullable=False)
     # Nullable: movements recorded before warehouses existed have no
