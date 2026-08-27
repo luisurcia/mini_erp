@@ -223,6 +223,95 @@ Backups land in `~/backups/kombuchaerp/`, retained locally for 30 days
 directory to off-server storage (e.g. weekly to S3 or another host) —
 out of scope for the script, which only handles the daily local backup.
 
+## Scoby ERP deployment (`client/scoby` branch)
+
+A second, independent production instance for Scoby Kombucha specifically —
+same cPanel account/server as above, but its own "Python App", its own
+virtualenv, its own SQLite database, and deployed from the `client/scoby`
+branch instead of `main`. `main` stays the generic product line; this is
+where Scoby's branding/color/multi-warehouse/etc. customizations actually
+run live.
+
+| | |
+|---|---|
+| Production URL | https://titourcia.com/scobyerp |
+| Host / SSH port | same as kombuchaerp: `198.54.116.189`, port **21098** |
+| User | `titoeyzy` (same account) |
+| App code | `~/scobyerp` (git clone of this repo, branch `client/scoby`) |
+| Virtualenv | `~/virtualenv/scobyerp/3.12` |
+| Database | `~/scobyerp/instance/mini_erp.db` — separate file, not shared with kombuchaerp's |
+| `SECRET_KEY` / `ADMIN_PASSWORD` | Own values, set the same way as kombuchaerp (`cloudlinux-selector set --env-vars`) — never reuse kombuchaerp's |
+| Restart the app | `cloudlinux-selector restart --json --interpreter python --user titoeyzy --app-root /home/titoeyzy/scobyerp` |
+
+### First-time setup (do this once, manually, over SSH)
+
+Same shape as kombuchaerp's original first-time setup — nothing here is
+automated by CI, it only takes over once the app exists and has a schema:
+
+```bash
+ssh -i ~/.ssh/garageerp_deploy -p 21098 titoeyzy@198.54.116.189
+
+# 1. Clone the repo on the client/scoby branch.
+git clone --branch client/scoby https://github.com/luisurcia/mini_erp.git ~/scobyerp
+
+# 2. Create the Python App (also generates passenger_wsgi.py and the
+#    Passenger block in ~/public_html/scobyerp/.htaccess automatically —
+#    don't hand-edit either).
+cloudlinux-selector create --json --interpreter python \
+  --user titoeyzy --app-root /home/titoeyzy/scobyerp \
+  --app-uri scobyerp --startup-file wsgi.py --entry-point app
+
+# 3. Install dependencies into the new virtualenv.
+cloudlinux-selector install-modules --json --interpreter python \
+  --user titoeyzy --app-root /home/titoeyzy/scobyerp \
+  --requirements-file requirements.txt
+
+# 4. Set real env vars (never the dev defaults from config.py) — generate
+#    a fresh SECRET_KEY and ADMIN_PASSWORD, don't reuse kombuchaerp's.
+cloudlinux-selector set --json --interpreter python \
+  --user titoeyzy --app-root /home/titoeyzy/scobyerp \
+  --env-vars '{"SECRET_KEY": "...", "ADMIN_PASSWORD": "..."}'
+
+# 5. Create the schema and seed Scoby's demo data (customers, products,
+#    a sale or two) so there's something to look at on first login —
+#    swap for `flask init-db` alone later if a clean slate is wanted
+#    instead.
+source ~/virtualenv/scobyerp/3.12/bin/activate
+export FLASK_APP=wsgi.py
+flask seed-demo
+
+# 6. Restart and verify.
+cloudlinux-selector restart --json --interpreter python \
+  --user titoeyzy --app-root /home/titoeyzy/scobyerp
+curl -s -o /dev/null -w '%{http_code}\n' https://titourcia.com/scobyerp/health
+```
+
+### CI/CD
+
+`.github/workflows/deploy-scoby.yml` mirrors `ci.yml` exactly, but triggers
+on `client/scoby` instead of `main`, deploys to `~/scobyerp` instead of
+`~/kombuchaerp`, and checks `/scobyerp/health` instead of
+`/kombuchaerp/health`. It reuses the same repo-level secrets
+(`SSH_HOST`/`SSH_USER`/`SSH_PRIVATE_KEY`) as kombuchaerp's pipeline — same
+server and account, so no separate deploy key was generated for this one —
+and deploys through its own GitHub **Environment**, `scoby-production`
+(separate from kombuchaerp's `production`, so the two apps' deploy history
+shows up distinctly under *Deployments*).
+
+Once the first-time setup above has run, pushing to `client/scoby` is
+enough to ship a change — same as `main` does for kombuchaerp.
+
+### Backups
+
+Same `deploy/backup_sqlite.sh` script, pointed at scobyerp's own paths via
+env vars (the var names are prefixed `KOMBUCHAERP_` in the script itself,
+but that's just the script's original naming — it works for any app
+directory passed in). Add a second cron line alongside the existing one:
+
+```
+0 2 * * * KOMBUCHAERP_APP_DIR=/home/titoeyzy/scobyerp KOMBUCHAERP_DB_PATH=/home/titoeyzy/scobyerp/instance/mini_erp.db KOMBUCHAERP_BACKUP_DIR=/home/titoeyzy/backups/scobyerp /home/titoeyzy/scobyerp/deploy/backup_sqlite.sh >> /home/titoeyzy/scobyerp/logs/backup.log 2>&1
+```
+
 ## Project layout
 
 ```
