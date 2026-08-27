@@ -28,13 +28,13 @@
   <div class="col-sm-6 col-lg-4">
     <div class="card stat-card p-3">
       <div class="text-muted small">{{ _("Net sales") }}</div>
-      <div class="stat-value">${{ "%.2f"|format(stats.net_sales) }}</div>
+      <div class="stat-value">{{ format_money(stats.net_sales) }}</div>
     </div>
   </div>
   <div class="col-sm-6 col-lg-4">
     <div class="card stat-card p-3">
       <div class="text-muted small">{{ _("Average sale") }}</div>
-      <div class="stat-value">${{ "%.2f"|format(stats.average_sale_total) }}</div>
+      <div class="stat-value">{{ format_money(stats.average_sale_total) }}</div>
     </div>
   </div>
   <div class="col-sm-6 col-lg-4">
@@ -110,7 +110,7 @@ new Chart(document.getElementById("productSalesChart"), {
         callbacks: {
           label: (ctx) => {
             const pct = productSales[ctx.dataIndex].percentage.toFixed(1);
-            return `${ctx.label}: $${ctx.parsed.toFixed(2)} (${pct}%)`;
+            return `${ctx.label}: ${window.formatMoney(ctx.parsed)} (${pct}%)`;
           },
         },
       },

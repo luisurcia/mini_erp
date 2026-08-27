@@ -13,6 +13,10 @@ def test_get_settings_creates_default_row_with_spanish_language(app):
     assert settings.product_short_name_enabled is True
     assert settings.product_size_enabled is True
     assert settings.product_sku_enabled is True
+    assert settings.currency_code == "CLP"
+    assert settings.currency_symbol == "$"
+    assert settings.currency_decimals == 0
+    assert settings.money_quantum == Decimal("1")
 
 
 def test_get_settings_returns_existing_row(app):

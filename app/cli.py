@@ -7,6 +7,7 @@ from app.models.customer_segment import CustomerSegment
 from app.models.user import User
 from app.models.warehouse import Warehouse
 from app.schema import (
+    ensure_company_currency_columns,
     ensure_company_language_column,
     ensure_company_product_field_toggles,
     ensure_customer_columns,
@@ -37,6 +38,7 @@ def _upgrade_schema() -> None:
     ensure_sale_tax_columns()
     ensure_company_language_column()
     ensure_company_product_field_toggles()
+    ensure_company_currency_columns()
     ensure_customer_columns()
     ensure_customer_segment_active_column()
     CustomerSegment.ensure_defaults()

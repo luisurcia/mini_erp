@@ -40,14 +40,25 @@ def create_app(config_class: type = Config) -> Flask:
 
     @app.context_processor
     def inject_locale():
-        return {"current_locale": str(get_locale())}
+        from app.models.company import Company
 
-    from app.display import product_label, product_short_label
+        settings = Company.get_settings()
+        return {
+            "current_locale": str(get_locale()),
+            # Exposed for client-side money formatting (Intl.NumberFormat)
+            # in the few templates that compute totals in JS. Server-side
+            # rendering uses format_money() instead.
+            "currency_symbol": settings.currency_symbol,
+            "currency_decimals": settings.currency_decimals,
+        }
+
+    from app.display import format_money, product_label, product_short_label
 
     app.jinja_env.globals["sale_status_label"] = _sale_status_label
     app.jinja_env.globals["user_role_label"] = _user_role_label
     app.jinja_env.globals["product_label"] = product_label
     app.jinja_env.globals["product_short_label"] = product_short_label
+    app.jinja_env.globals["format_money"] = format_money
     app.jinja_env.globals["stock_movement_reason_label"] = _stock_movement_reason_label
 
     _register_blueprints(app)

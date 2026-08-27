@@ -44,7 +44,7 @@
         <td>{{ loop.index }}</td>
         <td>{{ entry.customer.name }}</td>
         <td>{{ entry.customer.segment.name if entry.customer.segment else "-" }}</td>
-        <td>${{ "%.2f"|format(entry.total_amount) }}</td>
+        <td>{{ format_money(entry.total_amount) }}</td>
         <td>{{ entry.total_units }}</td>
         <td>{{ entry.sale_count }}</td>
       </tr>

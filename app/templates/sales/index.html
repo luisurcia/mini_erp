@@ -17,7 +17,7 @@
         <td>{{ sale.customer.name }}</td>
         <td>{{ sale.invoice_number or "-" }}</td>
         <td><span class="badge bg-secondary">{{ sale_status_label(sale.status) }}</span></td>
-        <td>${{ "%.2f"|format(sale.total_amount) }}</td>
+        <td>{{ format_money(sale.total_amount) }}</td>
         <td class="text-end"><a class="btn btn-sm btn-outline-secondary" href="{{ url_for('sales.detail', sale_id=sale.id) }}">{{ _("View") }}</a></td>
       </tr>
       {% else %}

@@ -17,12 +17,28 @@ class Company(BaseModel):
     tax_enabled_default = db.Column(db.Boolean, nullable=False, default=True)
     language = db.Column(db.String(5), nullable=False, default=LANGUAGE_ES)
 
+    # Money display. `client/scoby` bills in Chilean pesos, which have no
+    # cents — so the default here is CLP with 0 decimals, and every amount
+    # shown in the app is formatted through app.display.format_money using
+    # these settings. Tax rounding follows currency_decimals too (see
+    # Sale.recalculate_total). See #39.
+    currency_code = db.Column(db.String(3), nullable=False, default="CLP")
+    currency_symbol = db.Column(db.String(8), nullable=False, default="$")
+    currency_decimals = db.Column(db.Integer, nullable=False, default=0)
+
     # Per-field visibility on the "new/edit product" form. Unit price is
     # never toggleable: Sales reads it directly off the product, so a
     # product without one can't be sold.
     product_short_name_enabled = db.Column(db.Boolean, nullable=False, default=True)
     product_size_enabled = db.Column(db.Boolean, nullable=False, default=True)
     product_sku_enabled = db.Column(db.Boolean, nullable=False, default=True)
+
+    @property
+    def money_quantum(self) -> Decimal:
+        """The smallest representable amount for the configured currency —
+        e.g. Decimal('1') for CLP (0 decimals), Decimal('0.01') for USD.
+        Used to round computed amounts (tax) to whole units of currency."""
+        return Decimal(1).scaleb(-self.currency_decimals)
 
     @classmethod
     def get_settings(cls) -> "Company":

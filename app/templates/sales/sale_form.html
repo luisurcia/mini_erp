@@ -33,7 +33,7 @@
             <th>{{ _("Unit price") }}</th>
             {% for product in products %}
             <td>
-              <input type="number" step="0.01" min="0" class="form-control form-control-sm unit-price-input"
+              <input type="number" step="{{ 10 ** (-currency_decimals) }}" min="0" class="form-control form-control-sm unit-price-input"
                      name="unit_price__{{ product.id }}" {% if loop.first %}id="first-unit-price"{% endif %}>
             </td>
             {% endfor %}
@@ -65,16 +65,16 @@
     <div class="card bg-light p-3 mb-3" style="max-width: 320px;">
       <div class="d-flex justify-content-between">
         <span>{{ _("Subtotal") }}</span>
-        <span>$<span id="sale-subtotal">0.00</span></span>
+        <span id="sale-subtotal">{{ format_money(0) }}</span>
       </div>
       <div style="display: flex; justify-content: space-between;" id="sale-tax-row">
         <span>{{ _("IVA (%(rate)s%%)", rate=tax_rate) }}</span>
-        <span>$<span id="sale-tax">0.00</span></span>
+        <span id="sale-tax">{{ format_money(0) }}</span>
       </div>
       <hr class="my-2">
       <div class="d-flex justify-content-between fw-bold">
         <span>{{ _("Total") }}</span>
-        <span>$<span id="sale-total">0.00</span></span>
+        <span id="sale-total">{{ format_money(0) }}</span>
       </div>
     </div>
 
@@ -116,12 +116,14 @@
     });
 
     var applyTax = !!(taxCheckbox && taxCheckbox.checked);
-    var tax = applyTax ? subtotal * (taxRate / 100) : 0;
+    // Round tax to whole units of currency, matching Sale.recalculate_total.
+    var factor = Math.pow(10, window.MONEY.decimals);
+    var tax = applyTax ? Math.round(subtotal * (taxRate / 100) * factor) / factor : 0;
     var total = subtotal + tax;
 
-    document.getElementById("sale-subtotal").textContent = subtotal.toFixed(2);
-    document.getElementById("sale-tax").textContent = tax.toFixed(2);
-    document.getElementById("sale-total").textContent = total.toFixed(2);
+    document.getElementById("sale-subtotal").textContent = window.formatMoney(subtotal);
+    document.getElementById("sale-tax").textContent = window.formatMoney(tax);
+    document.getElementById("sale-total").textContent = window.formatMoney(total);
     if (taxRow) taxRow.style.display = applyTax ? "flex" : "none";
   }
 

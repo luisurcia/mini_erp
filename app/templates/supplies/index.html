@@ -25,7 +25,7 @@
       <tr>
         <td>{{ supply.name }}</td>
         <td>{{ supply.unit }}</td>
-        <td>${{ "%.2f"|format(supply.unit_price) }}</td>
+        <td>{{ format_money(supply.unit_price) }}</td>
         <td>
           {% if supply.is_active %}
           <span class="badge" style="background-color: var(--scoby-teal);">{{ _("Active") }}</span>

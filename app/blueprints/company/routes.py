@@ -24,6 +24,9 @@ def settings():
         company.product_size_enabled = form.product_size_enabled.data
         company.product_sku_enabled = form.product_sku_enabled.data
         company.language = form.language.data
+        company.currency_code = form.currency_code.data
+        company.currency_symbol = form.currency_symbol.data
+        company.currency_decimals = form.currency_decimals.data
         db.session.commit()
         flash(_("Company settings updated."), "success")
         return redirect(url_for("company.settings"))

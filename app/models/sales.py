@@ -1,4 +1,4 @@
-from decimal import Decimal
+from decimal import ROUND_HALF_UP, Decimal
 
 from app.extensions import db
 from app.models.base import BaseModel
@@ -31,10 +31,13 @@ class Sale(BaseModel):
         return sum((item.subtotal for item in self.items), start=Decimal("0"))
 
     def recalculate_total(self) -> None:
+        from app.models.company import Company
+
+        quantum = Company.get_settings().money_quantum
         subtotal = self.subtotal_amount
         if self.tax_applied and self.tax_rate_applied is not None:
             self.tax_amount = (subtotal * self.tax_rate_applied / Decimal("100")).quantize(
-                Decimal("0.01")
+                quantum, rounding=ROUND_HALF_UP
             )
         else:
             self.tax_amount = Decimal("0")

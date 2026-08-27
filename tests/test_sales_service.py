@@ -60,6 +60,7 @@ def test_record_sale_without_tax_leaves_total_equal_to_subtotal(app, customer, p
 def test_record_sale_with_tax_applies_configured_rate(app, customer, product):
     company = Company.get_settings()
     company.tax_rate = Decimal("19.00")
+    company.currency_decimals = 2  # cents currency: tax rounds to 2 places
     db.session.commit()
 
     sale = SalesService().record_sale(
@@ -71,8 +72,28 @@ def test_record_sale_with_tax_applies_configured_rate(app, customer, product):
     assert sale.tax_applied is True
     assert sale.tax_rate_applied == Decimal("19.00")
     assert sale.subtotal_amount == Decimal("13.50")
-    assert sale.tax_amount == Decimal("2.56")
-    assert sale.total_amount == Decimal("16.06")
+    # 13.50 * 19% = 2.565 -> 2.57 (round half up)
+    assert sale.tax_amount == Decimal("2.57")
+    assert sale.total_amount == Decimal("16.07")
+
+
+def test_record_sale_tax_rounds_to_currency_decimals(app, customer, product):
+    """With a 0-decimal currency (CLP, the default), tax is rounded to a
+    whole unit of currency rather than to cents. See #39."""
+    company = Company.get_settings()
+    company.tax_rate = Decimal("19.00")
+    assert company.currency_decimals == 0
+    db.session.commit()
+
+    sale = SalesService().record_sale(
+        customer_id=customer.id,
+        items=[{"product_id": product.id, "quantity": 3}],
+        include_tax=True,
+    )
+
+    # 13.50 * 19% = 2.565 -> 3 (rounded to 0 decimals)
+    assert sale.tax_amount == Decimal("3")
+    assert sale.total_amount == Decimal("16.50")
 
 
 def test_sales_by_product_returns_amount_and_percentage(app, customer, product):

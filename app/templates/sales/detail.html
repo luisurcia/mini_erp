@@ -17,17 +17,17 @@
         <td>{{ product_label(item.product) }}</td>
         <td>{{ item.warehouse.name if item.warehouse else "-" }}</td>
         <td>{{ item.quantity }}</td>
-        <td>${{ "%.2f"|format(item.unit_price) }}</td>
-        <td>${{ "%.2f"|format(item.subtotal) }}</td>
+        <td>{{ format_money(item.unit_price) }}</td>
+        <td>{{ format_money(item.subtotal) }}</td>
       </tr>
       {% endfor %}
     </tbody>
     <tfoot>
-      <tr><th colspan="4" class="text-end">{{ _("Subtotal") }}</th><th>${{ "%.2f"|format(sale.subtotal_amount) }}</th></tr>
+      <tr><th colspan="4" class="text-end">{{ _("Subtotal") }}</th><th>{{ format_money(sale.subtotal_amount) }}</th></tr>
       {% if sale.tax_applied %}
-      <tr><th colspan="4" class="text-end">{{ _("IVA (%(rate)s%%)", rate=sale.tax_rate_applied) }}</th><th>${{ "%.2f"|format(sale.tax_amount) }}</th></tr>
+      <tr><th colspan="4" class="text-end">{{ _("IVA (%(rate)s%%)", rate=sale.tax_rate_applied) }}</th><th>{{ format_money(sale.tax_amount) }}</th></tr>
       {% endif %}
-      <tr><th colspan="4" class="text-end">{{ _("Total") }}</th><th>${{ "%.2f"|format(sale.total_amount) }}</th></tr>
+      <tr><th colspan="4" class="text-end">{{ _("Total") }}</th><th>{{ format_money(sale.total_amount) }}</th></tr>
     </tfoot>
   </table>
 </div>

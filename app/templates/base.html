@@ -67,6 +67,24 @@
   </main>
 
   {{ bootstrap.load_js() }}
+  <script>
+    // Money formatting for the few places that compute totals in the
+    // browser. Mirrors app.display.format_money: currency symbol +
+    // locale-aware grouping + a fixed number of decimals (0 for CLP). See #39.
+    window.MONEY = {
+      symbol: {{ currency_symbol|tojson }},
+      decimals: {{ currency_decimals|tojson }},
+      locale: {{ current_locale|tojson }},
+    };
+    window.formatMoney = function (value) {
+      var n = Number(value) || 0;
+      return window.MONEY.symbol + n.toLocaleString(window.MONEY.locale, {
+        minimumFractionDigits: window.MONEY.decimals,
+        maximumFractionDigits: window.MONEY.decimals,
+        useGrouping: true,
+      });
+    };
+  </script>
   {% block scripts %}{% endblock %}
 </body>
 </html>

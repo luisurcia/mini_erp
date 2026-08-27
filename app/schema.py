@@ -95,6 +95,40 @@ def ensure_company_product_field_toggles() -> None:
     db.session.commit()
 
 
+def ensure_company_currency_columns() -> None:
+    """Backfill the currency-display columns for databases created before
+    money formatting was configurable (see #39).
+
+    Defaults match the model (CLP / "$" / 0 decimals) so an existing
+    `client/scoby` database picks up peso formatting on the next deploy
+    without a manual settings change.
+    """
+    inspector = inspect(db.engine)
+    columns = {column["name"] for column in inspector.get_columns("company_settings")}
+    if "currency_code" not in columns:
+        db.session.execute(
+            text(
+                "ALTER TABLE company_settings ADD COLUMN currency_code "
+                "VARCHAR(3) NOT NULL DEFAULT 'CLP'"
+            )
+        )
+    if "currency_symbol" not in columns:
+        db.session.execute(
+            text(
+                "ALTER TABLE company_settings ADD COLUMN currency_symbol "
+                "VARCHAR(8) NOT NULL DEFAULT '$'"
+            )
+        )
+    if "currency_decimals" not in columns:
+        db.session.execute(
+            text(
+                "ALTER TABLE company_settings ADD COLUMN currency_decimals "
+                "INTEGER NOT NULL DEFAULT 0"
+            )
+        )
+    db.session.commit()
+
+
 def ensure_customer_columns() -> None:
     """Backfill `customers.rut`/`shipping_address`/`segment_id` for
     databases created before Scoby's customer segmentation existed.

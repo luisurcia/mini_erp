@@ -26,7 +26,7 @@
         {% if settings.product_short_name_enabled %}<td>{{ product.short_name or "-" }}</td>{% endif %}
         {% if settings.product_sku_enabled %}<td>{{ product.sku }}</td>{% endif %}
         {% if settings.product_size_enabled %}<td>{{ product.size_ml }} ml</td>{% endif %}
-        <td>${{ "%.2f"|format(product.unit_price) }}</td>
+        <td>{{ format_money(product.unit_price) }}</td>
         <td>
           {% if product.is_active %}
           <span class="badge" style="background-color: var(--scoby-teal);">{{ _("Active") }}</span>
