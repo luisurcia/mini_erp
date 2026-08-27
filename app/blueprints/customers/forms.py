@@ -8,11 +8,16 @@ from app.models.customer_segment import CustomerSegment
 
 class CustomerForm(FlaskForm):
     name = StringField(_l("Name"), validators=[DataRequired(), Length(max=120)])
+    nickname = StringField(_l("Nickname"), validators=[Optional(), Length(max=80)])
     rut = StringField(_l("RUT"), validators=[DataRequired(), Length(max=20)])
     segment_id = SelectField(_l("Segment"), coerce=int, validators=[DataRequired()])
     email = StringField(_l("Email"), validators=[Optional(), Email(), Length(max=120)])
     phone = StringField(_l("Phone"), validators=[Optional(), Length(max=40)])
-    shipping_address = TextAreaField(_l("Shipping address"), validators=[Optional()])
+    shipping_street = StringField(_l("Street"), validators=[Optional(), Length(max=120)])
+    shipping_number = StringField(_l("Number"), validators=[Optional(), Length(max=20)])
+    shipping_city = StringField(_l("City"), validators=[Optional(), Length(max=80)])
+    shipping_commune = StringField(_l("Commune"), validators=[Optional(), Length(max=80)])
+    shipping_region = StringField(_l("Region"), validators=[Optional(), Length(max=80)])
     instagram_handle = StringField(
         _l("Instagram handle"), validators=[Optional(), Length(max=80)]
     )

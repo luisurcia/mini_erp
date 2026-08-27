@@ -179,6 +179,36 @@ def ensure_customer_columns() -> None:
     db.session.commit()
 
 
+def ensure_customer_nickname_and_structured_address() -> None:
+    """#41: add customers.nickname. #42: replace the free-text
+    shipping_address column with structured street/number/city/commune/
+    region columns.
+
+    The old free-text values are not parsed into the new fields — only
+    demo data ever used the column, and Scoby re-enters real addresses in
+    the structured form. SQLite 3.35+ (this deploy target is 3.45) supports
+    DROP COLUMN directly, so no table rebuild is needed.
+    """
+    inspector = inspect(db.engine)
+    columns = {column["name"] for column in inspector.get_columns("customers")}
+    if "nickname" not in columns:
+        db.session.execute(text("ALTER TABLE customers ADD COLUMN nickname VARCHAR(80)"))
+    for column in (
+        "shipping_street",
+        "shipping_number",
+        "shipping_city",
+        "shipping_commune",
+        "shipping_region",
+    ):
+        if column not in columns:
+            db.session.execute(
+                text(f"ALTER TABLE customers ADD COLUMN {column} VARCHAR(120)")
+            )
+    if "shipping_address" in columns:
+        db.session.execute(text("ALTER TABLE customers DROP COLUMN shipping_address"))
+    db.session.commit()
+
+
 def ensure_customer_segment_active_column() -> None:
     """Backfill `customer_segments.is_active` for databases created before
     segments could be deactivated instead of deleted.

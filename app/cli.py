@@ -11,6 +11,7 @@ from app.schema import (
     ensure_company_language_column,
     ensure_company_product_field_toggles,
     ensure_customer_columns,
+    ensure_customer_nickname_and_structured_address,
     ensure_customer_segment_active_column,
     ensure_inventory_item_warehouse_column,
     ensure_product_short_name_column,
@@ -43,6 +44,7 @@ def _upgrade_schema() -> None:
     ensure_company_product_field_toggles()
     ensure_company_currency_columns()
     ensure_customer_columns()
+    ensure_customer_nickname_and_structured_address()
     ensure_customer_segment_active_column()
     CustomerSegment.ensure_defaults()
     Warehouse.ensure_defaults()

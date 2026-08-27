@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-08-27 18:43-0400\n"
+"POT-Creation-Date: 2026-08-27 19:16-0400\n"
 "PO-Revision-Date: 2026-08-24 17:58-0400\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: es\n"
@@ -191,49 +191,69 @@ msgid "Segment '%(name)s' updated."
 msgstr "Segmento '%(name)s' actualizado."
 
 #: app/blueprints/customers/forms.py:11 app/templates/customers/index.html:14
+msgid "Nickname"
+msgstr "Sobrenombre"
+
+#: app/blueprints/customers/forms.py:12 app/templates/customers/index.html:15
 msgid "RUT"
 msgstr "RUT"
 
-#: app/blueprints/customers/forms.py:12 app/templates/customers/index.html:15
+#: app/blueprints/customers/forms.py:13 app/templates/customers/index.html:16
 #: app/templates/top_customers/index.html:26
 #: app/templates/top_customers/index.html:44
 msgid "Segment"
 msgstr "Segmento"
 
-#: app/blueprints/customers/forms.py:13 app/templates/customers/index.html:16
+#: app/blueprints/customers/forms.py:14 app/templates/customers/index.html:17
 msgid "Email"
 msgstr "Correo electrónico"
 
-#: app/blueprints/customers/forms.py:14 app/templates/customers/index.html:17
+#: app/blueprints/customers/forms.py:15 app/templates/customers/index.html:18
 msgid "Phone"
 msgstr "Teléfono"
 
-#: app/blueprints/customers/forms.py:15
-msgid "Shipping address"
-msgstr "Dirección de despacho"
+#: app/blueprints/customers/forms.py:16
+msgid "Street"
+msgstr "Calle"
 
-#: app/blueprints/customers/forms.py:17 app/templates/customers/index.html:18
+#: app/blueprints/customers/forms.py:17
+msgid "Number"
+msgstr "Número"
+
+#: app/blueprints/customers/forms.py:18
+msgid "City"
+msgstr "Ciudad"
+
+#: app/blueprints/customers/forms.py:19
+msgid "Commune"
+msgstr "Comuna"
+
+#: app/blueprints/customers/forms.py:20
+msgid "Region"
+msgstr "Región"
+
+#: app/blueprints/customers/forms.py:22 app/templates/customers/index.html:20
 msgid "Instagram handle"
 msgstr "Usuario de Instagram"
 
-#: app/blueprints/customers/forms.py:19
+#: app/blueprints/customers/forms.py:24
 msgid "Notes"
 msgstr "Notas"
 
-#: app/blueprints/customers/forms.py:20
+#: app/blueprints/customers/forms.py:25
 msgid "Save customer"
 msgstr "Guardar cliente"
 
-#: app/blueprints/customers/routes.py:40
+#: app/blueprints/customers/routes.py:45
 #, python-format
 msgid "Customer '%(name)s' created."
 msgstr "Cliente '%(name)s' creado."
 
-#: app/blueprints/customers/routes.py:52
+#: app/blueprints/customers/routes.py:57
 msgid "Customer not found."
 msgstr "Cliente no encontrado."
 
-#: app/blueprints/customers/routes.py:67
+#: app/blueprints/customers/routes.py:77
 #, python-format
 msgid "Customer '%(name)s' updated."
 msgstr "Cliente '%(name)s' actualizado."
@@ -615,7 +635,7 @@ msgid "Inactive"
 msgstr "Inactivo"
 
 #: app/templates/company/segments_list.html:30
-#: app/templates/customers/index.html:32
+#: app/templates/customers/index.html:36
 #: app/templates/inventory/warehouses_list.html:30
 #: app/templates/products/index.html:38 app/templates/supplies/index.html:37
 #: app/templates/users/index.html:18
@@ -645,7 +665,11 @@ msgstr "Editar cliente"
 msgid "New customer"
 msgstr "Nuevo cliente"
 
-#: app/templates/customers/index.html:36
+#: app/templates/customers/index.html:19
+msgid "Shipping address"
+msgstr "Dirección de despacho"
+
+#: app/templates/customers/index.html:40
 msgid "No customers yet."
 msgstr "Aún no hay clientes."
 

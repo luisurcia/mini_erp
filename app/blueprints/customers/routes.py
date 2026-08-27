@@ -27,10 +27,15 @@ def new_customer():
     if form.validate_on_submit():
         customer = Customer(
             name=form.name.data,
+            nickname=form.nickname.data or None,
             rut=form.rut.data,
             email=form.email.data or None,
             phone=form.phone.data or None,
-            shipping_address=form.shipping_address.data or None,
+            shipping_street=form.shipping_street.data or None,
+            shipping_number=form.shipping_number.data or None,
+            shipping_city=form.shipping_city.data or None,
+            shipping_commune=form.shipping_commune.data or None,
+            shipping_region=form.shipping_region.data or None,
             segment_id=form.segment_id.data,
             instagram_handle=form.instagram_handle.data or None,
             notes=form.notes.data or None,
@@ -56,10 +61,15 @@ def edit_customer(customer_id):
 
     if form.validate_on_submit():
         customer.name = form.name.data
+        customer.nickname = form.nickname.data or None
         customer.rut = form.rut.data
         customer.email = form.email.data or None
         customer.phone = form.phone.data or None
-        customer.shipping_address = form.shipping_address.data or None
+        customer.shipping_street = form.shipping_street.data or None
+        customer.shipping_number = form.shipping_number.data or None
+        customer.shipping_city = form.shipping_city.data or None
+        customer.shipping_commune = form.shipping_commune.data or None
+        customer.shipping_region = form.shipping_region.data or None
         customer.segment_id = form.segment_id.data
         customer.instagram_handle = form.instagram_handle.data or None
         customer.notes = form.notes.data or None
