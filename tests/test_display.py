@@ -1,6 +1,6 @@
 from decimal import Decimal
 
-from app.display import format_money
+from app.display import format_money, product_label
 from app.extensions import db
 from app.models.company import Company
 
@@ -28,3 +28,30 @@ def test_format_money_respects_decimals_and_symbol(app):
 
     assert format_money(Decimal("1234.5")) == "US$1.234,50"
     assert format_money(1000) == "US$1.000,00"
+
+
+def test_product_label_includes_flavor_by_default(app, product):
+    company = Company.get_settings()
+    company.product_size_enabled = False
+    db.session.commit()
+
+    assert product_label(product) == "Original - Kombucha"
+
+
+def test_product_label_omits_flavor_when_company_hides_it(app, product):
+    company = Company.get_settings()
+    company.product_flavor_enabled = False
+    company.product_size_enabled = False
+    db.session.commit()
+
+    assert product_label(product) == "Kombucha"
+
+
+def test_product_label_omits_flavor_when_product_has_none(app, product):
+    company = Company.get_settings()
+    company.product_size_enabled = False
+    db.session.commit()
+    product.flavor_id = None
+    db.session.commit()
+
+    assert product_label(product) == "Kombucha"

@@ -19,6 +19,35 @@ def ensure_product_short_name_column() -> None:
         db.session.commit()
 
 
+def ensure_products_optional_columns_nullable() -> None:
+    """Make `products.flavor_id` and `products.unit_price` nullable for
+    databases created before those fields became hideable (#37, #38).
+
+    SQLite can't ALTER a column's NOT NULL constraint, so rebuild the
+    table: rename aside, recreate from the current model via create_all(),
+    copy every row across (ids and all column values preserved), drop the
+    old table. FK enforcement is off (PRAGMA foreign_keys = 0) and row ids
+    are unchanged, so the inventory_items / sale_items / stock_movements
+    references to products.id stay valid.
+    """
+    inspector = inspect(db.engine)
+    by_name = {c["name"]: c for c in inspector.get_columns("products")}
+    already_nullable = by_name["flavor_id"]["nullable"] and by_name["unit_price"]["nullable"]
+    if already_nullable:
+        return
+
+    cols = (
+        "id, flavor_id, name, short_name, sku, size_ml, unit_price, is_active, "
+        "created_at, updated_at"
+    )
+    db.session.execute(text("ALTER TABLE products RENAME TO products_old"))
+    db.session.commit()
+    db.create_all()
+    db.session.execute(text(f"INSERT INTO products ({cols}) SELECT {cols} FROM products_old"))
+    db.session.execute(text("DROP TABLE products_old"))
+    db.session.commit()
+
+
 def ensure_sale_invoice_number_column() -> None:
     """Backfill `sales.invoice_number` for databases created before it existed.
 
@@ -87,6 +116,8 @@ def ensure_company_product_field_toggles() -> None:
         "product_short_name_enabled",
         "product_size_enabled",
         "product_sku_enabled",
+        "product_flavor_enabled",
+        "product_price_enabled",
     ):
         if name not in columns:
             db.session.execute(

@@ -23,6 +23,8 @@ def settings():
         company.product_short_name_enabled = form.product_short_name_enabled.data
         company.product_size_enabled = form.product_size_enabled.data
         company.product_sku_enabled = form.product_sku_enabled.data
+        company.product_flavor_enabled = form.product_flavor_enabled.data
+        company.product_price_enabled = form.product_price_enabled.data
         company.language = form.language.data
         company.currency_code = form.currency_code.data
         company.currency_symbol = form.currency_symbol.data

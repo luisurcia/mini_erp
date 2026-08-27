@@ -3,7 +3,7 @@ from datetime import UTC, datetime
 from decimal import Decimal
 
 from app.display import product_label
-from app.exceptions import NotFoundError
+from app.exceptions import MiniErpError, NotFoundError
 from app.models.company import Company
 from app.models.inventory import StockMovement
 from app.models.sales import Sale, SaleItem
@@ -64,6 +64,11 @@ class SalesService:
             unit_price = line.get("unit_price")
             if unit_price is None:
                 unit_price = product.unit_price
+            if unit_price is None:
+                raise MiniErpError(
+                    f"No unit price for '{product_label(product)}'. Enter a price on "
+                    f"the sale line (this product has no catalog price)."
+                )
             warehouse_id = line.get("warehouse_id")
             if warehouse_id is None:
                 if default_warehouse_id is None:

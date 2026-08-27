@@ -4,10 +4,11 @@ from decimal import Decimal
 import pytest
 
 from app.display import product_label
-from app.exceptions import InsufficientStockError
+from app.exceptions import InsufficientStockError, MiniErpError
 from app.extensions import db
 from app.models.company import Company
 from app.models.customer import Customer
+from app.repositories.sales_repository import SalesRepository
 from app.services.inventory_service import InventoryService
 from app.services.sales_service import SalesService
 
@@ -45,6 +46,22 @@ def test_record_sale_requires_at_least_one_item(app, customer):
     service = SalesService()
     with pytest.raises(ValueError):
         service.record_sale(customer_id=customer.id, items=[])
+
+
+def test_record_sale_without_line_or_catalog_price_raises(app, customer, product):
+    """When the product has no catalog price (#38) the sale line must
+    carry one; otherwise the sale is rejected, not saved with a null."""
+    product.unit_price = None
+    db.session.commit()
+
+    service = SalesService()
+    with pytest.raises(MiniErpError):
+        service.record_sale(
+            customer_id=customer.id,
+            items=[{"product_id": product.id, "quantity": 2}],
+        )
+
+    assert len(SalesRepository().get_all()) == 0
 
 
 def test_record_sale_without_tax_leaves_total_equal_to_subtotal(app, customer, product):

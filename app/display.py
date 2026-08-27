@@ -25,10 +25,14 @@ def format_money(value, settings: Company | None = None) -> str:
 
 
 def product_label(product: Product, settings: Company | None = None) -> str:
-    """Product name for pickers/lists: flavor + name, size only if the
+    """Product name for pickers/lists: flavor + name (flavor only when the
+    company still uses it and this product has one), size only if the
     company still asks for it on the product form."""
     settings = settings or Company.get_settings()
-    label = f"{product.flavor.name} - {product.name}"
+    if settings.product_flavor_enabled and product.flavor is not None:
+        label = f"{product.flavor.name} - {product.name}"
+    else:
+        label = product.name
     if settings.product_size_enabled:
         label += f" ({product.size_ml}ml)"
     return label

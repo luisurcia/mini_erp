@@ -26,12 +26,16 @@ class Company(BaseModel):
     currency_symbol = db.Column(db.String(8), nullable=False, default="$")
     currency_decimals = db.Column(db.Integer, nullable=False, default=0)
 
-    # Per-field visibility on the "new/edit product" form. Unit price is
-    # never toggleable: Sales reads it directly off the product, so a
-    # product without one can't be sold.
+    # Per-field visibility on the "new/edit product" form. A hidden field
+    # is dropped from the form entirely and its column left null/derived.
+    # Price can be hidden too (#38): since #23 every real Sale line carries
+    # its own price, so a catalog price is optional — Scoby enters it per
+    # sale. Flavor likewise (#37): Scoby folds the flavor into the name.
     product_short_name_enabled = db.Column(db.Boolean, nullable=False, default=True)
     product_size_enabled = db.Column(db.Boolean, nullable=False, default=True)
     product_sku_enabled = db.Column(db.Boolean, nullable=False, default=True)
+    product_flavor_enabled = db.Column(db.Boolean, nullable=False, default=True)
+    product_price_enabled = db.Column(db.Boolean, nullable=False, default=True)
 
     @property
     def money_quantum(self) -> Decimal:

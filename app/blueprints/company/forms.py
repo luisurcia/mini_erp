@@ -27,6 +27,12 @@ class CompanySettingsForm(FlaskForm):
     product_sku_enabled = BooleanField(
         _l("Ask for a SKU when creating a product")
     )
+    product_flavor_enabled = BooleanField(
+        _l("Ask for a flavor when creating a product")
+    )
+    product_price_enabled = BooleanField(
+        _l("Ask for a unit price when creating a product")
+    )
     language = SelectField(
         _l("Language"),
         choices=[(Company.LANGUAGE_ES, "Español"), (Company.LANGUAGE_EN, "English")],

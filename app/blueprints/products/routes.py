@@ -40,6 +40,10 @@ def _apply_product_field_visibility(form: ProductForm, settings: Company) -> Non
         del form.size_ml
     if not settings.product_sku_enabled:
         del form.sku
+    if not settings.product_flavor_enabled:
+        del form.flavor_id
+    if not settings.product_price_enabled:
+        del form.unit_price
 
 
 def _generate_sku(product_name: str, size_ml: int) -> str:
@@ -58,8 +62,9 @@ def _generate_sku(product_name: str, size_ml: int) -> str:
 def new_product():
     settings = Company.get_settings()
     form = ProductForm()
-    form.flavor_id.choices = _flavor_choices()
     _apply_product_field_visibility(form, settings)
+    if settings.product_flavor_enabled:
+        form.flavor_id.choices = _flavor_choices()
 
     if form.validate_on_submit():
         size_ml = form.size_ml.data if settings.product_size_enabled else DEFAULT_SIZE_ML
@@ -70,12 +75,12 @@ def new_product():
         )
         short_name = form.short_name.data or None if settings.product_short_name_enabled else None
         product = Product(
-            flavor_id=form.flavor_id.data,
+            flavor_id=form.flavor_id.data if settings.product_flavor_enabled else None,
             name=form.name.data,
             short_name=short_name,
             sku=sku,
             size_ml=size_ml,
-            unit_price=form.unit_price.data,
+            unit_price=form.unit_price.data if settings.product_price_enabled else None,
             is_active=form.is_active.data,
         )
         ProductRepository().add(product)
@@ -97,19 +102,22 @@ def edit_product(product_id):
 
     settings = Company.get_settings()
     form = ProductForm(obj=product)
-    form.flavor_id.choices = _flavor_choices()
     _apply_product_field_visibility(form, settings)
+    if settings.product_flavor_enabled:
+        form.flavor_id.choices = _flavor_choices()
 
     if form.validate_on_submit():
-        product.flavor_id = form.flavor_id.data
         product.name = form.name.data
+        if settings.product_flavor_enabled:
+            product.flavor_id = form.flavor_id.data
         if settings.product_short_name_enabled:
             product.short_name = form.short_name.data or None
         if settings.product_sku_enabled:
             product.sku = form.sku.data
         if settings.product_size_enabled:
             product.size_ml = form.size_ml.data
-        product.unit_price = form.unit_price.data
+        if settings.product_price_enabled:
+            product.unit_price = form.unit_price.data
         product.is_active = form.is_active.data
         ProductRepository().commit()
         flash(_("Product '%(name)s' updated.", name=product_label(product)), "success")

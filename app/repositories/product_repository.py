@@ -12,9 +12,11 @@ class ProductRepository(Repository[Product]):
         super().__init__(Product)
 
     def get_active(self) -> list[Product]:
+        # outerjoin, not join: a product may have no flavor when the
+        # company has hidden that field (#37).
         return (
             Product.query.filter_by(is_active=True)
-            .join(Flavor)
+            .outerjoin(Flavor)
             .order_by(Flavor.name, Product.name)
             .all()
         )

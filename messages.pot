@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-08-27 17:29-0400\n"
+"POT-Creation-Date: 2026-08-27 18:19-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -113,34 +113,42 @@ msgid "Ask for a SKU when creating a product"
 msgstr ""
 
 #: app/blueprints/company/forms.py:31
+msgid "Ask for a flavor when creating a product"
+msgstr ""
+
+#: app/blueprints/company/forms.py:34
+msgid "Ask for a unit price when creating a product"
+msgstr ""
+
+#: app/blueprints/company/forms.py:37
 msgid "Language"
 msgstr ""
 
-#: app/blueprints/company/forms.py:36
+#: app/blueprints/company/forms.py:42
 msgid "Currency code"
 msgstr ""
 
-#: app/blueprints/company/forms.py:39
+#: app/blueprints/company/forms.py:45
 msgid "ISO code, e.g. CLP, USD, EUR."
 msgstr ""
 
-#: app/blueprints/company/forms.py:42
+#: app/blueprints/company/forms.py:48
 msgid "Currency symbol"
 msgstr ""
 
-#: app/blueprints/company/forms.py:45
+#: app/blueprints/company/forms.py:51
 msgid "Decimal places shown for amounts"
 msgstr ""
 
-#: app/blueprints/company/forms.py:47
+#: app/blueprints/company/forms.py:53
 msgid "Chilean pesos (CLP) use 0 — no decimals anywhere in the app."
 msgstr ""
 
-#: app/blueprints/company/forms.py:49
+#: app/blueprints/company/forms.py:55
 msgid "Save settings"
 msgstr ""
 
-#: app/blueprints/company/forms.py:53 app/blueprints/customers/forms.py:10
+#: app/blueprints/company/forms.py:59 app/blueprints/customers/forms.py:10
 #: app/blueprints/inventory/forms.py:26 app/blueprints/supplies/forms.py:11
 #: app/templates/company/segments_list.html:13
 #: app/templates/customers/index.html:13
@@ -149,7 +157,7 @@ msgstr ""
 msgid "Name"
 msgstr ""
 
-#: app/blueprints/company/forms.py:54 app/blueprints/inventory/forms.py:27
+#: app/blueprints/company/forms.py:60 app/blueprints/inventory/forms.py:27
 #: app/blueprints/products/forms.py:23 app/blueprints/supplies/forms.py:16
 #: app/templates/company/segments_list.html:24
 #: app/templates/inventory/warehouses_list.html:24
@@ -157,24 +165,24 @@ msgstr ""
 msgid "Active"
 msgstr ""
 
-#: app/blueprints/company/forms.py:55
+#: app/blueprints/company/forms.py:61
 msgid "Save segment"
 msgstr ""
 
-#: app/blueprints/company/routes.py:31
+#: app/blueprints/company/routes.py:33
 msgid "Company settings updated."
 msgstr ""
 
-#: app/blueprints/company/routes.py:54
+#: app/blueprints/company/routes.py:56
 #, python-format
 msgid "Segment '%(name)s' created."
 msgstr ""
 
-#: app/blueprints/company/routes.py:66
+#: app/blueprints/company/routes.py:68
 msgid "Segment not found."
 msgstr ""
 
-#: app/blueprints/company/routes.py:75
+#: app/blueprints/company/routes.py:77
 #, python-format
 msgid "Segment '%(name)s' updated."
 msgstr ""
@@ -308,7 +316,7 @@ msgid "Save warehouse"
 msgstr ""
 
 #: app/blueprints/inventory/forms.py:32 app/templates/dashboard/index.html:75
-#: app/templates/sales/detail.html:13
+#: app/templates/products/index.html:13 app/templates/sales/detail.html:13
 msgid "Product"
 msgstr ""
 
@@ -346,7 +354,7 @@ msgstr ""
 msgid "Transferred %(qty)s units of %(name)s from %(from_wh)s to %(to_wh)s."
 msgstr ""
 
-#: app/blueprints/inventory/routes.py:145 app/blueprints/products/routes.py:95
+#: app/blueprints/inventory/routes.py:145 app/blueprints/products/routes.py:100
 msgid "Product not found."
 msgstr ""
 
@@ -393,12 +401,12 @@ msgstr ""
 msgid "Save product"
 msgstr ""
 
-#: app/blueprints/products/routes.py:83
+#: app/blueprints/products/routes.py:88
 #, python-format
 msgid "Product '%(name)s' created."
 msgstr ""
 
-#: app/blueprints/products/routes.py:115
+#: app/blueprints/products/routes.py:123
 #, python-format
 msgid "Product '%(name)s' updated."
 msgstr ""
