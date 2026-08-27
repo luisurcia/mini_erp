@@ -113,6 +113,22 @@ def ensure_customer_columns() -> None:
     db.session.commit()
 
 
+def ensure_customer_segment_active_column() -> None:
+    """Backfill `customer_segments.is_active` for databases created before
+    segments could be deactivated instead of deleted.
+
+    Defaults to 1 (active) so upgrading doesn't silently hide segments
+    already in use by existing customers.
+    """
+    inspector = inspect(db.engine)
+    columns = {column["name"] for column in inspector.get_columns("customer_segments")}
+    if "is_active" not in columns:
+        db.session.execute(
+            text("ALTER TABLE customer_segments ADD COLUMN is_active BOOLEAN NOT NULL DEFAULT 1")
+        )
+        db.session.commit()
+
+
 def ensure_user_role_column() -> None:
     """Backfill `users.role` for databases created before roles existed.
 

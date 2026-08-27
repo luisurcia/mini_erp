@@ -50,7 +50,7 @@ def edit_customer(customer_id):
         flash(_("Customer not found."), "danger")
         return redirect(url_for("customers.index"))
 
-    form = CustomerForm(obj=customer)
+    form = CustomerForm(obj=customer, customer=customer)
 
     if form.validate_on_submit():
         customer.name = form.name.data

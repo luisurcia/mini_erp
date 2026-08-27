@@ -9,6 +9,7 @@ from app.schema import (
     ensure_company_language_column,
     ensure_company_product_field_toggles,
     ensure_customer_columns,
+    ensure_customer_segment_active_column,
     ensure_product_short_name_column,
     ensure_sale_invoice_number_column,
     ensure_sale_tax_columns,
@@ -28,6 +29,7 @@ def register_cli(app: Flask) -> None:
         ensure_company_language_column()
         ensure_company_product_field_toggles()
         ensure_customer_columns()
+        ensure_customer_segment_active_column()
         CustomerSegment.ensure_defaults()
         click.echo("Database tables created.")
 
@@ -44,6 +46,7 @@ def register_cli(app: Flask) -> None:
         ensure_company_language_column()
         ensure_company_product_field_toggles()
         ensure_customer_columns()
+        ensure_customer_segment_active_column()
         CustomerSegment.ensure_defaults()
         seed_demo_data(app)
         click.echo("Demo data seeded.")

@@ -19,9 +19,14 @@ class CustomerForm(FlaskForm):
     notes = TextAreaField(_l("Notes"), validators=[Optional()])
     submit = SubmitField(_l("Save customer"))
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, *args, customer=None, **kwargs):
         super().__init__(*args, **kwargs)
-        self.segment_id.choices = [
-            (segment.id, segment.name)
-            for segment in CustomerSegment.query.order_by(CustomerSegment.id).all()
-        ]
+        segments = list(
+            CustomerSegment.query.filter_by(is_active=True).order_by(CustomerSegment.id).all()
+        )
+        # Keep the customer's current segment selectable even if it's since
+        # been deactivated, so editing them doesn't silently reassign it.
+        if customer is not None and customer.segment is not None:
+            if not any(segment.id == customer.segment_id for segment in segments):
+                segments.append(customer.segment)
+        self.segment_id.choices = [(segment.id, segment.name) for segment in segments]

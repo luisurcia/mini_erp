@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-08-26 22:37-0400\n"
+"POT-Creation-Date: 2026-08-26 22:54-0400\n"
 "PO-Revision-Date: 2026-08-24 17:58-0400\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: en\n"
@@ -146,7 +146,12 @@ msgstr "Save settings"
 msgid "Name"
 msgstr "Name"
 
-#: app/blueprints/company/forms.py:33
+#: app/blueprints/company/forms.py:33 app/blueprints/inventory/forms.py:34
+#: app/templates/company/segments_list.html:24
+msgid "Active"
+msgstr "Active"
+
+#: app/blueprints/company/forms.py:34
 msgid "Save segment"
 msgstr "Save segment"
 
@@ -163,7 +168,7 @@ msgstr "Segment '%(name)s' created."
 msgid "Segment not found."
 msgstr "Segment not found."
 
-#: app/blueprints/company/routes.py:71
+#: app/blueprints/company/routes.py:72
 #, python-format
 msgid "Segment '%(name)s' updated."
 msgstr "Segment '%(name)s' updated."
@@ -296,10 +301,6 @@ msgstr "Initial stock"
 msgid "Reorder level"
 msgstr "Reorder level"
 
-#: app/blueprints/inventory/forms.py:34
-msgid "Active"
-msgstr "Active"
-
 #: app/blueprints/inventory/forms.py:35
 msgid "Save product"
 msgstr "Save product"
@@ -384,8 +385,8 @@ msgstr "Stage updated."
 msgid "Converted to Sale #%(id)s."
 msgstr "Converted to Sale #%(id)s."
 
-#: app/blueprints/sales/forms.py:12 app/templates/inventory/index.html:22
-#: app/templates/sales/index.html:13
+#: app/blueprints/sales/forms.py:12 app/templates/company/segments_list.html:14
+#: app/templates/inventory/index.html:22 app/templates/sales/index.html:13
 msgid "Status"
 msgstr "Status"
 
@@ -519,13 +520,18 @@ msgstr "New segment"
 msgid "Customer segments"
 msgstr "Customer segments"
 
-#: app/templates/company/segments_list.html:22
+#: app/templates/company/segments_list.html:26
+#: app/templates/inventory/index.html:38
+msgid "Inactive"
+msgstr "Inactive"
+
+#: app/templates/company/segments_list.html:30
 #: app/templates/customers/index.html:35 app/templates/inventory/index.html:48
 #: app/templates/users/index.html:18
 msgid "Edit"
 msgstr "Edit"
 
-#: app/templates/company/segments_list.html:26
+#: app/templates/company/segments_list.html:34
 msgid "No segments yet."
 msgstr "No segments yet."
 
@@ -697,10 +703,6 @@ msgstr "Size"
 #: app/templates/inventory/index.html:19
 msgid "Price"
 msgstr "Price"
-
-#: app/templates/inventory/index.html:38
-msgid "Inactive"
-msgstr "Inactive"
 
 #: app/templates/inventory/index.html:42
 msgid "OK"

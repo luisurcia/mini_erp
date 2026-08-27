@@ -11,6 +11,7 @@
     <thead>
       <tr>
         <th>{{ _("Name") }}</th>
+        <th>{{ _("Status") }}</th>
         <th></th>
       </tr>
     </thead>
@@ -18,12 +19,19 @@
       {% for segment in segments %}
       <tr>
         <td>{{ segment.name }}</td>
+        <td>
+          {% if segment.is_active %}
+          <span class="badge bg-success">{{ _("Active") }}</span>
+          {% else %}
+          <span class="badge bg-secondary">{{ _("Inactive") }}</span>
+          {% endif %}
+        </td>
         <td class="text-end">
           <a class="btn btn-sm btn-outline-secondary" href="{{ url_for('company.edit_segment', segment_id=segment.id) }}">{{ _("Edit") }}</a>
         </td>
       </tr>
       {% else %}
-      <tr><td colspan="2" class="text-muted text-center py-4">{{ _("No segments yet.") }}</td></tr>
+      <tr><td colspan="3" class="text-muted text-center py-4">{{ _("No segments yet.") }}</td></tr>
       {% endfor %}
     </tbody>
   </table>

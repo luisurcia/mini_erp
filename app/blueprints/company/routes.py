@@ -46,7 +46,7 @@ def new_segment():
     form = CustomerSegmentForm()
 
     if form.validate_on_submit():
-        db.session.add(CustomerSegment(name=form.name.data))
+        db.session.add(CustomerSegment(name=form.name.data, is_active=form.is_active.data))
         db.session.commit()
         flash(_("Segment '%(name)s' created.", name=form.name.data), "success")
         return redirect(url_for("company.segments"))
@@ -67,6 +67,7 @@ def edit_segment(segment_id):
 
     if form.validate_on_submit():
         segment.name = form.name.data
+        segment.is_active = form.is_active.data
         db.session.commit()
         flash(_("Segment '%(name)s' updated.", name=segment.name), "success")
         return redirect(url_for("company.segments"))

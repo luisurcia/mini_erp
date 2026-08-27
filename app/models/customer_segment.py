@@ -15,6 +15,7 @@ class CustomerSegment(BaseModel):
     DEFAULTS = ["Persona natural", "Comercio", "Distribuidor", "Otros"]
 
     name = db.Column(db.String(60), unique=True, nullable=False)
+    is_active = db.Column(db.Boolean, nullable=False, default=True)
 
     @classmethod
     def ensure_defaults(cls) -> None:
