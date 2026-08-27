@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-08-27 00:10-0400\n"
+"POT-Creation-Date: 2026-08-27 00:41-0400\n"
 "PO-Revision-Date: 2026-08-24 17:58-0400\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: en\n"
@@ -18,63 +18,63 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.18.0\n"
 
-#: app/__init__.py:72
+#: app/__init__.py:73
 msgid "Completed"
 msgstr "Completed"
 
-#: app/__init__.py:73
+#: app/__init__.py:74
 msgid "Pending"
 msgstr "Pending"
 
-#: app/__init__.py:74
+#: app/__init__.py:75
 msgid "Cancelled"
 msgstr "Cancelled"
 
-#: app/__init__.py:85 app/blueprints/opportunities/forms.py:34
+#: app/__init__.py:86 app/blueprints/opportunities/forms.py:34
 msgid "New"
 msgstr "New"
 
-#: app/__init__.py:86 app/blueprints/opportunities/forms.py:35
+#: app/__init__.py:87 app/blueprints/opportunities/forms.py:35
 msgid "Contacted"
 msgstr "Contacted"
 
-#: app/__init__.py:87 app/blueprints/opportunities/forms.py:36
+#: app/__init__.py:88 app/blueprints/opportunities/forms.py:36
 msgid "Quoted"
 msgstr "Quoted"
 
-#: app/__init__.py:88
+#: app/__init__.py:89
 msgid "Won"
 msgstr "Won"
 
-#: app/__init__.py:89 app/blueprints/opportunities/forms.py:37
+#: app/__init__.py:90 app/blueprints/opportunities/forms.py:37
 msgid "Lost"
 msgstr "Lost"
 
-#: app/__init__.py:100 app/blueprints/opportunities/forms.py:20
+#: app/__init__.py:101 app/blueprints/opportunities/forms.py:20
 msgid "Instagram DM"
 msgstr "Instagram DM"
 
-#: app/__init__.py:101 app/blueprints/opportunities/forms.py:21
+#: app/__init__.py:102 app/blueprints/opportunities/forms.py:21
 msgid "Website"
 msgstr "Website"
 
-#: app/__init__.py:102 app/blueprints/opportunities/forms.py:22
+#: app/__init__.py:103 app/blueprints/opportunities/forms.py:22
 msgid "Referral"
 msgstr "Referral"
 
-#: app/__init__.py:103 app/blueprints/opportunities/forms.py:23
+#: app/__init__.py:104 app/blueprints/opportunities/forms.py:23
 msgid "Other"
 msgstr "Other"
 
-#: app/__init__.py:120 app/templates/inventory/restock_form.html:3
+#: app/__init__.py:121 app/templates/inventory/restock_form.html:3
 msgid "Restock"
 msgstr "Restock"
 
-#: app/__init__.py:121
+#: app/__init__.py:122
 msgid "Sale"
 msgstr "Sale"
 
-#: app/__init__.py:122
+#: app/__init__.py:123
 msgid "Adjustment"
 msgstr "Adjustment"
 
@@ -403,6 +403,7 @@ msgid "Size (ml)"
 msgstr "Size (ml)"
 
 #: app/blueprints/products/forms.py:21 app/templates/sales/detail.html:13
+#: app/templates/sales/sale_form.html:33
 msgid "Unit price"
 msgstr "Unit price"
 
@@ -436,18 +437,23 @@ msgstr "Invoice number"
 msgid "Record sale"
 msgstr "Record sale"
 
-#: app/blueprints/sales/routes.py:39
+#: app/blueprints/sales/routes.py:50
 msgid "Add at least one product line to the sale."
 msgstr "Add at least one product line to the sale."
 
-#: app/blueprints/sales/routes.py:49
+#: app/blueprints/sales/routes.py:60
 #, python-format
 msgid "Sale #%(id)s recorded."
 msgstr "Sale #%(id)s recorded."
 
-#: app/blueprints/sales/routes.py:62
+#: app/blueprints/sales/routes.py:80
 msgid "Sale not found."
 msgstr "Sale not found."
+
+#: app/blueprints/sales/routes.py:124
+#, python-format
+msgid "Enter a unit price for %(name)s."
+msgstr "Enter a unit price for %(name)s."
 
 #: app/blueprints/users/forms.py:9
 msgid "Admin"
@@ -669,7 +675,6 @@ msgstr "Low stock"
 #: app/templates/dashboard/index.html:100
 #: app/templates/dashboard/index.html:121
 #: app/templates/opportunities/index.html:22 app/templates/sales/detail.html:13
-#: app/templates/sales/sale_form.html:16
 msgid "Product"
 msgstr "Product"
 
@@ -718,7 +723,7 @@ msgstr "Stock history: %(name)s"
 msgid "Date"
 msgstr "Date"
 
-#: app/templates/inventory/history.html:7
+#: app/templates/inventory/history.html:7 app/templates/sales/detail.html:13
 msgid "Warehouse"
 msgstr "Warehouse"
 
@@ -748,7 +753,8 @@ msgid "Flavor / Product"
 msgstr "Flavor / Product"
 
 #: app/templates/inventory/index.html:17 app/templates/inventory/index.html:54
-#: app/templates/sales/detail.html:29 app/templates/sales/index.html:13
+#: app/templates/sales/detail.html:30 app/templates/sales/index.html:13
+#: app/templates/sales/sale_form.html:76
 msgid "Total"
 msgstr "Total"
 
@@ -883,16 +889,17 @@ msgstr "Invoice number:"
 msgid "Notes:"
 msgstr "Notes:"
 
-#: app/templates/sales/detail.html:13 app/templates/sales/detail.html:25
+#: app/templates/sales/detail.html:13 app/templates/sales/detail.html:26
+#: app/templates/sales/sale_form.html:67
 msgid "Subtotal"
 msgstr "Subtotal"
 
-#: app/templates/sales/detail.html:27
+#: app/templates/sales/detail.html:28 app/templates/sales/sale_form.html:71
 #, python-format
 msgid "IVA (%(rate)s%%)"
 msgstr "IVA (%(rate)s%%)"
 
-#: app/templates/sales/detail.html:33
+#: app/templates/sales/detail.html:34
 msgid "Back to sales"
 msgstr "Back to sales"
 
@@ -917,13 +924,24 @@ msgstr "No sales recorded yet."
 msgid "Line items"
 msgstr "Line items"
 
-#: app/templates/sales/sale_form.html:16
-msgid "Quantity"
-msgstr "Quantity"
+#: app/templates/sales/sale_form.html:17
+msgid ""
+"Tip: the unit price you type in the first column fills the rest of the "
+"row for you — edit any single one afterward if a product needs a "
+"different price."
+msgstr ""
+"Tip: the unit price you type in the first column fills the rest of the "
+"row for you — edit any single one afterward if a product needs a "
+"different price."
 
-#: app/templates/sales/sale_form.html:31
-msgid "Add line"
-msgstr "Add line"
+#: app/templates/sales/sale_form.html:49
+#, python-format
+msgid "Available: %(qty)s"
+msgstr "Available: %(qty)s"
+
+#: app/templates/sales/sale_form.html:56
+msgid "No active products."
+msgstr "No active products."
 
 #: app/templates/users/index.html:6 app/templates/users/user_form.html:3
 #: app/templates/users/user_form.html:8
@@ -956,4 +974,10 @@ msgstr "Leave the password fields blank to keep the current password."
 
 #~ msgid "OK"
 #~ msgstr "OK"
+
+#~ msgid "Quantity"
+#~ msgstr "Quantity"
+
+#~ msgid "Add line"
+#~ msgstr "Add line"
 

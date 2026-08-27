@@ -14,3 +14,13 @@ def product_label(product: Product, settings: Company | None = None) -> str:
     if settings.product_size_enabled:
         label += f" ({product.size_ml}ml)"
     return label
+
+
+def product_short_label(product: Product, settings: Company | None = None) -> str:
+    """Compact product label for tight spaces (e.g. a grid column header):
+    the product's short name, falling back to the full label when short
+    names are off or this product doesn't have one."""
+    settings = settings or Company.get_settings()
+    if settings.product_short_name_enabled and product.short_name:
+        return product.short_name
+    return product_label(product, settings)

@@ -50,11 +50,15 @@ class SaleItem(BaseModel):
 
     sale_id = db.Column(db.Integer, db.ForeignKey("sales.id"), nullable=False)
     product_id = db.Column(db.Integer, db.ForeignKey("products.id"), nullable=False)
+    # Nullable: which warehouse a line was drawn from wasn't tracked before
+    # Sales became warehouse-aware (#24) — historical lines have none.
+    warehouse_id = db.Column(db.Integer, db.ForeignKey("warehouses.id"), nullable=True)
     quantity = db.Column(db.Integer, nullable=False)
     unit_price = db.Column(db.Numeric(10, 2), nullable=False)
 
     sale = db.relationship("Sale", back_populates="items")
     product = db.relationship("Product")
+    warehouse = db.relationship("Warehouse")
 
     @property
     def subtotal(self):

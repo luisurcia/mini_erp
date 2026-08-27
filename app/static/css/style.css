@@ -71,6 +71,11 @@ body {
   background-color: #f7ecd2 !important;
 }
 
+.stock-hint {
+  color: var(--scoby-teal);
+  font-weight: 600;
+}
+
 .badge-stage-new { background-color: var(--scoby-warm-gray); }
 .badge-stage-contacted { background-color: #3f7fbf; }
 .badge-stage-quoted { background-color: var(--scoby-orange); }

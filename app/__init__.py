@@ -42,13 +42,14 @@ def create_app(config_class: type = Config) -> Flask:
     def inject_locale():
         return {"current_locale": str(get_locale())}
 
-    from app.display import product_label
+    from app.display import product_label, product_short_label
 
     app.jinja_env.globals["sale_status_label"] = _sale_status_label
     app.jinja_env.globals["opportunity_stage_label"] = _opportunity_stage_label
     app.jinja_env.globals["opportunity_source_label"] = _opportunity_source_label
     app.jinja_env.globals["user_role_label"] = _user_role_label
     app.jinja_env.globals["product_label"] = product_label
+    app.jinja_env.globals["product_short_label"] = product_short_label
     app.jinja_env.globals["stock_movement_reason_label"] = _stock_movement_reason_label
 
     _register_blueprints(app)

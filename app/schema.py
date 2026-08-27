@@ -189,6 +189,22 @@ def ensure_stock_movement_warehouse_column() -> None:
         db.session.commit()
 
 
+def ensure_sale_item_warehouse_column() -> None:
+    """Backfill `sale_items.warehouse_id` for databases created before
+    Sales picked a warehouse per line (#23/#24).
+
+    Left NULL for existing rows — sales recorded before then genuinely
+    don't have one, no default to backfill them with.
+    """
+    inspector = inspect(db.engine)
+    columns = {column["name"] for column in inspector.get_columns("sale_items")}
+    if "warehouse_id" not in columns:
+        db.session.execute(
+            text("ALTER TABLE sale_items ADD COLUMN warehouse_id INTEGER")
+        )
+        db.session.commit()
+
+
 def ensure_user_role_column() -> None:
     """Backfill `users.role` for databases created before roles existed.
 

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-08-27 00:10-0400\n"
+"POT-Creation-Date: 2026-08-27 00:41-0400\n"
 "PO-Revision-Date: 2026-08-24 17:58-0400\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: es\n"
@@ -18,63 +18,63 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.18.0\n"
 
-#: app/__init__.py:72
+#: app/__init__.py:73
 msgid "Completed"
 msgstr "Completado"
 
-#: app/__init__.py:73
+#: app/__init__.py:74
 msgid "Pending"
 msgstr "Pendiente"
 
-#: app/__init__.py:74
+#: app/__init__.py:75
 msgid "Cancelled"
 msgstr "Cancelado"
 
-#: app/__init__.py:85 app/blueprints/opportunities/forms.py:34
+#: app/__init__.py:86 app/blueprints/opportunities/forms.py:34
 msgid "New"
 msgstr "Nuevo"
 
-#: app/__init__.py:86 app/blueprints/opportunities/forms.py:35
+#: app/__init__.py:87 app/blueprints/opportunities/forms.py:35
 msgid "Contacted"
 msgstr "Contactado"
 
-#: app/__init__.py:87 app/blueprints/opportunities/forms.py:36
+#: app/__init__.py:88 app/blueprints/opportunities/forms.py:36
 msgid "Quoted"
 msgstr "Cotizado"
 
-#: app/__init__.py:88
+#: app/__init__.py:89
 msgid "Won"
 msgstr "Ganado"
 
-#: app/__init__.py:89 app/blueprints/opportunities/forms.py:37
+#: app/__init__.py:90 app/blueprints/opportunities/forms.py:37
 msgid "Lost"
 msgstr "Perdido"
 
-#: app/__init__.py:100 app/blueprints/opportunities/forms.py:20
+#: app/__init__.py:101 app/blueprints/opportunities/forms.py:20
 msgid "Instagram DM"
 msgstr "DM de Instagram"
 
-#: app/__init__.py:101 app/blueprints/opportunities/forms.py:21
+#: app/__init__.py:102 app/blueprints/opportunities/forms.py:21
 msgid "Website"
 msgstr "Sitio web"
 
-#: app/__init__.py:102 app/blueprints/opportunities/forms.py:22
+#: app/__init__.py:103 app/blueprints/opportunities/forms.py:22
 msgid "Referral"
 msgstr "Referido"
 
-#: app/__init__.py:103 app/blueprints/opportunities/forms.py:23
+#: app/__init__.py:104 app/blueprints/opportunities/forms.py:23
 msgid "Other"
 msgstr "Otro"
 
-#: app/__init__.py:120 app/templates/inventory/restock_form.html:3
+#: app/__init__.py:121 app/templates/inventory/restock_form.html:3
 msgid "Restock"
 msgstr "Reabastecer"
 
-#: app/__init__.py:121
+#: app/__init__.py:122
 msgid "Sale"
 msgstr "Venta"
 
-#: app/__init__.py:122
+#: app/__init__.py:123
 msgid "Adjustment"
 msgstr "Ajuste"
 
@@ -403,6 +403,7 @@ msgid "Size (ml)"
 msgstr "Tamaño (ml)"
 
 #: app/blueprints/products/forms.py:21 app/templates/sales/detail.html:13
+#: app/templates/sales/sale_form.html:33
 msgid "Unit price"
 msgstr "Precio unitario"
 
@@ -436,18 +437,23 @@ msgstr "Número de factura"
 msgid "Record sale"
 msgstr "Registrar venta"
 
-#: app/blueprints/sales/routes.py:39
+#: app/blueprints/sales/routes.py:50
 msgid "Add at least one product line to the sale."
 msgstr "Agrega al menos una línea de producto a la venta."
 
-#: app/blueprints/sales/routes.py:49
+#: app/blueprints/sales/routes.py:60
 #, python-format
 msgid "Sale #%(id)s recorded."
 msgstr "Venta #%(id)s registrada."
 
-#: app/blueprints/sales/routes.py:62
+#: app/blueprints/sales/routes.py:80
 msgid "Sale not found."
 msgstr "Venta no encontrada."
+
+#: app/blueprints/sales/routes.py:124
+#, python-format
+msgid "Enter a unit price for %(name)s."
+msgstr "Ingresa un precio unitario para %(name)s."
 
 #: app/blueprints/users/forms.py:9
 msgid "Admin"
@@ -669,7 +675,6 @@ msgstr "Stock bajo"
 #: app/templates/dashboard/index.html:100
 #: app/templates/dashboard/index.html:121
 #: app/templates/opportunities/index.html:22 app/templates/sales/detail.html:13
-#: app/templates/sales/sale_form.html:16
 msgid "Product"
 msgstr "Producto"
 
@@ -718,7 +723,7 @@ msgstr "Historial de stock: %(name)s"
 msgid "Date"
 msgstr "Fecha"
 
-#: app/templates/inventory/history.html:7
+#: app/templates/inventory/history.html:7 app/templates/sales/detail.html:13
 msgid "Warehouse"
 msgstr "Bodega"
 
@@ -748,7 +753,8 @@ msgid "Flavor / Product"
 msgstr "Sabor / Producto"
 
 #: app/templates/inventory/index.html:17 app/templates/inventory/index.html:54
-#: app/templates/sales/detail.html:29 app/templates/sales/index.html:13
+#: app/templates/sales/detail.html:30 app/templates/sales/index.html:13
+#: app/templates/sales/sale_form.html:76
 msgid "Total"
 msgstr "Total"
 
@@ -883,16 +889,17 @@ msgstr "Número de factura:"
 msgid "Notes:"
 msgstr "Notas:"
 
-#: app/templates/sales/detail.html:13 app/templates/sales/detail.html:25
+#: app/templates/sales/detail.html:13 app/templates/sales/detail.html:26
+#: app/templates/sales/sale_form.html:67
 msgid "Subtotal"
 msgstr "Subtotal"
 
-#: app/templates/sales/detail.html:27
+#: app/templates/sales/detail.html:28 app/templates/sales/sale_form.html:71
 #, python-format
 msgid "IVA (%(rate)s%%)"
 msgstr "IVA (%(rate)s%%)"
 
-#: app/templates/sales/detail.html:33
+#: app/templates/sales/detail.html:34
 msgid "Back to sales"
 msgstr "Volver a ventas"
 
@@ -917,13 +924,24 @@ msgstr "Aún no hay ventas registradas."
 msgid "Line items"
 msgstr "Líneas de producto"
 
-#: app/templates/sales/sale_form.html:16
-msgid "Quantity"
-msgstr "Cantidad"
+#: app/templates/sales/sale_form.html:17
+msgid ""
+"Tip: the unit price you type in the first column fills the rest of the "
+"row for you — edit any single one afterward if a product needs a "
+"different price."
+msgstr ""
+"Tip: el precio unitario que ingresas en la primera columna se copia al "
+"resto de la fila — edita cualquiera individualmente si un producto "
+"necesita otro precio."
 
-#: app/templates/sales/sale_form.html:31
-msgid "Add line"
-msgstr "Agregar línea"
+#: app/templates/sales/sale_form.html:49
+#, python-format
+msgid "Available: %(qty)s"
+msgstr "Disponible: %(qty)s"
+
+#: app/templates/sales/sale_form.html:56
+msgid "No active products."
+msgstr "No hay productos activos."
 
 #: app/templates/users/index.html:6 app/templates/users/user_form.html:3
 #: app/templates/users/user_form.html:8
@@ -958,4 +976,10 @@ msgstr ""
 
 #~ msgid "OK"
 #~ msgstr "OK"
+
+#~ msgid "Quantity"
+#~ msgstr "Cantidad"
+
+#~ msgid "Add line"
+#~ msgstr "Agregar línea"
 

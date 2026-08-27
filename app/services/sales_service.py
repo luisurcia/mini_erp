@@ -51,11 +51,10 @@ class SalesService:
             tax_rate_applied=Company.get_settings().tax_rate if include_tax else None,
         )
 
-        # TODO(#23/#24): the Sales form doesn't let the seller pick a
-        # warehouse per line yet, so every sale is drawn from the default
-        # warehouse until the line-item grid is redesigned to capture one
-        # explicitly. Remove this once that lands.
-        default_warehouse = self.warehouse_repo.get_default()
+        # Callers that don't know about warehouses yet (opportunity
+        # conversion, seed data) fall back to the default warehouse rather
+        # than requiring every caller to pick one.
+        default_warehouse_id = None
 
         for line in items:
             product = self.product_repo.get(line["product_id"])
@@ -65,15 +64,25 @@ class SalesService:
             unit_price = line.get("unit_price")
             if unit_price is None:
                 unit_price = product.unit_price
+            warehouse_id = line.get("warehouse_id")
+            if warehouse_id is None:
+                if default_warehouse_id is None:
+                    default_warehouse_id = self.warehouse_repo.get_default().id
+                warehouse_id = default_warehouse_id
 
             sale.items.append(
-                SaleItem(product=product, quantity=quantity, unit_price=unit_price)
+                SaleItem(
+                    product=product,
+                    quantity=quantity,
+                    unit_price=unit_price,
+                    warehouse_id=warehouse_id,
+                )
             )
 
             if status == Sale.STATUS_COMPLETED:
                 self.inventory_service.consume(
                     product.id,
-                    default_warehouse.id,
+                    warehouse_id,
                     quantity,
                     reason=StockMovement.REASON_SALE,
                     note=f"Sale line for {product_label(product)}",

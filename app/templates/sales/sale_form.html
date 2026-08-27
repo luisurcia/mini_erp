@@ -12,61 +12,133 @@
     </div>
 
     <h2 class="h6 mt-4">{{ _("Line items") }}</h2>
-    <table class="table" id="line-items-table">
-      <thead><tr><th>{{ _("Product") }}</th><th style="width: 140px;">{{ _("Quantity") }}</th><th></th></tr></thead>
-      <tbody id="line-items-body">
-        <tr class="line-item-row">
-          <td>
-            <select name="product_id[]" class="form-select">
-              {% for product in products %}
-              <option value="{{ product.id }}">{{ product_label(product) }} (${{ "%.2f"|format(product.unit_price) }})</option>
-              {% endfor %}
-            </select>
-          </td>
-          <td><input type="number" name="quantity[]" class="form-control" min="1" value="1"></td>
-          <td><button type="button" class="btn btn-sm btn-outline-danger remove-row">✕</button></td>
-        </tr>
-      </tbody>
-    </table>
-    <button type="button" id="add-row" class="btn btn-sm btn-outline-secondary mb-3">+ {{ _("Add line") }}</button>
+    {% if products %}
+    <p class="text-muted small mb-2">
+      {{ _("Tip: the unit price you type in the first column fills the rest of the row for you — edit any single one afterward if a product needs a different price.") }}
+    </p>
+    {% endif %}
+    <div class="table-responsive">
+      <table class="table align-middle" id="line-items-table">
+        <thead>
+          <tr>
+            <th style="width: 120px;"></th>
+            {% for product in products %}
+            <th class="text-center" style="width: 90px;">{{ product_short_label(product) }}</th>
+            {% endfor %}
+          </tr>
+        </thead>
+        <tbody>
+          {% if products %}
+          <tr>
+            <th>{{ _("Unit price") }}</th>
+            {% for product in products %}
+            <td>
+              <input type="number" step="0.01" min="0" class="form-control form-control-sm unit-price-input"
+                     name="unit_price__{{ product.id }}" {% if loop.first %}id="first-unit-price"{% endif %}>
+            </td>
+            {% endfor %}
+          </tr>
+          {% for warehouse in warehouses %}
+          <tr>
+            <th>{{ warehouse.name }}</th>
+            {% for product in products %}
+            {% set item = stock.get((product.id, warehouse.id)) %}
+            <td>
+              <input type="number" min="0" class="form-control form-control-sm text-center quantity-input"
+                     name="quantity__{{ product.id }}__{{ warehouse.id }}" placeholder="0"
+                     title="{{ _('Available: %(qty)s', qty=(item.quantity_on_hand if item else 0)) }}">
+              <div class="form-text text-center stock-hint">{{ item.quantity_on_hand if item else 0 }}</div>
+            </td>
+            {% endfor %}
+          </tr>
+          {% endfor %}
+          {% else %}
+          <tr><td class="text-muted text-center py-3">{{ _("No active products.") }}</td></tr>
+          {% endif %}
+        </tbody>
+      </table>
+    </div>
 
     {{ render_field(form.include_tax) }}
     {{ render_field(form.invoice_number) }}
 
+    <div class="card bg-light p-3 mb-3" style="max-width: 320px;">
+      <div class="d-flex justify-content-between">
+        <span>{{ _("Subtotal") }}</span>
+        <span>$<span id="sale-subtotal">0.00</span></span>
+      </div>
+      <div style="display: flex; justify-content: space-between;" id="sale-tax-row">
+        <span>{{ _("IVA (%(rate)s%%)", rate=tax_rate) }}</span>
+        <span>$<span id="sale-tax">0.00</span></span>
+      </div>
+      <hr class="my-2">
+      <div class="d-flex justify-content-between fw-bold">
+        <span>{{ _("Total") }}</span>
+        <span>$<span id="sale-total">0.00</span></span>
+      </div>
+    </div>
+
     <div>{{ form.submit(class="btn btn-primary") }}</div>
   </form>
 </div>
-
-<template id="row-template">
-  <tr class="line-item-row">
-    <td>
-      <select name="product_id[]" class="form-select">
-        {% for product in products %}
-        <option value="{{ product.id }}">{{ product_label(product) }} (${{ "%.2f"|format(product.unit_price) }})</option>
-        {% endfor %}
-      </select>
-    </td>
-    <td><input type="number" name="quantity[]" class="form-control" min="1" value="1"></td>
-    <td><button type="button" class="btn btn-sm btn-outline-danger remove-row">✕</button></td>
-  </tr>
-</template>
 {% endblock %}
 
 {% block scripts %}
 <script>
-document.getElementById("add-row").addEventListener("click", function () {
-  const template = document.getElementById("row-template");
-  const clone = template.content.cloneNode(true);
-  document.getElementById("line-items-body").appendChild(clone);
-});
+(function () {
+  var table = document.getElementById("line-items-table");
+  if (!table) return;
 
-document.getElementById("line-items-body").addEventListener("click", function (event) {
-  if (event.target.classList.contains("remove-row")) {
-    const rows = document.querySelectorAll(".line-item-row");
-    if (rows.length > 1) {
-      event.target.closest("tr").remove();
-    }
+  var priceInputs = Array.prototype.slice.call(table.querySelectorAll(".unit-price-input"));
+  var qtyInputs = Array.prototype.slice.call(table.querySelectorAll(".quantity-input"));
+  var firstPrice = document.getElementById("first-unit-price");
+  var taxCheckbox = document.getElementById("include_tax");
+  var taxRow = document.getElementById("sale-tax-row");
+  var taxRate = {{ (tax_rate or 0)|float }};
+
+  function productIdOf(input) {
+    return input.name.split("__")[1];
   }
-});
+
+  function updateTotals() {
+    var qtyByProduct = {};
+    qtyInputs.forEach(function (input) {
+      var pid = productIdOf(input);
+      var qty = parseInt(input.value, 10) || 0;
+      qtyByProduct[pid] = (qtyByProduct[pid] || 0) + qty;
+    });
+
+    var subtotal = 0;
+    priceInputs.forEach(function (input) {
+      var pid = productIdOf(input);
+      var price = parseFloat(input.value) || 0;
+      subtotal += price * (qtyByProduct[pid] || 0);
+    });
+
+    var applyTax = !!(taxCheckbox && taxCheckbox.checked);
+    var tax = applyTax ? subtotal * (taxRate / 100) : 0;
+    var total = subtotal + tax;
+
+    document.getElementById("sale-subtotal").textContent = subtotal.toFixed(2);
+    document.getElementById("sale-tax").textContent = tax.toFixed(2);
+    document.getElementById("sale-total").textContent = total.toFixed(2);
+    if (taxRow) taxRow.style.display = applyTax ? "flex" : "none";
+  }
+
+  if (firstPrice) {
+    firstPrice.addEventListener("input", function () {
+      priceInputs.forEach(function (input) {
+        if (input !== firstPrice) input.value = firstPrice.value;
+      });
+      updateTotals();
+    });
+  }
+
+  priceInputs.forEach(function (input) { input.addEventListener("input", updateTotals); });
+  qtyInputs.forEach(function (input) { input.addEventListener("input", updateTotals); });
+  if (taxCheckbox) taxCheckbox.addEventListener("change", updateTotals);
+
+  updateTotals();
+})();
 </script>
 {% endblock %}

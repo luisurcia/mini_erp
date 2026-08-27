@@ -14,6 +14,7 @@ from app.schema import (
     ensure_inventory_item_warehouse_column,
     ensure_product_short_name_column,
     ensure_sale_invoice_number_column,
+    ensure_sale_item_warehouse_column,
     ensure_sale_tax_columns,
     ensure_stock_movement_warehouse_column,
     ensure_user_role_column,
@@ -42,6 +43,7 @@ def _upgrade_schema() -> None:
     Warehouse.ensure_defaults()
     ensure_inventory_item_warehouse_column()
     ensure_stock_movement_warehouse_column()
+    ensure_sale_item_warehouse_column()
 
 
 def register_cli(app: Flask) -> None:
