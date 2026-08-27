@@ -1,81 +1,86 @@
 :root {
-  --kombucha-green: #3f6b4a;
-  --kombucha-green-dark: #2c4d34;
-  --kombucha-amber: #d98f3b;
-  --kombucha-amber-dark: #b8752a;
-  --kombucha-cream: #faf5ec;
-  --kombucha-rose: #c65b6c;
+  --scoby-cream: #e7decf;
+  --scoby-cream-card: #f1eadd;
+  --scoby-ink: #1a1816;
+  --scoby-pink: #e27ca6;
+  --scoby-pink-dark: #c9648d;
+  --scoby-muted: #6e6a62;
+  --scoby-teal: #2e8c93;
+  --scoby-mustard: #e3b23c;
+  --scoby-orange: #e0762e;
+  --scoby-warm-gray: #9a968c;
+  --scoby-rose: #a34a63;
 }
 
 body {
-  background-color: var(--kombucha-cream);
+  background-color: var(--scoby-cream);
 }
 
 .kombucha-navbar {
-  background-color: var(--kombucha-green-dark);
+  background-color: var(--scoby-ink);
 }
 
 .kombucha-navbar .navbar-brand,
 .kombucha-navbar .nav-link {
-  color: #f3ead9;
+  color: var(--scoby-cream-card);
 }
 
 .kombucha-navbar .nav-link:hover {
-  color: var(--kombucha-amber);
+  color: var(--scoby-pink);
 }
 
 .btn-primary {
-  background-color: var(--kombucha-green);
-  border-color: var(--kombucha-green);
+  background-color: var(--scoby-pink);
+  border-color: var(--scoby-pink);
 }
 
 .btn-primary:hover,
 .btn-primary:focus {
-  background-color: var(--kombucha-green-dark);
-  border-color: var(--kombucha-green-dark);
+  background-color: var(--scoby-pink-dark);
+  border-color: var(--scoby-pink-dark);
 }
 
 .btn-warning {
-  background-color: var(--kombucha-amber);
-  border-color: var(--kombucha-amber-dark);
-  color: #2c1f0e;
+  background-color: var(--scoby-mustard);
+  border-color: var(--scoby-orange);
+  color: var(--scoby-ink);
 }
 
 .card {
   border: none;
   border-radius: 0.75rem;
-  box-shadow: 0 2px 10px rgba(44, 77, 52, 0.08);
+  box-shadow: 0 2px 10px rgba(26, 24, 22, 0.08);
 }
 
 .stat-card {
   background: white;
-  border-left: 4px solid var(--kombucha-green);
+  border-left: 4px solid var(--scoby-pink);
 }
 
 .stat-card .stat-value {
   font-size: 2rem;
   font-weight: 700;
-  color: var(--kombucha-green-dark);
+  color: var(--scoby-ink);
 }
 
 .stat-card.stat-warning {
-  border-left-color: var(--kombucha-amber);
+  border-left-color: var(--scoby-mustard);
 }
 
 .table-low-stock {
-  background-color: #fdf2e3 !important;
+  background-color: #f7ecd2 !important;
 }
 
-.badge-stage-new { background-color: #6c757d; }
+.badge-stage-new { background-color: var(--scoby-warm-gray); }
 .badge-stage-contacted { background-color: #3f7fbf; }
-.badge-stage-quoted { background-color: var(--kombucha-amber-dark); }
-.badge-stage-won { background-color: var(--kombucha-green); }
-.badge-stage-lost { background-color: var(--kombucha-rose); }
+.badge-stage-quoted { background-color: var(--scoby-orange); }
+.badge-stage-won { background-color: var(--scoby-teal); }
+.badge-stage-lost { background-color: var(--scoby-rose); }
 
 a {
-  color: var(--kombucha-green-dark);
+  color: var(--scoby-pink-dark);
 }
 
 a:hover {
-  color: var(--kombucha-amber-dark);
+  color: var(--scoby-orange);
 }
