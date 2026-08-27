@@ -7,7 +7,6 @@ from flask_login import login_required
 from app.blueprints.dashboard import bp
 from app.repositories.sales_repository import SalesRepository
 from app.services.inventory_service import InventoryService
-from app.services.opportunity_service import OpportunityService
 from app.services.sales_service import SalesService
 
 
@@ -23,7 +22,6 @@ def _month_names() -> list[str]:
 def index():
     sales_repo = SalesRepository()
     inventory_service = InventoryService()
-    opportunity_service = OpportunityService()
     sales_service = SalesService()
 
     now = datetime.now(UTC)
@@ -48,7 +46,6 @@ def index():
         "average_bottles_per_sale": sales_service.average_bottles_per_sale(sales_this_period),
     }
     low_stock_items = inventory_service.low_stock_report()
-    recent_opportunities = opportunity_service.open_opportunities()[:5]
 
     charts = {
         "product_sales": sales_service.sales_by_product(sales_this_period),
@@ -60,7 +57,6 @@ def index():
         "dashboard/index.html",
         stats=stats,
         low_stock_items=low_stock_items,
-        recent_opportunities=recent_opportunities,
         charts=charts,
         available_years=available_years,
         selected_year=selected_year,

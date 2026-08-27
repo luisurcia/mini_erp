@@ -51,9 +51,9 @@ class SalesService:
             tax_rate_applied=Company.get_settings().tax_rate if include_tax else None,
         )
 
-        # Callers that don't know about warehouses yet (opportunity
-        # conversion, seed data) fall back to the default warehouse rather
-        # than requiring every caller to pick one.
+        # Callers that don't know about warehouses yet (seed data) fall
+        # back to the default warehouse rather than requiring every caller
+        # to pick one.
         default_warehouse_id = None
 
         for line in items:
@@ -137,6 +137,26 @@ class SalesService:
         for sale in sales:
             counts[sale.sale_date.month - 1] += 1
         return counts
+
+    def top_customers_by_consumption(self, sales: list[Sale], limit: int = 10) -> list[dict]:
+        """Ranks customers by total amount spent across the given sales."""
+        totals: dict[int, dict] = {}
+        for sale in sales:
+            entry = totals.setdefault(
+                sale.customer_id,
+                {
+                    "customer": sale.customer,
+                    "total_amount": Decimal("0"),
+                    "total_units": 0,
+                    "sale_count": 0,
+                },
+            )
+            entry["total_amount"] += sale.total_amount
+            entry["total_units"] += sum(item.quantity for item in sale.items)
+            entry["sale_count"] += 1
+
+        ranked = sorted(totals.values(), key=lambda entry: entry["total_amount"], reverse=True)
+        return ranked[:limit]
 
     def monthly_bottles_sold(self, sales: list[Sale]) -> list[int]:
         """Sum of item quantities per calendar month (Jan..Dec) for the given sales."""

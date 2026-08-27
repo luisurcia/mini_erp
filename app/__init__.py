@@ -45,8 +45,6 @@ def create_app(config_class: type = Config) -> Flask:
     from app.display import product_label, product_short_label
 
     app.jinja_env.globals["sale_status_label"] = _sale_status_label
-    app.jinja_env.globals["opportunity_stage_label"] = _opportunity_stage_label
-    app.jinja_env.globals["opportunity_source_label"] = _opportunity_source_label
     app.jinja_env.globals["user_role_label"] = _user_role_label
     app.jinja_env.globals["product_label"] = product_label
     app.jinja_env.globals["product_short_label"] = product_short_label
@@ -77,35 +75,6 @@ def _sale_status_label(status: str) -> str:
     return labels.get(status, status)
 
 
-def _opportunity_stage_label(stage: str) -> str:
-    from flask_babel import gettext as _
-
-    from app.models.opportunity import Opportunity
-
-    labels = {
-        Opportunity.STAGE_NEW: _("New"),
-        Opportunity.STAGE_CONTACTED: _("Contacted"),
-        Opportunity.STAGE_QUOTED: _("Quoted"),
-        Opportunity.STAGE_WON: _("Won"),
-        Opportunity.STAGE_LOST: _("Lost"),
-    }
-    return labels.get(stage, stage)
-
-
-def _opportunity_source_label(source: str) -> str:
-    from flask_babel import gettext as _
-
-    from app.models.opportunity import Opportunity
-
-    labels = {
-        Opportunity.SOURCE_INSTAGRAM: _("Instagram DM"),
-        Opportunity.SOURCE_WEBSITE: _("Website"),
-        Opportunity.SOURCE_REFERRAL: _("Referral"),
-        Opportunity.SOURCE_OTHER: _("Other"),
-    }
-    return labels.get(source, source)
-
-
 def _user_role_label(role: str) -> str:
     from app.blueprints.users.forms import ROLE_LABELS
 
@@ -132,9 +101,9 @@ def _register_blueprints(app: Flask) -> None:
     from app.blueprints.customers import bp as customers_bp
     from app.blueprints.dashboard import bp as dashboard_bp
     from app.blueprints.inventory import bp as inventory_bp
-    from app.blueprints.opportunities import bp as opportunities_bp
     from app.blueprints.products import bp as products_bp
     from app.blueprints.sales import bp as sales_bp
+    from app.blueprints.top_customers import bp as top_customers_bp
     from app.blueprints.users import bp as users_bp
 
     app.register_blueprint(auth_bp, url_prefix="/auth")
@@ -142,7 +111,7 @@ def _register_blueprints(app: Flask) -> None:
     app.register_blueprint(products_bp, url_prefix="/products")
     app.register_blueprint(inventory_bp, url_prefix="/inventory")
     app.register_blueprint(sales_bp, url_prefix="/sales")
-    app.register_blueprint(opportunities_bp, url_prefix="/opportunities")
+    app.register_blueprint(top_customers_bp, url_prefix="/top-customers")
     app.register_blueprint(customers_bp, url_prefix="/customers")
     app.register_blueprint(users_bp, url_prefix="/users")
     app.register_blueprint(company_bp, url_prefix="/company")

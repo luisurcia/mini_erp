@@ -23,10 +23,6 @@ class InsufficientStockError(MiniErpError):
         )
 
 
-class InvalidStageTransitionError(MiniErpError):
-    """Raised when an opportunity is moved to an invalid pipeline stage."""
-
-
 class DuplicateUsernameError(MiniErpError):
     """Raised when a username is already taken by another user."""
 

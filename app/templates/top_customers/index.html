@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% block title %}{{ _("Top customers") }}{% endblock %}
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
+  <h1 class="h3 mb-0">{{ _("Top customers") }}</h1>
+  <form method="get" class="d-flex gap-2 align-items-end">
+    <div>
+      <label class="form-label small text-muted mb-0" for="year">{{ _("Year") }}</label>
+      <select class="form-select" id="year" name="year" onchange="this.form.submit()">
+        <option value="{{ all_time_value }}" {{ "selected" if selected_year == all_time_value else "" }}>{{ _("All-time") }}</option>
+        {% for y in available_years %}
+        <option value="{{ y }}" {{ "selected" if y == selected_year else "" }}>{{ y }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div>
+      <label class="form-label small text-muted mb-0" for="month">{{ _("Month") }}</label>
+      <select class="form-select" id="month" name="month" onchange="this.form.submit()" {{ "disabled" if selected_year == all_time_value else "" }}>
+        <option value="">{{ _("All months") }}</option>
+        {% for name in month_names %}
+        <option value="{{ loop.index }}" {{ "selected" if loop.index == selected_month else "" }}>{{ name }}</option>
+        {% endfor %}
+      </select>
+    </div>
+  </form>
+</div>
+
+<div class="card p-3">
+  {% if top_customers %}
+  <table class="table table-sm mb-0">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>{{ _("Customer") }}</th>
+        <th>{{ _("Segment") }}</th>
+        <th>{{ _("Total spent") }}</th>
+        <th>{{ _("Bottles") }}</th>
+        <th>{{ _("Sales") }}</th>
+      </tr>
+    </thead>
+    <tbody>
+    {% for entry in top_customers %}
+      <tr>
+        <td>{{ loop.index }}</td>
+        <td>{{ entry.customer.name }}</td>
+        <td>{{ entry.customer.segment.name if entry.customer.segment else "-" }}</td>
+        <td>${{ "%.2f"|format(entry.total_amount) }}</td>
+        <td>{{ entry.total_units }}</td>
+        <td>{{ entry.sale_count }}</td>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+  {% else %}
+  <p class="text-muted mb-0">{{ _("No sales in this period.") }}</p>
+  {% endif %}
+</div>
+{% endblock %}

@@ -25,7 +25,6 @@ class Sale(BaseModel):
     items = db.relationship(
         "SaleItem", back_populates="sale", cascade="all, delete-orphan"
     )
-    opportunity = db.relationship("Opportunity", back_populates="sale", uselist=False)
 
     @property
     def subtotal_amount(self):

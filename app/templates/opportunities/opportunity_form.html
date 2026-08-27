@@ -1,9 +1,0 @@
-{% extends "base.html" %}
-{% from 'bootstrap5/form.html' import render_form %}
-{% block title %}{{ _("New opportunity") }}{% endblock %}
-{% block content %}
-<h1 class="h3 mb-3">{{ _("New request / opportunity") }}</h1>
-<div class="card p-4" style="max-width: 640px;">
-  {{ render_form(form) }}
-</div>
-{% endblock %}

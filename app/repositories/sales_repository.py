@@ -27,6 +27,9 @@ class SalesRepository(Repository[Sale]):
             extract("year", Sale.sale_date) == year,
         ).all()
 
+    def completed_all(self) -> list[Sale]:
+        return Sale.query.filter(Sale.status == Sale.STATUS_COMPLETED).all()
+
     def distinct_years(self) -> list[int]:
         rows = db.session.query(extract("year", Sale.sale_date)).distinct().all()
         return sorted({int(row[0]) for row in rows if row[0] is not None}, reverse=True)

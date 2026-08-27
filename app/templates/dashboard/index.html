@@ -67,7 +67,7 @@
 </div>
 
 <div class="row g-4">
-  <div class="col-lg-6">
+  <div class="col-12">
     <div class="card p-3">
       <h2 class="h5">{{ _("Low stock") }}</h2>
       {% if low_stock_items %}
@@ -85,27 +85,6 @@
       </table>
       {% else %}
       <p class="text-muted mb-0">{{ _("Everything is well stocked.") }}</p>
-      {% endif %}
-    </div>
-  </div>
-  <div class="col-lg-6">
-    <div class="card p-3">
-      <h2 class="h5">{{ _("Open opportunities") }}</h2>
-      {% if recent_opportunities %}
-      <table class="table table-sm mb-0">
-        <thead><tr><th>{{ _("Customer") }}</th><th>{{ _("Product") }}</th><th>{{ _("Stage") }}</th></tr></thead>
-        <tbody>
-        {% for opp in recent_opportunities %}
-          <tr>
-            <td>{{ opp.customer.name }}</td>
-            <td>{{ product_label(opp.product) if opp.product else "-" }}</td>
-            <td><span class="badge badge-stage-{{ opp.stage }}">{{ opp.stage }}</span></td>
-          </tr>
-        {% endfor %}
-        </tbody>
-      </table>
-      {% else %}
-      <p class="text-muted mb-0">{{ _("No open requests right now.") }}</p>
       {% endif %}
     </div>
   </div>

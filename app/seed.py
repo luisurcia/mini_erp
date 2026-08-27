@@ -5,12 +5,10 @@ from flask import Flask
 from app.extensions import db
 from app.models.customer import Customer
 from app.models.customer_segment import CustomerSegment
-from app.models.opportunity import Opportunity
 from app.models.product import Flavor, Product
 from app.models.user import User
 from app.models.warehouse import Warehouse
 from app.services.inventory_service import InventoryService
-from app.services.opportunity_service import OpportunityService
 from app.services.sales_service import SalesService
 
 FLAVORS = [
@@ -37,7 +35,6 @@ def seed_demo_data(app: Flask) -> None:
 
     products = _seed_flavors_and_products()
     customers = _seed_customers()
-    _seed_opportunities(customers, products)
     _seed_sales(customers, products)
 
 
@@ -124,34 +121,6 @@ def _seed_customers() -> dict[str, Customer]:
     return customers
 
 
-def _seed_opportunities(customers: dict[str, Customer], products: dict[str, Product]) -> None:
-    opportunity_service = OpportunityService()
-    opportunity_service.create(
-        customer_id=customers["maria"].id,
-        product_id=products["Ginger Lemon"].id,
-        quantity_requested=12,
-        source=Opportunity.SOURCE_INSTAGRAM,
-        notes="DM'd asking about pricing for a birthday event.",
-    )
-    opp2 = opportunity_service.create(
-        customer_id=customers["green_leaf"].id,
-        product_id=products["Hibiscus Rose"].id,
-        quantity_requested=24,
-        source=Opportunity.SOURCE_WEBSITE,
-        notes="Wants a quote for a monthly wholesale order.",
-    )
-    opportunity_service.update_stage(opp2.id, Opportunity.STAGE_QUOTED)
-
-    opp3 = opportunity_service.create(
-        customer_id=customers["fresh_market"].id,
-        product_id=products["Mixed Berry"].id,
-        quantity_requested=48,
-        source=Opportunity.SOURCE_REFERRAL,
-        notes="Referred by Green Leaf Cafe, evaluating suppliers.",
-    )
-    opportunity_service.update_stage(opp3.id, Opportunity.STAGE_CONTACTED)
-
-
 def _seed_sales(customers: dict[str, Customer], products: dict[str, Product]) -> None:
     sales_service = SalesService()
     now = datetime.now(UTC)
@@ -171,4 +140,11 @@ def _seed_sales(customers: dict[str, Customer], products: dict[str, Product]) ->
         items=[{"product_id": products["Ginger Lemon"].id, "quantity": 6}],
         sale_date=now - timedelta(days=2),
         notes="Personal order via Instagram DM.",
+    )
+
+    sales_service.record_sale(
+        customer_id=customers["fresh_market"].id,
+        items=[{"product_id": products["Mixed Berry"].id, "quantity": 36}],
+        sale_date=now - timedelta(days=45),
+        notes="First trial order before committing to a recurring contract.",
     )

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-08-27 01:45-0400\n"
+"POT-Creation-Date: 2026-08-27 02:07-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,67 +17,31 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.18.0\n"
 
-#: app/__init__.py:73
+#: app/__init__.py:71
 msgid "Completed"
 msgstr ""
 
-#: app/__init__.py:74
+#: app/__init__.py:72
 msgid "Pending"
 msgstr ""
 
-#: app/__init__.py:75
+#: app/__init__.py:73
 msgid "Cancelled"
 msgstr ""
 
-#: app/__init__.py:86 app/blueprints/opportunities/forms.py:34
-msgid "New"
-msgstr ""
-
-#: app/__init__.py:87 app/blueprints/opportunities/forms.py:35
-msgid "Contacted"
-msgstr ""
-
-#: app/__init__.py:88 app/blueprints/opportunities/forms.py:36
-msgid "Quoted"
-msgstr ""
-
-#: app/__init__.py:89
-msgid "Won"
-msgstr ""
-
-#: app/__init__.py:90 app/blueprints/opportunities/forms.py:37
-msgid "Lost"
-msgstr ""
-
-#: app/__init__.py:101 app/blueprints/opportunities/forms.py:20
-msgid "Instagram DM"
-msgstr ""
-
-#: app/__init__.py:102 app/blueprints/opportunities/forms.py:21
-msgid "Website"
-msgstr ""
-
-#: app/__init__.py:103 app/blueprints/opportunities/forms.py:22
-msgid "Referral"
-msgstr ""
-
-#: app/__init__.py:104 app/blueprints/opportunities/forms.py:23
-msgid "Other"
-msgstr ""
-
-#: app/__init__.py:121 app/templates/inventory/restock_form.html:3
+#: app/__init__.py:90 app/templates/inventory/restock_form.html:3
 msgid "Restock"
 msgstr ""
 
-#: app/__init__.py:122
+#: app/__init__.py:91
 msgid "Sale"
 msgstr ""
 
-#: app/__init__.py:123
+#: app/__init__.py:92
 msgid "Adjustment"
 msgstr ""
 
-#: app/__init__.py:124 app/blueprints/inventory/forms.py:37
+#: app/__init__.py:93 app/blueprints/inventory/forms.py:37
 msgid "Transfer"
 msgstr ""
 
@@ -198,6 +162,7 @@ msgid "RUT"
 msgstr ""
 
 #: app/blueprints/customers/forms.py:12 app/templates/customers/index.html:17
+#: app/templates/top_customers/index.html:35
 msgid "Segment"
 msgstr ""
 
@@ -218,7 +183,6 @@ msgid "Instagram handle"
 msgstr ""
 
 #: app/blueprints/customers/forms.py:19
-#: app/blueprints/opportunities/forms.py:26
 msgid "Notes"
 msgstr ""
 
@@ -240,51 +204,63 @@ msgstr ""
 msgid "Customer '%(name)s' updated."
 msgstr ""
 
-#: app/blueprints/dashboard/routes.py:16
+#: app/blueprints/dashboard/routes.py:15
+#: app/blueprints/top_customers/routes.py:14
 msgid "Jan"
 msgstr ""
 
-#: app/blueprints/dashboard/routes.py:16
+#: app/blueprints/dashboard/routes.py:15
+#: app/blueprints/top_customers/routes.py:14
 msgid "Feb"
 msgstr ""
 
-#: app/blueprints/dashboard/routes.py:16
+#: app/blueprints/dashboard/routes.py:15
+#: app/blueprints/top_customers/routes.py:14
 msgid "Mar"
 msgstr ""
 
-#: app/blueprints/dashboard/routes.py:16
+#: app/blueprints/dashboard/routes.py:15
+#: app/blueprints/top_customers/routes.py:14
 msgid "Apr"
 msgstr ""
 
-#: app/blueprints/dashboard/routes.py:16
+#: app/blueprints/dashboard/routes.py:15
+#: app/blueprints/top_customers/routes.py:14
 msgid "May"
 msgstr ""
 
-#: app/blueprints/dashboard/routes.py:16
+#: app/blueprints/dashboard/routes.py:15
+#: app/blueprints/top_customers/routes.py:14
 msgid "Jun"
 msgstr ""
 
-#: app/blueprints/dashboard/routes.py:17
+#: app/blueprints/dashboard/routes.py:16
+#: app/blueprints/top_customers/routes.py:15
 msgid "Jul"
 msgstr ""
 
-#: app/blueprints/dashboard/routes.py:17
+#: app/blueprints/dashboard/routes.py:16
+#: app/blueprints/top_customers/routes.py:15
 msgid "Aug"
 msgstr ""
 
-#: app/blueprints/dashboard/routes.py:17
+#: app/blueprints/dashboard/routes.py:16
+#: app/blueprints/top_customers/routes.py:15
 msgid "Sep"
 msgstr ""
 
-#: app/blueprints/dashboard/routes.py:17
+#: app/blueprints/dashboard/routes.py:16
+#: app/blueprints/top_customers/routes.py:15
 msgid "Oct"
 msgstr ""
 
-#: app/blueprints/dashboard/routes.py:17
+#: app/blueprints/dashboard/routes.py:16
+#: app/blueprints/top_customers/routes.py:15
 msgid "Nov"
 msgstr ""
 
-#: app/blueprints/dashboard/routes.py:17
+#: app/blueprints/dashboard/routes.py:16
+#: app/blueprints/top_customers/routes.py:15
 msgid "Dec"
 msgstr ""
 
@@ -310,8 +286,7 @@ msgid "Save warehouse"
 msgstr ""
 
 #: app/blueprints/inventory/forms.py:32 app/templates/dashboard/index.html:75
-#: app/templates/dashboard/index.html:96
-#: app/templates/opportunities/index.html:22 app/templates/sales/detail.html:13
+#: app/templates/sales/detail.html:13
 msgid "Product"
 msgstr ""
 
@@ -367,52 +342,6 @@ msgstr ""
 msgid "Warehouse '%(name)s' updated."
 msgstr ""
 
-#: app/blueprints/opportunities/forms.py:10 app/blueprints/sales/forms.py:17
-#: app/templates/dashboard/index.html:96
-#: app/templates/opportunities/index.html:22 app/templates/sales/index.html:13
-msgid "Customer"
-msgstr ""
-
-#: app/blueprints/opportunities/forms.py:12
-msgid "Product interested in"
-msgstr ""
-
-#: app/blueprints/opportunities/forms.py:15
-msgid "Quantity requested"
-msgstr ""
-
-#: app/blueprints/opportunities/forms.py:18
-#: app/templates/opportunities/index.html:22
-msgid "Source"
-msgstr ""
-
-#: app/blueprints/opportunities/forms.py:27
-msgid "Save request"
-msgstr ""
-
-#: app/blueprints/opportunities/forms.py:32
-#: app/templates/dashboard/index.html:96
-#: app/templates/opportunities/index.html:22
-msgid "Stage"
-msgstr ""
-
-#: app/blueprints/opportunities/forms.py:40
-msgid "Update stage"
-msgstr ""
-
-#: app/blueprints/opportunities/routes.py:48
-msgid "Opportunity created."
-msgstr ""
-
-#: app/blueprints/opportunities/routes.py:62
-msgid "Stage updated."
-msgstr ""
-
-#: app/blueprints/opportunities/routes.py:74
-#, python-format
-msgid "Converted to Sale #%(id)s."
-msgstr ""
-
 #: app/blueprints/products/forms.py:11
 msgid "Flavor"
 msgstr ""
@@ -450,6 +379,11 @@ msgstr ""
 #: app/blueprints/products/routes.py:113
 #, python-format
 msgid "Product '%(name)s' updated."
+msgstr ""
+
+#: app/blueprints/sales/forms.py:17 app/templates/sales/index.html:13
+#: app/templates/top_customers/index.html:34
+msgid "Customer"
 msgstr ""
 
 #: app/blueprints/sales/forms.py:19
@@ -552,14 +486,15 @@ msgstr ""
 msgid "Inventory"
 msgstr ""
 
-#: app/templates/base.html:23 app/templates/dashboard/index.html:148
+#: app/templates/base.html:23 app/templates/dashboard/index.html:127
 #: app/templates/sales/index.html:2 app/templates/sales/index.html:5
+#: app/templates/top_customers/index.html:38
 msgid "Sales"
 msgstr ""
 
-#: app/templates/base.html:24 app/templates/opportunities/index.html:2
-#: app/templates/opportunities/index.html:5
-msgid "Opportunities"
+#: app/templates/base.html:24 app/templates/top_customers/index.html:2
+#: app/templates/top_customers/index.html:5
+msgid "Top customers"
 msgstr ""
 
 #: app/templates/base.html:25 app/templates/customers/index.html:2
@@ -644,14 +579,17 @@ msgid "No customers yet."
 msgstr ""
 
 #: app/templates/dashboard/index.html:8
+#: app/templates/top_customers/index.html:8
 msgid "Year"
 msgstr ""
 
 #: app/templates/dashboard/index.html:16
+#: app/templates/top_customers/index.html:17
 msgid "Month"
 msgstr ""
 
 #: app/templates/dashboard/index.html:18
+#: app/templates/top_customers/index.html:19
 msgid "All months"
 msgstr ""
 
@@ -693,15 +631,8 @@ msgstr ""
 msgid "Everything is well stocked."
 msgstr ""
 
-#: app/templates/dashboard/index.html:93
-msgid "Open opportunities"
-msgstr ""
-
-#: app/templates/dashboard/index.html:108
-msgid "No open requests right now."
-msgstr ""
-
-#: app/templates/dashboard/index.html:157
+#: app/templates/dashboard/index.html:136
+#: app/templates/top_customers/index.html:37
 msgid "Bottles"
 msgstr ""
 
@@ -824,42 +755,6 @@ msgstr ""
 msgid "No warehouses yet."
 msgstr ""
 
-#: app/templates/opportunities/index.html:7
-msgid "New request"
-msgstr ""
-
-#: app/templates/opportunities/index.html:12
-msgid "All"
-msgstr ""
-
-#: app/templates/opportunities/index.html:22 app/templates/sales/detail.html:13
-msgid "Qty"
-msgstr ""
-
-#: app/templates/opportunities/index.html:42
-msgid "Update"
-msgstr ""
-
-#: app/templates/opportunities/index.html:47
-msgid "Convert to Sale"
-msgstr ""
-
-#: app/templates/opportunities/index.html:52
-msgid "closed"
-msgstr ""
-
-#: app/templates/opportunities/index.html:57
-msgid "No opportunities yet."
-msgstr ""
-
-#: app/templates/opportunities/opportunity_form.html:3
-msgid "New opportunity"
-msgstr ""
-
-#: app/templates/opportunities/opportunity_form.html:5
-msgid "New request / opportunity"
-msgstr ""
-
 #: app/templates/products/index.html:7
 #: app/templates/products/product_form.html:3
 #: app/templates/products/product_form.html:5
@@ -902,6 +797,10 @@ msgstr ""
 
 #: app/templates/sales/detail.html:10
 msgid "Notes:"
+msgstr ""
+
+#: app/templates/sales/detail.html:13
+msgid "Qty"
 msgstr ""
 
 #: app/templates/sales/detail.html:13 app/templates/sales/detail.html:26
@@ -953,6 +852,18 @@ msgstr ""
 
 #: app/templates/sales/sale_form.html:56
 msgid "No active products."
+msgstr ""
+
+#: app/templates/top_customers/index.html:10
+msgid "All-time"
+msgstr ""
+
+#: app/templates/top_customers/index.html:36
+msgid "Total spent"
+msgstr ""
+
+#: app/templates/top_customers/index.html:55
+msgid "No sales in this period."
 msgstr ""
 
 #: app/templates/users/index.html:6 app/templates/users/user_form.html:3

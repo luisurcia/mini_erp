@@ -7,6 +7,7 @@ from app.display import product_label
 from app.exceptions import InsufficientStockError
 from app.extensions import db
 from app.models.company import Company
+from app.models.customer import Customer
 from app.services.inventory_service import InventoryService
 from app.services.sales_service import SalesService
 
@@ -151,3 +152,44 @@ def test_average_bottles_per_sale(app, customer, product):
 
 def test_average_bottles_per_sale_with_no_sales_returns_zero(app):
     assert SalesService().average_bottles_per_sale([]) == Decimal("0")
+
+
+def test_top_customers_by_consumption_ranks_by_total_amount(app, customer, product):
+    other = Customer(name="Other Customer", email="other@example.com")
+    db.session.add(other)
+    db.session.commit()
+
+    service = SalesService()
+    small_sale = service.record_sale(
+        customer_id=customer.id, items=[{"product_id": product.id, "quantity": 1}]
+    )
+    big_sale_1 = service.record_sale(
+        customer_id=other.id, items=[{"product_id": product.id, "quantity": 3}]
+    )
+    big_sale_2 = service.record_sale(
+        customer_id=other.id, items=[{"product_id": product.id, "quantity": 2}]
+    )
+
+    ranked = service.top_customers_by_consumption([small_sale, big_sale_1, big_sale_2])
+
+    assert [entry["customer"].id for entry in ranked] == [other.id, customer.id]
+    assert ranked[0]["total_amount"] == big_sale_1.total_amount + big_sale_2.total_amount
+    assert ranked[0]["total_units"] == 5
+    assert ranked[0]["sale_count"] == 2
+
+
+def test_top_customers_by_consumption_respects_limit(app, customer, product):
+    customers = [customer]
+    for i in range(2):
+        c = Customer(name=f"Customer {i}", email=f"c{i}@example.com")
+        db.session.add(c)
+        customers.append(c)
+    db.session.commit()
+
+    service = SalesService()
+    sales = [
+        service.record_sale(customer_id=c.id, items=[{"product_id": product.id, "quantity": 1}])
+        for c in customers
+    ]
+
+    assert len(service.top_customers_by_consumption(sales, limit=1)) == 1

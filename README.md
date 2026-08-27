@@ -2,7 +2,7 @@
 
 A small ERP web app built for a kombucha producer (demo customer:
 [@kombucha_scoby](https://instagram.com/kombucha_scoby)) to manage inventory,
-record real sales, and track incoming requests/opportunities.
+record real sales, and track top customers by consumption.
 
 Built with Python (Flask, OOP, layered architecture: models →
 repositories → services → routes), SQLAlchemy, and Bootstrap 5.
@@ -13,10 +13,8 @@ repositories → services → routes), SQLAlchemy, and Bootstrap 5.
   alerts, full stock-movement history.
 - **Sales** — record real, multi-line sales; stock is automatically
   consumed and validated (can't oversell).
-- **Opportunities** — incoming requests/leads (e.g. an Instagram DM asking
-  about wholesale pricing) with a stage pipeline
-  (new → contacted → quoted → won/lost), and a one-click **Convert to
-  Sale**.
+- **Top customers** — ranks customers by consumption (total spent,
+  bottles, number of sales) over a selected year/month or all-time.
 - **Users & roles** — self-service password change, plus admin-only user
   management (create/edit/delete). Three roles: **admin** (everything,
   including user management), **editor** (create/update records), and
@@ -27,7 +25,7 @@ repositories → services → routes), SQLAlchemy, and Bootstrap 5.
   (Short Name, Size, SKU can each be turned off — Unit Price always
   stays required). Whichever fields are hidden also disappear from every
   product picker/grid/chart across the app (Inventory, Sales,
-  Opportunities, Dashboard), not just the form.
+  Top customers, Dashboard), not just the form.
 
 ## Setup
 
@@ -337,7 +335,7 @@ app/
   services/       business logic (stock rules, sale creation, pipeline,
                   user management)
   blueprints/     routes + forms, one per module (auth, dashboard,
-                  inventory, sales, opportunities, users)
+                  inventory, sales, top_customers, users)
   permissions.py  role-based route decorators (admin_required, editor_required)
   schema.py       lightweight in-place upgrades for existing SQLite DBs
   templates/      Jinja2 templates (Bootstrap 5)
