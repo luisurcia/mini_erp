@@ -94,6 +94,25 @@ def ensure_company_product_field_toggles() -> None:
     db.session.commit()
 
 
+def ensure_customer_columns() -> None:
+    """Backfill `customers.rut`/`shipping_address`/`segment_id` for
+    databases created before Scoby's customer segmentation existed.
+
+    SQLite's ALTER TABLE can't add a UNIQUE constraint, so `rut`'s
+    uniqueness is only enforced on fresh installs (db.create_all()), not
+    on databases upgraded through this path.
+    """
+    inspector = inspect(db.engine)
+    columns = {column["name"] for column in inspector.get_columns("customers")}
+    if "rut" not in columns:
+        db.session.execute(text("ALTER TABLE customers ADD COLUMN rut VARCHAR(20)"))
+    if "shipping_address" not in columns:
+        db.session.execute(text("ALTER TABLE customers ADD COLUMN shipping_address TEXT"))
+    if "segment_id" not in columns:
+        db.session.execute(text("ALTER TABLE customers ADD COLUMN segment_id INTEGER"))
+    db.session.commit()
+
+
 def ensure_user_role_column() -> None:
     """Backfill `users.role` for databases created before roles existed.
 

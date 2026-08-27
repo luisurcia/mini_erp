@@ -13,6 +13,8 @@
     <thead>
       <tr>
         <th>{{ _("Name") }}</th>
+        <th>{{ _("RUT") }}</th>
+        <th>{{ _("Segment") }}</th>
         <th>{{ _("Email") }}</th>
         <th>{{ _("Phone") }}</th>
         <th>{{ _("Instagram handle") }}</th>
@@ -23,6 +25,8 @@
       {% for customer in customers %}
       <tr>
         <td>{{ customer.name }}</td>
+        <td>{{ customer.rut or "-" }}</td>
+        <td>{{ customer.segment.name if customer.segment else "-" }}</td>
         <td>{{ customer.email or "-" }}</td>
         <td>{{ customer.phone or "-" }}</td>
         <td>{{ customer.instagram_handle or "-" }}</td>
@@ -33,7 +37,7 @@
         </td>
       </tr>
       {% else %}
-      <tr><td colspan="5" class="text-muted text-center py-4">{{ _("No customers yet.") }}</td></tr>
+      <tr><td colspan="7" class="text-muted text-center py-4">{{ _("No customers yet.") }}</td></tr>
       {% endfor %}
     </tbody>
   </table>

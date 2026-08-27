@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block title %}{{ _("Customer segments") }}{% endblock %}
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-3">
+  <h1 class="h3 mb-0">{{ _("Customer segments") }}</h1>
+  <a class="btn btn-primary" href="{{ url_for('company.new_segment') }}">+ {{ _("New segment") }}</a>
+</div>
+
+<div class="card p-3" style="max-width: 480px;">
+  <table class="table align-middle mb-0">
+    <thead>
+      <tr>
+        <th>{{ _("Name") }}</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for segment in segments %}
+      <tr>
+        <td>{{ segment.name }}</td>
+        <td class="text-end">
+          <a class="btn btn-sm btn-outline-secondary" href="{{ url_for('company.edit_segment', segment_id=segment.id) }}">{{ _("Edit") }}</a>
+        </td>
+      </tr>
+      {% else %}
+      <tr><td colspan="2" class="text-muted text-center py-4">{{ _("No segments yet.") }}</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

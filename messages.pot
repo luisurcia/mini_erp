@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-08-25 20:15-0400\n"
+"POT-Creation-Date: 2026-08-26 22:37-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,51 +17,51 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.18.0\n"
 
-#: app/__init__.py:55 app/blueprints/sales/routes.py:31
+#: app/__init__.py:71 app/blueprints/sales/routes.py:31
 msgid "Completed"
 msgstr ""
 
-#: app/__init__.py:56 app/blueprints/sales/routes.py:32
+#: app/__init__.py:72 app/blueprints/sales/routes.py:32
 msgid "Pending"
 msgstr ""
 
-#: app/__init__.py:57
+#: app/__init__.py:73
 msgid "Cancelled"
 msgstr ""
 
-#: app/__init__.py:68 app/blueprints/opportunities/forms.py:34
+#: app/__init__.py:84 app/blueprints/opportunities/forms.py:34
 msgid "New"
 msgstr ""
 
-#: app/__init__.py:69 app/blueprints/opportunities/forms.py:35
+#: app/__init__.py:85 app/blueprints/opportunities/forms.py:35
 msgid "Contacted"
 msgstr ""
 
-#: app/__init__.py:70 app/blueprints/opportunities/forms.py:36
+#: app/__init__.py:86 app/blueprints/opportunities/forms.py:36
 msgid "Quoted"
 msgstr ""
 
-#: app/__init__.py:71
+#: app/__init__.py:87
 msgid "Won"
 msgstr ""
 
-#: app/__init__.py:72 app/blueprints/opportunities/forms.py:37
+#: app/__init__.py:88 app/blueprints/opportunities/forms.py:37
 msgid "Lost"
 msgstr ""
 
-#: app/__init__.py:83 app/blueprints/opportunities/forms.py:20
+#: app/__init__.py:99 app/blueprints/opportunities/forms.py:20
 msgid "Instagram DM"
 msgstr ""
 
-#: app/__init__.py:84 app/blueprints/opportunities/forms.py:21
+#: app/__init__.py:100 app/blueprints/opportunities/forms.py:21
 msgid "Website"
 msgstr ""
 
-#: app/__init__.py:85 app/blueprints/opportunities/forms.py:22
+#: app/__init__.py:101 app/blueprints/opportunities/forms.py:22
 msgid "Referral"
 msgstr ""
 
-#: app/__init__.py:86 app/blueprints/opportunities/forms.py:23
+#: app/__init__.py:102 app/blueprints/opportunities/forms.py:23
 msgid "Other"
 msgstr ""
 
@@ -139,45 +139,77 @@ msgstr ""
 msgid "Save settings"
 msgstr ""
 
-#: app/blueprints/company/routes.py:27
-msgid "Company settings updated."
-msgstr ""
-
-#: app/blueprints/customers/forms.py:8 app/templates/customers/index.html:15
+#: app/blueprints/company/forms.py:32 app/blueprints/customers/forms.py:10
+#: app/templates/company/segments_list.html:13
+#: app/templates/customers/index.html:15
 msgid "Name"
 msgstr ""
 
-#: app/blueprints/customers/forms.py:9 app/templates/customers/index.html:16
+#: app/blueprints/company/forms.py:33
+msgid "Save segment"
+msgstr ""
+
+#: app/blueprints/company/routes.py:28
+msgid "Company settings updated."
+msgstr ""
+
+#: app/blueprints/company/routes.py:51
+#, python-format
+msgid "Segment '%(name)s' created."
+msgstr ""
+
+#: app/blueprints/company/routes.py:63
+msgid "Segment not found."
+msgstr ""
+
+#: app/blueprints/company/routes.py:71
+#, python-format
+msgid "Segment '%(name)s' updated."
+msgstr ""
+
+#: app/blueprints/customers/forms.py:11 app/templates/customers/index.html:16
+msgid "RUT"
+msgstr ""
+
+#: app/blueprints/customers/forms.py:12 app/templates/customers/index.html:17
+msgid "Segment"
+msgstr ""
+
+#: app/blueprints/customers/forms.py:13 app/templates/customers/index.html:18
 msgid "Email"
 msgstr ""
 
-#: app/blueprints/customers/forms.py:10 app/templates/customers/index.html:17
+#: app/blueprints/customers/forms.py:14 app/templates/customers/index.html:19
 msgid "Phone"
 msgstr ""
 
-#: app/blueprints/customers/forms.py:12 app/templates/customers/index.html:18
+#: app/blueprints/customers/forms.py:15
+msgid "Shipping address"
+msgstr ""
+
+#: app/blueprints/customers/forms.py:17 app/templates/customers/index.html:20
 msgid "Instagram handle"
 msgstr ""
 
-#: app/blueprints/customers/forms.py:14
+#: app/blueprints/customers/forms.py:19
 #: app/blueprints/opportunities/forms.py:26 app/blueprints/sales/forms.py:17
 msgid "Notes"
 msgstr ""
 
-#: app/blueprints/customers/forms.py:15
+#: app/blueprints/customers/forms.py:20
 msgid "Save customer"
 msgstr ""
 
-#: app/blueprints/customers/routes.py:35
+#: app/blueprints/customers/routes.py:38
 #, python-format
 msgid "Customer '%(name)s' created."
 msgstr ""
 
-#: app/blueprints/customers/routes.py:47
+#: app/blueprints/customers/routes.py:50
 msgid "Customer not found."
 msgstr ""
 
-#: app/blueprints/customers/routes.py:59
+#: app/blueprints/customers/routes.py:65
 #, python-format
 msgid "Customer '%(name)s' updated."
 msgstr ""
@@ -284,22 +316,23 @@ msgstr ""
 msgid "Restock"
 msgstr ""
 
-#: app/blueprints/inventory/routes.py:86
+#: app/blueprints/inventory/routes.py:88
 #, python-format
 msgid "Product '%(name)s' created."
 msgstr ""
 
-#: app/blueprints/inventory/routes.py:98 app/blueprints/inventory/routes.py:136
-#: app/blueprints/inventory/routes.py:163
+#: app/blueprints/inventory/routes.py:100
+#: app/blueprints/inventory/routes.py:138
+#: app/blueprints/inventory/routes.py:165
 msgid "Product not found."
 msgstr ""
 
-#: app/blueprints/inventory/routes.py:122
+#: app/blueprints/inventory/routes.py:124
 #, python-format
 msgid "Product '%(name)s' updated."
 msgstr ""
 
-#: app/blueprints/inventory/routes.py:145
+#: app/blueprints/inventory/routes.py:147
 #, python-format
 msgid "Restocked %(qty)s units of %(name)s."
 msgstr ""
@@ -337,15 +370,15 @@ msgstr ""
 msgid "Update stage"
 msgstr ""
 
-#: app/blueprints/opportunities/routes.py:47
+#: app/blueprints/opportunities/routes.py:48
 msgid "Opportunity created."
 msgstr ""
 
-#: app/blueprints/opportunities/routes.py:61
+#: app/blueprints/opportunities/routes.py:62
 msgid "Stage updated."
 msgstr ""
 
-#: app/blueprints/opportunities/routes.py:73
+#: app/blueprints/opportunities/routes.py:74
 #, python-format
 msgid "Converted to Sale #%(id)s."
 msgstr ""
@@ -469,8 +502,38 @@ msgstr ""
 msgid "Log out"
 msgstr ""
 
+#: app/templates/company/segment_form.html:3
+#: app/templates/company/segment_form.html:5
+msgid "Edit segment"
+msgstr ""
+
+#: app/templates/company/segment_form.html:3
+#: app/templates/company/segment_form.html:5
+#: app/templates/company/segments_list.html:6
+msgid "New segment"
+msgstr ""
+
+#: app/templates/company/segments_list.html:2
+#: app/templates/company/segments_list.html:5
+msgid "Customer segments"
+msgstr ""
+
+#: app/templates/company/segments_list.html:22
+#: app/templates/customers/index.html:35 app/templates/inventory/index.html:48
+#: app/templates/users/index.html:18
+msgid "Edit"
+msgstr ""
+
+#: app/templates/company/segments_list.html:26
+msgid "No segments yet."
+msgstr ""
+
 #: app/templates/company/settings.html:3 app/templates/company/settings.html:8
 msgid "Company settings"
+msgstr ""
+
+#: app/templates/company/settings.html:11
+msgid "Manage customer segments"
 msgstr ""
 
 #: app/templates/customers/customer_form.html:3
@@ -484,12 +547,7 @@ msgstr ""
 msgid "New customer"
 msgstr ""
 
-#: app/templates/customers/index.html:31 app/templates/inventory/index.html:48
-#: app/templates/users/index.html:18
-msgid "Edit"
-msgstr ""
-
-#: app/templates/customers/index.html:36
+#: app/templates/customers/index.html:40
 msgid "No customers yet."
 msgstr ""
 

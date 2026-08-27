@@ -7,6 +7,8 @@
     <div class="card p-4">
       <h1 class="h4 mb-3">{{ _("Company settings") }}</h1>
       {{ render_form(form) }}
+      <hr>
+      <a href="{{ url_for('company.segments') }}">{{ _("Manage customer segments") }} &rarr;</a>
     </div>
   </div>
 </div>

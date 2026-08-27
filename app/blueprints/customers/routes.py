@@ -25,8 +25,11 @@ def new_customer():
     if form.validate_on_submit():
         customer = Customer(
             name=form.name.data,
+            rut=form.rut.data,
             email=form.email.data or None,
             phone=form.phone.data or None,
+            shipping_address=form.shipping_address.data or None,
+            segment_id=form.segment_id.data,
             instagram_handle=form.instagram_handle.data or None,
             notes=form.notes.data or None,
         )
@@ -51,8 +54,11 @@ def edit_customer(customer_id):
 
     if form.validate_on_submit():
         customer.name = form.name.data
+        customer.rut = form.rut.data
         customer.email = form.email.data or None
         customer.phone = form.phone.data or None
+        customer.shipping_address = form.shipping_address.data or None
+        customer.segment_id = form.segment_id.data
         customer.instagram_handle = form.instagram_handle.data or None
         customer.notes = form.notes.data or None
         CustomerRepository().commit()

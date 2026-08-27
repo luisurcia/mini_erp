@@ -4,6 +4,7 @@ from flask import Flask
 
 from app.extensions import db
 from app.models.customer import Customer
+from app.models.customer_segment import CustomerSegment
 from app.models.opportunity import Opportunity
 from app.models.product import Flavor, Product
 from app.models.user import User
@@ -76,23 +77,38 @@ def _seed_flavors_and_products() -> dict[str, Product]:
 
 
 def _seed_customers() -> dict[str, Customer]:
+    segments_by_name = {segment.name: segment for segment in CustomerSegment.query.all()}
+
+    def segment_id(name: str) -> int | None:
+        segment = segments_by_name.get(name)
+        return segment.id if segment else None
+
     customers = {
         "green_leaf": Customer(
             name="Green Leaf Cafe",
+            rut="76.123.456-7",
             email="orders@greenleafcafe.example",
             phone="+1-555-0101",
+            shipping_address="Av. Providencia 1234, Providencia, Santiago",
+            segment_id=segment_id("Comercio"),
             notes="Local cafe, orders wholesale monthly.",
         ),
         "maria": Customer(
             name="Maria Torres",
+            rut="12.345.678-9",
             email="maria.torres@example.com",
+            shipping_address="Los Aromos 456, Depto 12B, Ñuñoa, Santiago",
+            segment_id=segment_id("Persona natural"),
             instagram_handle="maria.wellness",
             notes="Found us through Instagram, buys for personal use and small events.",
         ),
         "fresh_market": Customer(
             name="Fresh Market Co-op",
+            rut="77.987.654-3",
             email="buyers@freshmarket.example",
             phone="+1-555-0199",
+            shipping_address="Camino La Dehesa 890, Bodega 3, Lo Barnechea, Santiago",
+            segment_id=segment_id("Distribuidor"),
             notes="Interested in a recurring wholesale order.",
         ),
     }

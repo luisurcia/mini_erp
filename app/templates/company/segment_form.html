@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% from 'bootstrap5/form.html' import render_form %}
+{% block title %}{{ _("Edit segment") if mode == "edit" else _("New segment") }}{% endblock %}
+{% block content %}
+<h1 class="h3 mb-3">{{ _("Edit segment") if mode == "edit" else _("New segment") }}</h1>
+<div class="card p-4" style="max-width: 480px;">
+  {{ render_form(form) }}
+</div>
+{% endblock %}

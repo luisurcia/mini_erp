@@ -1,7 +1,7 @@
 from flask_babel import lazy_gettext as _l
 from flask_wtf import FlaskForm
-from wtforms import BooleanField, DecimalField, SelectField, SubmitField
-from wtforms.validators import DataRequired, NumberRange
+from wtforms import BooleanField, DecimalField, SelectField, StringField, SubmitField
+from wtforms.validators import DataRequired, Length, NumberRange
 
 from app.models.company import Company
 
@@ -26,3 +26,8 @@ class CompanySettingsForm(FlaskForm):
         validators=[DataRequired()],
     )
     submit = SubmitField(_l("Save settings"))
+
+
+class CustomerSegmentForm(FlaskForm):
+    name = StringField(_l("Name"), validators=[DataRequired(), Length(max=60)])
+    submit = SubmitField(_l("Save segment"))
