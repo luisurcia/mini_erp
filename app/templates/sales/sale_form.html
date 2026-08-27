@@ -8,11 +8,8 @@
     {{ form.hidden_tag() }}
     <div class="row">
       <div class="col-md-6">{{ render_field(form.customer_id) }}</div>
-      <div class="col-md-6">{{ render_field(form.status) }}</div>
+      <div class="col-md-6">{{ render_field(form.sale_date) }}</div>
     </div>
-    {{ render_field(form.invoice_number) }}
-    {{ render_field(form.include_tax) }}
-    {{ render_field(form.notes) }}
 
     <h2 class="h6 mt-4">{{ _("Line items") }}</h2>
     <table class="table" id="line-items-table">
@@ -32,6 +29,10 @@
       </tbody>
     </table>
     <button type="button" id="add-row" class="btn btn-sm btn-outline-secondary mb-3">+ {{ _("Add line") }}</button>
+
+    {{ render_field(form.include_tax) }}
+    {{ render_field(form.invoice_number) }}
+
     <div>{{ form.submit(class="btn btn-primary") }}</div>
   </form>
 </div>

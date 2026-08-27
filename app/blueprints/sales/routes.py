@@ -1,3 +1,5 @@
+from datetime import date, datetime
+
 from flask import flash, redirect, render_template, request, url_for
 from flask_babel import gettext as _
 from flask_login import login_required
@@ -6,7 +8,6 @@ from app.blueprints.sales import bp
 from app.blueprints.sales.forms import SaleMetaForm
 from app.exceptions import MiniErpError
 from app.models.company import Company
-from app.models.sales import Sale
 from app.permissions import editor_required
 from app.repositories.customer_repository import CustomerRepository
 from app.repositories.product_repository import ProductRepository
@@ -27,12 +28,9 @@ def index():
 def new_sale():
     form = SaleMetaForm()
     form.customer_id.choices = _customer_choices()
-    form.status.choices = [
-        (Sale.STATUS_COMPLETED, _("Completed")),
-        (Sale.STATUS_PENDING, _("Pending")),
-    ]
     if not form.is_submitted():
         form.include_tax.data = Company.get_settings().tax_enabled_default
+        form.sale_date.data = date.today()
     products = ProductRepository().get_active()
 
     if form.validate_on_submit():
@@ -44,8 +42,7 @@ def new_sale():
                 sale = SalesService().record_sale(
                     customer_id=form.customer_id.data,
                     items=items,
-                    status=form.status.data,
-                    notes=form.notes.data,
+                    sale_date=datetime.combine(form.sale_date.data, datetime.now().time()),
                     invoice_number=form.invoice_number.data or None,
                     include_tax=form.include_tax.data,
                 )

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-08-26 22:54-0400\n"
+"POT-Creation-Date: 2026-08-26 23:04-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,11 +17,11 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.18.0\n"
 
-#: app/__init__.py:71 app/blueprints/sales/routes.py:31
+#: app/__init__.py:71
 msgid "Completed"
 msgstr ""
 
-#: app/__init__.py:72 app/blueprints/sales/routes.py:32
+#: app/__init__.py:72
 msgid "Pending"
 msgstr ""
 
@@ -197,7 +197,7 @@ msgid "Instagram handle"
 msgstr ""
 
 #: app/blueprints/customers/forms.py:19
-#: app/blueprints/opportunities/forms.py:26 app/blueprints/sales/forms.py:17
+#: app/blueprints/opportunities/forms.py:26
 msgid "Notes"
 msgstr ""
 
@@ -338,7 +338,7 @@ msgstr ""
 msgid "Restocked %(qty)s units of %(name)s."
 msgstr ""
 
-#: app/blueprints/opportunities/forms.py:10 app/blueprints/sales/forms.py:11
+#: app/blueprints/opportunities/forms.py:10 app/blueprints/sales/forms.py:17
 #: app/templates/dashboard/index.html:121
 #: app/templates/opportunities/index.html:22 app/templates/sales/index.html:13
 msgid "Customer"
@@ -384,33 +384,32 @@ msgstr ""
 msgid "Converted to Sale #%(id)s."
 msgstr ""
 
-#: app/blueprints/sales/forms.py:12 app/templates/company/segments_list.html:14
-#: app/templates/inventory/index.html:22 app/templates/sales/index.html:13
-msgid "Status"
+#: app/blueprints/sales/forms.py:19
+msgid "Sale date"
 msgstr ""
 
-#: app/blueprints/sales/forms.py:14
-msgid "Invoice number"
-msgstr ""
-
-#: app/blueprints/sales/forms.py:16
+#: app/blueprints/sales/forms.py:21
 msgid "Include tax (IVA)"
 msgstr ""
 
-#: app/blueprints/sales/forms.py:18
+#: app/blueprints/sales/forms.py:23
+msgid "Invoice number"
+msgstr ""
+
+#: app/blueprints/sales/forms.py:25
 msgid "Record sale"
 msgstr ""
 
-#: app/blueprints/sales/routes.py:41
+#: app/blueprints/sales/routes.py:39
 msgid "Add at least one product line to the sale."
 msgstr ""
 
-#: app/blueprints/sales/routes.py:52
+#: app/blueprints/sales/routes.py:49
 #, python-format
 msgid "Sale #%(id)s recorded."
 msgstr ""
 
-#: app/blueprints/sales/routes.py:65
+#: app/blueprints/sales/routes.py:62
 msgid "Sale not found."
 msgstr ""
 
@@ -519,6 +518,11 @@ msgstr ""
 msgid "Customer segments"
 msgstr ""
 
+#: app/templates/company/segments_list.html:14
+#: app/templates/inventory/index.html:22 app/templates/sales/index.html:13
+msgid "Status"
+msgstr ""
+
 #: app/templates/company/segments_list.html:26
 #: app/templates/inventory/index.html:38
 msgid "Inactive"
@@ -620,7 +624,7 @@ msgstr ""
 #: app/templates/dashboard/index.html:100
 #: app/templates/dashboard/index.html:121
 #: app/templates/opportunities/index.html:22 app/templates/sales/detail.html:13
-#: app/templates/sales/sale_form.html:19
+#: app/templates/sales/sale_form.html:16
 msgid "Product"
 msgstr ""
 
@@ -825,15 +829,15 @@ msgstr ""
 msgid "No sales recorded yet."
 msgstr ""
 
-#: app/templates/sales/sale_form.html:17
+#: app/templates/sales/sale_form.html:14
 msgid "Line items"
 msgstr ""
 
-#: app/templates/sales/sale_form.html:19
+#: app/templates/sales/sale_form.html:16
 msgid "Quantity"
 msgstr ""
 
-#: app/templates/sales/sale_form.html:34
+#: app/templates/sales/sale_form.html:31
 msgid "Add line"
 msgstr ""
 
