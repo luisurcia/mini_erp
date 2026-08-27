@@ -117,11 +117,13 @@ def _register_blueprints(app: Flask) -> None:
     from app.blueprints.dashboard import bp as dashboard_bp
     from app.blueprints.inventory import bp as inventory_bp
     from app.blueprints.opportunities import bp as opportunities_bp
+    from app.blueprints.products import bp as products_bp
     from app.blueprints.sales import bp as sales_bp
     from app.blueprints.users import bp as users_bp
 
     app.register_blueprint(auth_bp, url_prefix="/auth")
     app.register_blueprint(dashboard_bp)
+    app.register_blueprint(products_bp, url_prefix="/products")
     app.register_blueprint(inventory_bp, url_prefix="/inventory")
     app.register_blueprint(sales_bp, url_prefix="/sales")
     app.register_blueprint(opportunities_bp, url_prefix="/opportunities")

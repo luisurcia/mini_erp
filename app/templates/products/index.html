@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% block title %}{{ _("Products") }}{% endblock %}
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-3">
+  <h1 class="h3 mb-0">{{ _("Products") }}</h1>
+  {% if current_user.can_edit %}
+  <a class="btn btn-primary" href="{{ url_for('products.new_product') }}">+ {{ _("New product") }}</a>
+  {% endif %}
+</div>
+
+<div class="card p-3">
+  <table class="table align-middle mb-0">
+    <thead>
+      <tr>
+        <th>{{ _("Flavor / Product") }}</th>
+        {% if settings.product_short_name_enabled %}<th>{{ _("Short name") }}</th>{% endif %}
+        {% if settings.product_sku_enabled %}<th>{{ _("SKU") }}</th>{% endif %}
+        {% if settings.product_size_enabled %}<th>{{ _("Size") }}</th>{% endif %}
+        <th>{{ _("Price") }}</th>
+        <th>{{ _("Status") }}</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for product in products %}
+      <tr>
+        <td>{{ product_label(product) }}</td>
+        {% if settings.product_short_name_enabled %}<td>{{ product.short_name or "-" }}</td>{% endif %}
+        {% if settings.product_sku_enabled %}<td>{{ product.sku }}</td>{% endif %}
+        {% if settings.product_size_enabled %}<td>{{ product.size_ml }} ml</td>{% endif %}
+        <td>${{ "%.2f"|format(product.unit_price) }}</td>
+        <td>
+          {% if product.is_active %}
+          <span class="badge" style="background-color: var(--scoby-teal);">{{ _("Active") }}</span>
+          {% else %}
+          <span class="badge bg-secondary">{{ _("Inactive") }}</span>
+          {% endif %}
+        </td>
+        <td class="text-end">
+          {% if current_user.can_edit %}
+          <a class="btn btn-sm btn-outline-secondary" href="{{ url_for('products.edit_product', product_id=product.id) }}">{{ _("Edit") }}</a>
+          {% endif %}
+        </td>
+      </tr>
+      {% else %}
+      <tr><td colspan="100%" class="text-muted text-center py-4">{{ _("No products yet.") }}</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

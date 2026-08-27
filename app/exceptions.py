@@ -9,12 +9,16 @@ class NotFoundError(MiniErpError):
 class InsufficientStockError(MiniErpError):
     """Raised when a sale would consume more stock than is on hand."""
 
-    def __init__(self, product_name: str, requested: int, available: int):
+    def __init__(
+        self, product_name: str, requested: int, available: int, warehouse_name: str | None = None
+    ):
         self.product_name = product_name
         self.requested = requested
         self.available = available
+        self.warehouse_name = warehouse_name
+        location = f" in '{warehouse_name}'" if warehouse_name else ""
         super().__init__(
-            f"Not enough stock for '{product_name}': requested {requested}, "
+            f"Not enough stock for '{product_name}'{location}: requested {requested}, "
             f"only {available} available."
         )
 

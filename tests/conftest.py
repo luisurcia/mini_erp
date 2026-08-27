@@ -4,6 +4,7 @@ from app import create_app
 from app.extensions import db
 from app.models.customer import Customer
 from app.models.product import Flavor, Product
+from app.models.warehouse import Warehouse
 from app.services.inventory_service import InventoryService
 from config import TestConfig
 
@@ -27,7 +28,15 @@ def customer(app):
 
 
 @pytest.fixture()
-def product(app):
+def warehouse(app):
+    w = Warehouse(name="Main Warehouse", is_active=True, is_default=True)
+    db.session.add(w)
+    db.session.commit()
+    return w
+
+
+@pytest.fixture()
+def product(app, warehouse):
     flavor = Flavor(name="Original", description="Classic")
     db.session.add(flavor)
     db.session.flush()
@@ -43,6 +52,6 @@ def product(app):
     db.session.add(p)
     db.session.flush()
 
-    InventoryService().create_inventory_item(p.id, initial_qty=50, reorder_level=10)
+    InventoryService().create_inventory_item(p.id, warehouse.id, initial_qty=50, reorder_level=10)
     db.session.commit()
     return p

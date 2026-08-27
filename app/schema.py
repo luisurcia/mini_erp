@@ -2,6 +2,7 @@ from sqlalchemy import inspect, text
 
 from app.extensions import db
 from app.models.user import User
+from app.models.warehouse import Warehouse
 
 
 def ensure_product_short_name_column() -> None:
@@ -125,6 +126,65 @@ def ensure_customer_segment_active_column() -> None:
     if "is_active" not in columns:
         db.session.execute(
             text("ALTER TABLE customer_segments ADD COLUMN is_active BOOLEAN NOT NULL DEFAULT 1")
+        )
+        db.session.commit()
+
+
+def ensure_inventory_item_warehouse_column() -> None:
+    """Migrate `inventory_items` from one row per product to one row per
+    (product, warehouse) pair, for databases created before multi-warehouse
+    stock existed (#25).
+
+    `Warehouse.ensure_defaults()` must have already run — every existing
+    row is assigned to the default warehouse (`Bodega Principal`), since
+    pre-multi-warehouse stock wasn't tracked by location.
+
+    SQLite can't ALTER a column onto a table with a *new* composite UNIQUE
+    constraint, so this rebuilds the table: rename the old one aside,
+    let `db.create_all()` create the new (already-registered) schema, copy
+    the data across with the default warehouse filled in, then drop the
+    old table.
+    """
+    inspector = inspect(db.engine)
+    columns = {column["name"] for column in inspector.get_columns("inventory_items")}
+    if "warehouse_id" in columns:
+        return
+
+    default_warehouse = Warehouse.query.filter_by(is_default=True).first()
+    if default_warehouse is None:
+        raise RuntimeError(
+            "Warehouse.ensure_defaults() must run before ensure_inventory_item_warehouse_column()"
+        )
+
+    db.session.execute(text("ALTER TABLE inventory_items RENAME TO inventory_items_old"))
+    db.session.commit()
+    db.create_all()
+    db.session.execute(
+        text(
+            "INSERT INTO inventory_items "
+            "(id, product_id, warehouse_id, quantity_on_hand, reorder_level, "
+            "created_at, updated_at) "
+            "SELECT id, product_id, :warehouse_id, quantity_on_hand, reorder_level, "
+            "created_at, updated_at FROM inventory_items_old"
+        ),
+        {"warehouse_id": default_warehouse.id},
+    )
+    db.session.execute(text("DROP TABLE inventory_items_old"))
+    db.session.commit()
+
+
+def ensure_stock_movement_warehouse_column() -> None:
+    """Backfill `stock_movements.warehouse_id` for databases created before
+    multi-warehouse stock existed.
+
+    Left NULL for existing rows — movements recorded before warehouses
+    existed genuinely don't have one, no default to backfill them with.
+    """
+    inspector = inspect(db.engine)
+    columns = {column["name"] for column in inspector.get_columns("stock_movements")}
+    if "warehouse_id" not in columns:
+        db.session.execute(
+            text("ALTER TABLE stock_movements ADD COLUMN warehouse_id INTEGER")
         )
         db.session.commit()
 

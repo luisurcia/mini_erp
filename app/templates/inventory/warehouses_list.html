@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block title %}{{ _("Warehouses") }}{% endblock %}
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-3">
+  <h1 class="h3 mb-0">{{ _("Warehouses") }}</h1>
+  <a class="btn btn-primary" href="{{ url_for('inventory.new_warehouse') }}">+ {{ _("New warehouse") }}</a>
+</div>
+
+<div class="card p-3" style="max-width: 480px;">
+  <table class="table align-middle mb-0">
+    <thead>
+      <tr>
+        <th>{{ _("Name") }}</th>
+        <th>{{ _("Status") }}</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for warehouse in warehouses %}
+      <tr>
+        <td>{{ warehouse.name }}</td>
+        <td>
+          {% if warehouse.is_active %}
+          <span class="badge bg-success">{{ _("Active") }}</span>
+          {% else %}
+          <span class="badge bg-secondary">{{ _("Inactive") }}</span>
+          {% endif %}
+        </td>
+        <td class="text-end">
+          <a class="btn btn-sm btn-outline-secondary" href="{{ url_for('inventory.edit_warehouse', warehouse_id=warehouse.id) }}">{{ _("Edit") }}</a>
+        </td>
+      </tr>
+      {% else %}
+      <tr><td colspan="3" class="text-muted text-center py-4">{{ _("No warehouses yet.") }}</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+<a class="btn btn-outline-secondary mt-3" href="{{ url_for('inventory.index') }}">{{ _("Back to inventory") }}</a>
+{% endblock %}

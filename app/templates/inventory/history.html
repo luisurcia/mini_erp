@@ -4,11 +4,12 @@
 <h1 class="h3 mb-3">{{ _("Stock history: %(name)s", name=product.display_name) }}</h1>
 <div class="card p-3">
   <table class="table table-sm mb-0">
-    <thead><tr><th>{{ _("Date") }}</th><th>{{ _("Change") }}</th><th>{{ _("Reason") }}</th><th>{{ _("Note") }}</th></tr></thead>
+    <thead><tr><th>{{ _("Date") }}</th><th>{{ _("Warehouse") }}</th><th>{{ _("Change") }}</th><th>{{ _("Reason") }}</th><th>{{ _("Note") }}</th></tr></thead>
     <tbody>
       {% for m in movements %}
       <tr>
         <td>{{ m.created_at.strftime("%Y-%m-%d %H:%M") }}</td>
+        <td>{{ m.warehouse.name if m.warehouse else "-" }}</td>
         <td class="{{ 'text-success' if m.change_qty > 0 else 'text-danger' }}">
           {{ "+%d"|format(m.change_qty) if m.change_qty > 0 else m.change_qty }}
         </td>
@@ -16,7 +17,7 @@
         <td>{{ m.note or "" }}</td>
       </tr>
       {% else %}
-      <tr><td colspan="4" class="text-muted text-center py-3">{{ _("No movements yet.") }}</td></tr>
+      <tr><td colspan="5" class="text-muted text-center py-3">{{ _("No movements yet.") }}</td></tr>
       {% endfor %}
     </tbody>
   </table>

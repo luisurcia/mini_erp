@@ -3,7 +3,10 @@
 {% block title %}{{ _("Restock") }}{% endblock %}
 {% block content %}
 <h1 class="h3 mb-3">{{ _("Restock: %(name)s", name=product.display_name) }}</h1>
-<p class="text-muted">{{ _("Currently on hand: %(qty)s", qty=product.inventory_item.quantity_on_hand) }}</p>
+<p class="text-muted">
+  {{ _("Warehouse: %(warehouse)s", warehouse=warehouse.name) }} &middot;
+  {{ _("Currently on hand: %(qty)s", qty=on_hand) }}
+</p>
 <div class="card p-4" style="max-width: 480px;">
   {{ render_form(form) }}
 </div>

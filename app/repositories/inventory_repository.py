@@ -9,6 +9,13 @@ class InventoryRepository(Repository[InventoryItem]):
     def get_by_product(self, product_id: int) -> InventoryItem | None:
         return InventoryItem.query.filter_by(product_id=product_id).first()
 
+    def get_by_product_and_warehouse(
+        self, product_id: int, warehouse_id: int
+    ) -> InventoryItem | None:
+        return InventoryItem.query.filter_by(
+            product_id=product_id, warehouse_id=warehouse_id
+        ).first()
+
     def low_stock(self) -> list[InventoryItem]:
         return [item for item in self.get_all() if item.is_low_stock]
 

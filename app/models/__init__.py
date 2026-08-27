@@ -5,6 +5,7 @@ from app.models.opportunity import Opportunity
 from app.models.product import Flavor, Product
 from app.models.sales import Sale, SaleItem
 from app.models.user import User
+from app.models.warehouse import Warehouse
 
 __all__ = [
     "Customer",
@@ -17,4 +18,5 @@ __all__ = [
     "Sale",
     "SaleItem",
     "User",
+    "Warehouse",
 ]

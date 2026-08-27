@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-08-26 23:04-0400\n"
+"POT-Creation-Date: 2026-08-26 23:38-0400\n"
 "PO-Revision-Date: 2026-08-24 17:58-0400\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: en\n"
@@ -96,7 +96,7 @@ msgid "Passwords must match."
 msgstr "Passwords must match."
 
 #: app/blueprints/auth/forms.py:25 app/templates/auth/change_password.html:3
-#: app/templates/auth/change_password.html:8 app/templates/base.html:32
+#: app/templates/auth/change_password.html:8 app/templates/base.html:33
 msgid "Change password"
 msgstr "Change password"
 
@@ -141,13 +141,18 @@ msgid "Save settings"
 msgstr "Save settings"
 
 #: app/blueprints/company/forms.py:32 app/blueprints/customers/forms.py:10
+#: app/blueprints/inventory/forms.py:19
 #: app/templates/company/segments_list.html:13
 #: app/templates/customers/index.html:15
+#: app/templates/inventory/warehouses_list.html:13
 msgid "Name"
 msgstr "Name"
 
-#: app/blueprints/company/forms.py:33 app/blueprints/inventory/forms.py:34
+#: app/blueprints/company/forms.py:33 app/blueprints/inventory/forms.py:20
+#: app/blueprints/products/forms.py:23
 #: app/templates/company/segments_list.html:24
+#: app/templates/inventory/warehouses_list.html:24
+#: app/templates/products/index.html:34
 msgid "Active"
 msgstr "Active"
 
@@ -268,76 +273,56 @@ msgstr "Nov"
 msgid "Dec"
 msgstr "Dec"
 
-#: app/blueprints/inventory/forms.py:16
-msgid "Flavor"
-msgstr "Flavor"
-
-#: app/blueprints/inventory/forms.py:17
-msgid "Product name"
-msgstr "Product name"
-
-#: app/blueprints/inventory/forms.py:19 app/templates/inventory/index.html:16
-msgid "Short name"
-msgstr "Short name"
-
-#: app/blueprints/inventory/forms.py:21 app/templates/inventory/index.html:17
-msgid "SKU"
-msgstr "SKU"
-
-#: app/blueprints/inventory/forms.py:23
-msgid "Size (ml)"
-msgstr "Size (ml)"
-
-#: app/blueprints/inventory/forms.py:26 app/templates/sales/detail.html:13
-msgid "Unit price"
-msgstr "Unit price"
-
-#: app/blueprints/inventory/forms.py:29
-msgid "Initial stock"
-msgstr "Initial stock"
-
-#: app/blueprints/inventory/forms.py:32 app/templates/dashboard/index.html:100
-#: app/templates/inventory/index.html:21
-msgid "Reorder level"
-msgstr "Reorder level"
-
-#: app/blueprints/inventory/forms.py:35
-msgid "Save product"
-msgstr "Save product"
-
-#: app/blueprints/inventory/forms.py:40
+#: app/blueprints/inventory/forms.py:9
 msgid "Quantity to add"
 msgstr "Quantity to add"
 
-#: app/blueprints/inventory/forms.py:42 app/templates/inventory/history.html:7
+#: app/blueprints/inventory/forms.py:12 app/templates/dashboard/index.html:100
+msgid "Reorder level"
+msgstr "Reorder level"
+
+#: app/blueprints/inventory/forms.py:14 app/templates/inventory/history.html:7
 msgid "Note"
 msgstr "Note"
 
-#: app/blueprints/inventory/forms.py:43 app/templates/inventory/index.html:47
-#: app/templates/inventory/restock_form.html:3
-msgid "Restock"
-msgstr "Restock"
+#: app/blueprints/inventory/forms.py:15
+msgid "Save"
+msgstr "Save"
 
-#: app/blueprints/inventory/routes.py:88
+#: app/blueprints/inventory/forms.py:21
+msgid "Save warehouse"
+msgstr "Save warehouse"
+
+#: app/blueprints/inventory/routes.py:36
+msgid "Product or warehouse not found."
+msgstr "Product or warehouse not found."
+
+#: app/blueprints/inventory/routes.py:57
 #, python-format
-msgid "Product '%(name)s' created."
-msgstr "Product '%(name)s' created."
+msgid "Restocked %(qty)s units of %(name)s in %(warehouse)s."
+msgstr "Restocked %(qty)s units of %(name)s in %(warehouse)s."
 
-#: app/blueprints/inventory/routes.py:100
-#: app/blueprints/inventory/routes.py:138
-#: app/blueprints/inventory/routes.py:165
+#: app/blueprints/inventory/routes.py:68
+msgid "Reorder level updated."
+msgstr "Reorder level updated."
+
+#: app/blueprints/inventory/routes.py:88 app/blueprints/products/routes.py:92
 msgid "Product not found."
 msgstr "Product not found."
 
-#: app/blueprints/inventory/routes.py:124
+#: app/blueprints/inventory/routes.py:113
 #, python-format
-msgid "Product '%(name)s' updated."
-msgstr "Product '%(name)s' updated."
+msgid "Warehouse '%(name)s' created."
+msgstr "Warehouse '%(name)s' created."
 
-#: app/blueprints/inventory/routes.py:147
+#: app/blueprints/inventory/routes.py:125
+msgid "Warehouse not found."
+msgstr "Warehouse not found."
+
+#: app/blueprints/inventory/routes.py:134
 #, python-format
-msgid "Restocked %(qty)s units of %(name)s."
-msgstr "Restocked %(qty)s units of %(name)s."
+msgid "Warehouse '%(name)s' updated."
+msgstr "Warehouse '%(name)s' updated."
 
 #: app/blueprints/opportunities/forms.py:10 app/blueprints/sales/forms.py:17
 #: app/templates/dashboard/index.html:121
@@ -384,6 +369,44 @@ msgstr "Stage updated."
 #, python-format
 msgid "Converted to Sale #%(id)s."
 msgstr "Converted to Sale #%(id)s."
+
+#: app/blueprints/products/forms.py:11
+msgid "Flavor"
+msgstr "Flavor"
+
+#: app/blueprints/products/forms.py:12
+msgid "Product name"
+msgstr "Product name"
+
+#: app/blueprints/products/forms.py:14 app/templates/products/index.html:16
+msgid "Short name"
+msgstr "Short name"
+
+#: app/blueprints/products/forms.py:16 app/templates/products/index.html:17
+msgid "SKU"
+msgstr "SKU"
+
+#: app/blueprints/products/forms.py:18
+msgid "Size (ml)"
+msgstr "Size (ml)"
+
+#: app/blueprints/products/forms.py:21 app/templates/sales/detail.html:13
+msgid "Unit price"
+msgstr "Unit price"
+
+#: app/blueprints/products/forms.py:24
+msgid "Save product"
+msgstr "Save product"
+
+#: app/blueprints/products/routes.py:80
+#, python-format
+msgid "Product '%(name)s' created."
+msgstr "Product '%(name)s' created."
+
+#: app/blueprints/products/routes.py:112
+#, python-format
+msgid "Product '%(name)s' updated."
+msgstr "Product '%(name)s' updated."
 
 #: app/blueprints/sales/forms.py:19
 msgid "Sale date"
@@ -470,36 +493,41 @@ msgstr "User '%(name)s' deleted."
 msgid "Dashboard"
 msgstr "Dashboard"
 
-#: app/templates/base.html:21 app/templates/inventory/index.html:2
+#: app/templates/base.html:21 app/templates/products/index.html:2
+#: app/templates/products/index.html:5
+msgid "Products"
+msgstr "Products"
+
+#: app/templates/base.html:22 app/templates/inventory/index.html:2
 #: app/templates/inventory/index.html:5
 msgid "Inventory"
 msgstr "Inventory"
 
-#: app/templates/base.html:22 app/templates/dashboard/index.html:173
+#: app/templates/base.html:23 app/templates/dashboard/index.html:173
 #: app/templates/sales/index.html:2 app/templates/sales/index.html:5
 msgid "Sales"
 msgstr "Sales"
 
-#: app/templates/base.html:23 app/templates/opportunities/index.html:2
+#: app/templates/base.html:24 app/templates/opportunities/index.html:2
 #: app/templates/opportunities/index.html:5
 msgid "Opportunities"
 msgstr "Opportunities"
 
-#: app/templates/base.html:24 app/templates/customers/index.html:2
+#: app/templates/base.html:25 app/templates/customers/index.html:2
 #: app/templates/customers/index.html:5
 msgid "Customers"
 msgstr "Customers"
 
-#: app/templates/base.html:26 app/templates/users/index.html:2
+#: app/templates/base.html:27 app/templates/users/index.html:2
 #: app/templates/users/index.html:5
 msgid "Users"
 msgstr "Users"
 
-#: app/templates/base.html:27
+#: app/templates/base.html:28
 msgid "Company"
 msgstr "Company"
 
-#: app/templates/base.html:33
+#: app/templates/base.html:34
 msgid "Log out"
 msgstr "Log out"
 
@@ -520,18 +548,22 @@ msgid "Customer segments"
 msgstr "Customer segments"
 
 #: app/templates/company/segments_list.html:14
-#: app/templates/inventory/index.html:22 app/templates/sales/index.html:13
+#: app/templates/inventory/warehouses_list.html:14
+#: app/templates/products/index.html:20 app/templates/sales/index.html:13
 msgid "Status"
 msgstr "Status"
 
 #: app/templates/company/segments_list.html:26
-#: app/templates/inventory/index.html:38
+#: app/templates/inventory/index.html:26
+#: app/templates/inventory/warehouses_list.html:26
+#: app/templates/products/index.html:36
 msgid "Inactive"
 msgstr "Inactive"
 
 #: app/templates/company/segments_list.html:30
-#: app/templates/customers/index.html:35 app/templates/inventory/index.html:48
-#: app/templates/users/index.html:18
+#: app/templates/customers/index.html:35
+#: app/templates/inventory/warehouses_list.html:30
+#: app/templates/products/index.html:41 app/templates/users/index.html:18
 msgid "Edit"
 msgstr "Edit"
 
@@ -618,7 +650,7 @@ msgstr "Sales per month (%(year)s)"
 msgid "Bottles sold per month (%(year)s)"
 msgstr "Bottles sold per month (%(year)s)"
 
-#: app/templates/dashboard/index.html:97 app/templates/inventory/index.html:40
+#: app/templates/dashboard/index.html:97
 msgid "Low stock"
 msgstr "Low stock"
 
@@ -629,7 +661,7 @@ msgstr "Low stock"
 msgid "Product"
 msgstr "Product"
 
-#: app/templates/dashboard/index.html:100 app/templates/inventory/index.html:20
+#: app/templates/dashboard/index.html:100
 msgid "On hand"
 msgstr "On hand"
 
@@ -675,6 +707,10 @@ msgid "Date"
 msgstr "Date"
 
 #: app/templates/inventory/history.html:7
+msgid "Warehouse"
+msgstr "Warehouse"
+
+#: app/templates/inventory/history.html:7
 msgid "Change"
 msgstr "Change"
 
@@ -682,58 +718,74 @@ msgstr "Change"
 msgid "Reason"
 msgstr "Reason"
 
-#: app/templates/inventory/history.html:19
+#: app/templates/inventory/history.html:20
 msgid "No movements yet."
 msgstr "No movements yet."
 
-#: app/templates/inventory/history.html:24
+#: app/templates/inventory/history.html:25
+#: app/templates/inventory/warehouses_list.html:39
 msgid "Back to inventory"
 msgstr "Back to inventory"
 
-#: app/templates/inventory/index.html:7
-#: app/templates/inventory/product_form.html:3
-#: app/templates/inventory/product_form.html:5
-msgid "New product"
-msgstr "New product"
+#: app/templates/inventory/index.html:6
+msgid "Manage warehouses"
+msgstr "Manage warehouses"
 
-#: app/templates/inventory/index.html:15
+#: app/templates/inventory/index.html:13 app/templates/products/index.html:15
 msgid "Flavor / Product"
 msgstr "Flavor / Product"
 
-#: app/templates/inventory/index.html:18
-msgid "Size"
-msgstr "Size"
+#: app/templates/inventory/index.html:17 app/templates/sales/detail.html:29
+#: app/templates/sales/index.html:13
+msgid "Total"
+msgstr "Total"
 
-#: app/templates/inventory/index.html:19
-msgid "Price"
-msgstr "Price"
-
-#: app/templates/inventory/index.html:42
-msgid "OK"
-msgstr "OK"
-
-#: app/templates/inventory/index.html:50
+#: app/templates/inventory/index.html:44
 msgid "History"
 msgstr "History"
 
-#: app/templates/inventory/index.html:54
+#: app/templates/inventory/index.html:48 app/templates/products/index.html:46
 msgid "No products yet."
 msgstr "No products yet."
 
-#: app/templates/inventory/product_form.html:3
-#: app/templates/inventory/product_form.html:5
-msgid "Edit product"
-msgstr "Edit product"
+#: app/templates/inventory/restock_form.html:3
+msgid "Restock"
+msgstr "Restock"
 
 #: app/templates/inventory/restock_form.html:5
 #, python-format
 msgid "Restock: %(name)s"
 msgstr "Restock: %(name)s"
 
-#: app/templates/inventory/restock_form.html:6
+#: app/templates/inventory/restock_form.html:7
+#, python-format
+msgid "Warehouse: %(warehouse)s"
+msgstr "Warehouse: %(warehouse)s"
+
+#: app/templates/inventory/restock_form.html:8
 #, python-format
 msgid "Currently on hand: %(qty)s"
 msgstr "Currently on hand: %(qty)s"
+
+#: app/templates/inventory/warehouse_form.html:3
+#: app/templates/inventory/warehouse_form.html:5
+msgid "Edit warehouse"
+msgstr "Edit warehouse"
+
+#: app/templates/inventory/warehouse_form.html:3
+#: app/templates/inventory/warehouse_form.html:5
+#: app/templates/inventory/warehouses_list.html:6
+msgid "New warehouse"
+msgstr "New warehouse"
+
+#: app/templates/inventory/warehouses_list.html:2
+#: app/templates/inventory/warehouses_list.html:5
+msgid "Warehouses"
+msgstr "Warehouses"
+
+#: app/templates/inventory/warehouses_list.html:34
+msgid "No warehouses yet."
+msgstr "No warehouses yet."
 
 #: app/templates/opportunities/index.html:7
 msgid "New request"
@@ -771,6 +823,25 @@ msgstr "New opportunity"
 msgid "New request / opportunity"
 msgstr "New request / opportunity"
 
+#: app/templates/products/index.html:7
+#: app/templates/products/product_form.html:3
+#: app/templates/products/product_form.html:5
+msgid "New product"
+msgstr "New product"
+
+#: app/templates/products/index.html:18
+msgid "Size"
+msgstr "Size"
+
+#: app/templates/products/index.html:19
+msgid "Price"
+msgstr "Price"
+
+#: app/templates/products/product_form.html:3
+#: app/templates/products/product_form.html:5
+msgid "Edit product"
+msgstr "Edit product"
+
 #: app/templates/sales/detail.html:2 app/templates/sales/detail.html:4
 #, python-format
 msgid "Sale #%(id)s"
@@ -804,10 +875,6 @@ msgstr "Subtotal"
 #, python-format
 msgid "IVA (%(rate)s%%)"
 msgstr "IVA (%(rate)s%%)"
-
-#: app/templates/sales/detail.html:29 app/templates/sales/index.html:13
-msgid "Total"
-msgstr "Total"
 
 #: app/templates/sales/detail.html:33
 msgid "Back to sales"
@@ -867,4 +934,10 @@ msgstr "Edit %(name)s"
 #: app/templates/users/user_form.html:10
 msgid "Leave the password fields blank to keep the current password."
 msgstr "Leave the password fields blank to keep the current password."
+
+#~ msgid "Initial stock"
+#~ msgstr "Initial stock"
+
+#~ msgid "OK"
+#~ msgstr "OK"
 

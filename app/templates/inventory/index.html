@@ -3,9 +3,7 @@
 {% block content %}
 <div class="d-flex justify-content-between align-items-center mb-3">
   <h1 class="h3 mb-0">{{ _("Inventory") }}</h1>
-  {% if current_user.can_edit %}
-  <a class="btn btn-primary" href="{{ url_for('inventory.new_product') }}">+ {{ _("New product") }}</a>
-  {% endif %}
+  <a href="{{ url_for('inventory.warehouses') }}">{{ _("Manage warehouses") }} &rarr;</a>
 </div>
 
 <div class="card p-3">
@@ -13,40 +11,36 @@
     <thead>
       <tr>
         <th>{{ _("Flavor / Product") }}</th>
-        {% if settings.product_short_name_enabled %}<th>{{ _("Short name") }}</th>{% endif %}
-        {% if settings.product_sku_enabled %}<th>{{ _("SKU") }}</th>{% endif %}
-        {% if settings.product_size_enabled %}<th>{{ _("Size") }}</th>{% endif %}
-        <th>{{ _("Price") }}</th>
-        <th>{{ _("On hand") }}</th>
-        <th>{{ _("Reorder level") }}</th>
-        <th>{{ _("Status") }}</th>
+        {% for warehouse in warehouses %}
+        <th class="text-end">{{ warehouse.name }}</th>
+        {% endfor %}
+        <th class="text-end">{{ _("Total") }}</th>
         <th></th>
       </tr>
     </thead>
     <tbody>
       {% for product in products %}
-      <tr class="{{ 'table-low-stock' if product.inventory_item and product.inventory_item.is_low_stock else '' }}">
-        <td>{{ product_label(product) }}</td>
-        {% if settings.product_short_name_enabled %}<td>{{ product.short_name or "-" }}</td>{% endif %}
-        {% if settings.product_sku_enabled %}<td>{{ product.sku }}</td>{% endif %}
-        {% if settings.product_size_enabled %}<td>{{ product.size_ml }} ml</td>{% endif %}
-        <td>${{ "%.2f"|format(product.unit_price) }}</td>
-        <td>{{ product.inventory_item.quantity_on_hand if product.inventory_item else "-" }}</td>
-        <td>{{ product.inventory_item.reorder_level if product.inventory_item else "-" }}</td>
+      <tr>
         <td>
-          {% if not product.is_active %}
-            <span class="badge bg-secondary">{{ _("Inactive") }}</span>
-          {% elif product.inventory_item and product.inventory_item.is_low_stock %}
-            <span class="badge" style="background-color: var(--kombucha-amber);">{{ _("Low stock") }}</span>
+          {{ product_label(product) }}
+          {% if not product.is_active %}<span class="badge bg-secondary">{{ _("Inactive") }}</span>{% endif %}
+        </td>
+        {% set total = namespace(qty=0) %}
+        {% for warehouse in warehouses %}
+        {% set item = stock.get((product.id, warehouse.id)) %}
+        {% set total.qty = total.qty + (item.quantity_on_hand if item else 0) %}
+        <td class="text-end {{ 'table-low-stock' if item and item.is_low_stock else '' }}">
+          {% if current_user.can_edit %}
+          <a class="btn btn-sm btn-outline-secondary" href="{{ url_for('inventory.restock', product_id=product.id, warehouse_id=warehouse.id) }}">
+            {{ item.quantity_on_hand if item else 0 }}
+          </a>
           {% else %}
-            <span class="badge" style="background-color: var(--kombucha-green);">{{ _("OK") }}</span>
+          {{ item.quantity_on_hand if item else 0 }}
           {% endif %}
         </td>
+        {% endfor %}
+        <td class="text-end"><strong>{{ total.qty }}</strong></td>
         <td class="text-end">
-          {% if current_user.can_edit %}
-          <a class="btn btn-sm btn-warning" href="{{ url_for('inventory.restock', product_id=product.id) }}">{{ _("Restock") }}</a>
-          <a class="btn btn-sm btn-outline-secondary" href="{{ url_for('inventory.edit_product', product_id=product.id) }}">{{ _("Edit") }}</a>
-          {% endif %}
           <a class="btn btn-sm btn-outline-secondary" href="{{ url_for('inventory.history', product_id=product.id) }}">{{ _("History") }}</a>
         </td>
       </tr>

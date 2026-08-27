@@ -9,6 +9,7 @@ from app.models.inventory import StockMovement
 from app.models.sales import Sale, SaleItem
 from app.repositories.product_repository import ProductRepository
 from app.repositories.sales_repository import SalesRepository
+from app.repositories.warehouse_repository import WarehouseRepository
 from app.services.inventory_service import InventoryService
 
 
@@ -20,10 +21,12 @@ class SalesService:
         sales_repo: SalesRepository | None = None,
         product_repo: ProductRepository | None = None,
         inventory_service: InventoryService | None = None,
+        warehouse_repo: WarehouseRepository | None = None,
     ):
         self.sales_repo = sales_repo or SalesRepository()
         self.product_repo = product_repo or ProductRepository()
         self.inventory_service = inventory_service or InventoryService()
+        self.warehouse_repo = warehouse_repo or WarehouseRepository()
 
     def record_sale(
         self,
@@ -48,19 +51,29 @@ class SalesService:
             tax_rate_applied=Company.get_settings().tax_rate if include_tax else None,
         )
 
+        # TODO(#23/#24): the Sales form doesn't let the seller pick a
+        # warehouse per line yet, so every sale is drawn from the default
+        # warehouse until the line-item grid is redesigned to capture one
+        # explicitly. Remove this once that lands.
+        default_warehouse = self.warehouse_repo.get_default()
+
         for line in items:
             product = self.product_repo.get(line["product_id"])
             if product is None:
                 raise NotFoundError(f"Product #{line['product_id']} not found")
             quantity = int(line["quantity"])
+            unit_price = line.get("unit_price")
+            if unit_price is None:
+                unit_price = product.unit_price
 
             sale.items.append(
-                SaleItem(product=product, quantity=quantity, unit_price=product.unit_price)
+                SaleItem(product=product, quantity=quantity, unit_price=unit_price)
             )
 
             if status == Sale.STATUS_COMPLETED:
                 self.inventory_service.consume(
                     product.id,
+                    default_warehouse.id,
                     quantity,
                     reason=StockMovement.REASON_SALE,
                     note=f"Sale line for {product.display_name}",

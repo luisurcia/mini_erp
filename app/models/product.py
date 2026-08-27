@@ -26,9 +26,8 @@ class Product(BaseModel):
     is_active = db.Column(db.Boolean, nullable=False, default=True)
 
     flavor = db.relationship("Flavor", back_populates="products")
-    inventory_item = db.relationship(
-        "InventoryItem", back_populates="product", uselist=False,
-        cascade="all, delete-orphan",
+    inventory_items = db.relationship(
+        "InventoryItem", back_populates="product", cascade="all, delete-orphan"
     )
 
     def __repr__(self) -> str:

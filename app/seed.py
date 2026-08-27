@@ -8,6 +8,7 @@ from app.models.customer_segment import CustomerSegment
 from app.models.opportunity import Opportunity
 from app.models.product import Flavor, Product
 from app.models.user import User
+from app.models.warehouse import Warehouse
 from app.services.inventory_service import InventoryService
 from app.services.opportunity_service import OpportunityService
 from app.services.sales_service import SalesService
@@ -51,6 +52,10 @@ def _seed_admin(app: Flask) -> None:
 
 def _seed_flavors_and_products() -> dict[str, Product]:
     inventory_service = InventoryService()
+    # Demo stock all lands in the main warehouse, same as a real upgrade
+    # from before multi-warehouse stock existed — the other two start
+    # empty until someone restocks them there.
+    main_warehouse_id = Warehouse.query.filter_by(is_default=True).first().id
     products: dict[str, Product] = {}
 
     for name, description in FLAVORS:
@@ -70,7 +75,9 @@ def _seed_flavors_and_products() -> dict[str, Product]:
         db.session.flush()
         products[name] = product
 
-        inventory_service.create_inventory_item(product.id, initial_qty=100, reorder_level=20)
+        inventory_service.create_inventory_item(
+            product.id, main_warehouse_id, initial_qty=100, reorder_level=20
+        )
 
     db.session.commit()
     return products
