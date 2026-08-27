@@ -11,6 +11,9 @@ repositories → services → routes), SQLAlchemy, and Bootstrap 5.
 
 - **Inventory** — flavors/products, stock on hand, restocking, low-stock
   alerts, full stock-movement history.
+- **Supplies** — production inputs (bottles, labels, caps) with their own
+  catalog/price and per-warehouse stock, mirroring Inventory's pattern.
+  Not deducted automatically when a sale is recorded.
 - **Sales** — record real, multi-line sales; stock is automatically
   consumed and validated (can't oversell).
 - **Top customers** — ranks customers by consumption (total spent,
@@ -335,7 +338,7 @@ app/
   services/       business logic (stock rules, sale creation, pipeline,
                   user management)
   blueprints/     routes + forms, one per module (auth, dashboard,
-                  inventory, sales, top_customers, users)
+                  inventory, supplies, sales, top_customers, users)
   permissions.py  role-based route decorators (admin_required, editor_required)
   schema.py       lightweight in-place upgrades for existing SQLite DBs
   templates/      Jinja2 templates (Bootstrap 5)

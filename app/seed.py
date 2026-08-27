@@ -6,10 +6,12 @@ from app.extensions import db
 from app.models.customer import Customer
 from app.models.customer_segment import CustomerSegment
 from app.models.product import Flavor, Product
+from app.models.supply import Supply
 from app.models.user import User
 from app.models.warehouse import Warehouse
 from app.services.inventory_service import InventoryService
 from app.services.sales_service import SalesService
+from app.services.supply_service import SupplyService
 
 FLAVORS = [
     ("Original", "Classic lightly-sweet kombucha, the everyday favorite."),
@@ -34,6 +36,7 @@ def seed_demo_data(app: Flask) -> None:
         return  # already seeded
 
     products = _seed_flavors_and_products()
+    _seed_supplies()
     customers = _seed_customers()
     _seed_sales(customers, products)
 
@@ -78,6 +81,29 @@ def _seed_flavors_and_products() -> dict[str, Product]:
 
     db.session.commit()
     return products
+
+
+SUPPLIES = [
+    ("Botellas 355ml", "unidad", 0.35, 1000),
+    ("Etiquetas", "unidad", 0.08, 1500),
+    ("Tapas", "unidad", 0.05, 1200),
+]
+
+
+def _seed_supplies() -> None:
+    supply_service = SupplyService()
+    main_warehouse_id = Warehouse.query.filter_by(is_default=True).first().id
+
+    for name, unit, unit_price, initial_qty in SUPPLIES:
+        supply = Supply(name=name, unit=unit, unit_price=unit_price, is_active=True)
+        db.session.add(supply)
+        db.session.flush()
+
+        supply_service.create_supply_item(
+            supply.id, main_warehouse_id, initial_qty=initial_qty, reorder_level=200
+        )
+
+    db.session.commit()
 
 
 def _seed_customers() -> dict[str, Customer]:

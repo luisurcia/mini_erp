@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% block title %}{{ _("Supplies") }}{% endblock %}
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-3">
+  <h1 class="h3 mb-0">{{ _("Supplies") }}</h1>
+  <div class="d-flex gap-2">
+    <a class="btn btn-outline-secondary btn-sm" href="{{ url_for('supplies.stock') }}">{{ _("Stock by warehouse") }}</a>
+    {% if current_user.can_edit %}
+    <a class="btn btn-primary btn-sm" href="{{ url_for('supplies.new_supply') }}">+ {{ _("New supply") }}</a>
+    {% endif %}
+  </div>
+</div>
+
+<div class="card p-3">
+  <table class="table align-middle mb-0">
+    <thead>
+      <tr>
+        <th>{{ _("Name") }}</th>
+        <th>{{ _("Unit") }}</th>
+        <th>{{ _("Price") }}</th>
+        <th>{{ _("Status") }}</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for supply in supplies %}
+      <tr>
+        <td>{{ supply.name }}</td>
+        <td>{{ supply.unit }}</td>
+        <td>${{ "%.2f"|format(supply.unit_price) }}</td>
+        <td>
+          {% if supply.is_active %}
+          <span class="badge" style="background-color: var(--scoby-teal);">{{ _("Active") }}</span>
+          {% else %}
+          <span class="badge bg-secondary">{{ _("Inactive") }}</span>
+          {% endif %}
+        </td>
+        <td class="text-end">
+          {% if current_user.can_edit %}
+          <a class="btn btn-sm btn-outline-secondary" href="{{ url_for('supplies.edit_supply', supply_id=supply.id) }}">{{ _("Edit") }}</a>
+          {% endif %}
+        </td>
+      </tr>
+      {% else %}
+      <tr><td colspan="100%" class="text-muted text-center py-4">{{ _("No supplies yet.") }}</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

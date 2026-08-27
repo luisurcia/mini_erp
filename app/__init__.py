@@ -103,6 +103,7 @@ def _register_blueprints(app: Flask) -> None:
     from app.blueprints.inventory import bp as inventory_bp
     from app.blueprints.products import bp as products_bp
     from app.blueprints.sales import bp as sales_bp
+    from app.blueprints.supplies import bp as supplies_bp
     from app.blueprints.top_customers import bp as top_customers_bp
     from app.blueprints.users import bp as users_bp
 
@@ -110,6 +111,7 @@ def _register_blueprints(app: Flask) -> None:
     app.register_blueprint(dashboard_bp)
     app.register_blueprint(products_bp, url_prefix="/products")
     app.register_blueprint(inventory_bp, url_prefix="/inventory")
+    app.register_blueprint(supplies_bp, url_prefix="/supplies")
     app.register_blueprint(sales_bp, url_prefix="/sales")
     app.register_blueprint(top_customers_bp, url_prefix="/top-customers")
     app.register_blueprint(customers_bp, url_prefix="/customers")
