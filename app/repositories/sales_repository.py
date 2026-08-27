@@ -33,3 +33,14 @@ class SalesRepository(Repository[Sale]):
     def distinct_years(self) -> list[int]:
         rows = db.session.query(extract("year", Sale.sale_date)).distinct().all()
         return sorted({int(row[0]) for row in rows if row[0] is not None}, reverse=True)
+
+    def last_purchase_by_customer(self) -> dict[int, datetime]:
+        """customer id -> date of their most recent completed sale, across
+        all history (not scoped to any year/month filter). See #40."""
+        rows = (
+            db.session.query(Sale.customer_id, db.func.max(Sale.sale_date))
+            .filter(Sale.status == Sale.STATUS_COMPLETED)
+            .group_by(Sale.customer_id)
+            .all()
+        )
+        return {customer_id: last_date for customer_id, last_date in rows}

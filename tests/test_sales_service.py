@@ -1,4 +1,4 @@
-from datetime import UTC, datetime
+from datetime import UTC, date, datetime
 from decimal import Decimal
 
 import pytest
@@ -214,6 +214,30 @@ def test_top_customers_by_consumption_ranks_by_total_amount(app, customer, produ
     assert ranked[0]["total_amount"] == big_sale_1.total_amount + big_sale_2.total_amount
     assert ranked[0]["total_units"] == 5
     assert ranked[0]["sale_count"] == 2
+    assert ranked[0]["last_purchase"] is None  # not requested
+
+
+def test_top_customers_by_consumption_fills_last_purchase_from_history(app, customer, product):
+    service = SalesService()
+    jan_sale = service.record_sale(
+        customer_id=customer.id,
+        items=[{"product_id": product.id, "quantity": 1}],
+        sale_date=datetime(2026, 1, 10, tzinfo=UTC),
+    )
+    service.record_sale(
+        customer_id=customer.id,
+        items=[{"product_id": product.id, "quantity": 1}],
+        sale_date=datetime(2026, 6, 20, tzinfo=UTC),
+    )
+
+    last_by_customer = SalesRepository().last_purchase_by_customer()
+    assert last_by_customer[customer.id].date() == date(2026, 6, 20)
+
+    # Rank over only the January sale — last_purchase still reflects June.
+    ranked = service.top_customers_by_consumption(
+        [jan_sale], last_purchase_by_customer=last_by_customer
+    )
+    assert ranked[0]["last_purchase"].date() == date(2026, 6, 20)
 
 
 def test_top_customers_by_consumption_respects_limit(app, customer, product):

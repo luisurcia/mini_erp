@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-08-27 18:19-0400\n"
+"POT-Creation-Date: 2026-08-27 18:43-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -192,7 +192,8 @@ msgid "RUT"
 msgstr ""
 
 #: app/blueprints/customers/forms.py:12 app/templates/customers/index.html:15
-#: app/templates/top_customers/index.html:35
+#: app/templates/top_customers/index.html:26
+#: app/templates/top_customers/index.html:44
 msgid "Segment"
 msgstr ""
 
@@ -235,62 +236,62 @@ msgid "Customer '%(name)s' updated."
 msgstr ""
 
 #: app/blueprints/dashboard/routes.py:15
-#: app/blueprints/top_customers/routes.py:16
+#: app/blueprints/top_customers/routes.py:17
 msgid "Jan"
 msgstr ""
 
 #: app/blueprints/dashboard/routes.py:15
-#: app/blueprints/top_customers/routes.py:16
+#: app/blueprints/top_customers/routes.py:17
 msgid "Feb"
 msgstr ""
 
 #: app/blueprints/dashboard/routes.py:15
-#: app/blueprints/top_customers/routes.py:16
+#: app/blueprints/top_customers/routes.py:17
 msgid "Mar"
 msgstr ""
 
 #: app/blueprints/dashboard/routes.py:15
-#: app/blueprints/top_customers/routes.py:16
+#: app/blueprints/top_customers/routes.py:17
 msgid "Apr"
 msgstr ""
 
 #: app/blueprints/dashboard/routes.py:15
-#: app/blueprints/top_customers/routes.py:16
+#: app/blueprints/top_customers/routes.py:17
 msgid "May"
 msgstr ""
 
 #: app/blueprints/dashboard/routes.py:15
-#: app/blueprints/top_customers/routes.py:16
+#: app/blueprints/top_customers/routes.py:17
 msgid "Jun"
 msgstr ""
 
 #: app/blueprints/dashboard/routes.py:16
-#: app/blueprints/top_customers/routes.py:17
+#: app/blueprints/top_customers/routes.py:18
 msgid "Jul"
 msgstr ""
 
 #: app/blueprints/dashboard/routes.py:16
-#: app/blueprints/top_customers/routes.py:17
+#: app/blueprints/top_customers/routes.py:18
 msgid "Aug"
 msgstr ""
 
 #: app/blueprints/dashboard/routes.py:16
-#: app/blueprints/top_customers/routes.py:17
+#: app/blueprints/top_customers/routes.py:18
 msgid "Sep"
 msgstr ""
 
 #: app/blueprints/dashboard/routes.py:16
-#: app/blueprints/top_customers/routes.py:17
+#: app/blueprints/top_customers/routes.py:18
 msgid "Oct"
 msgstr ""
 
 #: app/blueprints/dashboard/routes.py:16
-#: app/blueprints/top_customers/routes.py:17
+#: app/blueprints/top_customers/routes.py:18
 msgid "Nov"
 msgstr ""
 
 #: app/blueprints/dashboard/routes.py:16
-#: app/blueprints/top_customers/routes.py:17
+#: app/blueprints/top_customers/routes.py:18
 msgid "Dec"
 msgstr ""
 
@@ -412,7 +413,7 @@ msgid "Product '%(name)s' updated."
 msgstr ""
 
 #: app/blueprints/sales/forms.py:17 app/templates/sales/index.html:11
-#: app/templates/top_customers/index.html:34
+#: app/templates/top_customers/index.html:43
 msgid "Customer"
 msgstr ""
 
@@ -491,7 +492,7 @@ msgstr ""
 
 #: app/blueprints/users/forms.py:11 app/templates/base.html:31
 #: app/templates/dashboard/index.html:127 app/templates/sales/index.html:2
-#: app/templates/sales/index.html:5 app/templates/top_customers/index.html:38
+#: app/templates/sales/index.html:5 app/templates/top_customers/index.html:47
 msgid "Sales"
 msgstr ""
 
@@ -697,7 +698,7 @@ msgid "Everything is well stocked."
 msgstr ""
 
 #: app/templates/dashboard/index.html:136
-#: app/templates/top_customers/index.html:37
+#: app/templates/top_customers/index.html:46
 msgid "Bottles"
 msgstr ""
 
@@ -961,11 +962,19 @@ msgstr ""
 msgid "All-time"
 msgstr ""
 
-#: app/templates/top_customers/index.html:36
+#: app/templates/top_customers/index.html:28
+msgid "All segments"
+msgstr ""
+
+#: app/templates/top_customers/index.html:45
 msgid "Total spent"
 msgstr ""
 
-#: app/templates/top_customers/index.html:55
+#: app/templates/top_customers/index.html:48
+msgid "Last purchase"
+msgstr ""
+
+#: app/templates/top_customers/index.html:66
 msgid "No sales in this period."
 msgstr ""
 

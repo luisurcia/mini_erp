@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-08-27 18:19-0400\n"
+"POT-Creation-Date: 2026-08-27 18:43-0400\n"
 "PO-Revision-Date: 2026-08-24 17:58-0400\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: en\n"
@@ -193,7 +193,8 @@ msgid "RUT"
 msgstr "RUT"
 
 #: app/blueprints/customers/forms.py:12 app/templates/customers/index.html:15
-#: app/templates/top_customers/index.html:35
+#: app/templates/top_customers/index.html:26
+#: app/templates/top_customers/index.html:44
 msgid "Segment"
 msgstr "Segment"
 
@@ -236,62 +237,62 @@ msgid "Customer '%(name)s' updated."
 msgstr "Customer '%(name)s' updated."
 
 #: app/blueprints/dashboard/routes.py:15
-#: app/blueprints/top_customers/routes.py:16
+#: app/blueprints/top_customers/routes.py:17
 msgid "Jan"
 msgstr "Jan"
 
 #: app/blueprints/dashboard/routes.py:15
-#: app/blueprints/top_customers/routes.py:16
+#: app/blueprints/top_customers/routes.py:17
 msgid "Feb"
 msgstr "Feb"
 
 #: app/blueprints/dashboard/routes.py:15
-#: app/blueprints/top_customers/routes.py:16
+#: app/blueprints/top_customers/routes.py:17
 msgid "Mar"
 msgstr "Mar"
 
 #: app/blueprints/dashboard/routes.py:15
-#: app/blueprints/top_customers/routes.py:16
+#: app/blueprints/top_customers/routes.py:17
 msgid "Apr"
 msgstr "Apr"
 
 #: app/blueprints/dashboard/routes.py:15
-#: app/blueprints/top_customers/routes.py:16
+#: app/blueprints/top_customers/routes.py:17
 msgid "May"
 msgstr "May"
 
 #: app/blueprints/dashboard/routes.py:15
-#: app/blueprints/top_customers/routes.py:16
+#: app/blueprints/top_customers/routes.py:17
 msgid "Jun"
 msgstr "Jun"
 
 #: app/blueprints/dashboard/routes.py:16
-#: app/blueprints/top_customers/routes.py:17
+#: app/blueprints/top_customers/routes.py:18
 msgid "Jul"
 msgstr "Jul"
 
 #: app/blueprints/dashboard/routes.py:16
-#: app/blueprints/top_customers/routes.py:17
+#: app/blueprints/top_customers/routes.py:18
 msgid "Aug"
 msgstr "Aug"
 
 #: app/blueprints/dashboard/routes.py:16
-#: app/blueprints/top_customers/routes.py:17
+#: app/blueprints/top_customers/routes.py:18
 msgid "Sep"
 msgstr "Sep"
 
 #: app/blueprints/dashboard/routes.py:16
-#: app/blueprints/top_customers/routes.py:17
+#: app/blueprints/top_customers/routes.py:18
 msgid "Oct"
 msgstr "Oct"
 
 #: app/blueprints/dashboard/routes.py:16
-#: app/blueprints/top_customers/routes.py:17
+#: app/blueprints/top_customers/routes.py:18
 msgid "Nov"
 msgstr "Nov"
 
 #: app/blueprints/dashboard/routes.py:16
-#: app/blueprints/top_customers/routes.py:17
+#: app/blueprints/top_customers/routes.py:18
 msgid "Dec"
 msgstr "Dec"
 
@@ -413,7 +414,7 @@ msgid "Product '%(name)s' updated."
 msgstr "Product '%(name)s' updated."
 
 #: app/blueprints/sales/forms.py:17 app/templates/sales/index.html:11
-#: app/templates/top_customers/index.html:34
+#: app/templates/top_customers/index.html:43
 msgid "Customer"
 msgstr "Customer"
 
@@ -492,7 +493,7 @@ msgstr "Warehouse staff"
 
 #: app/blueprints/users/forms.py:11 app/templates/base.html:31
 #: app/templates/dashboard/index.html:127 app/templates/sales/index.html:2
-#: app/templates/sales/index.html:5 app/templates/top_customers/index.html:38
+#: app/templates/sales/index.html:5 app/templates/top_customers/index.html:47
 msgid "Sales"
 msgstr "Sales"
 
@@ -698,7 +699,7 @@ msgid "Everything is well stocked."
 msgstr "Everything is well stocked."
 
 #: app/templates/dashboard/index.html:136
-#: app/templates/top_customers/index.html:37
+#: app/templates/top_customers/index.html:46
 msgid "Bottles"
 msgstr "Bottles"
 
@@ -967,11 +968,19 @@ msgstr "Edit supply"
 msgid "All-time"
 msgstr "All-time"
 
-#: app/templates/top_customers/index.html:36
+#: app/templates/top_customers/index.html:28
+msgid "All segments"
+msgstr "All segments"
+
+#: app/templates/top_customers/index.html:45
 msgid "Total spent"
 msgstr "Total spent"
 
-#: app/templates/top_customers/index.html:55
+#: app/templates/top_customers/index.html:48
+msgid "Last purchase"
+msgstr "Last purchase"
+
+#: app/templates/top_customers/index.html:66
 msgid "No sales in this period."
 msgstr "No sales in this period."
 

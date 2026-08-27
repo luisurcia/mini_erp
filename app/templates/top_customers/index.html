@@ -22,6 +22,15 @@
         {% endfor %}
       </select>
     </div>
+    <div>
+      <label class="form-label small text-muted mb-0" for="segment">{{ _("Segment") }}</label>
+      <select class="form-select" id="segment" name="segment" onchange="this.form.submit()">
+        <option value="">{{ _("All segments") }}</option>
+        {% for segment in segments %}
+        <option value="{{ segment.id }}" {{ "selected" if segment.id == selected_segment else "" }}>{{ segment.name }}</option>
+        {% endfor %}
+      </select>
+    </div>
   </form>
 </div>
 
@@ -36,6 +45,7 @@
         <th>{{ _("Total spent") }}</th>
         <th>{{ _("Bottles") }}</th>
         <th>{{ _("Sales") }}</th>
+        <th>{{ _("Last purchase") }}</th>
       </tr>
     </thead>
     <tbody>
@@ -47,6 +57,7 @@
         <td>{{ format_money(entry.total_amount) }}</td>
         <td>{{ entry.total_units }}</td>
         <td>{{ entry.sale_count }}</td>
+        <td>{{ entry.last_purchase.strftime("%Y-%m-%d") if entry.last_purchase else "-" }}</td>
       </tr>
     {% endfor %}
     </tbody>

@@ -143,8 +143,20 @@ class SalesService:
             counts[sale.sale_date.month - 1] += 1
         return counts
 
-    def top_customers_by_consumption(self, sales: list[Sale], limit: int = 10) -> list[dict]:
-        """Ranks customers by total amount spent across the given sales."""
+    def top_customers_by_consumption(
+        self,
+        sales: list[Sale],
+        limit: int = 10,
+        last_purchase_by_customer: dict[int, datetime] | None = None,
+    ) -> list[dict]:
+        """Ranks customers by total amount spent across the given sales.
+
+        `last_purchase_by_customer` (customer id -> datetime), when given,
+        fills each entry's ``last_purchase`` — pass the *unfiltered*
+        history from SalesRepository.last_purchase_by_customer() so the
+        column shows the customer's real last order, not just the last one
+        inside the current year/month filter (#40).
+        """
         totals: dict[int, dict] = {}
         for sale in sales:
             entry = totals.setdefault(
@@ -154,11 +166,16 @@ class SalesService:
                     "total_amount": Decimal("0"),
                     "total_units": 0,
                     "sale_count": 0,
+                    "last_purchase": None,
                 },
             )
             entry["total_amount"] += sale.total_amount
             entry["total_units"] += sum(item.quantity for item in sale.items)
             entry["sale_count"] += 1
+
+        for customer_id, entry in totals.items():
+            if last_purchase_by_customer is not None:
+                entry["last_purchase"] = last_purchase_by_customer.get(customer_id)
 
         ranked = sorted(totals.values(), key=lambda entry: entry["total_amount"], reverse=True)
         return ranked[:limit]

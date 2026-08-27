@@ -3,6 +3,7 @@ from flask_babel import gettext as _
 from flask_login import login_required
 
 from app.blueprints.top_customers import bp
+from app.models.customer_segment import CustomerSegment
 from app.models.user import User
 from app.permissions import module_required
 from app.repositories.sales_repository import SalesRepository
@@ -44,7 +45,20 @@ def index():
             else sales_this_year
         )
 
-    top_customers = sales_service.top_customers_by_consumption(sales, limit=10)
+    # Segment filter — independent of the year/month scope, so it also
+    # applies to the All-time view (unlike month). See #40.
+    segments = (
+        CustomerSegment.query.filter_by(is_active=True).order_by(CustomerSegment.id).all()
+    )
+    selected_segment = request.args.get("segment", type=int)
+    if selected_segment:
+        sales = [s for s in sales if s.customer.segment_id == selected_segment]
+
+    top_customers = sales_service.top_customers_by_consumption(
+        sales,
+        limit=10,
+        last_purchase_by_customer=sales_repo.last_purchase_by_customer(),
+    )
 
     return render_template(
         "top_customers/index.html",
@@ -54,4 +68,6 @@ def index():
         selected_month=selected_month,
         month_names=_month_names(),
         all_time_value=ALL_TIME,
+        segments=segments,
+        selected_segment=selected_segment,
     )
