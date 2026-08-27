@@ -2,7 +2,7 @@
 {% from 'bootstrap5/form.html' import render_form %}
 {% block title %}{{ _("Restock") }}{% endblock %}
 {% block content %}
-<h1 class="h3 mb-3">{{ _("Restock: %(name)s", name=product.display_name) }}</h1>
+<h1 class="h3 mb-3">{{ _("Restock: %(name)s", name=product_label(product)) }}</h1>
 <p class="text-muted">
   {{ _("Warehouse: %(warehouse)s", warehouse=warehouse.name) }} &middot;
   {{ _("Currently on hand: %(qty)s", qty=on_hand) }}

@@ -4,6 +4,7 @@ from flask_login import login_required
 
 from app.blueprints.inventory import bp
 from app.blueprints.inventory.forms import RestockForm, WarehouseForm
+from app.display import product_label
 from app.exceptions import MiniErpError
 from app.models.warehouse import Warehouse
 from app.permissions import admin_required, editor_required
@@ -21,8 +22,21 @@ def index():
     stock = {
         (item.product_id, item.warehouse_id): item for item in InventoryRepository().get_all()
     }
+    warehouse_totals = [
+        sum(
+            stock[(product.id, warehouse.id)].quantity_on_hand
+            for product in products
+            if (product.id, warehouse.id) in stock
+        )
+        for warehouse in warehouses
+    ]
     return render_template(
-        "inventory/index.html", products=products, warehouses=warehouses, stock=stock
+        "inventory/index.html",
+        products=products,
+        warehouses=warehouses,
+        stock=stock,
+        warehouse_totals=warehouse_totals,
+        grand_total=sum(warehouse_totals),
     )
 
 
@@ -56,7 +70,7 @@ def restock(product_id, warehouse_id):
                     _(
                         "Restocked %(qty)s units of %(name)s in %(warehouse)s.",
                         qty=quantity,
-                        name=product.display_name,
+                        name=product_label(product),
                         warehouse=warehouse.name,
                     ),
                     "success",

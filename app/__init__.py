@@ -49,6 +49,7 @@ def create_app(config_class: type = Config) -> Flask:
     app.jinja_env.globals["opportunity_source_label"] = _opportunity_source_label
     app.jinja_env.globals["user_role_label"] = _user_role_label
     app.jinja_env.globals["product_label"] = product_label
+    app.jinja_env.globals["stock_movement_reason_label"] = _stock_movement_reason_label
 
     _register_blueprints(app)
     register_cli(app)
@@ -108,6 +109,19 @@ def _user_role_label(role: str) -> str:
     from app.blueprints.users.forms import ROLE_LABELS
 
     return str(ROLE_LABELS.get(role, role))
+
+
+def _stock_movement_reason_label(reason: str) -> str:
+    from flask_babel import gettext as _
+
+    from app.models.inventory import StockMovement
+
+    labels = {
+        StockMovement.REASON_RESTOCK: _("Restock"),
+        StockMovement.REASON_SALE: _("Sale"),
+        StockMovement.REASON_ADJUSTMENT: _("Adjustment"),
+    }
+    return labels.get(reason, reason)
 
 
 def _register_blueprints(app: Flask) -> None:

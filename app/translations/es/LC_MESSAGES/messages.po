@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-08-26 23:38-0400\n"
+"POT-Creation-Date: 2026-08-27 00:10-0400\n"
 "PO-Revision-Date: 2026-08-24 17:58-0400\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: es\n"
@@ -18,53 +18,65 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.18.0\n"
 
-#: app/__init__.py:71
+#: app/__init__.py:72
 msgid "Completed"
 msgstr "Completado"
 
-#: app/__init__.py:72
+#: app/__init__.py:73
 msgid "Pending"
 msgstr "Pendiente"
 
-#: app/__init__.py:73
+#: app/__init__.py:74
 msgid "Cancelled"
 msgstr "Cancelado"
 
-#: app/__init__.py:84 app/blueprints/opportunities/forms.py:34
+#: app/__init__.py:85 app/blueprints/opportunities/forms.py:34
 msgid "New"
 msgstr "Nuevo"
 
-#: app/__init__.py:85 app/blueprints/opportunities/forms.py:35
+#: app/__init__.py:86 app/blueprints/opportunities/forms.py:35
 msgid "Contacted"
 msgstr "Contactado"
 
-#: app/__init__.py:86 app/blueprints/opportunities/forms.py:36
+#: app/__init__.py:87 app/blueprints/opportunities/forms.py:36
 msgid "Quoted"
 msgstr "Cotizado"
 
-#: app/__init__.py:87
+#: app/__init__.py:88
 msgid "Won"
 msgstr "Ganado"
 
-#: app/__init__.py:88 app/blueprints/opportunities/forms.py:37
+#: app/__init__.py:89 app/blueprints/opportunities/forms.py:37
 msgid "Lost"
 msgstr "Perdido"
 
-#: app/__init__.py:99 app/blueprints/opportunities/forms.py:20
+#: app/__init__.py:100 app/blueprints/opportunities/forms.py:20
 msgid "Instagram DM"
 msgstr "DM de Instagram"
 
-#: app/__init__.py:100 app/blueprints/opportunities/forms.py:21
+#: app/__init__.py:101 app/blueprints/opportunities/forms.py:21
 msgid "Website"
 msgstr "Sitio web"
 
-#: app/__init__.py:101 app/blueprints/opportunities/forms.py:22
+#: app/__init__.py:102 app/blueprints/opportunities/forms.py:22
 msgid "Referral"
 msgstr "Referido"
 
-#: app/__init__.py:102 app/blueprints/opportunities/forms.py:23
+#: app/__init__.py:103 app/blueprints/opportunities/forms.py:23
 msgid "Other"
 msgstr "Otro"
+
+#: app/__init__.py:120 app/templates/inventory/restock_form.html:3
+msgid "Restock"
+msgstr "Reabastecer"
+
+#: app/__init__.py:121
+msgid "Sale"
+msgstr "Venta"
+
+#: app/__init__.py:122
+msgid "Adjustment"
+msgstr "Ajuste"
 
 #: app/blueprints/auth/forms.py:8 app/blueprints/users/forms.py:17
 #: app/templates/users/index.html:11
@@ -293,33 +305,33 @@ msgstr "Guardar"
 msgid "Save warehouse"
 msgstr "Guardar bodega"
 
-#: app/blueprints/inventory/routes.py:36
+#: app/blueprints/inventory/routes.py:50
 msgid "Product or warehouse not found."
 msgstr "Producto o bodega no encontrada."
 
-#: app/blueprints/inventory/routes.py:57
+#: app/blueprints/inventory/routes.py:71
 #, python-format
 msgid "Restocked %(qty)s units of %(name)s in %(warehouse)s."
 msgstr "Se reabastecieron %(qty)s unidades de %(name)s en %(warehouse)s."
 
-#: app/blueprints/inventory/routes.py:68
+#: app/blueprints/inventory/routes.py:82
 msgid "Reorder level updated."
 msgstr "Nivel de reposición actualizado."
 
-#: app/blueprints/inventory/routes.py:88 app/blueprints/products/routes.py:92
+#: app/blueprints/inventory/routes.py:102 app/blueprints/products/routes.py:93
 msgid "Product not found."
 msgstr "Producto no encontrado."
 
-#: app/blueprints/inventory/routes.py:113
+#: app/blueprints/inventory/routes.py:127
 #, python-format
 msgid "Warehouse '%(name)s' created."
 msgstr "Bodega '%(name)s' creada."
 
-#: app/blueprints/inventory/routes.py:125
+#: app/blueprints/inventory/routes.py:139
 msgid "Warehouse not found."
 msgstr "Bodega no encontrada."
 
-#: app/blueprints/inventory/routes.py:134
+#: app/blueprints/inventory/routes.py:148
 #, python-format
 msgid "Warehouse '%(name)s' updated."
 msgstr "Bodega '%(name)s' actualizada."
@@ -398,12 +410,12 @@ msgstr "Precio unitario"
 msgid "Save product"
 msgstr "Guardar producto"
 
-#: app/blueprints/products/routes.py:80
+#: app/blueprints/products/routes.py:81
 #, python-format
 msgid "Product '%(name)s' created."
 msgstr "Producto '%(name)s' creado."
 
-#: app/blueprints/products/routes.py:112
+#: app/blueprints/products/routes.py:113
 #, python-format
 msgid "Product '%(name)s' updated."
 msgstr "Producto '%(name)s' actualizado."
@@ -735,8 +747,8 @@ msgstr "Gestionar bodegas"
 msgid "Flavor / Product"
 msgstr "Sabor / Producto"
 
-#: app/templates/inventory/index.html:17 app/templates/sales/detail.html:29
-#: app/templates/sales/index.html:13
+#: app/templates/inventory/index.html:17 app/templates/inventory/index.html:54
+#: app/templates/sales/detail.html:29 app/templates/sales/index.html:13
 msgid "Total"
 msgstr "Total"
 
@@ -748,9 +760,13 @@ msgstr "Historial"
 msgid "No products yet."
 msgstr "Aún no hay productos."
 
-#: app/templates/inventory/restock_form.html:3
-msgid "Restock"
-msgstr "Reabastecer"
+#: app/templates/inventory/index.html:67
+msgid ""
+"Stock at or below the reorder level for that warehouse is highlighted "
+"like this."
+msgstr ""
+"El stock igual o menor al nivel de reposición de esa bodega se resalta "
+"así."
 
 #: app/templates/inventory/restock_form.html:5
 #, python-format

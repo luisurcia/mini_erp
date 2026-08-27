@@ -14,7 +14,7 @@
     <tbody>
       {% for item in sale.items %}
       <tr>
-        <td>{{ item.product.display_name }}</td>
+        <td>{{ product_label(item.product) }}</td>
         <td>{{ item.quantity }}</td>
         <td>${{ "%.2f"|format(item.unit_price) }}</td>
         <td>${{ "%.2f"|format(item.subtotal) }}</td>

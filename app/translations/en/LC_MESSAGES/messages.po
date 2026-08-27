@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-08-26 23:38-0400\n"
+"POT-Creation-Date: 2026-08-27 00:10-0400\n"
 "PO-Revision-Date: 2026-08-24 17:58-0400\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: en\n"
@@ -18,53 +18,65 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.18.0\n"
 
-#: app/__init__.py:71
+#: app/__init__.py:72
 msgid "Completed"
 msgstr "Completed"
 
-#: app/__init__.py:72
+#: app/__init__.py:73
 msgid "Pending"
 msgstr "Pending"
 
-#: app/__init__.py:73
+#: app/__init__.py:74
 msgid "Cancelled"
 msgstr "Cancelled"
 
-#: app/__init__.py:84 app/blueprints/opportunities/forms.py:34
+#: app/__init__.py:85 app/blueprints/opportunities/forms.py:34
 msgid "New"
 msgstr "New"
 
-#: app/__init__.py:85 app/blueprints/opportunities/forms.py:35
+#: app/__init__.py:86 app/blueprints/opportunities/forms.py:35
 msgid "Contacted"
 msgstr "Contacted"
 
-#: app/__init__.py:86 app/blueprints/opportunities/forms.py:36
+#: app/__init__.py:87 app/blueprints/opportunities/forms.py:36
 msgid "Quoted"
 msgstr "Quoted"
 
-#: app/__init__.py:87
+#: app/__init__.py:88
 msgid "Won"
 msgstr "Won"
 
-#: app/__init__.py:88 app/blueprints/opportunities/forms.py:37
+#: app/__init__.py:89 app/blueprints/opportunities/forms.py:37
 msgid "Lost"
 msgstr "Lost"
 
-#: app/__init__.py:99 app/blueprints/opportunities/forms.py:20
+#: app/__init__.py:100 app/blueprints/opportunities/forms.py:20
 msgid "Instagram DM"
 msgstr "Instagram DM"
 
-#: app/__init__.py:100 app/blueprints/opportunities/forms.py:21
+#: app/__init__.py:101 app/blueprints/opportunities/forms.py:21
 msgid "Website"
 msgstr "Website"
 
-#: app/__init__.py:101 app/blueprints/opportunities/forms.py:22
+#: app/__init__.py:102 app/blueprints/opportunities/forms.py:22
 msgid "Referral"
 msgstr "Referral"
 
-#: app/__init__.py:102 app/blueprints/opportunities/forms.py:23
+#: app/__init__.py:103 app/blueprints/opportunities/forms.py:23
 msgid "Other"
 msgstr "Other"
+
+#: app/__init__.py:120 app/templates/inventory/restock_form.html:3
+msgid "Restock"
+msgstr "Restock"
+
+#: app/__init__.py:121
+msgid "Sale"
+msgstr "Sale"
+
+#: app/__init__.py:122
+msgid "Adjustment"
+msgstr "Adjustment"
 
 #: app/blueprints/auth/forms.py:8 app/blueprints/users/forms.py:17
 #: app/templates/users/index.html:11
@@ -293,33 +305,33 @@ msgstr "Save"
 msgid "Save warehouse"
 msgstr "Save warehouse"
 
-#: app/blueprints/inventory/routes.py:36
+#: app/blueprints/inventory/routes.py:50
 msgid "Product or warehouse not found."
 msgstr "Product or warehouse not found."
 
-#: app/blueprints/inventory/routes.py:57
+#: app/blueprints/inventory/routes.py:71
 #, python-format
 msgid "Restocked %(qty)s units of %(name)s in %(warehouse)s."
 msgstr "Restocked %(qty)s units of %(name)s in %(warehouse)s."
 
-#: app/blueprints/inventory/routes.py:68
+#: app/blueprints/inventory/routes.py:82
 msgid "Reorder level updated."
 msgstr "Reorder level updated."
 
-#: app/blueprints/inventory/routes.py:88 app/blueprints/products/routes.py:92
+#: app/blueprints/inventory/routes.py:102 app/blueprints/products/routes.py:93
 msgid "Product not found."
 msgstr "Product not found."
 
-#: app/blueprints/inventory/routes.py:113
+#: app/blueprints/inventory/routes.py:127
 #, python-format
 msgid "Warehouse '%(name)s' created."
 msgstr "Warehouse '%(name)s' created."
 
-#: app/blueprints/inventory/routes.py:125
+#: app/blueprints/inventory/routes.py:139
 msgid "Warehouse not found."
 msgstr "Warehouse not found."
 
-#: app/blueprints/inventory/routes.py:134
+#: app/blueprints/inventory/routes.py:148
 #, python-format
 msgid "Warehouse '%(name)s' updated."
 msgstr "Warehouse '%(name)s' updated."
@@ -398,12 +410,12 @@ msgstr "Unit price"
 msgid "Save product"
 msgstr "Save product"
 
-#: app/blueprints/products/routes.py:80
+#: app/blueprints/products/routes.py:81
 #, python-format
 msgid "Product '%(name)s' created."
 msgstr "Product '%(name)s' created."
 
-#: app/blueprints/products/routes.py:112
+#: app/blueprints/products/routes.py:113
 #, python-format
 msgid "Product '%(name)s' updated."
 msgstr "Product '%(name)s' updated."
@@ -735,8 +747,8 @@ msgstr "Manage warehouses"
 msgid "Flavor / Product"
 msgstr "Flavor / Product"
 
-#: app/templates/inventory/index.html:17 app/templates/sales/detail.html:29
-#: app/templates/sales/index.html:13
+#: app/templates/inventory/index.html:17 app/templates/inventory/index.html:54
+#: app/templates/sales/detail.html:29 app/templates/sales/index.html:13
 msgid "Total"
 msgstr "Total"
 
@@ -748,9 +760,13 @@ msgstr "History"
 msgid "No products yet."
 msgstr "No products yet."
 
-#: app/templates/inventory/restock_form.html:3
-msgid "Restock"
-msgstr "Restock"
+#: app/templates/inventory/index.html:67
+msgid ""
+"Stock at or below the reorder level for that warehouse is highlighted "
+"like this."
+msgstr ""
+"Stock at or below the reorder level for that warehouse is highlighted "
+"like this."
 
 #: app/templates/inventory/restock_form.html:5
 #, python-format

@@ -6,6 +6,7 @@ from flask_login import login_required
 
 from app.blueprints.products import bp
 from app.blueprints.products.forms import ProductForm
+from app.display import product_label
 from app.models.company import Company
 from app.models.product import Product
 from app.permissions import editor_required
@@ -77,7 +78,7 @@ def new_product():
         )
         ProductRepository().add(product)
         ProductRepository().commit()
-        flash(_("Product '%(name)s' created.", name=product.display_name), "success")
+        flash(_("Product '%(name)s' created.", name=product_label(product)), "success")
         return redirect(url_for("products.index"))
 
     return render_template("products/product_form.html", form=form, mode="new")
@@ -109,7 +110,7 @@ def edit_product(product_id):
         product.unit_price = form.unit_price.data
         product.is_active = form.is_active.data
         ProductRepository().commit()
-        flash(_("Product '%(name)s' updated.", name=product.display_name), "success")
+        flash(_("Product '%(name)s' updated.", name=product_label(product)), "success")
         return redirect(url_for("products.index"))
 
     return render_template(

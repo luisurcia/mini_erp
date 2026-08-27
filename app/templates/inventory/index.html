@@ -48,6 +48,24 @@
       <tr><td colspan="100%" class="text-muted text-center py-4">{{ _("No products yet.") }}</td></tr>
       {% endfor %}
     </tbody>
+    {% if products %}
+    <tfoot>
+      <tr>
+        <th>{{ _("Total") }}</th>
+        {% for total in warehouse_totals %}
+        <th class="text-end">{{ total }}</th>
+        {% endfor %}
+        <th class="text-end">{{ grand_total }}</th>
+        <th></th>
+      </tr>
+    </tfoot>
+    {% endif %}
   </table>
+  {% if products %}
+  <p class="text-muted small mb-0 mt-3">
+    <span class="table-low-stock" style="display: inline-block; width: 0.9em; height: 0.9em; vertical-align: middle; border: 1px solid rgba(0,0,0,0.15);"></span>
+    {{ _("Stock at or below the reorder level for that warehouse is highlighted like this.") }}
+  </p>
+  {% endif %}
 </div>
 {% endblock %}

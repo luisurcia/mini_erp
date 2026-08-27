@@ -3,6 +3,7 @@ from decimal import Decimal
 
 import pytest
 
+from app.display import product_label
 from app.exceptions import InsufficientStockError
 from app.extensions import db
 from app.models.company import Company
@@ -82,7 +83,7 @@ def test_sales_by_product_returns_amount_and_percentage(app, customer, product):
     result = service.sales_by_product([sale])
 
     assert result == [
-        {"product": product.display_name, "amount": 9.0, "percentage": 100.0}
+        {"product": product_label(product), "amount": 9.0, "percentage": 100.0}
     ]
 
 

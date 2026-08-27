@@ -76,7 +76,7 @@ class SalesService:
                     default_warehouse.id,
                     quantity,
                     reason=StockMovement.REASON_SALE,
-                    note=f"Sale line for {product.display_name}",
+                    note=f"Sale line for {product_label(product)}",
                     commit=False,
                 )
 

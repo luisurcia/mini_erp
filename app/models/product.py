@@ -32,7 +32,3 @@ class Product(BaseModel):
 
     def __repr__(self) -> str:
         return f"<Product {self.name} ({self.sku})>"
-
-    @property
-    def display_name(self) -> str:
-        return f"{self.flavor.name} - {self.name} ({self.size_ml}ml)"
