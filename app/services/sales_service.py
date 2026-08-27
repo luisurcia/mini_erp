@@ -105,6 +105,14 @@ class SalesService:
     def invoice_count(self, sales: list[Sale]) -> int:
         return sum(1 for sale in sales if sale.invoice_number)
 
+    def average_bottles_per_sale(self, sales: list[Sale]):
+        """Average number of units (across all line items) per sale —
+        one of Scoby's dashboard KPIs, see #30."""
+        if not sales:
+            return Decimal("0")
+        total_units = sum(item.quantity for sale in sales for item in sale.items)
+        return Decimal(total_units) / len(sales)
+
     def sales_by_product(self, sales: list[Sale]) -> list[dict]:
         """Revenue and share of total per product, across the given sales."""
         settings = Company.get_settings()

@@ -135,3 +135,19 @@ def test_average_sale_total(app, customer, product):
 
 def test_average_sale_total_with_no_sales_returns_zero(app):
     assert SalesService().average_sale_total([]) == Decimal("0")
+
+
+def test_average_bottles_per_sale(app, customer, product):
+    service = SalesService()
+    sale1 = service.record_sale(
+        customer_id=customer.id, items=[{"product_id": product.id, "quantity": 1}]
+    )
+    sale2 = service.record_sale(
+        customer_id=customer.id, items=[{"product_id": product.id, "quantity": 3}]
+    )
+
+    assert service.average_bottles_per_sale([sale1, sale2]) == Decimal("2")
+
+
+def test_average_bottles_per_sale_with_no_sales_returns_zero(app):
+    assert SalesService().average_bottles_per_sale([]) == Decimal("0")

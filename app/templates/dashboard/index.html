@@ -1,56 +1,10 @@
 {% extends "base.html" %}
 {% block title %}{{ _("Dashboard") }}{% endblock %}
 {% block content %}
-<h1 class="h3 mb-4">{{ _("Dashboard") }}</h1>
-
-<div class="row g-3 mb-4">
-  <div class="col-sm-6 col-lg-3">
-    <div class="card stat-card p-3">
-      <div class="text-muted small">{{ _("Active products") }}</div>
-      <div class="stat-value">{{ stats.active_products }}</div>
-    </div>
-  </div>
-  <div class="col-sm-6 col-lg-3">
-    <div class="card stat-card stat-warning p-3">
-      <div class="text-muted small">{{ _("Low stock alerts") }}</div>
-      <div class="stat-value">{{ stats.low_stock_count }}</div>
-    </div>
-  </div>
-  <div class="col-sm-6 col-lg-3">
-    <div class="card stat-card p-3">
-      <div class="text-muted small">{{ _("Open opportunities") }}</div>
-      <div class="stat-value">{{ stats.open_opportunities }}</div>
-    </div>
-  </div>
-  <div class="col-sm-6 col-lg-3">
-    <div class="card stat-card p-3">
-      <div class="text-muted small">{{ _("Revenue this month") }}</div>
-      <div class="stat-value">${{ "%.2f"|format(stats.revenue_this_month) }}</div>
-    </div>
-  </div>
-  <div class="col-sm-6 col-lg-3">
-    <div class="card stat-card p-3">
-      <div class="text-muted small">{{ _("Invoices (%(year)s)", year=selected_year) }}</div>
-      <div class="stat-value">{{ stats.invoice_count }}</div>
-    </div>
-  </div>
-  <div class="col-sm-6 col-lg-3">
-    <div class="card stat-card p-3">
-      <div class="text-muted small">{{ _("Average total per sale") }}</div>
-      <div class="stat-value">${{ "%.2f"|format(stats.average_sale_total) }}</div>
-    </div>
-  </div>
-  <div class="col-sm-6 col-lg-3">
-    <div class="card stat-card p-3">
-      <div class="text-muted small">{{ _("Total sold in %(year)s", year=selected_year) }}</div>
-      <div class="stat-value">${{ "%.2f"|format(stats.total_sold_year) }}</div>
-    </div>
-  </div>
-</div>
-
-<div class="card p-3 mb-4">
-  <form method="get" class="row g-2 align-items-end">
-    <div class="col-auto">
+<div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
+  <h1 class="h3 mb-0">{{ _("Dashboard") }}</h1>
+  <form method="get" class="d-flex gap-2 align-items-end">
+    <div>
       <label class="form-label small text-muted mb-0" for="year">{{ _("Year") }}</label>
       <select class="form-select" id="year" name="year" onchange="this.form.submit()">
         {% for y in available_years %}
@@ -58,8 +12,8 @@
         {% endfor %}
       </select>
     </div>
-    <div class="col-auto">
-      <label class="form-label small text-muted mb-0" for="month">{{ _("Month (product chart)") }}</label>
+    <div>
+      <label class="form-label small text-muted mb-0" for="month">{{ _("Month") }}</label>
       <select class="form-select" id="month" name="month" onchange="this.form.submit()">
         <option value="">{{ _("All months") }}</option>
         {% for name in month_names %}
@@ -68,6 +22,27 @@
       </select>
     </div>
   </form>
+</div>
+
+<div class="row g-3 mb-4">
+  <div class="col-sm-6 col-lg-4">
+    <div class="card stat-card p-3">
+      <div class="text-muted small">{{ _("Net sales") }}</div>
+      <div class="stat-value">${{ "%.2f"|format(stats.net_sales) }}</div>
+    </div>
+  </div>
+  <div class="col-sm-6 col-lg-4">
+    <div class="card stat-card p-3">
+      <div class="text-muted small">{{ _("Average sale") }}</div>
+      <div class="stat-value">${{ "%.2f"|format(stats.average_sale_total) }}</div>
+    </div>
+  </div>
+  <div class="col-sm-6 col-lg-4">
+    <div class="card stat-card p-3">
+      <div class="text-muted small">{{ _("Average bottles per sale") }}</div>
+      <div class="stat-value">{{ "%.1f"|format(stats.average_bottles_per_sale) }}</div>
+    </div>
+  </div>
 </div>
 
 <div class="row g-4 mb-4">
@@ -147,7 +122,7 @@ new Chart(document.getElementById("productSalesChart"), {
     labels: productSales.map((p) => p.product),
     datasets: [{
       data: productSales.map((p) => p.amount),
-      backgroundColor: ["#2f6b4f", "#d9a441", "#a3c9a8", "#7a5c3e", "#c96a4e", "#5b8a72"],
+      backgroundColor: ["#e27ca6", "#e3b23c", "#2e8c93", "#e0762e", "#a34a63", "#9a968c"],
     }],
   },
   options: {
@@ -170,7 +145,7 @@ new Chart(document.getElementById("salesPerMonthChart"), {
   type: "bar",
   data: {
     labels: monthLabels,
-    datasets: [{ label: {{ _("Sales")|tojson }}, data: {{ charts.monthly_counts | tojson }}, backgroundColor: "#2f6b4f" }],
+    datasets: [{ label: {{ _("Sales")|tojson }}, data: {{ charts.monthly_counts | tojson }}, backgroundColor: "#e27ca6" }],
   },
   options: { scales: { y: { beginAtZero: true, ticks: { precision: 0 } } } },
 });
@@ -179,7 +154,7 @@ new Chart(document.getElementById("bottlesPerMonthChart"), {
   type: "bar",
   data: {
     labels: monthLabels,
-    datasets: [{ label: {{ _("Bottles")|tojson }}, data: {{ charts.monthly_bottles | tojson }}, backgroundColor: "#d9a441" }],
+    datasets: [{ label: {{ _("Bottles")|tojson }}, data: {{ charts.monthly_bottles | tojson }}, backgroundColor: "#e3b23c" }],
   },
   options: { scales: { y: { beginAtZero: true, ticks: { precision: 0 } } } },
 });

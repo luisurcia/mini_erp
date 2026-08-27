@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-08-27 00:56-0400\n"
+"POT-Creation-Date: 2026-08-27 01:45-0400\n"
 "PO-Revision-Date: 2026-08-24 17:58-0400\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: es\n"
@@ -241,51 +241,51 @@ msgstr "Cliente no encontrado."
 msgid "Customer '%(name)s' updated."
 msgstr "Cliente '%(name)s' actualizado."
 
-#: app/blueprints/dashboard/routes.py:17
+#: app/blueprints/dashboard/routes.py:16
 msgid "Jan"
 msgstr "Ene"
 
-#: app/blueprints/dashboard/routes.py:17
+#: app/blueprints/dashboard/routes.py:16
 msgid "Feb"
 msgstr "Feb"
 
-#: app/blueprints/dashboard/routes.py:17
+#: app/blueprints/dashboard/routes.py:16
 msgid "Mar"
 msgstr "Mar"
 
-#: app/blueprints/dashboard/routes.py:17
+#: app/blueprints/dashboard/routes.py:16
 msgid "Apr"
 msgstr "Abr"
 
-#: app/blueprints/dashboard/routes.py:17
+#: app/blueprints/dashboard/routes.py:16
 msgid "May"
 msgstr "May"
 
-#: app/blueprints/dashboard/routes.py:17
+#: app/blueprints/dashboard/routes.py:16
 msgid "Jun"
 msgstr "Jun"
 
-#: app/blueprints/dashboard/routes.py:18
+#: app/blueprints/dashboard/routes.py:17
 msgid "Jul"
 msgstr "Jul"
 
-#: app/blueprints/dashboard/routes.py:18
+#: app/blueprints/dashboard/routes.py:17
 msgid "Aug"
 msgstr "Ago"
 
-#: app/blueprints/dashboard/routes.py:18
+#: app/blueprints/dashboard/routes.py:17
 msgid "Sep"
 msgstr "Sep"
 
-#: app/blueprints/dashboard/routes.py:18
+#: app/blueprints/dashboard/routes.py:17
 msgid "Oct"
 msgstr "Oct"
 
-#: app/blueprints/dashboard/routes.py:18
+#: app/blueprints/dashboard/routes.py:17
 msgid "Nov"
 msgstr "Nov"
 
-#: app/blueprints/dashboard/routes.py:18
+#: app/blueprints/dashboard/routes.py:17
 msgid "Dec"
 msgstr "Dic"
 
@@ -293,7 +293,7 @@ msgstr "Dic"
 msgid "Quantity to add"
 msgstr "Cantidad a agregar"
 
-#: app/blueprints/inventory/forms.py:19 app/templates/dashboard/index.html:100
+#: app/blueprints/inventory/forms.py:19 app/templates/dashboard/index.html:75
 msgid "Reorder level"
 msgstr "Nivel de reposición"
 
@@ -310,8 +310,8 @@ msgstr "Guardar"
 msgid "Save warehouse"
 msgstr "Guardar bodega"
 
-#: app/blueprints/inventory/forms.py:32 app/templates/dashboard/index.html:100
-#: app/templates/dashboard/index.html:121
+#: app/blueprints/inventory/forms.py:32 app/templates/dashboard/index.html:75
+#: app/templates/dashboard/index.html:96
 #: app/templates/opportunities/index.html:22 app/templates/sales/detail.html:13
 msgid "Product"
 msgstr "Producto"
@@ -348,7 +348,9 @@ msgstr "Nivel de reposición actualizado."
 #: app/blueprints/inventory/routes.py:122
 #, python-format
 msgid "Transferred %(qty)s units of %(name)s from %(from_wh)s to %(to_wh)s."
-msgstr "Se traspasaron %(qty)s unidades de %(name)s desde %(from_wh)s hacia %(to_wh)s."
+msgstr ""
+"Se traspasaron %(qty)s unidades de %(name)s desde %(from_wh)s hacia "
+"%(to_wh)s."
 
 #: app/blueprints/inventory/routes.py:142 app/blueprints/products/routes.py:93
 msgid "Product not found."
@@ -369,7 +371,7 @@ msgid "Warehouse '%(name)s' updated."
 msgstr "Bodega '%(name)s' actualizada."
 
 #: app/blueprints/opportunities/forms.py:10 app/blueprints/sales/forms.py:17
-#: app/templates/dashboard/index.html:121
+#: app/templates/dashboard/index.html:96
 #: app/templates/opportunities/index.html:22 app/templates/sales/index.html:13
 msgid "Customer"
 msgstr "Cliente"
@@ -392,7 +394,7 @@ msgid "Save request"
 msgstr "Guardar solicitud"
 
 #: app/blueprints/opportunities/forms.py:32
-#: app/templates/dashboard/index.html:121
+#: app/templates/dashboard/index.html:96
 #: app/templates/opportunities/index.html:22
 msgid "Stage"
 msgstr "Etapa"
@@ -539,7 +541,7 @@ msgid "User '%(name)s' deleted."
 msgstr "Usuario '%(name)s' eliminado."
 
 #: app/templates/base.html:20 app/templates/dashboard/index.html:2
-#: app/templates/dashboard/index.html:4
+#: app/templates/dashboard/index.html:5
 msgid "Dashboard"
 msgstr "Panel"
 
@@ -553,7 +555,7 @@ msgstr "Productos"
 msgid "Inventory"
 msgstr "Inventario"
 
-#: app/templates/base.html:23 app/templates/dashboard/index.html:173
+#: app/templates/base.html:23 app/templates/dashboard/index.html:148
 #: app/templates/sales/index.html:2 app/templates/sales/index.html:5
 msgid "Sales"
 msgstr "Ventas"
@@ -604,7 +606,7 @@ msgid "Status"
 msgstr "Estado"
 
 #: app/templates/company/segments_list.html:26
-#: app/templates/inventory/index.html:31
+#: app/templates/inventory/index.html:33
 #: app/templates/inventory/warehouses_list.html:26
 #: app/templates/products/index.html:36
 msgid "Inactive"
@@ -644,79 +646,65 @@ msgstr "Nuevo cliente"
 msgid "No customers yet."
 msgstr "Aún no hay clientes."
 
-#: app/templates/dashboard/index.html:9
-msgid "Active products"
-msgstr "Productos activos"
-
-#: app/templates/dashboard/index.html:15
-msgid "Low stock alerts"
-msgstr "Alertas de stock bajo"
-
-#: app/templates/dashboard/index.html:21 app/templates/dashboard/index.html:118
-msgid "Open opportunities"
-msgstr "Oportunidades abiertas"
-
-#: app/templates/dashboard/index.html:27
-msgid "Revenue this month"
-msgstr "Ingresos este mes"
-
-#: app/templates/dashboard/index.html:33
-#, python-format
-msgid "Invoices (%(year)s)"
-msgstr "Facturas (%(year)s)"
-
-#: app/templates/dashboard/index.html:39
-msgid "Average total per sale"
-msgstr "Total promedio por venta"
-
-#: app/templates/dashboard/index.html:45
-#, python-format
-msgid "Total sold in %(year)s"
-msgstr "Total vendido en %(year)s"
-
-#: app/templates/dashboard/index.html:54
+#: app/templates/dashboard/index.html:8
 msgid "Year"
 msgstr "Año"
 
-#: app/templates/dashboard/index.html:62
-msgid "Month (product chart)"
-msgstr "Mes (gráfico de productos)"
+#: app/templates/dashboard/index.html:16
+msgid "Month"
+msgstr "Mes"
 
-#: app/templates/dashboard/index.html:64
+#: app/templates/dashboard/index.html:18
 msgid "All months"
 msgstr "Todos los meses"
 
-#: app/templates/dashboard/index.html:76
+#: app/templates/dashboard/index.html:30
+msgid "Net sales"
+msgstr "Venta neta"
+
+#: app/templates/dashboard/index.html:36
+msgid "Average sale"
+msgstr "Venta promedio"
+
+#: app/templates/dashboard/index.html:42
+msgid "Average bottles per sale"
+msgstr "Botellas promedio por venta"
+
+#: app/templates/dashboard/index.html:51
 msgid "Sales share per product"
 msgstr "Participación de ventas por producto"
 
-#: app/templates/dashboard/index.html:82
+#: app/templates/dashboard/index.html:57
 #, python-format
 msgid "Sales per month (%(year)s)"
 msgstr "Ventas por mes (%(year)s)"
 
-#: app/templates/dashboard/index.html:88
+#: app/templates/dashboard/index.html:63
 #, python-format
 msgid "Bottles sold per month (%(year)s)"
 msgstr "Botellas vendidas por mes (%(year)s)"
 
-#: app/templates/dashboard/index.html:97
+#: app/templates/dashboard/index.html:72
 msgid "Low stock"
 msgstr "Stock bajo"
 
-#: app/templates/dashboard/index.html:100
+#: app/templates/dashboard/index.html:75
 msgid "On hand"
 msgstr "Disponible"
 
-#: app/templates/dashboard/index.html:112
+#: app/templates/dashboard/index.html:87
 msgid "Everything is well stocked."
 msgstr "Todo está bien abastecido."
 
-#: app/templates/dashboard/index.html:133
+#: app/templates/dashboard/index.html:93
+msgid "Open opportunities"
+msgstr "Oportunidades abiertas"
+
+#: app/templates/dashboard/index.html:108
 msgid "No open requests right now."
 msgstr "No hay solicitudes abiertas por ahora."
 
-#: app/templates/dashboard/index.html:182
+#: app/templates/dashboard/index.html:157
 msgid "Bottles"
 msgstr "Botellas"
 
@@ -776,29 +764,29 @@ msgstr "Volver al inventario"
 msgid "Transfer stock"
 msgstr "Traspaso de stock"
 
-#: app/templates/inventory/index.html:10
+#: app/templates/inventory/index.html:11
 msgid "Manage warehouses"
 msgstr "Gestionar bodegas"
 
-#: app/templates/inventory/index.html:18 app/templates/products/index.html:15
+#: app/templates/inventory/index.html:20 app/templates/products/index.html:15
 msgid "Flavor / Product"
 msgstr "Sabor / Producto"
 
-#: app/templates/inventory/index.html:22 app/templates/inventory/index.html:59
+#: app/templates/inventory/index.html:24 app/templates/inventory/index.html:61
 #: app/templates/sales/detail.html:30 app/templates/sales/index.html:13
 #: app/templates/sales/sale_form.html:76
 msgid "Total"
 msgstr "Total"
 
-#: app/templates/inventory/index.html:49
+#: app/templates/inventory/index.html:51
 msgid "History"
 msgstr "Historial"
 
-#: app/templates/inventory/index.html:53 app/templates/products/index.html:46
+#: app/templates/inventory/index.html:55 app/templates/products/index.html:46
 msgid "No products yet."
 msgstr "Aún no hay productos."
 
-#: app/templates/inventory/index.html:72
+#: app/templates/inventory/index.html:74
 msgid ""
 "Stock at or below the reorder level for that warehouse is highlighted "
 "like this."
@@ -1014,4 +1002,22 @@ msgstr ""
 
 #~ msgid "Add line"
 #~ msgstr "Agregar línea"
+
+#~ msgid "Active products"
+#~ msgstr "Productos activos"
+
+#~ msgid "Low stock alerts"
+#~ msgstr "Alertas de stock bajo"
+
+#~ msgid "Revenue this month"
+#~ msgstr "Ingresos este mes"
+
+#~ msgid "Invoices (%(year)s)"
+#~ msgstr "Facturas (%(year)s)"
+
+#~ msgid "Total sold in %(year)s"
+#~ msgstr "Total vendido en %(year)s"
+
+#~ msgid "Month (product chart)"
+#~ msgstr "Mes (gráfico de productos)"
 
