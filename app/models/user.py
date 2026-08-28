@@ -44,6 +44,9 @@ class User(BaseModel, UserMixin):
     # and fall back to the username. See #44.
     first_name = db.Column(db.String(80), nullable=True)
     last_name = db.Column(db.String(80), nullable=True)
+    # Preferred UI language. Null = follow the company default. Each user
+    # sets their own from /auth/language. See #43.
+    language = db.Column(db.String(5), nullable=True)
     password_hash = db.Column(db.String(255), nullable=False)
     role = db.Column(db.String(20), nullable=False, default=ROLE_ADMIN)
 

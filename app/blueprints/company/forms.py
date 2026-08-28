@@ -35,7 +35,7 @@ class CompanySettingsForm(FlaskForm):
     )
     language = SelectField(
         _l("Language"),
-        choices=[(Company.LANGUAGE_ES, "Español"), (Company.LANGUAGE_EN, "English")],
+        choices=list(Company.LANGUAGE_LABELS.items()),
         validators=[DataRequired()],
     )
     currency_code = StringField(

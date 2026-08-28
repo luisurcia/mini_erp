@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% from 'bootstrap5/form.html' import render_form %}
+{% block title %}{{ _("Language") }}{% endblock %}
+{% block content %}
+<div class="row justify-content-center">
+  <div class="col-md-5">
+    <div class="card p-4">
+      <h1 class="h4 mb-3">{{ _("Language") }}</h1>
+      <p class="text-muted small">{{ _("Choose the language for your view of the app. It only affects your account.") }}</p>
+      {{ render_form(form) }}
+    </div>
+  </div>
+</div>
+{% endblock %}

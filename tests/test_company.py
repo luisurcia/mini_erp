@@ -1,5 +1,6 @@
 from decimal import Decimal
 
+from app.extensions import db
 from app.models.company import Company
 
 
@@ -26,3 +27,17 @@ def test_get_settings_returns_existing_row(app):
     second = Company.get_settings()
 
     assert first.id == second.id
+
+
+def test_supported_languages_include_french(app):
+    assert Company.LANGUAGE_FR in Company.LANGUAGES
+    assert Company.LANGUAGE_LABELS[Company.LANGUAGE_FR] == "Français"
+
+
+def test_select_locale_falls_back_to_company_default_outside_request(app):
+    from app import _select_locale
+
+    Company.get_settings().language = Company.LANGUAGE_FR
+    db.session.commit()
+    # No request context / no logged-in user -> company default.
+    assert _select_locale() == Company.LANGUAGE_FR

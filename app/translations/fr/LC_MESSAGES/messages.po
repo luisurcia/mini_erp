@@ -1,17 +1,18 @@
-# Translations template for PROJECT.
+# English translations for PROJECT.
 # Copyright (C) 2026 ORGANIZATION
 # This file is distributed under the same license as the PROJECT project.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2026-08-27 20:09-0400\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2026-08-24 17:58-0400\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: fr\n"
+"Language-Team: fr <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -19,144 +20,144 @@ msgstr ""
 
 #: app/__init__.py:94
 msgid "Completed"
-msgstr ""
+msgstr "Terminée"
 
 #: app/__init__.py:95
 msgid "Pending"
-msgstr ""
+msgstr "En attente"
 
 #: app/__init__.py:96
 msgid "Cancelled"
-msgstr ""
+msgstr "Annulée"
 
 #: app/__init__.py:113 app/templates/inventory/restock_form.html:3
 #: app/templates/supplies/restock_form.html:3
 msgid "Restock"
-msgstr ""
+msgstr "Réapprovisionnement"
 
 #: app/__init__.py:114
 msgid "Sale"
-msgstr ""
+msgstr "Vente"
 
 #: app/__init__.py:115
 msgid "Adjustment"
-msgstr ""
+msgstr "Ajustement"
 
 #: app/__init__.py:116 app/blueprints/inventory/forms.py:37
 msgid "Transfer"
-msgstr ""
+msgstr "Transfert"
 
 #: app/blueprints/auth/forms.py:10 app/blueprints/users/forms.py:19
 #: app/templates/users/index.html:11
 msgid "Username"
-msgstr ""
+msgstr "Identifiant"
 
 #: app/blueprints/auth/forms.py:11 app/blueprints/users/forms.py:27
 msgid "Password"
-msgstr ""
+msgstr "Mot de passe"
 
 #: app/blueprints/auth/forms.py:12 app/templates/auth/login.html:3
 msgid "Log in"
-msgstr ""
+msgstr "Se connecter"
 
 #: app/blueprints/auth/forms.py:16
 msgid "Current password"
-msgstr ""
+msgstr "Mot de passe actuel"
 
 #: app/blueprints/auth/forms.py:18
 msgid "New password"
-msgstr ""
+msgstr "Nouveau mot de passe"
 
 #: app/blueprints/auth/forms.py:21
 msgid "Confirm new password"
-msgstr ""
+msgstr "Confirmer le nouveau mot de passe"
 
 #: app/blueprints/auth/forms.py:24 app/blueprints/users/forms.py:31
 msgid "Passwords must match."
-msgstr ""
+msgstr "Les mots de passe doivent correspondre."
 
 #: app/blueprints/auth/forms.py:27 app/templates/auth/change_password.html:3
 #: app/templates/auth/change_password.html:8 app/templates/base.html:47
 msgid "Change password"
-msgstr ""
+msgstr "Changer le mot de passe"
 
 #: app/blueprints/auth/forms.py:32 app/blueprints/company/forms.py:37
 #: app/templates/auth/change_language.html:3
 #: app/templates/auth/change_language.html:8 app/templates/base.html:46
 msgid "Language"
-msgstr ""
+msgstr "Langue"
 
 #: app/blueprints/auth/forms.py:36 app/blueprints/inventory/forms.py:22
 msgid "Save"
-msgstr ""
+msgstr "Enregistrer"
 
 #: app/blueprints/auth/routes.py:23
 msgid "Invalid username or password."
-msgstr ""
+msgstr "Identifiant ou mot de passe invalide."
 
 #: app/blueprints/auth/routes.py:41
 msgid "Current password is incorrect."
-msgstr ""
+msgstr "Le mot de passe actuel est incorrect."
 
 #: app/blueprints/auth/routes.py:45
 msgid "Password changed."
-msgstr ""
+msgstr "Mot de passe modifié."
 
 #: app/blueprints/auth/routes.py:62
 msgid "Language updated."
-msgstr ""
+msgstr "Langue mise à jour."
 
 #: app/blueprints/company/forms.py:18
 msgid "Tax rate (%)"
-msgstr ""
+msgstr "Taux de taxe (%)"
 
 #: app/blueprints/company/forms.py:20
 msgid "Include tax by default on new sales"
-msgstr ""
+msgstr "Inclure la taxe par défaut sur les nouvelles ventes"
 
 #: app/blueprints/company/forms.py:22
 msgid "Ask for a short name when creating a product"
-msgstr ""
+msgstr "Demander un nom court à la création d'un produit"
 
 #: app/blueprints/company/forms.py:25
 msgid "Ask for size (ml) when creating a product"
-msgstr ""
+msgstr "Demander la taille (ml) à la création d'un produit"
 
 #: app/blueprints/company/forms.py:28
 msgid "Ask for a SKU when creating a product"
-msgstr ""
+msgstr "Demander un SKU à la création d'un produit"
 
 #: app/blueprints/company/forms.py:31
 msgid "Ask for a flavor when creating a product"
-msgstr ""
+msgstr "Demander une saveur à la création d'un produit"
 
 #: app/blueprints/company/forms.py:34
 msgid "Ask for a unit price when creating a product"
-msgstr ""
+msgstr "Demander un prix unitaire à la création d'un produit"
 
 #: app/blueprints/company/forms.py:42
 msgid "Currency code"
-msgstr ""
+msgstr "Code de devise"
 
 #: app/blueprints/company/forms.py:45
 msgid "ISO code, e.g. CLP, USD, EUR."
-msgstr ""
+msgstr "Code ISO, par exemple CLP, USD, EUR."
 
 #: app/blueprints/company/forms.py:48
 msgid "Currency symbol"
-msgstr ""
+msgstr "Symbole de devise"
 
 #: app/blueprints/company/forms.py:51
 msgid "Decimal places shown for amounts"
-msgstr ""
+msgstr "Décimales affichées pour les montants"
 
 #: app/blueprints/company/forms.py:53
 msgid "Chilean pesos (CLP) use 0 — no decimals anywhere in the app."
-msgstr ""
+msgstr "Le peso chilien (CLP) utilise 0 : aucune décimale nulle part dans l'application."
 
 #: app/blueprints/company/forms.py:55
 msgid "Save settings"
-msgstr ""
+msgstr "Enregistrer les paramètres"
 
 #: app/blueprints/company/forms.py:59 app/blueprints/customers/forms.py:10
 #: app/blueprints/inventory/forms.py:26 app/blueprints/supplies/forms.py:11
@@ -166,7 +167,7 @@ msgstr ""
 #: app/templates/supplies/index.html:16 app/templates/supplies/stock.html:13
 #: app/templates/users/index.html:11
 msgid "Name"
-msgstr ""
+msgstr "Nom"
 
 #: app/blueprints/company/forms.py:60 app/blueprints/inventory/forms.py:27
 #: app/blueprints/products/forms.py:23 app/blueprints/supplies/forms.py:16
@@ -174,473 +175,475 @@ msgstr ""
 #: app/templates/inventory/warehouses_list.html:24
 #: app/templates/products/index.html:32 app/templates/supplies/index.html:31
 msgid "Active"
-msgstr ""
+msgstr "Actif"
 
 #: app/blueprints/company/forms.py:61
 msgid "Save segment"
-msgstr ""
+msgstr "Enregistrer le segment"
 
 #: app/blueprints/company/routes.py:33
 msgid "Company settings updated."
-msgstr ""
+msgstr "Paramètres de l'entreprise mis à jour."
 
 #: app/blueprints/company/routes.py:56
 #, python-format
 msgid "Segment '%(name)s' created."
-msgstr ""
+msgstr "Segment '%(name)s' créé."
 
 #: app/blueprints/company/routes.py:68
 msgid "Segment not found."
-msgstr ""
+msgstr "Segment introuvable."
 
 #: app/blueprints/company/routes.py:77
 #, python-format
 msgid "Segment '%(name)s' updated."
-msgstr ""
+msgstr "Segment '%(name)s' mis à jour."
 
 #: app/blueprints/customers/forms.py:11 app/templates/customers/index.html:14
 msgid "Nickname"
-msgstr ""
+msgstr "Surnom"
 
 #: app/blueprints/customers/forms.py:12 app/templates/customers/index.html:15
 msgid "RUT"
-msgstr ""
+msgstr "RUT"
 
 #: app/blueprints/customers/forms.py:13 app/templates/customers/index.html:16
 #: app/templates/top_customers/index.html:26
 #: app/templates/top_customers/index.html:44
 msgid "Segment"
-msgstr ""
+msgstr "Segment"
 
 #: app/blueprints/customers/forms.py:14 app/templates/customers/index.html:17
 msgid "Email"
-msgstr ""
+msgstr "E-mail"
 
 #: app/blueprints/customers/forms.py:15 app/templates/customers/index.html:18
 msgid "Phone"
-msgstr ""
+msgstr "Téléphone"
 
 #: app/blueprints/customers/forms.py:16
 msgid "Street"
-msgstr ""
+msgstr "Rue"
 
 #: app/blueprints/customers/forms.py:17
 msgid "Number"
-msgstr ""
+msgstr "Numéro"
 
 #: app/blueprints/customers/forms.py:18
 msgid "City"
-msgstr ""
+msgstr "Ville"
 
 #: app/blueprints/customers/forms.py:19
 msgid "Commune"
-msgstr ""
+msgstr "Commune"
 
 #: app/blueprints/customers/forms.py:20
 msgid "Region"
-msgstr ""
+msgstr "Région"
 
 #: app/blueprints/customers/forms.py:22 app/templates/customers/index.html:20
 msgid "Instagram handle"
-msgstr ""
+msgstr "Compte Instagram"
 
 #: app/blueprints/customers/forms.py:24
 msgid "Notes"
-msgstr ""
+msgstr "Notes"
 
 #: app/blueprints/customers/forms.py:25
 msgid "Save customer"
-msgstr ""
+msgstr "Enregistrer le client"
 
 #: app/blueprints/customers/routes.py:45
 #, python-format
 msgid "Customer '%(name)s' created."
-msgstr ""
+msgstr "Client '%(name)s' créé."
 
 #: app/blueprints/customers/routes.py:57
 msgid "Customer not found."
-msgstr ""
+msgstr "Client introuvable."
 
 #: app/blueprints/customers/routes.py:77
 #, python-format
 msgid "Customer '%(name)s' updated."
-msgstr ""
+msgstr "Client '%(name)s' mis à jour."
 
 #: app/blueprints/dashboard/routes.py:15
 #: app/blueprints/top_customers/routes.py:17
 msgid "Jan"
-msgstr ""
+msgstr "janv."
 
 #: app/blueprints/dashboard/routes.py:15
 #: app/blueprints/top_customers/routes.py:17
 msgid "Feb"
-msgstr ""
+msgstr "févr."
 
 #: app/blueprints/dashboard/routes.py:15
 #: app/blueprints/top_customers/routes.py:17
 msgid "Mar"
-msgstr ""
+msgstr "mars"
 
 #: app/blueprints/dashboard/routes.py:15
 #: app/blueprints/top_customers/routes.py:17
 msgid "Apr"
-msgstr ""
+msgstr "avr."
 
 #: app/blueprints/dashboard/routes.py:15
 #: app/blueprints/top_customers/routes.py:17
 msgid "May"
-msgstr ""
+msgstr "mai"
 
 #: app/blueprints/dashboard/routes.py:15
 #: app/blueprints/top_customers/routes.py:17
 msgid "Jun"
-msgstr ""
+msgstr "juin"
 
 #: app/blueprints/dashboard/routes.py:16
 #: app/blueprints/top_customers/routes.py:18
 msgid "Jul"
-msgstr ""
+msgstr "juil."
 
 #: app/blueprints/dashboard/routes.py:16
 #: app/blueprints/top_customers/routes.py:18
 msgid "Aug"
-msgstr ""
+msgstr "août"
 
 #: app/blueprints/dashboard/routes.py:16
 #: app/blueprints/top_customers/routes.py:18
 msgid "Sep"
-msgstr ""
+msgstr "sept."
 
 #: app/blueprints/dashboard/routes.py:16
 #: app/blueprints/top_customers/routes.py:18
 msgid "Oct"
-msgstr ""
+msgstr "oct."
 
 #: app/blueprints/dashboard/routes.py:16
 #: app/blueprints/top_customers/routes.py:18
 msgid "Nov"
-msgstr ""
+msgstr "nov."
 
 #: app/blueprints/dashboard/routes.py:16
 #: app/blueprints/top_customers/routes.py:18
 msgid "Dec"
-msgstr ""
+msgstr "déc."
 
 #: app/blueprints/inventory/forms.py:16
 msgid "Quantity to add"
-msgstr ""
+msgstr "Quantité à ajouter"
 
 #: app/blueprints/inventory/forms.py:19 app/templates/dashboard/index.html:75
 msgid "Reorder level"
-msgstr ""
+msgstr "Seuil de réapprovisionnement"
 
 #: app/blueprints/inventory/forms.py:21 app/blueprints/inventory/forms.py:36
 #: app/templates/inventory/history.html:7 app/templates/supplies/history.html:7
 msgid "Note"
-msgstr ""
+msgstr "Note"
 
 #: app/blueprints/inventory/forms.py:28
 msgid "Save warehouse"
-msgstr ""
+msgstr "Enregistrer l'entrepôt"
 
 #: app/blueprints/inventory/forms.py:32 app/templates/dashboard/index.html:75
 #: app/templates/products/index.html:13 app/templates/sales/detail.html:13
 msgid "Product"
-msgstr ""
+msgstr "Produit"
 
 #: app/blueprints/inventory/forms.py:33
 msgid "From warehouse"
-msgstr ""
+msgstr "Entrepôt d'origine"
 
 #: app/blueprints/inventory/forms.py:34
 msgid "To warehouse"
-msgstr ""
+msgstr "Entrepôt de destination"
 
 #: app/blueprints/inventory/forms.py:35
 msgid "Quantity"
-msgstr ""
+msgstr "Quantité"
 
 #: app/blueprints/inventory/forms.py:41
 msgid "Source and destination warehouse must be different."
-msgstr ""
+msgstr "L'entrepôt d'origine et de destination doivent être différents."
 
 #: app/blueprints/inventory/routes.py:52
 msgid "Product or warehouse not found."
-msgstr ""
+msgstr "Produit ou entrepôt introuvable."
 
 #: app/blueprints/inventory/routes.py:73
 #, python-format
 msgid "Restocked %(qty)s units of %(name)s in %(warehouse)s."
-msgstr ""
+msgstr "%(qty)s unités de %(name)s réapprovisionnées dans %(warehouse)s."
 
 #: app/blueprints/inventory/routes.py:84 app/blueprints/supplies/routes.py:134
 msgid "Reorder level updated."
-msgstr ""
+msgstr "Seuil de réapprovisionnement mis à jour."
 
 #: app/blueprints/inventory/routes.py:124
 #, python-format
 msgid "Transferred %(qty)s units of %(name)s from %(from_wh)s to %(to_wh)s."
-msgstr ""
+msgstr "%(qty)s unités de %(name)s transférées de %(from_wh)s vers %(to_wh)s."
 
 #: app/blueprints/inventory/routes.py:145 app/blueprints/products/routes.py:100
 msgid "Product not found."
-msgstr ""
+msgstr "Produit introuvable."
 
 #: app/blueprints/inventory/routes.py:170
 #, python-format
 msgid "Warehouse '%(name)s' created."
-msgstr ""
+msgstr "Entrepôt '%(name)s' créé."
 
 #: app/blueprints/inventory/routes.py:182
 msgid "Warehouse not found."
-msgstr ""
+msgstr "Entrepôt introuvable."
 
 #: app/blueprints/inventory/routes.py:191
 #, python-format
 msgid "Warehouse '%(name)s' updated."
-msgstr ""
+msgstr "Entrepôt '%(name)s' mis à jour."
 
 #: app/blueprints/products/forms.py:11
 msgid "Flavor"
-msgstr ""
+msgstr "Saveur"
 
 #: app/blueprints/products/forms.py:12
 msgid "Product name"
-msgstr ""
+msgstr "Nom du produit"
 
 #: app/blueprints/products/forms.py:14 app/templates/products/index.html:14
 msgid "Short name"
-msgstr ""
+msgstr "Nom court"
 
 #: app/blueprints/products/forms.py:16 app/templates/products/index.html:15
 msgid "SKU"
-msgstr ""
+msgstr "SKU"
 
 #: app/blueprints/products/forms.py:18
 msgid "Size (ml)"
-msgstr ""
+msgstr "Taille (ml)"
 
 #: app/blueprints/products/forms.py:21 app/blueprints/supplies/forms.py:14
 #: app/templates/sales/detail.html:13 app/templates/sales/sale_form.html:33
 msgid "Unit price"
-msgstr ""
+msgstr "Prix unitaire"
 
 #: app/blueprints/products/forms.py:24
 msgid "Save product"
-msgstr ""
+msgstr "Enregistrer le produit"
 
 #: app/blueprints/products/routes.py:88
 #, python-format
 msgid "Product '%(name)s' created."
-msgstr ""
+msgstr "Produit '%(name)s' créé."
 
 #: app/blueprints/products/routes.py:123
 #, python-format
 msgid "Product '%(name)s' updated."
-msgstr ""
+msgstr "Produit '%(name)s' mis à jour."
 
 #: app/blueprints/sales/forms.py:17 app/templates/sales/index.html:11
 #: app/templates/top_customers/index.html:43
 msgid "Customer"
-msgstr ""
+msgstr "Client"
 
 #: app/blueprints/sales/forms.py:19
 msgid "Sale date"
-msgstr ""
+msgstr "Date de vente"
 
 #: app/blueprints/sales/forms.py:21
 msgid "Include tax (IVA)"
-msgstr ""
+msgstr "Inclure la taxe (IVA)"
 
 #: app/blueprints/sales/forms.py:23
 msgid "Invoice number"
-msgstr ""
+msgstr "Numéro de facture"
 
 #: app/blueprints/sales/forms.py:25
 msgid "Record sale"
-msgstr ""
+msgstr "Enregistrer la vente"
 
 #: app/blueprints/sales/routes.py:52
 msgid "Add at least one product line to the sale."
-msgstr ""
+msgstr "Ajoutez au moins une ligne de produit à la vente."
 
 #: app/blueprints/sales/routes.py:62
 #, python-format
 msgid "Sale #%(id)s recorded."
-msgstr ""
+msgstr "Vente n°%(id)s enregistrée."
 
 #: app/blueprints/sales/routes.py:83
 msgid "Sale not found."
-msgstr ""
+msgstr "Vente introuvable."
 
 #: app/blueprints/sales/routes.py:127
 #, python-format
 msgid "Enter a unit price for %(name)s."
-msgstr ""
+msgstr "Saisissez un prix unitaire pour %(name)s."
 
 #: app/blueprints/supplies/forms.py:12 app/templates/supplies/index.html:17
 msgid "Unit"
-msgstr ""
+msgstr "Unité"
 
 #: app/blueprints/supplies/forms.py:17
 msgid "Save supply"
-msgstr ""
+msgstr "Enregistrer la fourniture"
 
 #: app/blueprints/supplies/routes.py:40
 #, python-format
 msgid "Supply '%(name)s' created."
-msgstr ""
+msgstr "Fourniture '%(name)s' créée."
 
 #: app/blueprints/supplies/routes.py:52 app/blueprints/supplies/routes.py:155
 msgid "Supply not found."
-msgstr ""
+msgstr "Fourniture introuvable."
 
 #: app/blueprints/supplies/routes.py:63
 #, python-format
 msgid "Supply '%(name)s' updated."
-msgstr ""
+msgstr "Fourniture '%(name)s' mise à jour."
 
 #: app/blueprints/supplies/routes.py:103
 msgid "Supply or warehouse not found."
-msgstr ""
+msgstr "Fourniture ou entrepôt introuvable."
 
 #: app/blueprints/supplies/routes.py:124
 #, python-format
 msgid "Restocked %(qty)s %(unit)s of %(name)s in %(warehouse)s."
-msgstr ""
+msgstr "%(qty)s %(unit)s de %(name)s réapprovisionnées dans %(warehouse)s."
 
 #: app/blueprints/users/forms.py:9
 msgid "Admin"
-msgstr ""
+msgstr "Administrateur"
 
 #: app/blueprints/users/forms.py:10
 msgid "Warehouse staff"
-msgstr ""
+msgstr "Magasinier"
 
 #: app/blueprints/users/forms.py:11 app/templates/base.html:31
 #: app/templates/dashboard/index.html:127 app/templates/sales/index.html:2
 #: app/templates/sales/index.html:5 app/templates/top_customers/index.html:47
 msgid "Sales"
-msgstr ""
+msgstr "Ventes"
 
 #: app/blueprints/users/forms.py:16
 msgid "First name"
-msgstr ""
+msgstr "Prénom"
 
 #: app/blueprints/users/forms.py:17
 msgid "Last name"
-msgstr ""
+msgstr "Nom de famille"
 
 #: app/blueprints/users/forms.py:22 app/templates/users/index.html:11
 msgid "Role"
-msgstr ""
+msgstr "Rôle"
 
 #: app/blueprints/users/forms.py:30
 msgid "Confirm password"
-msgstr ""
+msgstr "Confirmer le mot de passe"
 
 #: app/blueprints/users/forms.py:33
 msgid "Save user"
-msgstr ""
+msgstr "Enregistrer l'utilisateur"
 
 #: app/blueprints/users/routes.py:28
 msgid "Password is required for a new user."
-msgstr ""
+msgstr "Un mot de passe est requis pour un nouvel utilisateur."
 
 #: app/blueprints/users/routes.py:38
 #, python-format
 msgid "User '%(name)s' created."
-msgstr ""
+msgstr "Utilisateur '%(name)s' créé."
 
 #: app/blueprints/users/routes.py:52 app/blueprints/users/routes.py:84
 msgid "User not found."
-msgstr ""
+msgstr "Utilisateur introuvable."
 
 #: app/blueprints/users/routes.py:70
 #, python-format
 msgid "User '%(name)s' updated."
-msgstr ""
+msgstr "Utilisateur '%(name)s' mis à jour."
 
 #: app/blueprints/users/routes.py:86
 msgid "You cannot delete your own account."
-msgstr ""
+msgstr "Vous ne pouvez pas supprimer votre propre compte."
 
 #: app/blueprints/users/routes.py:91
 #, python-format
 msgid "User '%(name)s' deleted."
-msgstr ""
+msgstr "Utilisateur '%(name)s' supprimé."
 
 #: app/templates/base.html:20 app/templates/dashboard/index.html:2
 #: app/templates/dashboard/index.html:5
 msgid "Dashboard"
-msgstr ""
+msgstr "Tableau de bord"
 
 #: app/templates/base.html:22 app/templates/products/index.html:2
 #: app/templates/products/index.html:5
 msgid "Products"
-msgstr ""
+msgstr "Produits"
 
 #: app/templates/base.html:25 app/templates/inventory/index.html:2
 #: app/templates/inventory/index.html:5
 msgid "Inventory"
-msgstr ""
+msgstr "Inventaire"
 
 #: app/templates/base.html:28 app/templates/supplies/index.html:2
 #: app/templates/supplies/index.html:5
 msgid "Supplies"
-msgstr ""
+msgstr "Fournitures"
 
 #: app/templates/base.html:34 app/templates/top_customers/index.html:2
 #: app/templates/top_customers/index.html:5
 msgid "Top customers"
-msgstr ""
+msgstr "Meilleurs clients"
 
 #: app/templates/base.html:37 app/templates/customers/index.html:2
 #: app/templates/customers/index.html:5
 msgid "Customers"
-msgstr ""
+msgstr "Clients"
 
 #: app/templates/base.html:40 app/templates/users/index.html:2
 #: app/templates/users/index.html:5
 msgid "Users"
-msgstr ""
+msgstr "Utilisateurs"
 
 #: app/templates/base.html:41
 msgid "Company"
-msgstr ""
+msgstr "Entreprise"
 
 #: app/templates/base.html:48
 msgid "Log out"
-msgstr ""
+msgstr "Se déconnecter"
 
 #: app/templates/auth/change_language.html:9
 msgid ""
 "Choose the language for your view of the app. It only affects your "
 "account."
 msgstr ""
+"Choisissez la langue de votre affichage de l'application. Cela n'affecte que "
+"votre compte."
 
 #: app/templates/company/segment_form.html:3
 #: app/templates/company/segment_form.html:5
 msgid "Edit segment"
-msgstr ""
+msgstr "Modifier le segment"
 
 #: app/templates/company/segment_form.html:3
 #: app/templates/company/segment_form.html:5
 #: app/templates/company/segments_list.html:6
 msgid "New segment"
-msgstr ""
+msgstr "Nouveau segment"
 
 #: app/templates/company/segments_list.html:2
 #: app/templates/company/segments_list.html:5
 msgid "Customer segments"
-msgstr ""
+msgstr "Segments de clients"
 
 #: app/templates/company/segments_list.html:14
 #: app/templates/inventory/warehouses_list.html:14
 #: app/templates/products/index.html:18 app/templates/sales/index.html:11
 #: app/templates/supplies/index.html:19
 msgid "Status"
-msgstr ""
+msgstr "Statut"
 
 #: app/templates/company/segments_list.html:26
 #: app/templates/inventory/index.html:31
@@ -648,7 +651,7 @@ msgstr ""
 #: app/templates/products/index.html:34 app/templates/supplies/index.html:33
 #: app/templates/supplies/stock.html:26
 msgid "Inactive"
-msgstr ""
+msgstr "Inactif"
 
 #: app/templates/company/segments_list.html:30
 #: app/templates/customers/index.html:36
@@ -656,305 +659,307 @@ msgstr ""
 #: app/templates/products/index.html:38 app/templates/supplies/index.html:37
 #: app/templates/users/index.html:19
 msgid "Edit"
-msgstr ""
+msgstr "Modifier"
 
 #: app/templates/company/segments_list.html:34
 msgid "No segments yet."
-msgstr ""
+msgstr "Aucun segment pour le moment."
 
 #: app/templates/company/settings.html:3 app/templates/company/settings.html:8
 msgid "Company settings"
-msgstr ""
+msgstr "Paramètres de l'entreprise"
 
 #: app/templates/company/settings.html:11
 msgid "Manage customer segments"
-msgstr ""
+msgstr "Gérer les segments de clients"
 
 #: app/templates/customers/customer_form.html:3
 #: app/templates/customers/customer_form.html:5
 msgid "Edit customer"
-msgstr ""
+msgstr "Modifier le client"
 
 #: app/templates/customers/customer_form.html:3
 #: app/templates/customers/customer_form.html:5
 #: app/templates/customers/index.html:6
 msgid "New customer"
-msgstr ""
+msgstr "Nouveau client"
 
 #: app/templates/customers/index.html:19
 msgid "Shipping address"
-msgstr ""
+msgstr "Adresse de livraison"
 
 #: app/templates/customers/index.html:40
 msgid "No customers yet."
-msgstr ""
+msgstr "Aucun client pour le moment."
 
 #: app/templates/dashboard/index.html:8
 #: app/templates/top_customers/index.html:8
 msgid "Year"
-msgstr ""
+msgstr "Année"
 
 #: app/templates/dashboard/index.html:16
 #: app/templates/top_customers/index.html:17
 msgid "Month"
-msgstr ""
+msgstr "Mois"
 
 #: app/templates/dashboard/index.html:18
 #: app/templates/top_customers/index.html:19
 msgid "All months"
-msgstr ""
+msgstr "Tous les mois"
 
 #: app/templates/dashboard/index.html:30
 msgid "Net sales"
-msgstr ""
+msgstr "Ventes nettes"
 
 #: app/templates/dashboard/index.html:36
 msgid "Average sale"
-msgstr ""
+msgstr "Vente moyenne"
 
 #: app/templates/dashboard/index.html:42
 msgid "Average bottles per sale"
-msgstr ""
+msgstr "Bouteilles moyennes par vente"
 
 #: app/templates/dashboard/index.html:51
 msgid "Sales share per product"
-msgstr ""
+msgstr "Part des ventes par produit"
 
 #: app/templates/dashboard/index.html:57
 #, python-format
 msgid "Sales per month (%(year)s)"
-msgstr ""
+msgstr "Ventes par mois (%(year)s)"
 
 #: app/templates/dashboard/index.html:63
 #, python-format
 msgid "Bottles sold per month (%(year)s)"
-msgstr ""
+msgstr "Bouteilles vendues par mois (%(year)s)"
 
 #: app/templates/dashboard/index.html:72
 msgid "Low stock"
-msgstr ""
+msgstr "Stock faible"
 
 #: app/templates/dashboard/index.html:75
 msgid "On hand"
-msgstr ""
+msgstr "En stock"
 
 #: app/templates/dashboard/index.html:87
 msgid "Everything is well stocked."
-msgstr ""
+msgstr "Tout est bien approvisionné."
 
 #: app/templates/dashboard/index.html:136
 #: app/templates/top_customers/index.html:46
 msgid "Bottles"
-msgstr ""
+msgstr "Bouteilles"
 
 #: app/templates/errors/403.html:2
 msgid "Forbidden"
-msgstr ""
+msgstr "Interdit"
 
 #: app/templates/errors/403.html:5
 msgid "403 - Forbidden"
-msgstr ""
+msgstr "403 - Interdit"
 
 #: app/templates/errors/403.html:6
 msgid "You don't have permission to access this page."
-msgstr ""
+msgstr "Vous n'avez pas la permission d'accéder à cette page."
 
 #: app/templates/errors/403.html:7
 msgid "Back to dashboard"
-msgstr ""
+msgstr "Retour au tableau de bord"
 
 #: app/templates/inventory/history.html:2 app/templates/supplies/history.html:2
 msgid "Stock history"
-msgstr ""
+msgstr "Historique du stock"
 
 #: app/templates/inventory/history.html:4 app/templates/supplies/history.html:4
 #, python-format
 msgid "Stock history: %(name)s"
-msgstr ""
+msgstr "Historique du stock : %(name)s"
 
 #: app/templates/inventory/history.html:7 app/templates/sales/index.html:11
 #: app/templates/supplies/history.html:7
 msgid "Date"
-msgstr ""
+msgstr "Date"
 
 #: app/templates/inventory/history.html:7 app/templates/sales/detail.html:13
 #: app/templates/supplies/history.html:7
 msgid "Warehouse"
-msgstr ""
+msgstr "Entrepôt"
 
 #: app/templates/inventory/history.html:7 app/templates/supplies/history.html:7
 msgid "Change"
-msgstr ""
+msgstr "Variation"
 
 #: app/templates/inventory/history.html:7 app/templates/supplies/history.html:7
 msgid "Reason"
-msgstr ""
+msgstr "Motif"
 
 #: app/templates/inventory/history.html:20
 #: app/templates/supplies/history.html:20
 msgid "No movements yet."
-msgstr ""
+msgstr "Aucun mouvement pour le moment."
 
 #: app/templates/inventory/history.html:25
 #: app/templates/inventory/warehouses_list.html:39
 msgid "Back to inventory"
-msgstr ""
+msgstr "Retour à l'inventaire"
 
 #: app/templates/inventory/index.html:7
 #: app/templates/inventory/transfer_form.html:3
 #: app/templates/inventory/transfer_form.html:5
 msgid "Transfer stock"
-msgstr ""
+msgstr "Transférer du stock"
 
 #: app/templates/inventory/index.html:9
 msgid "Manage warehouses"
-msgstr ""
+msgstr "Gérer les entrepôts"
 
 #: app/templates/inventory/index.html:18 app/templates/products/index.html:13
 msgid "Flavor / Product"
-msgstr ""
+msgstr "Saveur / Produit"
 
 #: app/templates/inventory/index.html:22 app/templates/inventory/index.html:55
 #: app/templates/sales/detail.html:30 app/templates/sales/index.html:11
 #: app/templates/sales/sale_form.html:76 app/templates/supplies/stock.html:17
 #: app/templates/supplies/stock.html:50
 msgid "Total"
-msgstr ""
+msgstr "Total"
 
 #: app/templates/inventory/index.html:45 app/templates/supplies/stock.html:40
 msgid "History"
-msgstr ""
+msgstr "Historique"
 
 #: app/templates/inventory/index.html:49 app/templates/products/index.html:42
 msgid "No products yet."
-msgstr ""
+msgstr "Aucun produit pour le moment."
 
 #: app/templates/inventory/index.html:68 app/templates/supplies/stock.html:63
 msgid ""
 "Stock at or below the reorder level for that warehouse is highlighted "
 "like this."
 msgstr ""
+"Stock at or below the reorder level for that warehouse is highlighted "
+"like this."
 
 #: app/templates/inventory/restock_form.html:5
 #: app/templates/supplies/restock_form.html:5
 #, python-format
 msgid "Restock: %(name)s"
-msgstr ""
+msgstr "Réapprovisionner : %(name)s"
 
 #: app/templates/inventory/restock_form.html:7
 #: app/templates/supplies/restock_form.html:7
 #, python-format
 msgid "Warehouse: %(warehouse)s"
-msgstr ""
+msgstr "Entrepôt : %(warehouse)s"
 
 #: app/templates/inventory/restock_form.html:8
 #: app/templates/supplies/restock_form.html:8
 #, python-format
 msgid "Currently on hand: %(qty)s"
-msgstr ""
+msgstr "Actuellement en stock : %(qty)s"
 
 #: app/templates/inventory/warehouse_form.html:3
 #: app/templates/inventory/warehouse_form.html:5
 msgid "Edit warehouse"
-msgstr ""
+msgstr "Modifier l'entrepôt"
 
 #: app/templates/inventory/warehouse_form.html:3
 #: app/templates/inventory/warehouse_form.html:5
 #: app/templates/inventory/warehouses_list.html:6
 msgid "New warehouse"
-msgstr ""
+msgstr "Nouvel entrepôt"
 
 #: app/templates/inventory/warehouses_list.html:2
 #: app/templates/inventory/warehouses_list.html:5
 msgid "Warehouses"
-msgstr ""
+msgstr "Entrepôts"
 
 #: app/templates/inventory/warehouses_list.html:34
 msgid "No warehouses yet."
-msgstr ""
+msgstr "Aucun entrepôt pour le moment."
 
 #: app/templates/products/index.html:6
 #: app/templates/products/product_form.html:3
 #: app/templates/products/product_form.html:5
 msgid "New product"
-msgstr ""
+msgstr "Nouveau produit"
 
 #: app/templates/products/index.html:16
 msgid "Size"
-msgstr ""
+msgstr "Taille"
 
 #: app/templates/products/index.html:17 app/templates/supplies/index.html:18
 msgid "Price"
-msgstr ""
+msgstr "Prix"
 
 #: app/templates/products/product_form.html:3
 #: app/templates/products/product_form.html:5
 msgid "Edit product"
-msgstr ""
+msgstr "Modifier le produit"
 
 #: app/templates/sales/detail.html:2 app/templates/sales/detail.html:4
 #, python-format
 msgid "Sale #%(id)s"
-msgstr ""
+msgstr "Vente n°%(id)s"
 
 #: app/templates/sales/detail.html:6
 msgid "Customer:"
-msgstr ""
+msgstr "Client :"
 
 #: app/templates/sales/detail.html:7
 msgid "Date:"
-msgstr ""
+msgstr "Date :"
 
 #: app/templates/sales/detail.html:8
 msgid "Status:"
-msgstr ""
+msgstr "Statut :"
 
 #: app/templates/sales/detail.html:9
 msgid "Invoice number:"
-msgstr ""
+msgstr "Numéro de facture :"
 
 #: app/templates/sales/detail.html:10
 msgid "Notes:"
-msgstr ""
+msgstr "Notes :"
 
 #: app/templates/sales/detail.html:13
 msgid "Qty"
-msgstr ""
+msgstr "Qté"
 
 #: app/templates/sales/detail.html:13 app/templates/sales/detail.html:26
 #: app/templates/sales/sale_form.html:67
 msgid "Subtotal"
-msgstr ""
+msgstr "Sous-total"
 
 #: app/templates/sales/detail.html:28 app/templates/sales/sale_form.html:71
 #, python-format
 msgid "IVA (%(rate)s%%)"
-msgstr ""
+msgstr "IVA (%(rate)s%%)"
 
 #: app/templates/sales/detail.html:34
 msgid "Back to sales"
-msgstr ""
+msgstr "Retour aux ventes"
 
 #: app/templates/sales/index.html:6 app/templates/sales/sale_form.html:3
 #: app/templates/sales/sale_form.html:5
 msgid "New sale"
-msgstr ""
+msgstr "Nouvelle vente"
 
 #: app/templates/sales/index.html:11
 msgid "Invoice #"
-msgstr ""
+msgstr "N° de facture"
 
 #: app/templates/sales/index.html:21
 msgid "View"
-msgstr ""
+msgstr "Voir"
 
 #: app/templates/sales/index.html:24
 msgid "No sales recorded yet."
-msgstr ""
+msgstr "Aucune vente enregistrée pour le moment."
 
 #: app/templates/sales/sale_form.html:14
 msgid "Line items"
-msgstr ""
+msgstr "Lignes de produit"
 
 #: app/templates/sales/sale_form.html:17
 msgid ""
@@ -962,90 +967,216 @@ msgid ""
 "row for you — edit any single one afterward if a product needs a "
 "different price."
 msgstr ""
+"Tip: the unit price you type in the first column fills the rest of the "
+"row for you — edit any single one afterward if a product needs a "
+"different price."
 
 #: app/templates/sales/sale_form.html:49
 #, python-format
 msgid "Available: %(qty)s"
-msgstr ""
+msgstr "Disponible : %(qty)s"
 
 #: app/templates/sales/sale_form.html:56
 msgid "No active products."
-msgstr ""
+msgstr "Aucun produit actif."
 
 #: app/templates/supplies/history.html:25
 msgid "Back to supplies stock"
-msgstr ""
+msgstr "Retour au stock de fournitures"
 
 #: app/templates/supplies/index.html:7
 msgid "Stock by warehouse"
-msgstr ""
+msgstr "Stock par entrepôt"
 
 #: app/templates/supplies/index.html:8
 #: app/templates/supplies/supply_form.html:3
 #: app/templates/supplies/supply_form.html:5
 msgid "New supply"
-msgstr ""
+msgstr "Nouvelle fourniture"
 
 #: app/templates/supplies/index.html:41 app/templates/supplies/stock.html:44
 msgid "No supplies yet."
-msgstr ""
+msgstr "Aucune fourniture pour le moment."
 
 #: app/templates/supplies/stock.html:2 app/templates/supplies/stock.html:5
 msgid "Supplies stock"
-msgstr ""
+msgstr "Stock de fournitures"
 
 #: app/templates/supplies/stock.html:6
 msgid "Manage supplies"
-msgstr ""
+msgstr "Gérer les fournitures"
 
 #: app/templates/supplies/supply_form.html:3
 #: app/templates/supplies/supply_form.html:5
 msgid "Edit supply"
-msgstr ""
+msgstr "Modifier la fourniture"
 
 #: app/templates/top_customers/index.html:10
 msgid "All-time"
-msgstr ""
+msgstr "Depuis le début"
 
 #: app/templates/top_customers/index.html:28
 msgid "All segments"
-msgstr ""
+msgstr "Tous les segments"
 
 #: app/templates/top_customers/index.html:45
 msgid "Total spent"
-msgstr ""
+msgstr "Total dépensé"
 
 #: app/templates/top_customers/index.html:48
 msgid "Last purchase"
-msgstr ""
+msgstr "Dernier achat"
 
 #: app/templates/top_customers/index.html:66
 msgid "No sales in this period."
-msgstr ""
+msgstr "Aucune vente sur cette période."
 
 #: app/templates/users/index.html:6 app/templates/users/user_form.html:3
 #: app/templates/users/user_form.html:8
 msgid "New user"
-msgstr ""
+msgstr "Nouvel utilisateur"
 
 #: app/templates/users/index.html:22
 msgid "Delete"
-msgstr ""
+msgstr "Supprimer"
 
 #: app/templates/users/index.html:28
 msgid "No users yet."
-msgstr ""
+msgstr "Aucun utilisateur pour le moment."
 
 #: app/templates/users/user_form.html:3
 msgid "Edit user"
-msgstr ""
+msgstr "Modifier l'utilisateur"
 
 #: app/templates/users/user_form.html:8
 #, python-format
 msgid "Edit %(name)s"
-msgstr ""
+msgstr "Modifier %(name)s"
 
 #: app/templates/users/user_form.html:10
 msgid "Leave the password fields blank to keep the current password."
-msgstr ""
+msgstr "Laissez les champs de mot de passe vides pour conserver le mot de passe actuel."
+
+#~ msgid "Initial stock"
+#~ msgstr "Initial stock"
+
+#~ msgid "OK"
+#~ msgstr "OK"
+
+#~ msgid "Quantity"
+#~ msgstr "Quantity"
+
+#~ msgid "Add line"
+#~ msgstr "Add line"
+
+#~ msgid "Active products"
+#~ msgstr "Active products"
+
+#~ msgid "Low stock alerts"
+#~ msgstr "Low stock alerts"
+
+#~ msgid "Revenue this month"
+#~ msgstr "Revenue this month"
+
+#~ msgid "Invoices (%(year)s)"
+#~ msgstr "Invoices (%(year)s)"
+
+#~ msgid "Total sold in %(year)s"
+#~ msgstr "Total sold in %(year)s"
+
+#~ msgid "Month (product chart)"
+#~ msgstr "Month (product chart)"
+
+#~ msgid "New"
+#~ msgstr "New"
+
+#~ msgid "Contacted"
+#~ msgstr "Contacted"
+
+#~ msgid "Quoted"
+#~ msgstr "Quoted"
+
+#~ msgid "Won"
+#~ msgstr "Won"
+
+#~ msgid "Lost"
+#~ msgstr "Lost"
+
+#~ msgid "Instagram DM"
+#~ msgstr "Instagram DM"
+
+#~ msgid "Website"
+#~ msgstr "Website"
+
+#~ msgid "Referral"
+#~ msgstr "Referral"
+
+#~ msgid "Other"
+#~ msgstr "Other"
+
+#~ msgid "Product interested in"
+#~ msgstr "Product interested in"
+
+#~ msgid "Quantity requested"
+#~ msgstr "Quantity requested"
+
+#~ msgid "Source"
+#~ msgstr "Source"
+
+#~ msgid "Save request"
+#~ msgstr "Save request"
+
+#~ msgid "Stage"
+#~ msgstr "Stage"
+
+#~ msgid "Update stage"
+#~ msgstr "Update stage"
+
+#~ msgid "Opportunity created."
+#~ msgstr "Opportunity created."
+
+#~ msgid "Stage updated."
+#~ msgstr "Stage updated."
+
+#~ msgid "Converted to Sale #%(id)s."
+#~ msgstr "Converted to Sale #%(id)s."
+
+#~ msgid "Opportunities"
+#~ msgstr "Opportunities"
+
+#~ msgid "Open opportunities"
+#~ msgstr "Open opportunities"
+
+#~ msgid "No open requests right now."
+#~ msgstr "No open requests right now."
+
+#~ msgid "New request"
+#~ msgstr "New request"
+
+#~ msgid "All"
+#~ msgstr "All"
+
+#~ msgid "Update"
+#~ msgstr "Update"
+
+#~ msgid "Convert to Sale"
+#~ msgstr "Convert to Sale"
+
+#~ msgid "closed"
+#~ msgstr "closed"
+
+#~ msgid "No opportunities yet."
+#~ msgstr "No opportunities yet."
+
+#~ msgid "New opportunity"
+#~ msgstr "New opportunity"
+
+#~ msgid "New request / opportunity"
+#~ msgstr "New request / opportunity"
+
+#~ msgid "Editor"
+#~ msgstr "Editor"
+
+#~ msgid "Viewer"
+#~ msgstr "Viewer"
 

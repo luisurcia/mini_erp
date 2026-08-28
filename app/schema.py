@@ -315,6 +315,18 @@ def ensure_user_name_columns() -> None:
     db.session.commit()
 
 
+def ensure_user_language_column() -> None:
+    """Backfill `users.language` for databases created before per-user UI
+    language existed (#43). Nullable — null means "follow the company
+    default", so no backfill is needed for existing users.
+    """
+    inspector = inspect(db.engine)
+    columns = {column["name"] for column in inspector.get_columns("users")}
+    if "language" not in columns:
+        db.session.execute(text("ALTER TABLE users ADD COLUMN language VARCHAR(5)"))
+        db.session.commit()
+
+
 def ensure_user_role_column() -> None:
     """Backfill `users.role` for databases created before roles existed.
 

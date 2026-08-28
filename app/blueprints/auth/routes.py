@@ -3,8 +3,9 @@ from flask_babel import gettext as _
 from flask_login import current_user, login_required, login_user, logout_user
 
 from app.blueprints.auth import bp
-from app.blueprints.auth.forms import ChangePasswordForm, LoginForm
+from app.blueprints.auth.forms import ChangeLanguageForm, ChangePasswordForm, LoginForm
 from app.extensions import db
+from app.models.company import Company
 from app.models.user import User
 
 
@@ -45,3 +46,20 @@ def change_password():
             return redirect(url_for("dashboard.index"))
 
     return render_template("auth/change_password.html", form=form)
+
+
+@bp.route("/language", methods=["GET", "POST"])
+@login_required
+def change_language():
+    form = ChangeLanguageForm()
+    if not form.is_submitted():
+        form.language.data = current_user.language or Company.get_settings().language
+
+    if form.validate_on_submit():
+        current_user.language = form.language.data
+        db.session.commit()
+        # Rendered on the next request, so it already shows in the new language.
+        flash(_("Language updated."), "success")
+        return redirect(url_for("dashboard.index"))
+
+    return render_template("auth/change_language.html", form=form)

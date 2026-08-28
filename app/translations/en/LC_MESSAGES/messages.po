@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-08-27 19:57-0400\n"
+"POT-Creation-Date: 2026-08-27 20:09-0400\n"
 "PO-Revision-Date: 2026-08-24 17:58-0400\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: en\n"
@@ -18,80 +18,94 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.18.0\n"
 
-#: app/__init__.py:82
+#: app/__init__.py:94
 msgid "Completed"
 msgstr "Completed"
 
-#: app/__init__.py:83
+#: app/__init__.py:95
 msgid "Pending"
 msgstr "Pending"
 
-#: app/__init__.py:84
+#: app/__init__.py:96
 msgid "Cancelled"
 msgstr "Cancelled"
 
-#: app/__init__.py:101 app/templates/inventory/restock_form.html:3
+#: app/__init__.py:113 app/templates/inventory/restock_form.html:3
 #: app/templates/supplies/restock_form.html:3
 msgid "Restock"
 msgstr "Restock"
 
-#: app/__init__.py:102
+#: app/__init__.py:114
 msgid "Sale"
 msgstr "Sale"
 
-#: app/__init__.py:103
+#: app/__init__.py:115
 msgid "Adjustment"
 msgstr "Adjustment"
 
-#: app/__init__.py:104 app/blueprints/inventory/forms.py:37
+#: app/__init__.py:116 app/blueprints/inventory/forms.py:37
 msgid "Transfer"
 msgstr "Transfer"
 
-#: app/blueprints/auth/forms.py:8 app/blueprints/users/forms.py:19
+#: app/blueprints/auth/forms.py:10 app/blueprints/users/forms.py:19
 #: app/templates/users/index.html:11
 msgid "Username"
 msgstr "Username"
 
-#: app/blueprints/auth/forms.py:9 app/blueprints/users/forms.py:27
+#: app/blueprints/auth/forms.py:11 app/blueprints/users/forms.py:27
 msgid "Password"
 msgstr "Password"
 
-#: app/blueprints/auth/forms.py:10 app/templates/auth/login.html:3
+#: app/blueprints/auth/forms.py:12 app/templates/auth/login.html:3
 msgid "Log in"
 msgstr "Log in"
 
-#: app/blueprints/auth/forms.py:14
+#: app/blueprints/auth/forms.py:16
 msgid "Current password"
 msgstr "Current password"
 
-#: app/blueprints/auth/forms.py:16
+#: app/blueprints/auth/forms.py:18
 msgid "New password"
 msgstr "New password"
 
-#: app/blueprints/auth/forms.py:19
+#: app/blueprints/auth/forms.py:21
 msgid "Confirm new password"
 msgstr "Confirm new password"
 
-#: app/blueprints/auth/forms.py:22 app/blueprints/users/forms.py:31
+#: app/blueprints/auth/forms.py:24 app/blueprints/users/forms.py:31
 msgid "Passwords must match."
 msgstr "Passwords must match."
 
-#: app/blueprints/auth/forms.py:25 app/templates/auth/change_password.html:3
-#: app/templates/auth/change_password.html:8 app/templates/base.html:46
+#: app/blueprints/auth/forms.py:27 app/templates/auth/change_password.html:3
+#: app/templates/auth/change_password.html:8 app/templates/base.html:47
 msgid "Change password"
 msgstr "Change password"
 
-#: app/blueprints/auth/routes.py:22
+#: app/blueprints/auth/forms.py:32 app/blueprints/company/forms.py:37
+#: app/templates/auth/change_language.html:3
+#: app/templates/auth/change_language.html:8 app/templates/base.html:46
+msgid "Language"
+msgstr "Language"
+
+#: app/blueprints/auth/forms.py:36 app/blueprints/inventory/forms.py:22
+msgid "Save"
+msgstr "Save"
+
+#: app/blueprints/auth/routes.py:23
 msgid "Invalid username or password."
 msgstr "Invalid username or password."
 
-#: app/blueprints/auth/routes.py:40
+#: app/blueprints/auth/routes.py:41
 msgid "Current password is incorrect."
 msgstr "Current password is incorrect."
 
-#: app/blueprints/auth/routes.py:44
+#: app/blueprints/auth/routes.py:45
 msgid "Password changed."
 msgstr "Password changed."
+
+#: app/blueprints/auth/routes.py:62
+msgid "Language updated."
+msgstr "Language updated."
 
 #: app/blueprints/company/forms.py:18
 msgid "Tax rate (%)"
@@ -120,10 +134,6 @@ msgstr "Ask for a flavor when creating a product"
 #: app/blueprints/company/forms.py:34
 msgid "Ask for a unit price when creating a product"
 msgstr "Ask for a unit price when creating a product"
-
-#: app/blueprints/company/forms.py:37
-msgid "Language"
-msgstr "Language"
 
 #: app/blueprints/company/forms.py:42
 msgid "Currency code"
@@ -329,10 +339,6 @@ msgstr "Reorder level"
 #: app/templates/inventory/history.html:7 app/templates/supplies/history.html:7
 msgid "Note"
 msgstr "Note"
-
-#: app/blueprints/inventory/forms.py:22
-msgid "Save"
-msgstr "Save"
 
 #: app/blueprints/inventory/forms.py:28
 msgid "Save warehouse"
@@ -604,9 +610,16 @@ msgstr "Users"
 msgid "Company"
 msgstr "Company"
 
-#: app/templates/base.html:47
+#: app/templates/base.html:48
 msgid "Log out"
 msgstr "Log out"
+
+#: app/templates/auth/change_language.html:9
+msgid ""
+"Choose the language for your view of the app. It only affects your "
+"account."
+msgstr ""
+"Choose the language for your view of the app. It only affects your account."
 
 #: app/templates/company/segment_form.html:3
 #: app/templates/company/segment_form.html:5

@@ -11,7 +11,12 @@ class Company(BaseModel):
 
     LANGUAGE_ES = "es"
     LANGUAGE_EN = "en"
-    LANGUAGES = [LANGUAGE_ES, LANGUAGE_EN]
+    LANGUAGE_FR = "fr"
+    LANGUAGES = [LANGUAGE_ES, LANGUAGE_EN, LANGUAGE_FR]
+    # Shown as-is in language pickers — a language's own name, never
+    # translated (a French speaker looks for "Français" whatever the
+    # current UI language is).
+    LANGUAGE_LABELS = {LANGUAGE_ES: "Español", LANGUAGE_EN: "English", LANGUAGE_FR: "Français"}
 
     tax_rate = db.Column(db.Numeric(5, 2), nullable=False, default=Decimal("19.00"))
     tax_enabled_default = db.Column(db.Boolean, nullable=False, default=True)

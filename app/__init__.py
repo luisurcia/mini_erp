@@ -68,8 +68,20 @@ def create_app(config_class: type = Config) -> Flask:
 
 
 def _select_locale() -> str:
+    from flask import has_request_context
+    from flask_login import current_user
+
     from app.models.company import Company
 
+    # A logged-in user's own choice wins; otherwise the company default.
+    # The request-context guard keeps this safe for non-request callers
+    # (CLI, tests) where current_user isn't available. See #43.
+    if (
+        has_request_context()
+        and current_user.is_authenticated
+        and current_user.language
+    ):
+        return current_user.language
     return Company.get_settings().language
 
 

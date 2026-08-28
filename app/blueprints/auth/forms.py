@@ -1,7 +1,9 @@
 from flask_babel import lazy_gettext as _l
 from flask_wtf import FlaskForm
-from wtforms import PasswordField, StringField, SubmitField
+from wtforms import PasswordField, SelectField, StringField, SubmitField
 from wtforms.validators import DataRequired, EqualTo, Length
+
+from app.models.company import Company
 
 
 class LoginForm(FlaskForm):
@@ -23,3 +25,12 @@ class ChangePasswordForm(FlaskForm):
         ],
     )
     submit = SubmitField(_l("Change password"))
+
+
+class ChangeLanguageForm(FlaskForm):
+    language = SelectField(
+        _l("Language"),
+        choices=list(Company.LANGUAGE_LABELS.items()),
+        validators=[DataRequired()],
+    )
+    submit = SubmitField(_l("Save"))

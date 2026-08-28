@@ -20,6 +20,7 @@ from app.schema import (
     ensure_sale_item_warehouse_column,
     ensure_sale_tax_columns,
     ensure_stock_movement_warehouse_column,
+    ensure_user_language_column,
     ensure_user_name_columns,
     ensure_user_role_column,
 )
@@ -37,6 +38,7 @@ def _upgrade_schema() -> None:
     db.create_all()
     ensure_user_role_column()
     ensure_user_name_columns()
+    ensure_user_language_column()
     ensure_product_short_name_column()
     # After short_name (this rebuilds the products table and copies it).
     ensure_products_optional_columns_nullable()
