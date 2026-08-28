@@ -12,6 +12,27 @@ def test_create_user_sets_role_and_hashes_password(app):
     assert user.check_password("password123")
 
 
+def test_create_and_update_user_store_name_parts(app):
+    service = UserService()
+    user = service.create_user(
+        "mundurraga",
+        "password123",
+        User.ROLE_VENTAS,
+        first_name="Mario",
+        last_name="Undurraga",
+    )
+    assert user.display_name == "Mario Undurraga"
+
+    service.update_user(
+        user,
+        username="mundurraga",
+        role=User.ROLE_VENTAS,
+        first_name="Mario",
+        last_name="Undurraga Larraín",
+    )
+    assert user.last_name == "Undurraga Larraín"
+
+
 def test_create_user_duplicate_username_raises(app):
     service = UserService()
     service.create_user("dupe", "password123", User.ROLE_VENTAS)

@@ -5,7 +5,7 @@
 <div class="row justify-content-center">
   <div class="col-md-6">
     <div class="card p-4">
-      <h1 class="h4 mb-3">{{ _("New user") if mode == "new" else _("Edit %(name)s", name=user.username) }}</h1>
+      <h1 class="h4 mb-3">{{ _("New user") if mode == "new" else _("Edit %(name)s", name=user.display_name) }}</h1>
       {% if mode == "edit" %}
       <p class="text-muted">{{ _("Leave the password fields blank to keep the current password.") }}</p>
       {% endif %}

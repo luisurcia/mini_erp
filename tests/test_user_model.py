@@ -35,3 +35,18 @@ def test_is_admin_only_true_for_admin_role():
     assert _user(User.ROLE_ADMIN).is_admin
     assert not _user(User.ROLE_BODEGUERO).is_admin
     assert not _user(User.ROLE_VENTAS).is_admin
+
+
+def test_display_name_uses_full_name_when_set():
+    user = User(username="mundurraga", first_name="Mario", last_name="Undurraga")
+    assert user.display_name == "Mario Undurraga"
+
+
+def test_display_name_handles_only_one_name_part():
+    assert User(username="m", first_name="Mario").display_name == "Mario"
+    assert User(username="u", last_name="Undurraga").display_name == "Undurraga"
+
+
+def test_display_name_falls_back_to_username():
+    assert User(username="admin").display_name == "admin"
+    assert User(username="admin", first_name="", last_name="  ").display_name == "admin"

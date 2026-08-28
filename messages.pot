@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-08-27 19:16-0400\n"
+"POT-Creation-Date: 2026-08-27 19:57-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -46,12 +46,12 @@ msgstr ""
 msgid "Transfer"
 msgstr ""
 
-#: app/blueprints/auth/forms.py:8 app/blueprints/users/forms.py:17
+#: app/blueprints/auth/forms.py:8 app/blueprints/users/forms.py:19
 #: app/templates/users/index.html:11
 msgid "Username"
 msgstr ""
 
-#: app/blueprints/auth/forms.py:9 app/blueprints/users/forms.py:25
+#: app/blueprints/auth/forms.py:9 app/blueprints/users/forms.py:27
 msgid "Password"
 msgstr ""
 
@@ -71,7 +71,7 @@ msgstr ""
 msgid "Confirm new password"
 msgstr ""
 
-#: app/blueprints/auth/forms.py:22 app/blueprints/users/forms.py:29
+#: app/blueprints/auth/forms.py:22 app/blueprints/users/forms.py:31
 msgid "Passwords must match."
 msgstr ""
 
@@ -154,6 +154,7 @@ msgstr ""
 #: app/templates/customers/index.html:13
 #: app/templates/inventory/warehouses_list.html:13
 #: app/templates/supplies/index.html:16 app/templates/supplies/stock.html:13
+#: app/templates/users/index.html:11
 msgid "Name"
 msgstr ""
 
@@ -516,15 +517,23 @@ msgstr ""
 msgid "Sales"
 msgstr ""
 
-#: app/blueprints/users/forms.py:20 app/templates/users/index.html:11
+#: app/blueprints/users/forms.py:16
+msgid "First name"
+msgstr ""
+
+#: app/blueprints/users/forms.py:17
+msgid "Last name"
+msgstr ""
+
+#: app/blueprints/users/forms.py:22 app/templates/users/index.html:11
 msgid "Role"
 msgstr ""
 
-#: app/blueprints/users/forms.py:28
+#: app/blueprints/users/forms.py:30
 msgid "Confirm password"
 msgstr ""
 
-#: app/blueprints/users/forms.py:31
+#: app/blueprints/users/forms.py:33
 msgid "Save user"
 msgstr ""
 
@@ -532,25 +541,25 @@ msgstr ""
 msgid "Password is required for a new user."
 msgstr ""
 
-#: app/blueprints/users/routes.py:36
+#: app/blueprints/users/routes.py:38
 #, python-format
 msgid "User '%(name)s' created."
 msgstr ""
 
-#: app/blueprints/users/routes.py:50 app/blueprints/users/routes.py:80
+#: app/blueprints/users/routes.py:52 app/blueprints/users/routes.py:84
 msgid "User not found."
 msgstr ""
 
-#: app/blueprints/users/routes.py:66
+#: app/blueprints/users/routes.py:70
 #, python-format
 msgid "User '%(name)s' updated."
 msgstr ""
 
-#: app/blueprints/users/routes.py:82
+#: app/blueprints/users/routes.py:86
 msgid "You cannot delete your own account."
 msgstr ""
 
-#: app/blueprints/users/routes.py:86
+#: app/blueprints/users/routes.py:91
 #, python-format
 msgid "User '%(name)s' deleted."
 msgstr ""
@@ -633,7 +642,7 @@ msgstr ""
 #: app/templates/customers/index.html:36
 #: app/templates/inventory/warehouses_list.html:30
 #: app/templates/products/index.html:38 app/templates/supplies/index.html:37
-#: app/templates/users/index.html:18
+#: app/templates/users/index.html:19
 msgid "Edit"
 msgstr ""
 
@@ -1007,11 +1016,11 @@ msgstr ""
 msgid "New user"
 msgstr ""
 
-#: app/templates/users/index.html:21
+#: app/templates/users/index.html:22
 msgid "Delete"
 msgstr ""
 
-#: app/templates/users/index.html:27
+#: app/templates/users/index.html:28
 msgid "No users yet."
 msgstr ""
 

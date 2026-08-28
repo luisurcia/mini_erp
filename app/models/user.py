@@ -39,8 +39,18 @@ class User(BaseModel, UserMixin):
     }
 
     username = db.Column(db.String(80), unique=True, nullable=False)
+    # Display name — `username` stays the login identifier, screens show
+    # this instead. Nullable: pre-#44 users and the seeded admin have none
+    # and fall back to the username. See #44.
+    first_name = db.Column(db.String(80), nullable=True)
+    last_name = db.Column(db.String(80), nullable=True)
     password_hash = db.Column(db.String(255), nullable=False)
     role = db.Column(db.String(20), nullable=False, default=ROLE_ADMIN)
+
+    @property
+    def display_name(self) -> str:
+        full = f"{self.first_name or ''} {self.last_name or ''}".strip()
+        return full or self.username
 
     def set_password(self, raw_password: str) -> None:
         self.password_hash = generate_password_hash(raw_password)

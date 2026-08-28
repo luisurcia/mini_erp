@@ -10,17 +10,32 @@ class UserService:
     def __init__(self, user_repo: UserRepository | None = None):
         self.user_repo = user_repo or UserRepository()
 
-    def create_user(self, username: str, password: str, role: str) -> User:
+    def create_user(
+        self,
+        username: str,
+        password: str,
+        role: str,
+        first_name: str | None = None,
+        last_name: str | None = None,
+    ) -> User:
         self._ensure_username_available(username)
 
-        user = User(username=username, role=role)
+        user = User(
+            username=username, role=role, first_name=first_name, last_name=last_name
+        )
         user.set_password(password)
         self.user_repo.add(user)
         self.user_repo.commit()
         return user
 
     def update_user(
-        self, user: User, username: str, role: str, password: str | None = None
+        self,
+        user: User,
+        username: str,
+        role: str,
+        password: str | None = None,
+        first_name: str | None = None,
+        last_name: str | None = None,
     ) -> User:
         self._ensure_username_available(username, ignore_user_id=user.id)
 
@@ -29,6 +44,8 @@ class UserService:
 
         user.username = username
         user.role = role
+        user.first_name = first_name
+        user.last_name = last_name
         if password:
             user.set_password(password)
         self.user_repo.commit()

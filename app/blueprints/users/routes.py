@@ -32,8 +32,10 @@ def new_user():
                     username=form.username.data,
                     password=form.password.data,
                     role=form.role.data,
+                    first_name=form.first_name.data or None,
+                    last_name=form.last_name.data or None,
                 )
-                flash(_("User '%(name)s' created.", name=user.username), "success")
+                flash(_("User '%(name)s' created.", name=user.display_name), "success")
                 return redirect(url_for("users.index"))
             except MiniErpError as exc:
                 flash(str(exc), "danger")
@@ -62,8 +64,10 @@ def edit_user(user_id):
                 username=form.username.data,
                 role=form.role.data,
                 password=form.password.data or None,
+                first_name=form.first_name.data or None,
+                last_name=form.last_name.data or None,
             )
-            flash(_("User '%(name)s' updated.", name=form.username.data), "success")
+            flash(_("User '%(name)s' updated.", name=user.display_name), "success")
             return redirect(url_for("users.index"))
         except MiniErpError as exc:
             flash(str(exc), "danger")
@@ -82,8 +86,9 @@ def delete_user(user_id):
         flash(_("You cannot delete your own account."), "danger")
     else:
         try:
+            display_name = user.display_name
             UserService().delete_user(user)
-            flash(_("User '%(name)s' deleted.", name=user.username), "success")
+            flash(_("User '%(name)s' deleted.", name=display_name), "success")
         except MiniErpError as exc:
             flash(str(exc), "danger")
     return redirect(url_for("users.index"))

@@ -300,6 +300,21 @@ def ensure_sale_item_warehouse_column() -> None:
         db.session.commit()
 
 
+def ensure_user_name_columns() -> None:
+    """Backfill `users.first_name` / `users.last_name` for databases
+    created before display names existed (#44). Nullable — existing users
+    fall back to showing their username until an admin fills these in.
+    """
+    inspector = inspect(db.engine)
+    columns = {column["name"] for column in inspector.get_columns("users")}
+    for column in ("first_name", "last_name"):
+        if column not in columns:
+            db.session.execute(
+                text(f"ALTER TABLE users ADD COLUMN {column} VARCHAR(80)")
+            )
+    db.session.commit()
+
+
 def ensure_user_role_column() -> None:
     """Backfill `users.role` for databases created before roles existed.
 

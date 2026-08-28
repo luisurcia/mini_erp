@@ -13,6 +13,8 @@ ROLE_LABELS = {
 
 
 class UserForm(FlaskForm):
+    first_name = StringField(_l("First name"), validators=[Optional(), Length(max=80)])
+    last_name = StringField(_l("Last name"), validators=[Optional(), Length(max=80)])
     username = StringField(
         _l("Username"), validators=[DataRequired(), Length(min=3, max=80)]
     )
