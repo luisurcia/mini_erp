@@ -53,23 +53,27 @@ class SupplyItem(BaseModel):
 
 
 class SupplyMovement(BaseModel):
-    """Audit trail entry for every change to supply stock. No 'sale' or
-    'transfer' reason yet — supplies aren't sold directly or moved between
-    warehouses in this issue's scope, only restocked/adjusted."""
+    """Audit trail entry for every change to supply stock: restock,
+    manual adjustment, or automatic consumption when a sale draws on a
+    product's bill of materials (`sale_id` set, see #48). No 'transfer'
+    reason — supplies live in a single warehouse."""
 
     __tablename__ = "supply_movements"
 
     REASON_RESTOCK = "restock"
     REASON_ADJUSTMENT = "adjustment"
+    REASON_SALE = "sale"
 
     supply_id = db.Column(db.Integer, db.ForeignKey("supplies.id"), nullable=False)
     warehouse_id = db.Column(db.Integer, db.ForeignKey("warehouses.id"), nullable=True)
+    sale_id = db.Column(db.Integer, db.ForeignKey("sales.id"), nullable=True)
     change_qty = db.Column(db.Integer, nullable=False)
     reason = db.Column(db.String(20), nullable=False)
     note = db.Column(db.String(255), nullable=True)
 
     supply = db.relationship("Supply")
     warehouse = db.relationship("Warehouse")
+    sale = db.relationship("Sale")
 
     def __repr__(self) -> str:
         return (

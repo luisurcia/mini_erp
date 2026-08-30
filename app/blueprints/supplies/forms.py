@@ -15,3 +15,10 @@ class SupplyForm(FlaskForm):
     )
     is_active = BooleanField(_l("Active"), default=True)
     submit = SubmitField(_l("Save supply"))
+
+
+class ProductRecipeForm(FlaskForm):
+    """CSRF wrapper for the per-product recipe editor — the per-supply
+    quantity inputs are dynamic and read straight from request.form."""
+
+    submit = SubmitField(_l("Save recipe"))

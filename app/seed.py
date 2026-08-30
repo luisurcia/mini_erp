@@ -6,6 +6,7 @@ from app.extensions import db
 from app.models.customer import Customer
 from app.models.customer_segment import CustomerSegment
 from app.models.product import Flavor, Product
+from app.models.product_supply import ProductSupply
 from app.models.supply import Supply
 from app.models.user import User
 from app.models.warehouse import Warehouse
@@ -36,7 +37,8 @@ def seed_demo_data(app: Flask) -> None:
         return  # already seeded
 
     products = _seed_flavors_and_products()
-    _seed_supplies()
+    supplies = _seed_supplies()
+    _seed_recipes(products, supplies)
     customers = _seed_customers()
     _seed_sales(customers, products)
 
@@ -90,18 +92,35 @@ SUPPLIES = [
 ]
 
 
-def _seed_supplies() -> None:
+def _seed_supplies() -> dict[str, Supply]:
     supply_service = SupplyService()
-    main_warehouse_id = Warehouse.query.filter_by(is_default=True).first().id
+    supplies_warehouse_id = Warehouse.ensure_supplies_warehouse().id
+    supplies: dict[str, Supply] = {}
 
     for name, unit, unit_price, initial_qty in SUPPLIES:
         supply = Supply(name=name, unit=unit, unit_price=unit_price, is_active=True)
         db.session.add(supply)
         db.session.flush()
+        supplies[name] = supply
 
         supply_service.create_supply_item(
-            supply.id, main_warehouse_id, initial_qty=initial_qty, reorder_level=200
+            supply.id, supplies_warehouse_id, initial_qty=initial_qty, reorder_level=200
         )
+    return supplies
+
+
+def _seed_recipes(products: dict[str, Product], supplies: dict[str, Supply]) -> None:
+    """Every demo kombucha consumes 1 bottle + 1 label + 1 cap per unit (#48)."""
+    for product in products.values():
+        for supply_name in ("Botellas 355ml", "Etiquetas", "Tapas"):
+            db.session.add(
+                ProductSupply(
+                    product_id=product.id,
+                    supply_id=supplies[supply_name].id,
+                    quantity_per_unit=1,
+                )
+            )
+    db.session.commit()
 
     db.session.commit()
 

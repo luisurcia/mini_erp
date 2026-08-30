@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block title %}{{ _("Supplies for %(name)s", name=product_label(product)) }}{% endblock %}
+{% block content %}
+<h1 class="h3 mb-3">{{ _("Supplies for %(name)s", name=product_label(product)) }}</h1>
+<div class="card p-4" style="max-width: 520px;">
+  <p class="text-muted small">
+    {{ _("How many of each supply are consumed per unit of this product sold. Leave at 0 for supplies this product doesn't use.") }}
+  </p>
+  <form method="post" novalidate>
+    {{ form.hidden_tag() }}
+    <table class="table align-middle">
+      <thead>
+        <tr><th>{{ _("Supply") }}</th><th style="width: 120px;">{{ _("Qty per unit") }}</th></tr>
+      </thead>
+      <tbody>
+        {% for supply in supplies %}
+        <tr>
+          <td>
+            {{ supply.name }}
+            {% if supply.id not in active_ids %}<span class="badge bg-secondary">{{ _("Inactive") }}</span>{% endif %}
+          </td>
+          <td>
+            <input type="number" min="0" class="form-control form-control-sm"
+                   name="quantity__{{ supply.id }}"
+                   value="{{ existing[supply.id].quantity_per_unit if supply.id in existing else 0 }}">
+          </td>
+        </tr>
+        {% else %}
+        <tr><td colspan="2" class="text-muted text-center py-3">{{ _("No active supplies. Create supplies first.") }}</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    <div class="d-flex gap-2">
+      {{ form.submit(class="btn btn-primary") }}
+      <a class="btn btn-outline-secondary" href="{{ url_for('supplies.recipes') }}">{{ _("Cancel") }}</a>
+    </div>
+  </form>
+</div>
+{% endblock %}

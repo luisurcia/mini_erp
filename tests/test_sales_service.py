@@ -8,9 +8,30 @@ from app.exceptions import InsufficientStockError, MiniErpError
 from app.extensions import db
 from app.models.company import Company
 from app.models.customer import Customer
+from app.models.product_supply import ProductSupply
+from app.models.supply import Supply, SupplyMovement
 from app.repositories.sales_repository import SalesRepository
 from app.services.inventory_service import InventoryService
 from app.services.sales_service import SalesService
+from app.services.supply_service import SupplyService
+
+
+def _recipe(product, supplies_warehouse, per_unit: dict[str, int]) -> dict[str, Supply]:
+    """Give `product` a bill of materials and stock those supplies."""
+    supplies = {}
+    for name, qty in per_unit.items():
+        supply = Supply(name=name, unit="unidad", unit_price=0.1, is_active=True)
+        db.session.add(supply)
+        db.session.flush()
+        supplies[name] = supply
+        db.session.add(
+            ProductSupply(
+                product_id=product.id, supply_id=supply.id, quantity_per_unit=qty
+            )
+        )
+        SupplyService().restock(supply.id, supplies_warehouse.id, 100)
+    db.session.commit()
+    return supplies
 
 
 def test_record_sale_creates_sale_and_consumes_stock(app, customer, product):
@@ -303,3 +324,67 @@ def test_revert_payment_clears_payment_fields(app, customer, product):
     assert reverted.is_paid is False
     assert reverted.payment_reference is None
     assert reverted.paid_at is None
+
+
+def test_sale_consumes_product_bill_of_materials_from_supplies_warehouse(
+    app, customer, product, supplies_warehouse
+):
+    supplies = _recipe(product, supplies_warehouse, {"Bottle": 1, "Label": 2})
+
+    sale = SalesService().record_sale(
+        customer_id=customer.id, items=[{"product_id": product.id, "quantity": 4}]
+    )
+
+    svc = SupplyService()
+    bottle = svc.supply_item_repo.get_by_supply_and_warehouse(
+        supplies["Bottle"].id, supplies_warehouse.id
+    )
+    label = svc.supply_item_repo.get_by_supply_and_warehouse(
+        supplies["Label"].id, supplies_warehouse.id
+    )
+    assert bottle.quantity_on_hand == 96  # 100 - 4*1
+    assert label.quantity_on_hand == 92  # 100 - 4*2
+
+    movements = SupplyMovement.query.filter_by(reason=SupplyMovement.REASON_SALE).all()
+    assert {m.change_qty for m in movements} == {-4, -8}
+    assert all(m.sale_id == sale.id for m in movements)
+
+
+def test_sale_with_no_recipe_does_not_touch_supplies(
+    app, customer, product, supplies_warehouse
+):
+    SalesService().record_sale(
+        customer_id=customer.id, items=[{"product_id": product.id, "quantity": 3}]
+    )
+    assert SupplyMovement.query.count() == 0
+
+
+def test_sale_lets_supply_stock_go_negative_and_reports_shortfall(
+    app, customer, product, supplies_warehouse
+):
+    supplies = _recipe(product, supplies_warehouse, {"Cap": 1})
+    # drain the cap stock down to 10 so a sale of 15 goes negative
+    SupplyService().adjust(supplies["Cap"].id, supplies_warehouse.id, 10)
+
+    service = SalesService()
+    sale = service.record_sale(
+        customer_id=customer.id, items=[{"product_id": product.id, "quantity": 15}]
+    )
+
+    cap = service.supply_service.supply_item_repo.get_by_supply_and_warehouse(
+        supplies["Cap"].id, supplies_warehouse.id
+    )
+    assert cap.quantity_on_hand == -5
+    assert service.supply_service.shortfalls_for_sale(sale) == [("Cap", -5)]
+
+
+def test_pending_sale_does_not_consume_supplies(
+    app, customer, product, supplies_warehouse
+):
+    _recipe(product, supplies_warehouse, {"Bottle": 1})
+    SalesService().record_sale(
+        customer_id=customer.id,
+        items=[{"product_id": product.id, "quantity": 2}],
+        status="pending",
+    )
+    assert SupplyMovement.query.filter_by(reason=SupplyMovement.REASON_SALE).count() == 0

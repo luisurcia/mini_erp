@@ -69,6 +69,47 @@ class SupplyService:
         self.supply_item_repo.commit()
         return item
 
+    def consume_for_sale(
+        self, supply_id: int, warehouse_id: int, quantity: int, sale, commit: bool = True
+    ) -> SupplyItem:
+        """Draw `quantity` of a supply for a sale's bill of materials (#48).
+
+        Unlike InventoryService.consume this never raises on insufficient
+        stock — the balance is allowed to go negative and the caller warns
+        (a stale label count shouldn't block a real sale).
+        """
+        if quantity <= 0:
+            raise ValueError("Consume quantity must be positive")
+        item = self._get_or_create_item(supply_id, warehouse_id)
+        item.quantity_on_hand -= quantity
+        self._record_movement(
+            supply_id,
+            warehouse_id,
+            -quantity,
+            SupplyMovement.REASON_SALE,
+            note=None,
+            sale=sale,
+        )
+        if commit:
+            self.supply_item_repo.commit()
+        return item
+
+    def shortfalls_for_sale(self, sale) -> list[tuple[str, int]]:
+        """(supply name, on-hand) for every supply this sale pushed below
+        zero — feeds the post-sale "supply stock is now negative" warning
+        (#48)."""
+        movements = SupplyMovement.query.filter_by(
+            sale_id=sale.id, reason=SupplyMovement.REASON_SALE
+        ).all()
+        shortfalls = []
+        for movement in movements:
+            item = self.supply_item_repo.get_by_supply_and_warehouse(
+                movement.supply_id, movement.warehouse_id
+            )
+            if item is not None and item.quantity_on_hand < 0:
+                shortfalls.append((movement.supply.name, item.quantity_on_hand))
+        return sorted(shortfalls)
+
     def low_stock_report(self) -> list[SupplyItem]:
         return self.supply_item_repo.low_stock()
 
@@ -86,7 +127,13 @@ class SupplyService:
         return item
 
     def _record_movement(
-        self, supply_id: int, warehouse_id: int, change_qty: int, reason: str, note: str | None
+        self,
+        supply_id: int,
+        warehouse_id: int,
+        change_qty: int,
+        reason: str,
+        note: str | None,
+        sale=None,
     ) -> None:
         movement = SupplyMovement(
             supply_id=supply_id,
@@ -94,5 +141,6 @@ class SupplyService:
             change_qty=change_qty,
             reason=reason,
             note=note,
+            sale=sale,
         )
         self.movement_repo.add(movement)

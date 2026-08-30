@@ -1,14 +1,18 @@
-from flask import flash, redirect, render_template, url_for
+from flask import flash, redirect, render_template, request, url_for
 from flask_babel import gettext as _
 from flask_login import login_required
 
 from app.blueprints.inventory.forms import RestockForm
 from app.blueprints.supplies import bp
-from app.blueprints.supplies.forms import SupplyForm
+from app.blueprints.supplies.forms import ProductRecipeForm, SupplyForm
+from app.display import product_label
 from app.exceptions import MiniErpError
+from app.models.product_supply import ProductSupply
 from app.models.supply import Supply
 from app.models.user import User
 from app.permissions import module_required
+from app.repositories.product_repository import ProductRepository
+from app.repositories.product_supply_repository import ProductSupplyRepository
 from app.repositories.supply_repository import SupplyItemRepository, SupplyRepository
 from app.repositories.warehouse_repository import WarehouseRepository
 from app.services.supply_service import SupplyService
@@ -71,7 +75,8 @@ def edit_supply(supply_id):
 @module_required(User.MODULE_SUPPLIES)
 def stock():
     supplies = SupplyRepository().get_all()
-    warehouses = WarehouseRepository().get_active()
+    supplies_warehouse = WarehouseRepository().get_supplies_warehouse()
+    warehouses = [supplies_warehouse] if supplies_warehouse else []
     stock_by_cell = {
         (item.supply_id, item.warehouse_id): item for item in SupplyItemRepository().get_all()
     }
@@ -157,3 +162,81 @@ def history(supply_id):
 
     movements = SupplyService().movement_history(supply_id)
     return render_template("supplies/history.html", supply=supply, movements=movements)
+
+
+@bp.route("/recipes")
+@login_required
+@module_required(User.MODULE_SUPPLIES)
+def recipes():
+    products = ProductRepository().get_all()
+    rows = ProductSupplyRepository().for_products([p.id for p in products])
+    recipe_by_product: dict[int, list[ProductSupply]] = {}
+    for row in rows:
+        recipe_by_product.setdefault(row.product_id, []).append(row)
+    return render_template(
+        "supplies/recipes.html",
+        products=products,
+        recipe_by_product=recipe_by_product,
+    )
+
+
+@bp.route("/recipes/<int:product_id>", methods=["GET", "POST"])
+@login_required
+@module_required(User.MODULE_SUPPLIES)
+def edit_recipe(product_id):
+    product = ProductRepository().get(product_id)
+    if product is None:
+        flash(_("Product not found."), "danger")
+        return redirect(url_for("supplies.recipes"))
+
+    repo = ProductSupplyRepository()
+    supply_repo = SupplyRepository()
+    existing = {row.supply_id: row for row in repo.for_product(product_id)}
+
+    # Every active supply, plus any inactive one already in this recipe —
+    # a deactivated supply stays in the recipes it's part of (#48).
+    supplies = list(supply_repo.get_active())
+    active_ids = {s.id for s in supplies}
+    supplies += [
+        supply_repo.get(supply_id)
+        for supply_id in existing
+        if supply_id not in active_ids
+    ]
+    supplies.sort(key=lambda s: s.name)
+
+    form = ProductRecipeForm()
+    if form.validate_on_submit():
+        for supply in supplies:
+            raw = request.form.get(f"quantity__{supply.id}", "").strip()
+            try:
+                qty = int(raw) if raw else 0
+            except ValueError:
+                qty = 0
+            row = existing.get(supply.id)
+            if qty > 0 and row is None:
+                repo.add(
+                    ProductSupply(
+                        product_id=product_id,
+                        supply_id=supply.id,
+                        quantity_per_unit=qty,
+                    )
+                )
+            elif qty > 0:
+                row.quantity_per_unit = qty
+            elif row is not None:
+                repo.delete(row)
+        repo.commit()
+        flash(
+            _("Supplies recipe updated for %(name)s.", name=product_label(product)),
+            "success",
+        )
+        return redirect(url_for("supplies.recipes"))
+
+    return render_template(
+        "supplies/recipe_form.html",
+        form=form,
+        product=product,
+        supplies=supplies,
+        existing=existing,
+        active_ids=active_ids,
+    )

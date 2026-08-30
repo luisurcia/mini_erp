@@ -84,6 +84,81 @@ def ensure_sale_tax_columns() -> None:
     db.session.commit()
 
 
+def ensure_warehouse_kind_column() -> None:
+    """Add `warehouses.kind` (distribution / supplies) for databases
+    created before the split — see #48. Existing warehouses all become
+    distribution; the supplies warehouse is created by
+    Warehouse.ensure_defaults()."""
+    inspector = inspect(db.engine)
+    columns = {column["name"] for column in inspector.get_columns("warehouses")}
+    if "kind" not in columns:
+        db.session.execute(
+            text(
+                "ALTER TABLE warehouses ADD COLUMN kind "
+                "VARCHAR(20) NOT NULL DEFAULT 'distribution'"
+            )
+        )
+        db.session.commit()
+
+
+def consolidate_supply_stock_into_supplies_warehouse() -> None:
+    """Move every SupplyItem into the single supplies warehouse, summing
+    quantities, and repoint the SupplyMovement history so it stays
+    coherent (#48). Must run after Warehouse.ensure_defaults().
+
+    Before #48 supply stock was a supply x warehouse matrix (a leftover
+    of #29 copying the product-inventory pattern); in practice all stock
+    sat in Bodega Principal.
+    """
+    from app.models.supply import SupplyItem, SupplyMovement
+
+    supplies_wh = Warehouse.query.filter_by(
+        kind=Warehouse.KIND_SUPPLIES
+    ).first()
+    if supplies_wh is None:
+        return
+
+    stray_items = SupplyItem.query.filter(
+        SupplyItem.warehouse_id != supplies_wh.id
+    ).all()
+    if not stray_items:
+        return
+
+    by_supply: dict[int, list[SupplyItem]] = {}
+    for item in stray_items:
+        by_supply.setdefault(item.supply_id, []).append(item)
+
+    for items in by_supply.values():
+        target = SupplyItem.query.filter_by(
+            supply_id=items[0].supply_id, warehouse_id=supplies_wh.id
+        ).first()
+        if target is None:
+            target = items.pop(0)
+            target.warehouse_id = supplies_wh.id
+        for item in items:
+            target.quantity_on_hand += item.quantity_on_hand
+            target.reorder_level = max(target.reorder_level, item.reorder_level)
+            db.session.delete(item)
+
+    SupplyMovement.query.filter(
+        SupplyMovement.warehouse_id.isnot(None),
+        SupplyMovement.warehouse_id != supplies_wh.id,
+    ).update({"warehouse_id": supplies_wh.id}, synchronize_session=False)
+    db.session.commit()
+
+
+def ensure_supply_movement_sale_column() -> None:
+    """Backfill `supply_movements.sale_id` for databases created before
+    supplies were consumed by sales (#48)."""
+    inspector = inspect(db.engine)
+    columns = {column["name"] for column in inspector.get_columns("supply_movements")}
+    if "sale_id" not in columns:
+        db.session.execute(
+            text("ALTER TABLE supply_movements ADD COLUMN sale_id INTEGER")
+        )
+        db.session.commit()
+
+
 def ensure_sale_payment_columns() -> None:
     """Backfill `sales.payment_*` for databases created before payment
     tracking (#51). Existing sales default to unpaid; the client marks the

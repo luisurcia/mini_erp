@@ -11,6 +11,7 @@
     <thead>
       <tr>
         <th>{{ _("Name") }}</th>
+        <th>{{ _("Type") }}</th>
         <th>{{ _("Status") }}</th>
         <th></th>
       </tr>
@@ -19,6 +20,13 @@
       {% for warehouse in warehouses %}
       <tr>
         <td>{{ warehouse.name }}</td>
+        <td>
+          {% if warehouse.is_supplies %}
+          <span class="badge" style="background-color: var(--scoby-teal);">{{ _("Supplies") }}</span>
+          {% else %}
+          <span class="badge bg-secondary">{{ _("Distribution") }}</span>
+          {% endif %}
+        </td>
         <td>
           {% if warehouse.is_active %}
           <span class="badge bg-success">{{ _("Active") }}</span>
@@ -31,7 +39,7 @@
         </td>
       </tr>
       {% else %}
-      <tr><td colspan="3" class="text-muted text-center py-4">{{ _("No warehouses yet.") }}</td></tr>
+      <tr><td colspan="4" class="text-muted text-center py-4">{{ _("No warehouses yet.") }}</td></tr>
       {% endfor %}
     </tbody>
   </table>

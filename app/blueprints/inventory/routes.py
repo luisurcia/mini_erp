@@ -20,7 +20,7 @@ from app.services.inventory_service import InventoryService
 @module_required(User.MODULE_INVENTORY)
 def index():
     products = ProductRepository().get_all()
-    warehouses = WarehouseRepository().get_active()
+    warehouses = WarehouseRepository().get_distribution()
     stock = {
         (item.product_id, item.warehouse_id): item for item in InventoryRepository().get_all()
     }
@@ -102,7 +102,9 @@ def restock(product_id, warehouse_id):
 def transfer():
     form = TransferForm()
     product_choices = [(p.id, product_label(p)) for p in ProductRepository().get_active()]
-    warehouse_choices = [(w.id, w.name) for w in WarehouseRepository().get_active()]
+    warehouse_choices = [
+        (w.id, w.name) for w in WarehouseRepository().get_distribution()
+    ]
     form.product_id.choices = product_choices
     form.from_warehouse_id.choices = warehouse_choices
     form.to_warehouse_id.choices = warehouse_choices
@@ -194,11 +196,14 @@ def edit_warehouse(warehouse_id):
     form = WarehouseForm(obj=warehouse)
 
     if form.validate_on_submit():
-        warehouse.name = form.name.data
-        warehouse.is_active = form.is_active.data
-        WarehouseRepository().commit()
-        flash(_("Warehouse '%(name)s' updated.", name=warehouse.name), "success")
-        return redirect(url_for("inventory.warehouses"))
+        if warehouse.is_supplies and not form.is_active.data:
+            flash(_("The supplies warehouse can't be deactivated."), "danger")
+        else:
+            warehouse.name = form.name.data
+            warehouse.is_active = form.is_active.data
+            WarehouseRepository().commit()
+            flash(_("Warehouse '%(name)s' updated.", name=warehouse.name), "success")
+            return redirect(url_for("inventory.warehouses"))
 
     return render_template(
         "inventory/warehouse_form.html", form=form, mode="edit", warehouse=warehouse

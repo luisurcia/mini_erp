@@ -47,7 +47,7 @@ def new_sale():
         form.sale_date.data = date.today()
 
     products = ProductRepository().get_active()
-    warehouses = WarehouseRepository().get_active()
+    warehouses = WarehouseRepository().get_distribution()
     stock = {
         (item.product_id, item.warehouse_id): item for item in InventoryRepository().get_all()
     }
@@ -60,7 +60,8 @@ def new_sale():
             flash(_("Add at least one product line to the sale."), "danger")
         elif not errors:
             try:
-                sale = SalesService().record_sale(
+                service = SalesService()
+                sale = service.record_sale(
                     customer_id=form.customer_id.data,
                     items=items,
                     sale_date=datetime.combine(form.sale_date.data, datetime.now().time()),
@@ -68,6 +69,7 @@ def new_sale():
                     include_tax=form.include_tax.data,
                 )
                 flash(_("Sale #%(id)s recorded.", id=sale.id), "success")
+                _warn_on_supply_shortfalls(service, sale)
                 return redirect(url_for("sales.detail", sale_id=sale.id))
             except MiniErpError as exc:
                 flash(str(exc), "danger")
@@ -146,6 +148,22 @@ def revert_payment(sale_id):
 
 def _customer_choices():
     return [(c.id, c.name) for c in CustomerRepository().get_all()]
+
+
+def _warn_on_supply_shortfalls(service, sale) -> None:
+    """Flash a warning (not an error — the sale went through) when a sold
+    product's bill of materials pushed supply stock below zero (#48)."""
+    shortfalls = service.supply_service.shortfalls_for_sale(sale)
+    if shortfalls:
+        detail = ", ".join(f"{name}: {qty}" for name, qty in shortfalls)
+        flash(
+            _(
+                "The sale was recorded, but supply stock is now negative: "
+                "%(detail)s. Restock the supplies warehouse.",
+                detail=detail,
+            ),
+            "warning",
+        )
 
 
 def _parse_line_items(products, warehouses) -> tuple[list[dict], list[str]]:

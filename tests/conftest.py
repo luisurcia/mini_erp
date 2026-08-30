@@ -36,6 +36,14 @@ def warehouse(app):
 
 
 @pytest.fixture()
+def supplies_warehouse(app):
+    w = Warehouse(name="Bodega de Insumos", kind=Warehouse.KIND_SUPPLIES)
+    db.session.add(w)
+    db.session.commit()
+    return w
+
+
+@pytest.fixture()
 def product(app, warehouse):
     flavor = Flavor(name="Original", description="Classic")
     db.session.add(flavor)

@@ -8,9 +8,11 @@ from app.models.company import Company
 from app.models.inventory import StockMovement
 from app.models.sales import Sale, SaleItem
 from app.repositories.product_repository import ProductRepository
+from app.repositories.product_supply_repository import ProductSupplyRepository
 from app.repositories.sales_repository import SalesRepository
 from app.repositories.warehouse_repository import WarehouseRepository
 from app.services.inventory_service import InventoryService
+from app.services.supply_service import SupplyService
 
 
 class SalesService:
@@ -22,11 +24,15 @@ class SalesService:
         product_repo: ProductRepository | None = None,
         inventory_service: InventoryService | None = None,
         warehouse_repo: WarehouseRepository | None = None,
+        supply_service: SupplyService | None = None,
+        product_supply_repo: ProductSupplyRepository | None = None,
     ):
         self.sales_repo = sales_repo or SalesRepository()
         self.product_repo = product_repo or ProductRepository()
         self.inventory_service = inventory_service or InventoryService()
         self.warehouse_repo = warehouse_repo or WarehouseRepository()
+        self.supply_service = supply_service or SupplyService()
+        self.product_supply_repo = product_supply_repo or ProductSupplyRepository()
 
     def record_sale(
         self,
@@ -94,10 +100,41 @@ class SalesService:
                     commit=False,
                 )
 
+        if status == Sale.STATUS_COMPLETED:
+            self._consume_supplies(sale)
+
         sale.recalculate_total()
         self.sales_repo.add(sale)
         self.sales_repo.commit()
         return sale
+
+    def _consume_supplies(self, sale: Sale) -> None:
+        """Draw each sold product's bill of materials (bottle/label/cap...)
+        from the single supplies warehouse (#48). Never blocks the sale —
+        the balance is allowed to go negative and the route warns.
+        """
+        recipe_rows = self.product_supply_repo.for_products(
+            list({item.product.id for item in sale.items})
+        )
+        if not recipe_rows:
+            return
+        supplies_warehouse = self.warehouse_repo.get_supplies_warehouse()
+        if supplies_warehouse is None:
+            return
+
+        recipe_by_product: dict[int, list] = defaultdict(list)
+        for row in recipe_rows:
+            recipe_by_product[row.product_id].append(row)
+
+        needs: dict[int, int] = defaultdict(int)
+        for item in sale.items:
+            for row in recipe_by_product.get(item.product.id, []):
+                needs[row.supply_id] += row.quantity_per_unit * item.quantity
+
+        for supply_id, quantity in needs.items():
+            self.supply_service.consume_for_sale(
+                supply_id, supplies_warehouse.id, quantity, sale, commit=False
+            )
 
     def register_payment(
         self, sale_id: int, reference: str, paid_at: datetime | None = None

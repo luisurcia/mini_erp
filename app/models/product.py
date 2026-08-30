@@ -32,6 +32,9 @@ class Product(BaseModel):
     inventory_items = db.relationship(
         "InventoryItem", back_populates="product", cascade="all, delete-orphan"
     )
+    supply_recipe = db.relationship(
+        "ProductSupply", back_populates="product", cascade="all, delete-orphan"
+    )
 
     def __repr__(self) -> str:
         return f"<Product {self.name} ({self.sku})>"

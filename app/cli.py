@@ -4,9 +4,11 @@ from flask import Flask
 from app.extensions import db
 from app.models.company import Company  # noqa: F401 (registers table for create_all)
 from app.models.customer_segment import CustomerSegment
+from app.models.product_supply import ProductSupply  # noqa: F401 (create_all)
 from app.models.user import User
 from app.models.warehouse import Warehouse
 from app.schema import (
+    consolidate_supply_stock_into_supplies_warehouse,
     ensure_company_currency_columns,
     ensure_company_language_column,
     ensure_company_product_field_toggles,
@@ -21,9 +23,11 @@ from app.schema import (
     ensure_sale_payment_columns,
     ensure_sale_tax_columns,
     ensure_stock_movement_warehouse_column,
+    ensure_supply_movement_sale_column,
     ensure_user_language_column,
     ensure_user_name_columns,
     ensure_user_role_column,
+    ensure_warehouse_kind_column,
 )
 
 
@@ -52,11 +56,17 @@ def _upgrade_schema() -> None:
     ensure_customer_columns()
     ensure_customer_nickname_and_structured_address()
     ensure_customer_segment_active_column()
+    ensure_supply_movement_sale_column()
     CustomerSegment.ensure_defaults()
+    # `kind` column must exist before ensure_defaults() (it creates the
+    # supplies warehouse, which queries by kind).
+    ensure_warehouse_kind_column()
     Warehouse.ensure_defaults()
     ensure_inventory_item_warehouse_column()
     ensure_stock_movement_warehouse_column()
     ensure_sale_item_warehouse_column()
+    # After the supplies warehouse exists, pull all supply stock into it.
+    consolidate_supply_stock_into_supplies_warehouse()
 
 
 def register_cli(app: Flask) -> None:
