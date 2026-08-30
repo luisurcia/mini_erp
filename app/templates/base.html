@@ -3,6 +3,10 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  {# Scoby ERP has a single fixed light theme. Pin the color scheme so mobile
+     browsers in dark mode don't render native <select> option menus with a
+     dark background over dark inherited text (#49). #}
+  <meta name="color-scheme" content="light">
   <title>{% block title %}Mini ERP{% endblock %} · Scoby ERP</title>
   {{ bootstrap.load_css() }}
   <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">

@@ -1,4 +1,8 @@
 :root {
+  /* Single fixed light theme — keeps form controls and their native
+     mobile option menus readable when the device is in dark mode (#49). */
+  color-scheme: light;
+
   --scoby-cream: #e7decf;
   --scoby-cream-card: #f1eadd;
   --scoby-ink: #1a1816;
@@ -81,6 +85,14 @@ body {
 .badge-stage-quoted { background-color: var(--scoby-orange); }
 .badge-stage-won { background-color: var(--scoby-teal); }
 .badge-stage-lost { background-color: var(--scoby-rose); }
+
+/* Belt-and-suspenders for Android Chrome, which colours the native
+   <option> list from these properties rather than from color-scheme (#49). */
+.form-select,
+.form-select option {
+  color: var(--scoby-ink);
+  background-color: #fff;
+}
 
 a {
   color: var(--scoby-pink-dark);
