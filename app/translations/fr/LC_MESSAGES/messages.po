@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-08-27 20:09-0400\n"
+"POT-Creation-Date: 2026-08-30 13:11-0400\n"
 "PO-Revision-Date: 2026-08-24 17:58-0400\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: fr\n"
@@ -77,13 +77,13 @@ msgid "Passwords must match."
 msgstr "Les mots de passe doivent correspondre."
 
 #: app/blueprints/auth/forms.py:27 app/templates/auth/change_password.html:3
-#: app/templates/auth/change_password.html:8 app/templates/base.html:47
+#: app/templates/auth/change_password.html:8 app/templates/base.html:51
 msgid "Change password"
 msgstr "Changer le mot de passe"
 
 #: app/blueprints/auth/forms.py:32 app/blueprints/company/forms.py:37
 #: app/templates/auth/change_language.html:3
-#: app/templates/auth/change_language.html:8 app/templates/base.html:46
+#: app/templates/auth/change_language.html:8 app/templates/base.html:50
 msgid "Language"
 msgstr "Langue"
 
@@ -153,7 +153,9 @@ msgstr "Décimales affichées pour les montants"
 
 #: app/blueprints/company/forms.py:53
 msgid "Chilean pesos (CLP) use 0 — no decimals anywhere in the app."
-msgstr "Le peso chilien (CLP) utilise 0 : aucune décimale nulle part dans l'application."
+msgstr ""
+"Le peso chilien (CLP) utilise 0 : aucune décimale nulle part dans "
+"l'application."
 
 #: app/blueprints/company/forms.py:55
 msgid "Save settings"
@@ -378,25 +380,25 @@ msgstr "%(qty)s unités de %(name)s réapprovisionnées dans %(warehouse)s."
 msgid "Reorder level updated."
 msgstr "Seuil de réapprovisionnement mis à jour."
 
-#: app/blueprints/inventory/routes.py:124
+#: app/blueprints/inventory/routes.py:131
 #, python-format
 msgid "Transferred %(qty)s units of %(name)s from %(from_wh)s to %(to_wh)s."
 msgstr "%(qty)s unités de %(name)s transférées de %(from_wh)s vers %(to_wh)s."
 
-#: app/blueprints/inventory/routes.py:145 app/blueprints/products/routes.py:100
+#: app/blueprints/inventory/routes.py:154 app/blueprints/products/routes.py:100
 msgid "Product not found."
 msgstr "Produit introuvable."
 
-#: app/blueprints/inventory/routes.py:170
+#: app/blueprints/inventory/routes.py:179
 #, python-format
 msgid "Warehouse '%(name)s' created."
 msgstr "Entrepôt '%(name)s' créé."
 
-#: app/blueprints/inventory/routes.py:182
+#: app/blueprints/inventory/routes.py:191
 msgid "Warehouse not found."
 msgstr "Entrepôt introuvable."
 
-#: app/blueprints/inventory/routes.py:191
+#: app/blueprints/inventory/routes.py:200
 #, python-format
 msgid "Warehouse '%(name)s' updated."
 msgstr "Entrepôt '%(name)s' mis à jour."
@@ -518,7 +520,7 @@ msgstr "Administrateur"
 msgid "Warehouse staff"
 msgstr "Magasinier"
 
-#: app/blueprints/users/forms.py:11 app/templates/base.html:31
+#: app/blueprints/users/forms.py:11 app/templates/base.html:35
 #: app/templates/dashboard/index.html:127 app/templates/sales/index.html:2
 #: app/templates/sales/index.html:5 app/templates/top_customers/index.html:47
 msgid "Sales"
@@ -571,46 +573,46 @@ msgstr "Vous ne pouvez pas supprimer votre propre compte."
 msgid "User '%(name)s' deleted."
 msgstr "Utilisateur '%(name)s' supprimé."
 
-#: app/templates/base.html:20 app/templates/dashboard/index.html:2
+#: app/templates/base.html:24 app/templates/dashboard/index.html:2
 #: app/templates/dashboard/index.html:5
 msgid "Dashboard"
 msgstr "Tableau de bord"
 
-#: app/templates/base.html:22 app/templates/products/index.html:2
+#: app/templates/base.html:26 app/templates/products/index.html:2
 #: app/templates/products/index.html:5
 msgid "Products"
 msgstr "Produits"
 
-#: app/templates/base.html:25 app/templates/inventory/index.html:2
+#: app/templates/base.html:29 app/templates/inventory/index.html:2
 #: app/templates/inventory/index.html:5
 msgid "Inventory"
 msgstr "Inventaire"
 
-#: app/templates/base.html:28 app/templates/supplies/index.html:2
+#: app/templates/base.html:32 app/templates/supplies/index.html:2
 #: app/templates/supplies/index.html:5
 msgid "Supplies"
 msgstr "Fournitures"
 
-#: app/templates/base.html:34 app/templates/top_customers/index.html:2
+#: app/templates/base.html:38 app/templates/top_customers/index.html:2
 #: app/templates/top_customers/index.html:5
 msgid "Top customers"
 msgstr "Meilleurs clients"
 
-#: app/templates/base.html:37 app/templates/customers/index.html:2
+#: app/templates/base.html:41 app/templates/customers/index.html:2
 #: app/templates/customers/index.html:5
 msgid "Customers"
 msgstr "Clients"
 
-#: app/templates/base.html:40 app/templates/users/index.html:2
+#: app/templates/base.html:44 app/templates/users/index.html:2
 #: app/templates/users/index.html:5
 msgid "Users"
 msgstr "Utilisateurs"
 
-#: app/templates/base.html:41
+#: app/templates/base.html:45
 msgid "Company"
 msgstr "Entreprise"
 
-#: app/templates/base.html:48
+#: app/templates/base.html:52
 msgid "Log out"
 msgstr "Se déconnecter"
 
@@ -619,8 +621,8 @@ msgid ""
 "Choose the language for your view of the app. It only affects your "
 "account."
 msgstr ""
-"Choisissez la langue de votre affichage de l'application. Cela n'affecte que "
-"votre compte."
+"Choisissez la langue de votre affichage de l'application. Cela n'affecte "
+"que votre compte."
 
 #: app/templates/company/segment_form.html:3
 #: app/templates/company/segment_form.html:5
@@ -837,8 +839,8 @@ msgid ""
 "Stock at or below the reorder level for that warehouse is highlighted "
 "like this."
 msgstr ""
-"Le stock égal ou inférieur au seuil de réapprovisionnement de cet entrepôt "
-"est mis en évidence comme ceci."
+"Le stock égal ou inférieur au seuil de réapprovisionnement de cet "
+"entrepôt est mis en évidence comme ceci."
 
 #: app/templates/inventory/restock_form.html:5
 #: app/templates/supplies/restock_form.html:5
@@ -857,6 +859,10 @@ msgstr "Entrepôt : %(warehouse)s"
 #, python-format
 msgid "Currently on hand: %(qty)s"
 msgstr "Actuellement en stock : %(qty)s"
+
+#: app/templates/inventory/transfer_form.html:31
+msgid "Current stock:"
+msgstr "Stock actuel :"
 
 #: app/templates/inventory/warehouse_form.html:3
 #: app/templates/inventory/warehouse_form.html:5
@@ -968,8 +974,8 @@ msgid ""
 "different price."
 msgstr ""
 "Astuce : le prix unitaire que vous saisissez dans la première colonne "
-"remplit le reste de la ligne — modifiez-en un individuellement par la suite "
-"si un produit nécessite un prix différent."
+"remplit le reste de la ligne — modifiez-en un individuellement par la "
+"suite si un produit nécessite un prix différent."
 
 #: app/templates/sales/sale_form.html:49
 #, python-format
@@ -1055,7 +1061,9 @@ msgstr "Modifier %(name)s"
 
 #: app/templates/users/user_form.html:10
 msgid "Leave the password fields blank to keep the current password."
-msgstr "Laissez les champs de mot de passe vides pour conserver le mot de passe actuel."
+msgstr ""
+"Laissez les champs de mot de passe vides pour conserver le mot de passe "
+"actuel."
 
 #~ msgid "Initial stock"
 #~ msgstr "Initial stock"

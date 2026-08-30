@@ -107,6 +107,13 @@ def transfer():
     form.from_warehouse_id.choices = warehouse_choices
     form.to_warehouse_id.choices = warehouse_choices
 
+    # On-hand quantity per (product, warehouse), keyed "<pid>-<wid>" so the
+    # form can show the live stock of the picked warehouses (#50).
+    stock_levels = {
+        f"{item.product_id}-{item.warehouse_id}": item.quantity_on_hand
+        for item in InventoryRepository().get_all()
+    }
+
     if form.validate_on_submit():
         try:
             InventoryService().transfer(
@@ -133,7 +140,9 @@ def transfer():
         except MiniErpError as exc:
             flash(str(exc), "danger")
 
-    return render_template("inventory/transfer_form.html", form=form)
+    return render_template(
+        "inventory/transfer_form.html", form=form, stock_levels=stock_levels
+    )
 
 
 @bp.route("/<int:product_id>/history")

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-08-27 20:09-0400\n"
+"POT-Creation-Date: 2026-08-30 13:11-0400\n"
 "PO-Revision-Date: 2026-08-24 17:58-0400\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: es\n"
@@ -77,13 +77,13 @@ msgid "Passwords must match."
 msgstr "Las contraseñas deben coincidir."
 
 #: app/blueprints/auth/forms.py:27 app/templates/auth/change_password.html:3
-#: app/templates/auth/change_password.html:8 app/templates/base.html:47
+#: app/templates/auth/change_password.html:8 app/templates/base.html:51
 msgid "Change password"
 msgstr "Cambiar contraseña"
 
 #: app/blueprints/auth/forms.py:32 app/blueprints/company/forms.py:37
 #: app/templates/auth/change_language.html:3
-#: app/templates/auth/change_language.html:8 app/templates/base.html:46
+#: app/templates/auth/change_language.html:8 app/templates/base.html:50
 msgid "Language"
 msgstr "Idioma"
 
@@ -380,27 +380,27 @@ msgstr "Se reabastecieron %(qty)s unidades de %(name)s en %(warehouse)s."
 msgid "Reorder level updated."
 msgstr "Nivel de reposición actualizado."
 
-#: app/blueprints/inventory/routes.py:124
+#: app/blueprints/inventory/routes.py:131
 #, python-format
 msgid "Transferred %(qty)s units of %(name)s from %(from_wh)s to %(to_wh)s."
 msgstr ""
 "Se traspasaron %(qty)s unidades de %(name)s desde %(from_wh)s hacia "
 "%(to_wh)s."
 
-#: app/blueprints/inventory/routes.py:145 app/blueprints/products/routes.py:100
+#: app/blueprints/inventory/routes.py:154 app/blueprints/products/routes.py:100
 msgid "Product not found."
 msgstr "Producto no encontrado."
 
-#: app/blueprints/inventory/routes.py:170
+#: app/blueprints/inventory/routes.py:179
 #, python-format
 msgid "Warehouse '%(name)s' created."
 msgstr "Bodega '%(name)s' creada."
 
-#: app/blueprints/inventory/routes.py:182
+#: app/blueprints/inventory/routes.py:191
 msgid "Warehouse not found."
 msgstr "Bodega no encontrada."
 
-#: app/blueprints/inventory/routes.py:191
+#: app/blueprints/inventory/routes.py:200
 #, python-format
 msgid "Warehouse '%(name)s' updated."
 msgstr "Bodega '%(name)s' actualizada."
@@ -522,7 +522,7 @@ msgstr "Administrador"
 msgid "Warehouse staff"
 msgstr "Bodeguero"
 
-#: app/blueprints/users/forms.py:11 app/templates/base.html:31
+#: app/blueprints/users/forms.py:11 app/templates/base.html:35
 #: app/templates/dashboard/index.html:127 app/templates/sales/index.html:2
 #: app/templates/sales/index.html:5 app/templates/top_customers/index.html:47
 msgid "Sales"
@@ -575,46 +575,46 @@ msgstr "No puedes eliminar tu propia cuenta."
 msgid "User '%(name)s' deleted."
 msgstr "Usuario '%(name)s' eliminado."
 
-#: app/templates/base.html:20 app/templates/dashboard/index.html:2
+#: app/templates/base.html:24 app/templates/dashboard/index.html:2
 #: app/templates/dashboard/index.html:5
 msgid "Dashboard"
 msgstr "Panel"
 
-#: app/templates/base.html:22 app/templates/products/index.html:2
+#: app/templates/base.html:26 app/templates/products/index.html:2
 #: app/templates/products/index.html:5
 msgid "Products"
 msgstr "Productos"
 
-#: app/templates/base.html:25 app/templates/inventory/index.html:2
+#: app/templates/base.html:29 app/templates/inventory/index.html:2
 #: app/templates/inventory/index.html:5
 msgid "Inventory"
 msgstr "Inventario"
 
-#: app/templates/base.html:28 app/templates/supplies/index.html:2
+#: app/templates/base.html:32 app/templates/supplies/index.html:2
 #: app/templates/supplies/index.html:5
 msgid "Supplies"
 msgstr "Insumos"
 
-#: app/templates/base.html:34 app/templates/top_customers/index.html:2
+#: app/templates/base.html:38 app/templates/top_customers/index.html:2
 #: app/templates/top_customers/index.html:5
 msgid "Top customers"
 msgstr "Top clientes"
 
-#: app/templates/base.html:37 app/templates/customers/index.html:2
+#: app/templates/base.html:41 app/templates/customers/index.html:2
 #: app/templates/customers/index.html:5
 msgid "Customers"
 msgstr "Clientes"
 
-#: app/templates/base.html:40 app/templates/users/index.html:2
+#: app/templates/base.html:44 app/templates/users/index.html:2
 #: app/templates/users/index.html:5
 msgid "Users"
 msgstr "Usuarios"
 
-#: app/templates/base.html:41
+#: app/templates/base.html:45
 msgid "Company"
 msgstr "Empresa"
 
-#: app/templates/base.html:48
+#: app/templates/base.html:52
 msgid "Log out"
 msgstr "Cerrar sesión"
 
@@ -622,8 +622,7 @@ msgstr "Cerrar sesión"
 msgid ""
 "Choose the language for your view of the app. It only affects your "
 "account."
-msgstr ""
-"Elige el idioma con el que ves la aplicación. Solo afecta a tu cuenta."
+msgstr "Elige el idioma con el que ves la aplicación. Solo afecta a tu cuenta."
 
 #: app/templates/company/segment_form.html:3
 #: app/templates/company/segment_form.html:5
@@ -860,6 +859,10 @@ msgstr "Bodega: %(warehouse)s"
 #, python-format
 msgid "Currently on hand: %(qty)s"
 msgstr "Disponible actualmente: %(qty)s"
+
+#: app/templates/inventory/transfer_form.html:31
+msgid "Current stock:"
+msgstr "Stock actual:"
 
 #: app/templates/inventory/warehouse_form.html:3
 #: app/templates/inventory/warehouse_form.html:5

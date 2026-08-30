@@ -1,9 +1,62 @@
 {% extends "base.html" %}
-{% from 'bootstrap5/form.html' import render_form %}
+{% from 'bootstrap5/form.html' import render_field %}
 {% block title %}{{ _("Transfer stock") }}{% endblock %}
 {% block content %}
 <h1 class="h3 mb-3">{{ _("Transfer stock") }}</h1>
-<div class="card p-4" style="max-width: 480px;">
-  {{ render_form(form) }}
+<div class="card p-4" style="max-width: 520px;">
+  <form method="post" novalidate>
+    {{ form.hidden_tag() }}
+    {{ render_field(form.product_id) }}
+    <div class="row">
+      <div class="col-sm-6">
+        {{ render_field(form.from_warehouse_id) }}
+        <p class="form-text stock-hint" id="from-stock-hint"></p>
+      </div>
+      <div class="col-sm-6">
+        {{ render_field(form.to_warehouse_id) }}
+        <p class="form-text stock-hint" id="to-stock-hint"></p>
+      </div>
+    </div>
+    {{ render_field(form.quantity) }}
+    {{ render_field(form.note) }}
+    <div>{{ form.submit(class="btn btn-primary") }}</div>
+  </form>
 </div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+(function () {
+  var stock = {{ stock_levels|tojson }};
+  var LABEL = {{ _("Current stock:")|tojson }};
+  var productSel = document.getElementById("product_id");
+  var fromSel = document.getElementById("from_warehouse_id");
+  var toSel = document.getElementById("to_warehouse_id");
+  var qtyInput = document.getElementById("quantity");
+  var fromHint = document.getElementById("from-stock-hint");
+  var toHint = document.getElementById("to-stock-hint");
+  if (!productSel || !fromSel || !toSel) return;
+
+  function qtyAt(warehouseId) {
+    return stock[productSel.value + "-" + warehouseId] || 0;
+  }
+
+  function render() {
+    var available = qtyAt(fromSel.value);
+    fromHint.textContent = LABEL + " " + available;
+    toHint.textContent = LABEL + " " + qtyAt(toSel.value);
+    // Warn (client-side only; the server validates too) when the requested
+    // quantity is more than the origin warehouse holds.
+    var over = qtyInput && parseInt(qtyInput.value, 10) > available;
+    fromHint.classList.toggle("text-danger", !!over);
+    fromHint.classList.toggle("stock-hint", !over);
+  }
+
+  [productSel, fromSel, toSel].forEach(function (el) {
+    el.addEventListener("change", render);
+  });
+  if (qtyInput) qtyInput.addEventListener("input", render);
+  render();
+})();
+</script>
 {% endblock %}

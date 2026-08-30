@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-08-27 20:09-0400\n"
+"POT-Creation-Date: 2026-08-30 13:11-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -76,13 +76,13 @@ msgid "Passwords must match."
 msgstr ""
 
 #: app/blueprints/auth/forms.py:27 app/templates/auth/change_password.html:3
-#: app/templates/auth/change_password.html:8 app/templates/base.html:47
+#: app/templates/auth/change_password.html:8 app/templates/base.html:51
 msgid "Change password"
 msgstr ""
 
 #: app/blueprints/auth/forms.py:32 app/blueprints/company/forms.py:37
 #: app/templates/auth/change_language.html:3
-#: app/templates/auth/change_language.html:8 app/templates/base.html:46
+#: app/templates/auth/change_language.html:8 app/templates/base.html:50
 msgid "Language"
 msgstr ""
 
@@ -377,25 +377,25 @@ msgstr ""
 msgid "Reorder level updated."
 msgstr ""
 
-#: app/blueprints/inventory/routes.py:124
+#: app/blueprints/inventory/routes.py:131
 #, python-format
 msgid "Transferred %(qty)s units of %(name)s from %(from_wh)s to %(to_wh)s."
 msgstr ""
 
-#: app/blueprints/inventory/routes.py:145 app/blueprints/products/routes.py:100
+#: app/blueprints/inventory/routes.py:154 app/blueprints/products/routes.py:100
 msgid "Product not found."
 msgstr ""
 
-#: app/blueprints/inventory/routes.py:170
+#: app/blueprints/inventory/routes.py:179
 #, python-format
 msgid "Warehouse '%(name)s' created."
 msgstr ""
 
-#: app/blueprints/inventory/routes.py:182
+#: app/blueprints/inventory/routes.py:191
 msgid "Warehouse not found."
 msgstr ""
 
-#: app/blueprints/inventory/routes.py:191
+#: app/blueprints/inventory/routes.py:200
 #, python-format
 msgid "Warehouse '%(name)s' updated."
 msgstr ""
@@ -517,7 +517,7 @@ msgstr ""
 msgid "Warehouse staff"
 msgstr ""
 
-#: app/blueprints/users/forms.py:11 app/templates/base.html:31
+#: app/blueprints/users/forms.py:11 app/templates/base.html:35
 #: app/templates/dashboard/index.html:127 app/templates/sales/index.html:2
 #: app/templates/sales/index.html:5 app/templates/top_customers/index.html:47
 msgid "Sales"
@@ -570,46 +570,46 @@ msgstr ""
 msgid "User '%(name)s' deleted."
 msgstr ""
 
-#: app/templates/base.html:20 app/templates/dashboard/index.html:2
+#: app/templates/base.html:24 app/templates/dashboard/index.html:2
 #: app/templates/dashboard/index.html:5
 msgid "Dashboard"
 msgstr ""
 
-#: app/templates/base.html:22 app/templates/products/index.html:2
+#: app/templates/base.html:26 app/templates/products/index.html:2
 #: app/templates/products/index.html:5
 msgid "Products"
 msgstr ""
 
-#: app/templates/base.html:25 app/templates/inventory/index.html:2
+#: app/templates/base.html:29 app/templates/inventory/index.html:2
 #: app/templates/inventory/index.html:5
 msgid "Inventory"
 msgstr ""
 
-#: app/templates/base.html:28 app/templates/supplies/index.html:2
+#: app/templates/base.html:32 app/templates/supplies/index.html:2
 #: app/templates/supplies/index.html:5
 msgid "Supplies"
 msgstr ""
 
-#: app/templates/base.html:34 app/templates/top_customers/index.html:2
+#: app/templates/base.html:38 app/templates/top_customers/index.html:2
 #: app/templates/top_customers/index.html:5
 msgid "Top customers"
 msgstr ""
 
-#: app/templates/base.html:37 app/templates/customers/index.html:2
+#: app/templates/base.html:41 app/templates/customers/index.html:2
 #: app/templates/customers/index.html:5
 msgid "Customers"
 msgstr ""
 
-#: app/templates/base.html:40 app/templates/users/index.html:2
+#: app/templates/base.html:44 app/templates/users/index.html:2
 #: app/templates/users/index.html:5
 msgid "Users"
 msgstr ""
 
-#: app/templates/base.html:41
+#: app/templates/base.html:45
 msgid "Company"
 msgstr ""
 
-#: app/templates/base.html:48
+#: app/templates/base.html:52
 msgid "Log out"
 msgstr ""
 
@@ -851,6 +851,10 @@ msgstr ""
 #: app/templates/supplies/restock_form.html:8
 #, python-format
 msgid "Currently on hand: %(qty)s"
+msgstr ""
+
+#: app/templates/inventory/transfer_form.html:31
+msgid "Current stock:"
 msgstr ""
 
 #: app/templates/inventory/warehouse_form.html:3
