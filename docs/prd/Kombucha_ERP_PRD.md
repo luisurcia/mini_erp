@@ -2,7 +2,7 @@
 
 **Kombucha ERP**
 
-> Migrado desde `Kombucha_ERP_PRD.pdf` (25 agosto 2026) a Markdown para que quede legible y versionable en el repo. Se conserva tal cual como referencia histórica de la evaluación inicial — el seguimiento vivo de requerimientos para `client/scoby` se hace en GitHub Issues (ver el épica [#20](https://github.com/luisurcia/mini_erp/issues/20)).
+> Migrado desde `Kombucha_ERP_PRD.pdf` (25 agosto 2026) a Markdown para que quede legible y versionable en el repo. **Referencia histórica de la evaluación inicial — describe el sistema genérico antes de la personalización de Scoby.** Para el estado actual de la rama `client/scoby`, ver **[`Scoby_ERP_PRD.md`](Scoby_ERP_PRD.md)** (PRD por ingeniería inversa). El seguimiento del trabajo está en GitHub Issues (épicas [#20](https://github.com/luisurcia/mini_erp/issues/20), [#36](https://github.com/luisurcia/mini_erp/issues/36), [#47](https://github.com/luisurcia/mini_erp/issues/47)).
 
 Qué hace hoy el sistema, tal como está operando en producción — para que un productor de kombucha lo revise y nos diga qué funcionalidades le sirven, cuáles le sobran y cuáles le faltan.
 

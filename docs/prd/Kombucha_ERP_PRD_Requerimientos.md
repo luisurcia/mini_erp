@@ -2,7 +2,7 @@
 
 **Kombucha ERP**
 
-> Migrado desde `Kombucha_ERP_PRD_Requerimientos.docx` (25 agosto 2026) a Markdown para que quede legible y versionable en el repo. Se conserva como referencia — para `client/scoby`, el seguimiento vivo de requerimientos se hace en GitHub Issues (ver el épica [#20](https://github.com/luisurcia/mini_erp/issues/20) y sus 13 issues hijos). Cuando esta rama llegue a su versión final, se generará un PRD nuevo por ingeniería inversa a partir de lo efectivamente construido, en vez de seguir completando la tabla de abajo.
+> Migrado desde `Kombucha_ERP_PRD_Requerimientos.docx` (25 agosto 2026) a Markdown. **Referencia histórica: la plantilla de requerimientos que se usó al inicio.** La rama `client/scoby` ya llegó a su versión final para las tres rondas de requerimientos (épicas [#20](https://github.com/luisurcia/mini_erp/issues/20), [#36](https://github.com/luisurcia/mini_erp/issues/36), [#47](https://github.com/luisurcia/mini_erp/issues/47), todas cerradas), y el PRD por ingeniería inversa correspondiente es **[`Scoby_ERP_PRD.md`](Scoby_ERP_PRD.md)**. La tabla de la sección 6 abajo quedó sin usar — el seguimiento se hizo directamente en Issues.
 
 Qué hace hoy el sistema, y un espacio al final de este documento para que agregues los requerimientos nuevos que te gustaría tener — escritos en un formato que Claude Code puede leer directamente para construirlos.
 
