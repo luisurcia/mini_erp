@@ -837,8 +837,8 @@ msgid ""
 "Stock at or below the reorder level for that warehouse is highlighted "
 "like this."
 msgstr ""
-"Stock at or below the reorder level for that warehouse is highlighted "
-"like this."
+"Le stock égal ou inférieur au seuil de réapprovisionnement de cet entrepôt "
+"est mis en évidence comme ceci."
 
 #: app/templates/inventory/restock_form.html:5
 #: app/templates/supplies/restock_form.html:5
@@ -967,9 +967,9 @@ msgid ""
 "row for you — edit any single one afterward if a product needs a "
 "different price."
 msgstr ""
-"Tip: the unit price you type in the first column fills the rest of the "
-"row for you — edit any single one afterward if a product needs a "
-"different price."
+"Astuce : le prix unitaire que vous saisissez dans la première colonne "
+"remplit le reste de la ligne — modifiez-en un individuellement par la suite "
+"si un produit nécessite un prix différent."
 
 #: app/templates/sales/sale_form.html:49
 #, python-format
