@@ -14,6 +14,13 @@ class SalesRepository(Repository[Sale]):
     def get_all(self) -> list[Sale]:
         return Sale.query.order_by(Sale.sale_date.desc()).all()
 
+    def by_payment_status(self, payment_status: str) -> list[Sale]:
+        return (
+            Sale.query.filter(Sale.payment_status == payment_status)
+            .order_by(Sale.sale_date.desc())
+            .all()
+        )
+
     def completed_between(self, start: datetime, end: datetime) -> list[Sale]:
         return Sale.query.filter(
             Sale.status == Sale.STATUS_COMPLETED,

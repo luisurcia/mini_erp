@@ -6,12 +6,13 @@ from flask_babel import gettext as _
 from flask_login import login_required
 
 from app.blueprints.sales import bp
-from app.blueprints.sales.forms import SaleMetaForm
+from app.blueprints.sales.forms import PaymentForm, RevertPaymentForm, SaleMetaForm
 from app.display import product_label
 from app.exceptions import MiniErpError
 from app.models.company import Company
+from app.models.sales import Sale
 from app.models.user import User
-from app.permissions import module_required
+from app.permissions import admin_required, module_required
 from app.repositories.customer_repository import CustomerRepository
 from app.repositories.inventory_repository import InventoryRepository
 from app.repositories.product_repository import ProductRepository
@@ -24,8 +25,15 @@ from app.services.sales_service import SalesService
 @login_required
 @module_required(User.MODULE_SALES)
 def index():
-    sales = SalesRepository().get_all()
-    return render_template("sales/index.html", sales=sales)
+    payment_filter = request.args.get("payment")
+    if payment_filter in (Sale.PAYMENT_PAID, Sale.PAYMENT_UNPAID):
+        sales = SalesRepository().by_payment_status(payment_filter)
+    else:
+        payment_filter = None
+        sales = SalesRepository().get_all()
+    return render_template(
+        "sales/index.html", sales=sales, payment_filter=payment_filter
+    )
 
 
 @bp.route("/new", methods=["GET", "POST"])
@@ -82,7 +90,58 @@ def detail(sale_id):
     if sale is None:
         flash(_("Sale not found."), "danger")
         return redirect(url_for("sales.index"))
-    return render_template("sales/detail.html", sale=sale)
+    payment_form = PaymentForm()
+    if not payment_form.is_submitted():
+        payment_form.paid_at.data = date.today()
+    return render_template(
+        "sales/detail.html",
+        sale=sale,
+        payment_form=payment_form,
+        revert_form=RevertPaymentForm(),
+    )
+
+
+@bp.route("/<int:sale_id>/payment", methods=["POST"])
+@login_required
+@module_required(User.MODULE_SALES)
+def register_payment(sale_id):
+    sale = SalesRepository().get(sale_id)
+    if sale is None:
+        flash(_("Sale not found."), "danger")
+        return redirect(url_for("sales.index"))
+
+    form = PaymentForm()
+    if form.validate_on_submit():
+        try:
+            SalesService().register_payment(
+                sale_id,
+                form.payment_reference.data,
+                paid_at=datetime.combine(form.paid_at.data, datetime.min.time()),
+            )
+            flash(_("Payment registered for sale #%(id)s.", id=sale_id), "success")
+        except MiniErpError as exc:
+            flash(str(exc), "danger")
+    else:
+        for errors in form.errors.values():
+            for error in errors:
+                flash(error, "danger")
+    return redirect(url_for("sales.detail", sale_id=sale_id))
+
+
+@bp.route("/<int:sale_id>/payment/revert", methods=["POST"])
+@login_required
+@module_required(User.MODULE_SALES)
+@admin_required
+def revert_payment(sale_id):
+    sale = SalesRepository().get(sale_id)
+    if sale is None:
+        flash(_("Sale not found."), "danger")
+        return redirect(url_for("sales.index"))
+
+    if RevertPaymentForm().validate_on_submit():
+        SalesService().revert_payment(sale_id)
+        flash(_("Payment reverted for sale #%(id)s.", id=sale_id), "success")
+    return redirect(url_for("sales.detail", sale_id=sale_id))
 
 
 def _customer_choices():

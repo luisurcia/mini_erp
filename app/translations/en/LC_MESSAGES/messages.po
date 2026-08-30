@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-08-30 13:11-0400\n"
+"POT-Creation-Date: 2026-08-30 13:37-0400\n"
 "PO-Revision-Date: 2026-08-24 17:58-0400\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: en\n"
@@ -18,32 +18,40 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.18.0\n"
 
-#: app/__init__.py:94
+#: app/__init__.py:95
 msgid "Completed"
 msgstr "Completed"
 
-#: app/__init__.py:95
+#: app/__init__.py:96
 msgid "Pending"
 msgstr "Pending"
 
-#: app/__init__.py:96
+#: app/__init__.py:97
 msgid "Cancelled"
 msgstr "Cancelled"
 
-#: app/__init__.py:113 app/templates/inventory/restock_form.html:3
+#: app/__init__.py:108 app/templates/sales/index.html:15
+msgid "Paid"
+msgstr "Paid"
+
+#: app/__init__.py:109 app/templates/sales/index.html:13
+msgid "Unpaid"
+msgstr "Unpaid"
+
+#: app/__init__.py:126 app/templates/inventory/restock_form.html:3
 #: app/templates/supplies/restock_form.html:3
 msgid "Restock"
 msgstr "Restock"
 
-#: app/__init__.py:114
+#: app/__init__.py:127
 msgid "Sale"
 msgstr "Sale"
 
-#: app/__init__.py:115
+#: app/__init__.py:128
 msgid "Adjustment"
 msgstr "Adjustment"
 
-#: app/__init__.py:116 app/blueprints/inventory/forms.py:37
+#: app/__init__.py:129 app/blueprints/inventory/forms.py:37
 msgid "Transfer"
 msgstr "Transfer"
 
@@ -345,7 +353,7 @@ msgid "Save warehouse"
 msgstr "Save warehouse"
 
 #: app/blueprints/inventory/forms.py:32 app/templates/dashboard/index.html:75
-#: app/templates/products/index.html:13 app/templates/sales/detail.html:13
+#: app/templates/products/index.html:13 app/templates/sales/detail.html:42
 msgid "Product"
 msgstr "Product"
 
@@ -422,7 +430,7 @@ msgid "Size (ml)"
 msgstr "Size (ml)"
 
 #: app/blueprints/products/forms.py:21 app/blueprints/supplies/forms.py:14
-#: app/templates/sales/detail.html:13 app/templates/sales/sale_form.html:33
+#: app/templates/sales/detail.html:42 app/templates/sales/sale_form.html:33
 msgid "Unit price"
 msgstr "Unit price"
 
@@ -440,41 +448,68 @@ msgstr "Product '%(name)s' created."
 msgid "Product '%(name)s' updated."
 msgstr "Product '%(name)s' updated."
 
-#: app/blueprints/sales/forms.py:17 app/templates/sales/index.html:11
+#: app/blueprints/sales/forms.py:13
+msgid "Transfer / reference number"
+msgstr "Transfer / reference number"
+
+#: app/blueprints/sales/forms.py:17
+msgid "Payment date"
+msgstr "Payment date"
+
+#: app/blueprints/sales/forms.py:19
+msgid "Register payment"
+msgstr "Register payment"
+
+#: app/blueprints/sales/forms.py:25
+msgid "Revert payment"
+msgstr "Revert payment"
+
+#: app/blueprints/sales/forms.py:38 app/templates/sales/index.html:20
 #: app/templates/top_customers/index.html:43
 msgid "Customer"
 msgstr "Customer"
 
-#: app/blueprints/sales/forms.py:19
+#: app/blueprints/sales/forms.py:40
 msgid "Sale date"
 msgstr "Sale date"
 
-#: app/blueprints/sales/forms.py:21
+#: app/blueprints/sales/forms.py:42
 msgid "Include tax (IVA)"
 msgstr "Include tax (IVA)"
 
-#: app/blueprints/sales/forms.py:23
+#: app/blueprints/sales/forms.py:44
 msgid "Invoice number"
 msgstr "Invoice number"
 
-#: app/blueprints/sales/forms.py:25
+#: app/blueprints/sales/forms.py:46
 msgid "Record sale"
 msgstr "Record sale"
 
-#: app/blueprints/sales/routes.py:52
+#: app/blueprints/sales/routes.py:60
 msgid "Add at least one product line to the sale."
 msgstr "Add at least one product line to the sale."
 
-#: app/blueprints/sales/routes.py:62
+#: app/blueprints/sales/routes.py:70
 #, python-format
 msgid "Sale #%(id)s recorded."
 msgstr "Sale #%(id)s recorded."
 
-#: app/blueprints/sales/routes.py:83
+#: app/blueprints/sales/routes.py:91 app/blueprints/sales/routes.py:110
+#: app/blueprints/sales/routes.py:138
 msgid "Sale not found."
 msgstr "Sale not found."
 
-#: app/blueprints/sales/routes.py:127
+#: app/blueprints/sales/routes.py:121
+#, python-format
+msgid "Payment registered for sale #%(id)s."
+msgstr "Payment registered for sale #%(id)s."
+
+#: app/blueprints/sales/routes.py:143
+#, python-format
+msgid "Payment reverted for sale #%(id)s."
+msgstr "Payment reverted for sale #%(id)s."
+
+#: app/blueprints/sales/routes.py:186
 #, python-format
 msgid "Enter a unit price for %(name)s."
 msgstr "Enter a unit price for %(name)s."
@@ -640,7 +675,7 @@ msgstr "Customer segments"
 
 #: app/templates/company/segments_list.html:14
 #: app/templates/inventory/warehouses_list.html:14
-#: app/templates/products/index.html:18 app/templates/sales/index.html:11
+#: app/templates/products/index.html:18 app/templates/sales/index.html:20
 #: app/templates/supplies/index.html:19
 msgid "Status"
 msgstr "Status"
@@ -775,12 +810,12 @@ msgstr "Stock history"
 msgid "Stock history: %(name)s"
 msgstr "Stock history: %(name)s"
 
-#: app/templates/inventory/history.html:7 app/templates/sales/index.html:11
+#: app/templates/inventory/history.html:7 app/templates/sales/index.html:20
 #: app/templates/supplies/history.html:7
 msgid "Date"
 msgstr "Date"
 
-#: app/templates/inventory/history.html:7 app/templates/sales/detail.html:13
+#: app/templates/inventory/history.html:7 app/templates/sales/detail.html:42
 #: app/templates/supplies/history.html:7
 msgid "Warehouse"
 msgstr "Warehouse"
@@ -818,7 +853,7 @@ msgid "Flavor / Product"
 msgstr "Flavor / Product"
 
 #: app/templates/inventory/index.html:22 app/templates/inventory/index.html:55
-#: app/templates/sales/detail.html:30 app/templates/sales/index.html:11
+#: app/templates/sales/detail.html:59 app/templates/sales/index.html:20
 #: app/templates/sales/sale_form.html:76 app/templates/supplies/stock.html:17
 #: app/templates/supplies/stock.html:50
 msgid "Total"
@@ -901,46 +936,58 @@ msgstr "Price"
 msgid "Edit product"
 msgstr "Edit product"
 
-#: app/templates/sales/detail.html:2 app/templates/sales/detail.html:4
+#: app/templates/sales/detail.html:3 app/templates/sales/detail.html:5
 #, python-format
 msgid "Sale #%(id)s"
 msgstr "Sale #%(id)s"
 
-#: app/templates/sales/detail.html:6
+#: app/templates/sales/detail.html:7
 msgid "Customer:"
 msgstr "Customer:"
 
-#: app/templates/sales/detail.html:7
+#: app/templates/sales/detail.html:8
 msgid "Date:"
 msgstr "Date:"
 
-#: app/templates/sales/detail.html:8
+#: app/templates/sales/detail.html:9
 msgid "Status:"
 msgstr "Status:"
 
-#: app/templates/sales/detail.html:9
+#: app/templates/sales/detail.html:10
 msgid "Invoice number:"
 msgstr "Invoice number:"
 
-#: app/templates/sales/detail.html:10
+#: app/templates/sales/detail.html:11
 msgid "Notes:"
 msgstr "Notes:"
 
-#: app/templates/sales/detail.html:13
+#: app/templates/sales/detail.html:16 app/templates/sales/detail.html:29
+msgid "Payment:"
+msgstr "Payment:"
+
+#: app/templates/sales/detail.html:19
+msgid "Payment reference:"
+msgstr "Payment reference:"
+
+#: app/templates/sales/detail.html:20
+msgid "Paid on:"
+msgstr "Paid on:"
+
+#: app/templates/sales/detail.html:42
 msgid "Qty"
 msgstr "Qty"
 
-#: app/templates/sales/detail.html:13 app/templates/sales/detail.html:26
+#: app/templates/sales/detail.html:42 app/templates/sales/detail.html:55
 #: app/templates/sales/sale_form.html:67
 msgid "Subtotal"
 msgstr "Subtotal"
 
-#: app/templates/sales/detail.html:28 app/templates/sales/sale_form.html:71
+#: app/templates/sales/detail.html:57 app/templates/sales/sale_form.html:71
 #, python-format
 msgid "IVA (%(rate)s%%)"
 msgstr "IVA (%(rate)s%%)"
 
-#: app/templates/sales/detail.html:34
+#: app/templates/sales/detail.html:63
 msgid "Back to sales"
 msgstr "Back to sales"
 
@@ -949,15 +996,27 @@ msgstr "Back to sales"
 msgid "New sale"
 msgstr "New sale"
 
+#: app/templates/sales/index.html:9
+msgid "Payment filter"
+msgstr "Payment filter"
+
 #: app/templates/sales/index.html:11
+msgid "All"
+msgstr "All"
+
+#: app/templates/sales/index.html:20
 msgid "Invoice #"
 msgstr "Invoice #"
 
-#: app/templates/sales/index.html:21
+#: app/templates/sales/index.html:20
+msgid "Payment"
+msgstr "Payment"
+
+#: app/templates/sales/index.html:37
 msgid "View"
 msgstr "View"
 
-#: app/templates/sales/index.html:24
+#: app/templates/sales/index.html:40
 msgid "No sales recorded yet."
 msgstr "No sales recorded yet."
 

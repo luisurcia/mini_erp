@@ -18,6 +18,7 @@ from app.schema import (
     ensure_products_optional_columns_nullable,
     ensure_sale_invoice_number_column,
     ensure_sale_item_warehouse_column,
+    ensure_sale_payment_columns,
     ensure_sale_tax_columns,
     ensure_stock_movement_warehouse_column,
     ensure_user_language_column,
@@ -44,6 +45,7 @@ def _upgrade_schema() -> None:
     ensure_products_optional_columns_nullable()
     ensure_sale_invoice_number_column()
     ensure_sale_tax_columns()
+    ensure_sale_payment_columns()
     ensure_company_language_column()
     ensure_company_product_field_toggles()
     ensure_company_currency_columns()

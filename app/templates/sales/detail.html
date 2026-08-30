@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% from 'bootstrap5/form.html' import render_field %}
 {% block title %}{{ _("Sale #%(id)s", id=sale.id) }}{% endblock %}
 {% block content %}
 <h1 class="h3 mb-3">{{ _("Sale #%(id)s", id=sale.id) }}</h1>
@@ -8,6 +9,34 @@
   <p><strong>{{ _("Status:") }}</strong> <span class="badge bg-secondary">{{ sale_status_label(sale.status) }}</span></p>
   <p><strong>{{ _("Invoice number:") }}</strong> {{ sale.invoice_number or "-" }}</p>
   {% if sale.notes %}<p><strong>{{ _("Notes:") }}</strong> {{ sale.notes }}</p>{% endif %}
+
+  <div class="border-top pt-3 mt-2">
+    {% if sale.is_paid %}
+    <p class="mb-1">
+      <strong>{{ _("Payment:") }}</strong>
+      <span class="badge bg-success">{{ payment_status_label(sale.payment_status) }}</span>
+    </p>
+    <p class="mb-1"><strong>{{ _("Payment reference:") }}</strong> {{ sale.payment_reference }}</p>
+    <p class="mb-2"><strong>{{ _("Paid on:") }}</strong> {{ sale.paid_at.strftime("%Y-%m-%d") if sale.paid_at else "-" }}</p>
+    {% if current_user.is_admin %}
+    <form method="post" action="{{ url_for('sales.revert_payment', sale_id=sale.id) }}">
+      {{ revert_form.hidden_tag() }}
+      {{ revert_form.submit(class="btn btn-sm btn-outline-danger") }}
+    </form>
+    {% endif %}
+    {% else %}
+    <p class="mb-2">
+      <strong>{{ _("Payment:") }}</strong>
+      <span class="badge bg-warning text-dark">{{ payment_status_label(sale.payment_status) }}</span>
+    </p>
+    <form method="post" action="{{ url_for('sales.register_payment', sale_id=sale.id) }}" style="max-width: 420px;">
+      {{ payment_form.hidden_tag() }}
+      {{ render_field(payment_form.payment_reference) }}
+      {{ render_field(payment_form.paid_at) }}
+      {{ payment_form.submit(class="btn btn-primary btn-sm") }}
+    </form>
+    {% endif %}
+  </div>
 
   <table class="table mt-3">
     <thead><tr><th>{{ _("Product") }}</th><th>{{ _("Warehouse") }}</th><th>{{ _("Qty") }}</th><th>{{ _("Unit price") }}</th><th>{{ _("Subtotal") }}</th></tr></thead>

@@ -11,6 +11,11 @@ class Sale(BaseModel):
     STATUS_COMPLETED = "completed"
     STATUS_CANCELLED = "cancelled"
 
+    # Payment tracking is a separate axis from `status` (fulfilment): a sale
+    # can be delivered/completed and still be unpaid. See #51.
+    PAYMENT_UNPAID = "unpaid"
+    PAYMENT_PAID = "paid"
+
     customer_id = db.Column(db.Integer, db.ForeignKey("customers.id"), nullable=False)
     status = db.Column(db.String(20), nullable=False, default=STATUS_COMPLETED)
     sale_date = db.Column(db.DateTime, nullable=False)
@@ -20,11 +25,18 @@ class Sale(BaseModel):
     tax_applied = db.Column(db.Boolean, nullable=False, default=False)
     tax_rate_applied = db.Column(db.Numeric(5, 2), nullable=True)
     tax_amount = db.Column(db.Numeric(10, 2), nullable=False, default=0)
+    payment_status = db.Column(db.String(20), nullable=False, default=PAYMENT_UNPAID)
+    payment_reference = db.Column(db.String(80), nullable=True)
+    paid_at = db.Column(db.DateTime, nullable=True)
 
     customer = db.relationship("Customer")
     items = db.relationship(
         "SaleItem", back_populates="sale", cascade="all, delete-orphan"
     )
+
+    @property
+    def is_paid(self) -> bool:
+        return self.payment_status == self.PAYMENT_PAID
 
     @property
     def subtotal_amount(self):

@@ -99,6 +99,35 @@ class SalesService:
         self.sales_repo.commit()
         return sale
 
+    def register_payment(
+        self, sale_id: int, reference: str, paid_at: datetime | None = None
+    ) -> Sale:
+        """Mark a sale as paid, recording the transfer/reference number (#51)."""
+        sale = self.sales_repo.get(sale_id)
+        if sale is None:
+            raise NotFoundError(f"Sale #{sale_id} not found")
+        reference = (reference or "").strip()
+        if not reference:
+            raise MiniErpError("A payment reference is required.")
+        if sale.payment_status == Sale.PAYMENT_PAID:
+            raise MiniErpError(f"Sale #{sale_id} is already marked as paid.")
+        sale.payment_status = Sale.PAYMENT_PAID
+        sale.payment_reference = reference
+        sale.paid_at = paid_at or datetime.now(UTC)
+        self.sales_repo.commit()
+        return sale
+
+    def revert_payment(self, sale_id: int) -> Sale:
+        """Undo a payment, back to unpaid (admin-only in the UI, see #51)."""
+        sale = self.sales_repo.get(sale_id)
+        if sale is None:
+            raise NotFoundError(f"Sale #{sale_id} not found")
+        sale.payment_status = Sale.PAYMENT_UNPAID
+        sale.payment_reference = None
+        sale.paid_at = None
+        self.sales_repo.commit()
+        return sale
+
     def total_revenue(self, sales: list[Sale]):
         return sum((sale.total_amount for sale in sales), start=0)
 

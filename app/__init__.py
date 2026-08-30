@@ -55,6 +55,7 @@ def create_app(config_class: type = Config) -> Flask:
     from app.display import format_money, product_label, product_short_label
 
     app.jinja_env.globals["sale_status_label"] = _sale_status_label
+    app.jinja_env.globals["payment_status_label"] = _payment_status_label
     app.jinja_env.globals["user_role_label"] = _user_role_label
     app.jinja_env.globals["product_label"] = product_label
     app.jinja_env.globals["product_short_label"] = product_short_label
@@ -94,6 +95,18 @@ def _sale_status_label(status: str) -> str:
         Sale.STATUS_COMPLETED: _("Completed"),
         Sale.STATUS_PENDING: _("Pending"),
         Sale.STATUS_CANCELLED: _("Cancelled"),
+    }
+    return labels.get(status, status)
+
+
+def _payment_status_label(status: str) -> str:
+    from flask_babel import gettext as _
+
+    from app.models.sales import Sale
+
+    labels = {
+        Sale.PAYMENT_PAID: _("Paid"),
+        Sale.PAYMENT_UNPAID: _("Unpaid"),
     }
     return labels.get(status, status)
 

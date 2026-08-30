@@ -164,7 +164,7 @@ def _seed_sales(customers: dict[str, Customer], products: dict[str, Product]) ->
     sales_service = SalesService()
     now = datetime.now(UTC)
 
-    sales_service.record_sale(
+    paid_sale = sales_service.record_sale(
         customer_id=customers["green_leaf"].id,
         items=[
             {"product_id": products["Original"].id, "quantity": 20},
@@ -172,6 +172,9 @@ def _seed_sales(customers: dict[str, Customer], products: dict[str, Product]) ->
         ],
         sale_date=now - timedelta(days=6),
         notes="Monthly wholesale restock.",
+    )
+    sales_service.register_payment(
+        paid_sale.id, "TRF-20260101-0042", paid_at=now - timedelta(days=4)
     )
 
     sales_service.record_sale(

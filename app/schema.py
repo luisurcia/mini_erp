@@ -84,6 +84,27 @@ def ensure_sale_tax_columns() -> None:
     db.session.commit()
 
 
+def ensure_sale_payment_columns() -> None:
+    """Backfill `sales.payment_*` for databases created before payment
+    tracking (#51). Existing sales default to unpaid; the client marks the
+    already-collected ones from the Sales list, so no manual step on deploy.
+    """
+    inspector = inspect(db.engine)
+    columns = {column["name"] for column in inspector.get_columns("sales")}
+    if "payment_status" not in columns:
+        db.session.execute(
+            text(
+                "ALTER TABLE sales ADD COLUMN payment_status "
+                "VARCHAR(20) NOT NULL DEFAULT 'unpaid'"
+            )
+        )
+    if "payment_reference" not in columns:
+        db.session.execute(text("ALTER TABLE sales ADD COLUMN payment_reference VARCHAR(80)"))
+    if "paid_at" not in columns:
+        db.session.execute(text("ALTER TABLE sales ADD COLUMN paid_at DATETIME"))
+    db.session.commit()
+
+
 def ensure_company_language_column() -> None:
     """Backfill `company_settings.language` for databases created before it existed.
 

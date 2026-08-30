@@ -255,3 +255,51 @@ def test_top_customers_by_consumption_respects_limit(app, customer, product):
     ]
 
     assert len(service.top_customers_by_consumption(sales, limit=1)) == 1
+
+
+def test_register_payment_marks_sale_paid_with_reference(app, customer, product):
+    service = SalesService()
+    sale = service.record_sale(
+        customer_id=customer.id, items=[{"product_id": product.id, "quantity": 1}]
+    )
+    assert sale.is_paid is False
+
+    paid = service.register_payment(sale.id, "  TRF-99  ", paid_at=datetime(2026, 5, 1))
+
+    assert paid.is_paid is True
+    assert paid.payment_reference == "TRF-99"
+    assert paid.paid_at == datetime(2026, 5, 1)
+
+
+def test_register_payment_requires_a_reference(app, customer, product):
+    service = SalesService()
+    sale = service.record_sale(
+        customer_id=customer.id, items=[{"product_id": product.id, "quantity": 1}]
+    )
+    with pytest.raises(MiniErpError):
+        service.register_payment(sale.id, "   ")
+    assert service.sales_repo.get(sale.id).is_paid is False
+
+
+def test_register_payment_on_already_paid_sale_raises(app, customer, product):
+    service = SalesService()
+    sale = service.record_sale(
+        customer_id=customer.id, items=[{"product_id": product.id, "quantity": 1}]
+    )
+    service.register_payment(sale.id, "TRF-1")
+    with pytest.raises(MiniErpError):
+        service.register_payment(sale.id, "TRF-2")
+
+
+def test_revert_payment_clears_payment_fields(app, customer, product):
+    service = SalesService()
+    sale = service.record_sale(
+        customer_id=customer.id, items=[{"product_id": product.id, "quantity": 1}]
+    )
+    service.register_payment(sale.id, "TRF-1")
+
+    reverted = service.revert_payment(sale.id)
+
+    assert reverted.is_paid is False
+    assert reverted.payment_reference is None
+    assert reverted.paid_at is None

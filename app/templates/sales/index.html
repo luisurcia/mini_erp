@@ -6,9 +6,18 @@
   <a class="btn btn-primary" href="{{ url_for('sales.new_sale') }}">+ {{ _("New sale") }}</a>
 </div>
 
+<div class="btn-group btn-group-sm mb-3" role="group" aria-label="{{ _('Payment filter') }}">
+  <a class="btn btn-outline-secondary {{ 'active' if not payment_filter }}"
+     href="{{ url_for('sales.index') }}">{{ _("All") }}</a>
+  <a class="btn btn-outline-secondary {{ 'active' if payment_filter == 'unpaid' }}"
+     href="{{ url_for('sales.index', payment='unpaid') }}">{{ _("Unpaid") }}</a>
+  <a class="btn btn-outline-secondary {{ 'active' if payment_filter == 'paid' }}"
+     href="{{ url_for('sales.index', payment='paid') }}">{{ _("Paid") }}</a>
+</div>
+
 <div class="card p-3">
   <table class="table align-middle mb-0">
-    <thead><tr><th>#</th><th>{{ _("Date") }}</th><th>{{ _("Customer") }}</th><th>{{ _("Invoice #") }}</th><th>{{ _("Status") }}</th><th>{{ _("Total") }}</th><th></th></tr></thead>
+    <thead><tr><th>#</th><th>{{ _("Date") }}</th><th>{{ _("Customer") }}</th><th>{{ _("Invoice #") }}</th><th>{{ _("Status") }}</th><th>{{ _("Payment") }}</th><th>{{ _("Total") }}</th><th></th></tr></thead>
     <tbody>
       {% for sale in sales %}
       <tr>
@@ -17,11 +26,18 @@
         <td>{{ sale.customer.name }}</td>
         <td>{{ sale.invoice_number or "-" }}</td>
         <td><span class="badge bg-secondary">{{ sale_status_label(sale.status) }}</span></td>
+        <td>
+          {% if sale.is_paid %}
+          <span class="badge bg-success">{{ payment_status_label(sale.payment_status) }}</span>
+          {% else %}
+          <span class="badge bg-warning text-dark">{{ payment_status_label(sale.payment_status) }}</span>
+          {% endif %}
+        </td>
         <td>{{ format_money(sale.total_amount) }}</td>
         <td class="text-end"><a class="btn btn-sm btn-outline-secondary" href="{{ url_for('sales.detail', sale_id=sale.id) }}">{{ _("View") }}</a></td>
       </tr>
       {% else %}
-      <tr><td colspan="7" class="text-muted text-center py-4">{{ _("No sales recorded yet.") }}</td></tr>
+      <tr><td colspan="8" class="text-muted text-center py-4">{{ _("No sales recorded yet.") }}</td></tr>
       {% endfor %}
     </tbody>
   </table>

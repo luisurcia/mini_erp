@@ -4,6 +4,27 @@ from wtforms import BooleanField, DateField, SelectField, StringField, SubmitFie
 from wtforms.validators import DataRequired, Length, Optional
 
 
+class PaymentForm(FlaskForm):
+    """Records that a sale has been paid: a transfer/reference number
+    (required — the client wants proof of payment attached) and the date
+    it was received. See #51."""
+
+    payment_reference = StringField(
+        _l("Transfer / reference number"),
+        validators=[DataRequired(), Length(max=80)],
+    )
+    paid_at = DateField(
+        _l("Payment date"), validators=[DataRequired()], render_kw={"type": "date"}
+    )
+    submit = SubmitField(_l("Register payment"))
+
+
+class RevertPaymentForm(FlaskForm):
+    """Bare form so the admin-only 'revert payment' button is CSRF-protected."""
+
+    submit = SubmitField(_l("Revert payment"))
+
+
 class SaleMetaForm(FlaskForm):
     """Holds the sale-level fields; line items are handled as dynamic rows
     in the template/JS and read from request.form directly in the route.
