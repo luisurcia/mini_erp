@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-08-30 14:48-0400\n"
+"POT-Creation-Date: 2026-08-31 17:39-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -210,53 +210,53 @@ msgstr ""
 msgid "Nickname"
 msgstr ""
 
-#: app/blueprints/customers/forms.py:12 app/templates/customers/index.html:15
+#: app/blueprints/customers/forms.py:15 app/templates/customers/index.html:15
 msgid "RUT"
 msgstr ""
 
-#: app/blueprints/customers/forms.py:13 app/templates/customers/index.html:16
+#: app/blueprints/customers/forms.py:16 app/templates/customers/index.html:16
 #: app/templates/top_customers/index.html:26
 #: app/templates/top_customers/index.html:44
 msgid "Segment"
 msgstr ""
 
-#: app/blueprints/customers/forms.py:14 app/templates/customers/index.html:17
+#: app/blueprints/customers/forms.py:17 app/templates/customers/index.html:17
 msgid "Email"
 msgstr ""
 
-#: app/blueprints/customers/forms.py:15 app/templates/customers/index.html:18
+#: app/blueprints/customers/forms.py:18 app/templates/customers/index.html:18
 msgid "Phone"
 msgstr ""
 
-#: app/blueprints/customers/forms.py:16
+#: app/blueprints/customers/forms.py:19
 msgid "Street"
 msgstr ""
 
-#: app/blueprints/customers/forms.py:17
+#: app/blueprints/customers/forms.py:20
 msgid "Number"
 msgstr ""
 
-#: app/blueprints/customers/forms.py:18
+#: app/blueprints/customers/forms.py:21
 msgid "City"
 msgstr ""
 
-#: app/blueprints/customers/forms.py:19
+#: app/blueprints/customers/forms.py:22
 msgid "Commune"
 msgstr ""
 
-#: app/blueprints/customers/forms.py:20
+#: app/blueprints/customers/forms.py:23
 msgid "Region"
 msgstr ""
 
-#: app/blueprints/customers/forms.py:22 app/templates/customers/index.html:20
+#: app/blueprints/customers/forms.py:25 app/templates/customers/index.html:20
 msgid "Instagram handle"
 msgstr ""
 
-#: app/blueprints/customers/forms.py:24
+#: app/blueprints/customers/forms.py:27
 msgid "Notes"
 msgstr ""
 
-#: app/blueprints/customers/forms.py:25
+#: app/blueprints/customers/forms.py:28
 msgid "Save customer"
 msgstr ""
 
@@ -737,6 +737,10 @@ msgstr ""
 #: app/templates/customers/customer_form.html:5
 #: app/templates/customers/index.html:6
 msgid "New customer"
+msgstr ""
+
+#: app/templates/customers/customer_form.html:7
+msgid "Fields marked with * are required."
 msgstr ""
 
 #: app/templates/customers/index.html:19

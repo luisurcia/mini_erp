@@ -110,6 +110,15 @@ body {
   background-color: #fff;
 }
 
+/* Required-field marker. Bootstrap-Flask tags the wrapper of a field with a
+   DataRequired/InputRequired validator with a `.required` class but draws no
+   indicator; add the red asterisk after its label (#74). */
+.required > .form-label::after {
+  content: " *";
+  color: var(--scoby-rose);
+  font-weight: 700;
+}
+
 a {
   color: var(--scoby-pink-dark);
 }

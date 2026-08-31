@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-08-30 14:48-0400\n"
+"POT-Creation-Date: 2026-08-31 17:39-0400\n"
 "PO-Revision-Date: 2026-08-24 17:58-0400\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: fr\n"
@@ -213,53 +213,53 @@ msgstr "Segment '%(name)s' mis à jour."
 msgid "Nickname"
 msgstr "Surnom"
 
-#: app/blueprints/customers/forms.py:12 app/templates/customers/index.html:15
+#: app/blueprints/customers/forms.py:15 app/templates/customers/index.html:15
 msgid "RUT"
 msgstr "RUT"
 
-#: app/blueprints/customers/forms.py:13 app/templates/customers/index.html:16
+#: app/blueprints/customers/forms.py:16 app/templates/customers/index.html:16
 #: app/templates/top_customers/index.html:26
 #: app/templates/top_customers/index.html:44
 msgid "Segment"
 msgstr "Segment"
 
-#: app/blueprints/customers/forms.py:14 app/templates/customers/index.html:17
+#: app/blueprints/customers/forms.py:17 app/templates/customers/index.html:17
 msgid "Email"
 msgstr "E-mail"
 
-#: app/blueprints/customers/forms.py:15 app/templates/customers/index.html:18
+#: app/blueprints/customers/forms.py:18 app/templates/customers/index.html:18
 msgid "Phone"
 msgstr "Téléphone"
 
-#: app/blueprints/customers/forms.py:16
+#: app/blueprints/customers/forms.py:19
 msgid "Street"
 msgstr "Rue"
 
-#: app/blueprints/customers/forms.py:17
+#: app/blueprints/customers/forms.py:20
 msgid "Number"
 msgstr "Numéro"
 
-#: app/blueprints/customers/forms.py:18
+#: app/blueprints/customers/forms.py:21
 msgid "City"
 msgstr "Ville"
 
-#: app/blueprints/customers/forms.py:19
+#: app/blueprints/customers/forms.py:22
 msgid "Commune"
 msgstr "Commune"
 
-#: app/blueprints/customers/forms.py:20
+#: app/blueprints/customers/forms.py:23
 msgid "Region"
 msgstr "Région"
 
-#: app/blueprints/customers/forms.py:22 app/templates/customers/index.html:20
+#: app/blueprints/customers/forms.py:25 app/templates/customers/index.html:20
 msgid "Instagram handle"
 msgstr "Compte Instagram"
 
-#: app/blueprints/customers/forms.py:24
+#: app/blueprints/customers/forms.py:27
 msgid "Notes"
 msgstr "Notes"
 
-#: app/blueprints/customers/forms.py:25
+#: app/blueprints/customers/forms.py:28
 msgid "Save customer"
 msgstr "Enregistrer le client"
 
@@ -522,7 +522,9 @@ msgstr "Paiement annulé pour la vente #%(id)s."
 msgid ""
 "The sale was recorded, but supply stock is now negative: %(detail)s. "
 "Restock the supplies warehouse."
-msgstr "La vente a été enregistrée, mais le stock de fournitures est maintenant négatif : %(detail)s. Réapprovisionnez l'entrepôt de fournitures."
+msgstr ""
+"La vente a été enregistrée, mais le stock de fournitures est maintenant "
+"négatif : %(detail)s. Réapprovisionnez l'entrepôt de fournitures."
 
 #: app/blueprints/sales/routes.py:204
 #, python-format
@@ -743,6 +745,10 @@ msgstr "Modifier le client"
 #: app/templates/customers/index.html:6
 msgid "New customer"
 msgstr "Nouveau client"
+
+#: app/templates/customers/customer_form.html:7
+msgid "Fields marked with * are required."
+msgstr "Les champs marqués d'un * sont obligatoires."
 
 #: app/templates/customers/index.html:19
 msgid "Shipping address"
@@ -1111,7 +1117,9 @@ msgstr "Fournitures pour %(name)s"
 msgid ""
 "How many of each supply are consumed per unit of this product sold. Leave"
 " at 0 for supplies this product doesn't use."
-msgstr "Combien d'unités de chaque fourniture sont consommées par unité vendue de ce produit. Laissez à 0 les fournitures que ce produit n'utilise pas."
+msgstr ""
+"Combien d'unités de chaque fourniture sont consommées par unité vendue de"
+" ce produit. Laissez à 0 les fournitures que ce produit n'utilise pas."
 
 #: app/templates/supplies/recipe_form.html:13
 msgid "Supply"
@@ -1138,7 +1146,10 @@ msgid ""
 "Associate the supplies each product consumes per unit sold (a bottle, a "
 "label, a cap...). Products with no supplies here don't affect supply "
 "stock when sold."
-msgstr "Associez les fournitures que chaque produit consomme par unité vendue (une bouteille, une étiquette, une capsule...). Les produits sans fournitures ici n'affectent pas le stock de fournitures lors de la vente."
+msgstr ""
+"Associez les fournitures que chaque produit consomme par unité vendue "
+"(une bouteille, une étiquette, une capsule...). Les produits sans "
+"fournitures ici n'affectent pas le stock de fournitures lors de la vente."
 
 #: app/templates/supplies/recipes.html:18
 msgid "Supplies per unit"

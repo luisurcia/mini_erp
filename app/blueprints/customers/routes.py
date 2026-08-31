@@ -28,7 +28,7 @@ def new_customer():
         customer = Customer(
             name=form.name.data,
             nickname=form.nickname.data or None,
-            rut=form.rut.data,
+            rut=form.rut.data or None,
             email=form.email.data or None,
             phone=form.phone.data or None,
             shipping_street=form.shipping_street.data or None,
@@ -62,7 +62,7 @@ def edit_customer(customer_id):
     if form.validate_on_submit():
         customer.name = form.name.data
         customer.nickname = form.nickname.data or None
-        customer.rut = form.rut.data
+        customer.rut = form.rut.data or None
         customer.email = form.email.data or None
         customer.phone = form.phone.data or None
         customer.shipping_street = form.shipping_street.data or None

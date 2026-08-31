@@ -4,6 +4,7 @@
 {% block content %}
 <h1 class="h3 mb-3">{{ _("Edit customer") if mode == "edit" else _("New customer") }}</h1>
 <div class="card p-4" style="max-width: 640px;">
+  <p class="text-muted small mb-3">{{ _("Fields marked with * are required.") }}</p>
   {{ render_form(form) }}
 </div>
 {% endblock %}
