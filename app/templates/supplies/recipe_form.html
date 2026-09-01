@@ -4,7 +4,7 @@
 <h1 class="h3 mb-3">{{ _("Supplies for %(name)s", name=product_label(product)) }}</h1>
 <div class="card p-4" style="max-width: 520px;">
   <p class="text-muted small">
-    {{ _("How many of each supply are consumed per unit of this product sold. Leave at 0 for supplies this product doesn't use.") }}
+    {{ _("How many of each supply are consumed per unit of this product assembled (drawn from supplies when it enters the fermentation warehouse). Leave at 0 for supplies this product doesn't use.") }}
   </p>
   <form method="post" novalidate>
     {{ form.hidden_tag() }}

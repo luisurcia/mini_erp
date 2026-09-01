@@ -2,14 +2,85 @@ import pytest
 
 from app.exceptions import InsufficientStockError, MiniErpError, NotFoundError
 from app.extensions import db
+from app.models.product_supply import ProductSupply
+from app.models.supply import Supply, SupplyMovement
 from app.models.warehouse import Warehouse
 from app.services.inventory_service import InventoryService
+from app.services.supply_service import SupplyService
+
+
+def _recipe(product, supplies_warehouse, per_unit: dict[str, int]) -> dict[str, Supply]:
+    supplies = {}
+    for name, qty in per_unit.items():
+        supply = Supply(name=name, unit="unidad", unit_price=0.1, is_active=True)
+        db.session.add(supply)
+        db.session.flush()
+        supplies[name] = supply
+        db.session.add(
+            ProductSupply(
+                product_id=product.id, supply_id=supply.id, quantity_per_unit=qty
+            )
+        )
+        SupplyService().restock(supply.id, supplies_warehouse.id, 100)
+    db.session.commit()
+    return supplies
 
 
 def test_restock_increases_quantity(app, product, warehouse):
     service = InventoryService()
     item = service.restock(product.id, warehouse.id, 10, note="delivery")
     assert item.quantity_on_hand == 60
+
+
+def test_restock_into_fermentation_consumes_the_products_bill_of_materials(
+    app, product, fermentation_warehouse, supplies_warehouse
+):
+    supplies = _recipe(product, supplies_warehouse, {"Bottle": 1, "Cap": 1, "Label": 2})
+
+    InventoryService().restock(product.id, fermentation_warehouse.id, 5)
+
+    svc = SupplyService()
+    bottle = svc.supply_item_repo.get_by_supply_and_warehouse(
+        supplies["Bottle"].id, supplies_warehouse.id
+    )
+    label = svc.supply_item_repo.get_by_supply_and_warehouse(
+        supplies["Label"].id, supplies_warehouse.id
+    )
+    assert bottle.quantity_on_hand == 95  # 100 - 5*1
+    assert label.quantity_on_hand == 90  # 100 - 5*2
+    assert {
+        m.change_qty
+        for m in SupplyMovement.query.filter_by(
+            reason=SupplyMovement.REASON_ASSEMBLY
+        ).all()
+    } == {-5, -10}
+
+
+def test_restock_outside_fermentation_leaves_supplies_alone(
+    app, product, warehouse, supplies_warehouse
+):
+    _recipe(product, supplies_warehouse, {"Bottle": 1})
+
+    InventoryService().restock(product.id, warehouse.id, 5)
+
+    assert (
+        SupplyMovement.query.filter_by(reason=SupplyMovement.REASON_ASSEMBLY).count() == 0
+    )
+
+
+def test_assembly_lets_supply_stock_go_negative(
+    app, product, fermentation_warehouse, supplies_warehouse
+):
+    supplies = _recipe(product, supplies_warehouse, {"Cap": 1})
+    SupplyService().adjust(supplies["Cap"].id, supplies_warehouse.id, 3)
+
+    InventoryService().restock(product.id, fermentation_warehouse.id, 10)
+
+    cap = SupplyService().supply_item_repo.get_by_supply_and_warehouse(
+        supplies["Cap"].id, supplies_warehouse.id
+    )
+    assert cap.quantity_on_hand == -7
+    assert SupplyService().negative_stock() == [("Cap", -7)]
 
 
 def test_consume_decreases_quantity(app, product, warehouse):

@@ -54,18 +54,24 @@ class SupplyItem(BaseModel):
 
 class SupplyMovement(BaseModel):
     """Audit trail entry for every change to supply stock: restock,
-    manual adjustment, or automatic consumption when a sale draws on a
-    product's bill of materials (`sale_id` set, see #48). No 'transfer'
-    reason — supplies live in a single warehouse."""
+    manual adjustment, or automatic consumption when assembled bottles
+    enter the fermentation warehouse and draw on a product's bill of
+    materials (`assembly`, see #89 — this used to happen at sale time,
+    `sale`, see #48). No 'transfer' reason — supplies live in a single
+    warehouse."""
 
     __tablename__ = "supply_movements"
 
     REASON_RESTOCK = "restock"
     REASON_ADJUSTMENT = "adjustment"
+    REASON_ASSEMBLY = "assembly"
+    # Kept for historical rows only — supplies are no longer consumed at
+    # sale time (#89).
     REASON_SALE = "sale"
 
     supply_id = db.Column(db.Integer, db.ForeignKey("supplies.id"), nullable=False)
     warehouse_id = db.Column(db.Integer, db.ForeignKey("warehouses.id"), nullable=True)
+    # Legacy: pre-#89 consumption was linked to the sale that caused it.
     sale_id = db.Column(db.Integer, db.ForeignKey("sales.id"), nullable=True)
     change_qty = db.Column(db.Integer, nullable=False)
     reason = db.Column(db.String(20), nullable=False)

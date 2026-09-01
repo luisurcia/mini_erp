@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-09-01 18:36-0400\n"
+"POT-Creation-Date: 2026-09-01 18:55-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -50,7 +50,7 @@ msgstr ""
 msgid "Adjustment"
 msgstr ""
 
-#: app/__init__.py:129 app/blueprints/inventory/forms.py:37
+#: app/__init__.py:129 app/blueprints/inventory/forms.py:45
 msgid "Transfer"
 msgstr ""
 
@@ -155,7 +155,7 @@ msgstr ""
 msgid "Language"
 msgstr ""
 
-#: app/blueprints/auth/forms.py:36 app/blueprints/inventory/forms.py:22
+#: app/blueprints/auth/forms.py:36 app/blueprints/inventory/forms.py:30
 msgid "Save"
 msgstr ""
 
@@ -232,7 +232,7 @@ msgid "Save settings"
 msgstr ""
 
 #: app/blueprints/company/forms.py:62 app/blueprints/customers/forms.py:16
-#: app/blueprints/inventory/forms.py:26 app/blueprints/supplies/forms.py:11
+#: app/blueprints/inventory/forms.py:34 app/blueprints/supplies/forms.py:11
 #: app/templates/company/segments_list.html:13
 #: app/templates/customers/index.html:13
 #: app/templates/inventory/warehouses_list.html:13
@@ -241,7 +241,7 @@ msgstr ""
 msgid "Name"
 msgstr ""
 
-#: app/blueprints/company/forms.py:63 app/blueprints/inventory/forms.py:27
+#: app/blueprints/company/forms.py:63 app/blueprints/inventory/forms.py:35
 #: app/blueprints/products/forms.py:23 app/blueprints/supplies/forms.py:16
 #: app/templates/company/segments_list.html:24
 #: app/templates/inventory/warehouses_list.html:36
@@ -403,83 +403,90 @@ msgstr ""
 msgid "Dec"
 msgstr ""
 
-#: app/blueprints/inventory/forms.py:16
+#: app/blueprints/inventory/forms.py:23
 msgid "Quantity to add"
 msgstr ""
 
-#: app/blueprints/inventory/forms.py:19 app/templates/dashboard/index.html:87
+#: app/blueprints/inventory/forms.py:27 app/templates/dashboard/index.html:87
 #: app/templates/inventory/restock_form.html:3
 msgid "Reorder level"
 msgstr ""
 
-#: app/blueprints/inventory/forms.py:21 app/blueprints/inventory/forms.py:36
+#: app/blueprints/inventory/forms.py:29 app/blueprints/inventory/forms.py:44
 #: app/templates/inventory/history.html:7 app/templates/supplies/history.html:7
 msgid "Note"
 msgstr ""
 
-#: app/blueprints/inventory/forms.py:28
+#: app/blueprints/inventory/forms.py:36
 msgid "Save warehouse"
 msgstr ""
 
-#: app/blueprints/inventory/forms.py:32 app/templates/dashboard/index.html:87
+#: app/blueprints/inventory/forms.py:40 app/templates/dashboard/index.html:87
 #: app/templates/products/index.html:13 app/templates/sales/detail.html:42
 #: app/templates/supplies/recipes.html:17
 msgid "Product"
 msgstr ""
 
-#: app/blueprints/inventory/forms.py:33
+#: app/blueprints/inventory/forms.py:41
 msgid "From warehouse"
 msgstr ""
 
-#: app/blueprints/inventory/forms.py:34
+#: app/blueprints/inventory/forms.py:42
 msgid "To warehouse"
 msgstr ""
 
-#: app/blueprints/inventory/forms.py:35
+#: app/blueprints/inventory/forms.py:43
 msgid "Quantity"
 msgstr ""
 
-#: app/blueprints/inventory/forms.py:41
+#: app/blueprints/inventory/forms.py:49
 msgid "Source and destination warehouse must be different."
 msgstr ""
 
-#: app/blueprints/inventory/routes.py:52
+#: app/blueprints/inventory/routes.py:53
 msgid "Product or warehouse not found."
 msgstr ""
 
-#: app/blueprints/inventory/routes.py:78
+#: app/blueprints/inventory/routes.py:79
 #, python-format
 msgid "Restocked %(qty)s units of %(name)s in %(warehouse)s."
 msgstr ""
 
-#: app/blueprints/inventory/routes.py:89 app/blueprints/supplies/routes.py:139
+#: app/blueprints/inventory/routes.py:91 app/blueprints/supplies/routes.py:139
 msgid "Reorder level updated."
 msgstr ""
 
-#: app/blueprints/inventory/routes.py:149
+#: app/blueprints/inventory/routes.py:151
 #, python-format
 msgid "Transferred %(qty)s units of %(name)s from %(from_wh)s to %(to_wh)s."
 msgstr ""
 
-#: app/blueprints/inventory/routes.py:175 app/blueprints/products/routes.py:100
+#: app/blueprints/inventory/routes.py:177 app/blueprints/products/routes.py:100
 #: app/blueprints/supplies/routes.py:189
 msgid "Product not found."
 msgstr ""
 
-#: app/blueprints/inventory/routes.py:200
+#: app/blueprints/inventory/routes.py:193
+#, python-format
+msgid ""
+"Stock was received, but supply stock is now negative: %(detail)s. Restock"
+" the supplies warehouse."
+msgstr ""
+
+#: app/blueprints/inventory/routes.py:219
 #, python-format
 msgid "Warehouse '%(name)s' created."
 msgstr ""
 
-#: app/blueprints/inventory/routes.py:212
+#: app/blueprints/inventory/routes.py:231
 msgid "Warehouse not found."
 msgstr ""
 
-#: app/blueprints/inventory/routes.py:219
+#: app/blueprints/inventory/routes.py:238
 msgid "The supplies warehouse can't be deactivated."
 msgstr ""
 
-#: app/blueprints/inventory/routes.py:224
+#: app/blueprints/inventory/routes.py:243
 #, python-format
 msgid "Warehouse '%(name)s' updated."
 msgstr ""
@@ -564,34 +571,27 @@ msgstr ""
 msgid "Add at least one product line to the sale."
 msgstr ""
 
-#: app/blueprints/sales/routes.py:91
+#: app/blueprints/sales/routes.py:90
 #, python-format
 msgid "Sale #%(id)s recorded."
 msgstr ""
 
-#: app/blueprints/sales/routes.py:113 app/blueprints/sales/routes.py:132
-#: app/blueprints/sales/routes.py:160
+#: app/blueprints/sales/routes.py:111 app/blueprints/sales/routes.py:130
+#: app/blueprints/sales/routes.py:158
 msgid "Sale not found."
 msgstr ""
 
-#: app/blueprints/sales/routes.py:143
+#: app/blueprints/sales/routes.py:141
 #, python-format
 msgid "Payment registered for sale #%(id)s."
 msgstr ""
 
-#: app/blueprints/sales/routes.py:165
+#: app/blueprints/sales/routes.py:163
 #, python-format
 msgid "Payment reverted for sale #%(id)s."
 msgstr ""
 
-#: app/blueprints/sales/routes.py:181
-#, python-format
-msgid ""
-"The sale was recorded, but supply stock is now negative: %(detail)s. "
-"Restock the supplies warehouse."
-msgstr ""
-
-#: app/blueprints/sales/routes.py:224
+#: app/blueprints/sales/routes.py:206
 #, python-format
 msgid "Enter a unit price for %(name)s."
 msgstr ""
@@ -1182,8 +1182,9 @@ msgstr ""
 
 #: app/templates/supplies/recipe_form.html:7
 msgid ""
-"How many of each supply are consumed per unit of this product sold. Leave"
-" at 0 for supplies this product doesn't use."
+"How many of each supply are consumed per unit of this product assembled "
+"(drawn from supplies when it enters the fermentation warehouse). Leave at"
+" 0 for supplies this product doesn't use."
 msgstr ""
 
 #: app/templates/supplies/recipe_form.html:13
@@ -1208,9 +1209,10 @@ msgstr ""
 
 #: app/templates/supplies/recipes.html:10
 msgid ""
-"Associate the supplies each product consumes per unit sold (a bottle, a "
-"label, a cap...). Products with no supplies here don't affect supply "
-"stock when sold."
+"Associate the supplies each product consumes per unit assembled (a "
+"bottle, a label, a cap...). They're drawn from the supplies warehouse "
+"when the product enters the fermentation warehouse; products with no "
+"supplies here don't affect supply stock."
 msgstr ""
 
 #: app/templates/supplies/recipes.html:18

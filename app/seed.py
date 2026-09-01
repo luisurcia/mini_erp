@@ -113,7 +113,8 @@ def _seed_supplies() -> dict[str, Supply]:
 
 
 def _seed_recipes(products: dict[str, Product], supplies: dict[str, Supply]) -> None:
-    """Every demo kombucha consumes 1 bottle + 1 label + 1 cap per unit (#48)."""
+    """Every demo kombucha consumes 1 bottle + 1 label + 1 cap per unit
+    assembled — drawn when it enters the fermentation warehouse (#89)."""
     for product in products.values():
         for supply_name in ("Botellas 355ml", "Etiquetas", "Tapas"):
             db.session.add(

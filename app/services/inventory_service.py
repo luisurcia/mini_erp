@@ -6,7 +6,9 @@ from app.repositories.inventory_repository import (
     StockMovementRepository,
 )
 from app.repositories.product_repository import ProductRepository
+from app.repositories.product_supply_repository import ProductSupplyRepository
 from app.repositories.warehouse_repository import WarehouseRepository
+from app.services.supply_service import SupplyService
 
 
 class InventoryService:
@@ -20,11 +22,15 @@ class InventoryService:
         movement_repo: StockMovementRepository | None = None,
         product_repo: ProductRepository | None = None,
         warehouse_repo: WarehouseRepository | None = None,
+        supply_service: SupplyService | None = None,
+        product_supply_repo: ProductSupplyRepository | None = None,
     ):
         self.inventory_repo = inventory_repo or InventoryRepository()
         self.movement_repo = movement_repo or StockMovementRepository()
         self.product_repo = product_repo or ProductRepository()
         self.warehouse_repo = warehouse_repo or WarehouseRepository()
+        self.supply_service = supply_service or SupplyService()
+        self.product_supply_repo = product_supply_repo or ProductSupplyRepository()
 
     def create_inventory_item(
         self, product_id: int, warehouse_id: int, initial_qty: int = 0, reorder_level: int = 10
@@ -57,8 +63,29 @@ class InventoryService:
         self._record_movement(
             product_id, warehouse_id, quantity, StockMovement.REASON_RESTOCK, note
         )
+        # Restocking the fermentation warehouse *is* the assembly event:
+        # the bottles now carry their bottle/label/cap, so draw that bill
+        # of materials from the supplies warehouse (#89).
+        warehouse = self.warehouse_repo.get(warehouse_id)
+        if warehouse is not None and warehouse.is_fermentation:
+            self._consume_supplies_for_assembly(product_id, quantity)
         self.inventory_repo.commit()
         return item
+
+    def _consume_supplies_for_assembly(self, product_id: int, quantity: int) -> None:
+        recipe = self.product_supply_repo.for_product(product_id)
+        if not recipe:
+            return
+        supplies_warehouse = self.warehouse_repo.get_supplies_warehouse()
+        if supplies_warehouse is None:
+            return
+        for row in recipe:
+            self.supply_service.consume_for_assembly(
+                row.supply_id,
+                supplies_warehouse.id,
+                row.quantity_per_unit * quantity,
+                commit=False,
+            )
 
     def consume(
         self,

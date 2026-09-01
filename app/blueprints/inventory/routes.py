@@ -13,6 +13,7 @@ from app.repositories.inventory_repository import InventoryRepository
 from app.repositories.product_repository import ProductRepository
 from app.repositories.warehouse_repository import WarehouseRepository
 from app.services.inventory_service import InventoryService
+from app.services.supply_service import SupplyService
 
 
 @bp.route("/")
@@ -82,6 +83,7 @@ def restock(product_id, warehouse_id):
                     ),
                     "success",
                 )
+                _warn_on_negative_supplies()
             else:
                 InventoryService().set_reorder_level(
                     product_id, warehouse_id, form.reorder_level.data
@@ -177,6 +179,23 @@ def history(product_id):
 
     movements = InventoryService().movement_history(product_id)
     return render_template("inventory/history.html", product=product, movements=movements)
+
+
+def _warn_on_negative_supplies() -> None:
+    """After an assembly restock, flash a warning (not an error — the
+    stock still went in) if a product's bill of materials pushed a supply
+    below zero (#89)."""
+    shortfalls = SupplyService().negative_stock()
+    if shortfalls:
+        detail = ", ".join(f"{name}: {qty}" for name, qty in shortfalls)
+        flash(
+            _(
+                "Stock was received, but supply stock is now negative: "
+                "%(detail)s. Restock the supplies warehouse.",
+                detail=detail,
+            ),
+            "warning",
+        )
 
 
 @bp.route("/warehouses")
