@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-08-31 23:35-0400\n"
+"POT-Creation-Date: 2026-09-01 00:24-0400\n"
 "PO-Revision-Date: 2026-08-24 17:58-0400\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: es\n"
@@ -209,7 +209,7 @@ msgstr "Segmento no encontrado."
 msgid "Segment '%(name)s' updated."
 msgstr "Segmento '%(name)s' actualizado."
 
-#: app/blueprints/customers/forms.py:17 app/templates/customers/index.html:14
+#: app/blueprints/customers/forms.py:17
 msgid "Nickname"
 msgstr "Sobrenombre"
 
@@ -217,17 +217,17 @@ msgstr "Sobrenombre"
 msgid "RUT"
 msgstr "RUT"
 
-#: app/blueprints/customers/forms.py:23 app/templates/customers/index.html:16
+#: app/blueprints/customers/forms.py:23 app/templates/customers/index.html:14
 #: app/templates/top_customers/index.html:26
 #: app/templates/top_customers/index.html:44
 msgid "Segment"
 msgstr "Segmento"
 
-#: app/blueprints/customers/forms.py:25 app/templates/customers/index.html:17
+#: app/blueprints/customers/forms.py:25
 msgid "Email"
 msgstr "Correo electrónico"
 
-#: app/blueprints/customers/forms.py:26 app/templates/customers/index.html:18
+#: app/blueprints/customers/forms.py:26
 msgid "Phone"
 msgstr "Teléfono"
 
@@ -251,7 +251,7 @@ msgstr "Comuna"
 msgid "Region"
 msgstr "Región"
 
-#: app/blueprints/customers/forms.py:33 app/templates/customers/index.html:20
+#: app/blueprints/customers/forms.py:33
 msgid "Instagram handle"
 msgstr "Usuario de Instagram"
 
@@ -728,7 +728,7 @@ msgid "Inactive"
 msgstr "Inactivo"
 
 #: app/templates/company/segments_list.html:30
-#: app/templates/customers/index.html:36
+#: app/templates/customers/index.html:26
 #: app/templates/inventory/warehouses_list.html:38
 #: app/templates/products/index.html:38 app/templates/supplies/index.html:40
 #: app/templates/supplies/recipes.html:38 app/templates/users/index.html:19
@@ -762,11 +762,7 @@ msgstr "Nuevo cliente"
 msgid "Fields marked with * are required."
 msgstr "Los campos marcados con * son obligatorios."
 
-#: app/templates/customers/index.html:19
-msgid "Shipping address"
-msgstr "Dirección de despacho"
-
-#: app/templates/customers/index.html:40
+#: app/templates/customers/index.html:30
 msgid "No customers yet."
 msgstr "Aún no hay clientes."
 
@@ -1060,11 +1056,23 @@ msgstr "N° factura"
 msgid "Payment"
 msgstr "Pago"
 
-#: app/templates/sales/index.html:37
+#: app/templates/sales/index.html:20
+msgid "Tax"
+msgstr "IVA"
+
+#: app/templates/sales/index.html:36
+msgid "Yes"
+msgstr "Sí"
+
+#: app/templates/sales/index.html:36
+msgid "No"
+msgstr "No"
+
+#: app/templates/sales/index.html:38
 msgid "View"
 msgstr "Ver"
 
-#: app/templates/sales/index.html:40
+#: app/templates/sales/index.html:41
 msgid "No sales recorded yet."
 msgstr "Aún no hay ventas registradas."
 
@@ -1345,4 +1353,7 @@ msgstr ""
 
 #~ msgid "Stock by warehouse"
 #~ msgstr "Stock por bodega"
+
+#~ msgid "Shipping address"
+#~ msgstr "Dirección de despacho"
 

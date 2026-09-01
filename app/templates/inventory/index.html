@@ -15,9 +15,9 @@
       <tr>
         <th>{{ _("Flavor / Product") }}</th>
         {% for warehouse in warehouses %}
-        <th class="text-end">{{ warehouse.name }}</th>
+        <th class="text-center">{{ warehouse.name }}</th>
         {% endfor %}
-        <th class="text-end">{{ _("Total") }}</th>
+        <th class="text-center">{{ _("Total") }}</th>
         <th></th>
       </tr>
     </thead>
@@ -32,13 +32,13 @@
         {% for warehouse in warehouses %}
         {% set item = stock.get((product.id, warehouse.id)) %}
         {% set total.qty = total.qty + (item.quantity_on_hand if item else 0) %}
-        <td class="text-end {{ 'table-low-stock' if item and item.is_low_stock else '' }}">
+        <td class="text-center {{ 'table-low-stock' if item and item.is_low_stock else '' }}">
           <a class="btn btn-sm btn-outline-secondary" href="{{ url_for('inventory.restock', product_id=product.id, warehouse_id=warehouse.id) }}">
             {{ item.quantity_on_hand if item else 0 }}
           </a>
         </td>
         {% endfor %}
-        <td class="text-end"><strong>{{ total.qty }}</strong></td>
+        <td class="text-center"><strong>{{ total.qty }}</strong></td>
         <td class="text-end">
           <a class="btn btn-sm btn-outline-secondary" href="{{ url_for('inventory.history', product_id=product.id) }}">{{ _("History") }}</a>
         </td>
@@ -52,9 +52,9 @@
       <tr>
         <th>{{ _("Total") }}</th>
         {% for total in warehouse_totals %}
-        <th class="text-end">{{ total }}</th>
+        <th class="text-center">{{ total }}</th>
         {% endfor %}
-        <th class="text-end">{{ grand_total }}</th>
+        <th class="text-center">{{ grand_total }}</th>
         <th></th>
       </tr>
     </tfoot>

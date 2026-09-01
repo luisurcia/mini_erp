@@ -17,7 +17,7 @@
 
 <div class="card p-3">
   <table class="table align-middle mb-0">
-    <thead><tr><th>#</th><th>{{ _("Date") }}</th><th>{{ _("Customer") }}</th><th>{{ _("Invoice #") }}</th><th>{{ _("Status") }}</th><th>{{ _("Payment") }}</th><th>{{ _("Total") }}</th><th></th></tr></thead>
+    <thead><tr><th>#</th><th>{{ _("Date") }}</th><th>{{ _("Customer") }}</th><th>{{ _("Invoice #") }}</th><th>{{ _("Status") }}</th><th>{{ _("Payment") }}</th><th>{{ _("Tax") }}</th><th>{{ _("Total") }}</th><th></th></tr></thead>
     <tbody>
       {% for sale in sales %}
       <tr>
@@ -33,11 +33,12 @@
           <span class="badge bg-warning text-dark">{{ payment_status_label(sale.payment_status) }}</span>
           {% endif %}
         </td>
+        <td>{{ _("Yes") if sale.tax_applied else _("No") }}</td>
         <td>{{ format_money(sale.total_amount) }}</td>
         <td class="text-end"><a class="btn btn-sm btn-outline-secondary" href="{{ url_for('sales.detail', sale_id=sale.id) }}">{{ _("View") }}</a></td>
       </tr>
       {% else %}
-      <tr><td colspan="8" class="text-muted text-center py-4">{{ _("No sales recorded yet.") }}</td></tr>
+      <tr><td colspan="9" class="text-muted text-center py-4">{{ _("No sales recorded yet.") }}</td></tr>
       {% endfor %}
     </tbody>
   </table>

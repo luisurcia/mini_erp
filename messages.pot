@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-08-31 23:35-0400\n"
+"POT-Creation-Date: 2026-09-01 00:24-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -206,7 +206,7 @@ msgstr ""
 msgid "Segment '%(name)s' updated."
 msgstr ""
 
-#: app/blueprints/customers/forms.py:17 app/templates/customers/index.html:14
+#: app/blueprints/customers/forms.py:17
 msgid "Nickname"
 msgstr ""
 
@@ -214,17 +214,17 @@ msgstr ""
 msgid "RUT"
 msgstr ""
 
-#: app/blueprints/customers/forms.py:23 app/templates/customers/index.html:16
+#: app/blueprints/customers/forms.py:23 app/templates/customers/index.html:14
 #: app/templates/top_customers/index.html:26
 #: app/templates/top_customers/index.html:44
 msgid "Segment"
 msgstr ""
 
-#: app/blueprints/customers/forms.py:25 app/templates/customers/index.html:17
+#: app/blueprints/customers/forms.py:25
 msgid "Email"
 msgstr ""
 
-#: app/blueprints/customers/forms.py:26 app/templates/customers/index.html:18
+#: app/blueprints/customers/forms.py:26
 msgid "Phone"
 msgstr ""
 
@@ -248,7 +248,7 @@ msgstr ""
 msgid "Region"
 msgstr ""
 
-#: app/blueprints/customers/forms.py:33 app/templates/customers/index.html:20
+#: app/blueprints/customers/forms.py:33
 msgid "Instagram handle"
 msgstr ""
 
@@ -721,7 +721,7 @@ msgid "Inactive"
 msgstr ""
 
 #: app/templates/company/segments_list.html:30
-#: app/templates/customers/index.html:36
+#: app/templates/customers/index.html:26
 #: app/templates/inventory/warehouses_list.html:38
 #: app/templates/products/index.html:38 app/templates/supplies/index.html:40
 #: app/templates/supplies/recipes.html:38 app/templates/users/index.html:19
@@ -755,11 +755,7 @@ msgstr ""
 msgid "Fields marked with * are required."
 msgstr ""
 
-#: app/templates/customers/index.html:19
-msgid "Shipping address"
-msgstr ""
-
-#: app/templates/customers/index.html:40
+#: app/templates/customers/index.html:30
 msgid "No customers yet."
 msgstr ""
 
@@ -1051,11 +1047,23 @@ msgstr ""
 msgid "Payment"
 msgstr ""
 
-#: app/templates/sales/index.html:37
+#: app/templates/sales/index.html:20
+msgid "Tax"
+msgstr ""
+
+#: app/templates/sales/index.html:36
+msgid "Yes"
+msgstr ""
+
+#: app/templates/sales/index.html:36
+msgid "No"
+msgstr ""
+
+#: app/templates/sales/index.html:38
 msgid "View"
 msgstr ""
 
-#: app/templates/sales/index.html:40
+#: app/templates/sales/index.html:41
 msgid "No sales recorded yet."
 msgstr ""
 

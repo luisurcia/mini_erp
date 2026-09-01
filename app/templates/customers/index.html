@@ -11,13 +11,8 @@
     <thead>
       <tr>
         <th>{{ _("Name") }}</th>
-        <th>{{ _("Nickname") }}</th>
-        <th>{{ _("RUT") }}</th>
         <th>{{ _("Segment") }}</th>
-        <th>{{ _("Email") }}</th>
-        <th>{{ _("Phone") }}</th>
-        <th>{{ _("Shipping address") }}</th>
-        <th>{{ _("Instagram handle") }}</th>
+        <th>{{ _("RUT") }}</th>
         <th></th>
       </tr>
     </thead>
@@ -25,13 +20,8 @@
       {% for customer in customers %}
       <tr>
         <td>{{ customer.name }}</td>
-        <td>{{ customer.nickname or "-" }}</td>
-        <td>{{ customer.rut or "-" }}</td>
         <td>{{ customer.segment.name if customer.segment else "-" }}</td>
-        <td>{{ customer.email or "-" }}</td>
-        <td>{{ customer.phone or "-" }}</td>
-        <td>{{ customer.shipping_address_line or "-" }}</td>
-        <td>{{ customer.instagram_handle or "-" }}</td>
+        <td>{{ customer.rut or "-" }}</td>
         <td class="text-end">
           <a class="btn btn-sm btn-outline-secondary" href="{{ url_for('customers.edit_customer', customer_id=customer.id) }}">{{ _("Edit") }}</a>
         </td>
