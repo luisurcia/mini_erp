@@ -39,3 +39,17 @@ def test_segment_is_required(app, segment):
     ok, errors = _validate(app, name="Acme")
     assert not ok
     assert "segment_id" in errors
+
+
+def test_empty_segment_placeholder_is_rejected(app, segment):
+    # The select opens on "— Select a segment —" (value ""); submitting it
+    # unchanged must fail validation, not save a null segment (#77).
+    ok, errors = _validate(app, name="Acme", segment_id="")
+    assert not ok
+    assert "segment_id" in errors
+
+
+def test_segment_choices_start_with_the_placeholder(app, segment):
+    with app.test_request_context():
+        form = CustomerForm()
+        assert form.segment_id.choices[0][0] == ""

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-08-31 23:23-0400\n"
+"POT-Creation-Date: 2026-08-31 23:35-0400\n"
 "PO-Revision-Date: 2026-08-24 17:58-0400\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: es\n"
@@ -169,7 +169,7 @@ msgstr ""
 msgid "Save settings"
 msgstr "Guardar configuración"
 
-#: app/blueprints/company/forms.py:59 app/blueprints/customers/forms.py:10
+#: app/blueprints/company/forms.py:59 app/blueprints/customers/forms.py:16
 #: app/blueprints/inventory/forms.py:26 app/blueprints/supplies/forms.py:11
 #: app/templates/company/segments_list.html:13
 #: app/templates/customers/index.html:13
@@ -209,59 +209,63 @@ msgstr "Segmento no encontrado."
 msgid "Segment '%(name)s' updated."
 msgstr "Segmento '%(name)s' actualizado."
 
-#: app/blueprints/customers/forms.py:11 app/templates/customers/index.html:14
+#: app/blueprints/customers/forms.py:17 app/templates/customers/index.html:14
 msgid "Nickname"
 msgstr "Sobrenombre"
 
-#: app/blueprints/customers/forms.py:15 app/templates/customers/index.html:15
+#: app/blueprints/customers/forms.py:21 app/templates/customers/index.html:15
 msgid "RUT"
 msgstr "RUT"
 
-#: app/blueprints/customers/forms.py:16 app/templates/customers/index.html:16
+#: app/blueprints/customers/forms.py:23 app/templates/customers/index.html:16
 #: app/templates/top_customers/index.html:26
 #: app/templates/top_customers/index.html:44
 msgid "Segment"
 msgstr "Segmento"
 
-#: app/blueprints/customers/forms.py:17 app/templates/customers/index.html:17
+#: app/blueprints/customers/forms.py:25 app/templates/customers/index.html:17
 msgid "Email"
 msgstr "Correo electrónico"
 
-#: app/blueprints/customers/forms.py:18 app/templates/customers/index.html:18
+#: app/blueprints/customers/forms.py:26 app/templates/customers/index.html:18
 msgid "Phone"
 msgstr "Teléfono"
 
-#: app/blueprints/customers/forms.py:19
+#: app/blueprints/customers/forms.py:27
 msgid "Street"
 msgstr "Calle"
 
-#: app/blueprints/customers/forms.py:20
+#: app/blueprints/customers/forms.py:28
 msgid "Number"
 msgstr "Número"
 
-#: app/blueprints/customers/forms.py:21
+#: app/blueprints/customers/forms.py:29
 msgid "City"
 msgstr "Ciudad"
 
-#: app/blueprints/customers/forms.py:22
+#: app/blueprints/customers/forms.py:30
 msgid "Commune"
 msgstr "Comuna"
 
-#: app/blueprints/customers/forms.py:23
+#: app/blueprints/customers/forms.py:31
 msgid "Region"
 msgstr "Región"
 
-#: app/blueprints/customers/forms.py:25 app/templates/customers/index.html:20
+#: app/blueprints/customers/forms.py:33 app/templates/customers/index.html:20
 msgid "Instagram handle"
 msgstr "Usuario de Instagram"
 
-#: app/blueprints/customers/forms.py:27
+#: app/blueprints/customers/forms.py:35
 msgid "Notes"
 msgstr "Notas"
 
-#: app/blueprints/customers/forms.py:28
+#: app/blueprints/customers/forms.py:36
 msgid "Save customer"
 msgstr "Guardar cliente"
+
+#: app/blueprints/customers/forms.py:48
+msgid "— Select a segment —"
+msgstr "— Selecciona un segmento —"
 
 #: app/blueprints/customers/routes.py:45
 #, python-format

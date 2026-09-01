@@ -6,6 +6,12 @@ from wtforms.validators import DataRequired, Email, Length, Optional
 from app.models.customer_segment import CustomerSegment
 
 
+def _optional_int(value):
+    """Coerce a select value to int, or None for the empty placeholder
+    option — so DataRequired fires when no segment is chosen (#77)."""
+    return int(value) if value not in ("", None) else None
+
+
 class CustomerForm(FlaskForm):
     name = StringField(_l("Name"), validators=[DataRequired(), Length(max=120)])
     nickname = StringField(_l("Nickname"), validators=[Optional(), Length(max=80)])
@@ -13,7 +19,9 @@ class CustomerForm(FlaskForm):
     # optional: not every customer is invoiced (a boleta needs no RUT) and it
     # can be filled in later.
     rut = StringField(_l("RUT"), validators=[Optional(), Length(max=20)])
-    segment_id = SelectField(_l("Segment"), coerce=int, validators=[DataRequired()])
+    segment_id = SelectField(
+        _l("Segment"), coerce=_optional_int, validators=[DataRequired()]
+    )
     email = StringField(_l("Email"), validators=[Optional(), Email(), Length(max=120)])
     phone = StringField(_l("Phone"), validators=[Optional(), Length(max=40)])
     shipping_street = StringField(_l("Street"), validators=[Optional(), Length(max=120)])
@@ -37,4 +45,6 @@ class CustomerForm(FlaskForm):
         if customer is not None and customer.segment is not None:
             if not any(segment.id == customer.segment_id for segment in segments):
                 segments.append(customer.segment)
-        self.segment_id.choices = [(segment.id, segment.name) for segment in segments]
+        self.segment_id.choices = [("", _l("— Select a segment —"))] + [
+            (segment.id, segment.name) for segment in segments
+        ]
