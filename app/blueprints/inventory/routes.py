@@ -20,7 +20,7 @@ from app.services.inventory_service import InventoryService
 @module_required(User.MODULE_INVENTORY)
 def index():
     products = ProductRepository().get_all()
-    warehouses = WarehouseRepository().get_distribution()
+    warehouses = WarehouseRepository().get_stock_locations()
     stock = {
         (item.product_id, item.warehouse_id): item for item in InventoryRepository().get_all()
     }
@@ -54,12 +54,17 @@ def restock(product_id, warehouse_id):
 
     existing_item = InventoryRepository().get_by_product_and_warehouse(product_id, warehouse_id)
     form = RestockForm()
+    # Stock only enters through the fermentation warehouse (#86); elsewhere
+    # this screen just edits the reorder level, so drop the quantity field.
+    can_restock = warehouse.is_fermentation
+    if not can_restock:
+        del form.quantity
     if not form.is_submitted():
         form.reorder_level.data = existing_item.reorder_level if existing_item else 10
 
     if form.validate_on_submit():
         try:
-            quantity = form.quantity.data or 0
+            quantity = (form.quantity.data or 0) if can_restock else 0
             if quantity > 0:
                 InventoryService().restock(
                     product_id,
@@ -93,6 +98,7 @@ def restock(product_id, warehouse_id):
         product=product,
         warehouse=warehouse,
         on_hand=on_hand,
+        can_restock=can_restock,
     )
 
 
@@ -101,13 +107,22 @@ def restock(product_id, warehouse_id):
 @module_required(User.MODULE_INVENTORY)
 def transfer():
     form = TransferForm()
-    product_choices = [(p.id, product_label(p)) for p in ProductRepository().get_active()]
-    warehouse_choices = [
-        (w.id, w.name) for w in WarehouseRepository().get_distribution()
+    locations = WarehouseRepository().get_stock_locations()
+    form.product_id.choices = [
+        (p.id, product_label(p)) for p in ProductRepository().get_active()
     ]
-    form.product_id.choices = product_choices
-    form.from_warehouse_id.choices = warehouse_choices
-    form.to_warehouse_id.choices = warehouse_choices
+    # Only the flow routes: send from Fermentación/Principal, receive into
+    # Principal/distribución (#86). The service validates too.
+    form.from_warehouse_id.choices = [
+        (w.id, w.name) for w in locations if w.stage in (
+            Warehouse.STAGE_FERMENTATION, Warehouse.STAGE_MAIN
+        )
+    ]
+    form.to_warehouse_id.choices = [
+        (w.id, w.name) for w in locations if w.stage in (
+            Warehouse.STAGE_MAIN, Warehouse.STAGE_DISTRIBUTION
+        )
+    ]
 
     # On-hand quantity per (product, warehouse), keyed "<pid>-<wid>" so the
     # form can show the live stock of the picked warehouses (#50).
@@ -115,6 +130,7 @@ def transfer():
         f"{item.product_id}-{item.warehouse_id}": item.quantity_on_hand
         for item in InventoryRepository().get_all()
     }
+    warehouse_stages = {str(w.id): w.stage for w in locations}
 
     if form.validate_on_submit():
         try:
@@ -143,7 +159,10 @@ def transfer():
             flash(str(exc), "danger")
 
     return render_template(
-        "inventory/transfer_form.html", form=form, stock_levels=stock_levels
+        "inventory/transfer_form.html",
+        form=form,
+        stock_levels=stock_levels,
+        warehouse_stages=warehouse_stages,
     )
 
 

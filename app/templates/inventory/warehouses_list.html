@@ -23,6 +23,10 @@
         <td>
           {% if warehouse.is_supplies %}
           <span class="badge" style="background-color: var(--scoby-teal);">{{ _("Supplies") }}</span>
+          {% elif warehouse.is_fermentation %}
+          <span class="badge" style="background-color: var(--scoby-mustard); color: var(--scoby-ink);">{{ _("Fermentation") }}</span>
+          {% elif warehouse.is_main %}
+          <span class="badge" style="background-color: var(--scoby-pink);">{{ _("Main") }}</span>
           {% else %}
           <span class="badge bg-secondary">{{ _("Distribution") }}</span>
           {% endif %}

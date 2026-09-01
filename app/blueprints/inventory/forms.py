@@ -8,7 +8,14 @@ from wtforms import (
     SubmitField,
     TextAreaField,
 )
-from wtforms.validators import DataRequired, Length, NumberRange, Optional, ValidationError
+from wtforms.validators import (
+    DataRequired,
+    InputRequired,
+    Length,
+    NumberRange,
+    Optional,
+    ValidationError,
+)
 
 
 class RestockForm(FlaskForm):
@@ -16,7 +23,8 @@ class RestockForm(FlaskForm):
         _l("Quantity to add"), default=0, validators=[Optional(), NumberRange(min=0)]
     )
     reorder_level = IntegerField(
-        _l("Reorder level"), default=10, validators=[DataRequired(), NumberRange(min=0)]
+        # InputRequired, not DataRequired: 0 is a valid level ("never low").
+        _l("Reorder level"), default=10, validators=[InputRequired(), NumberRange(min=0)]
     )
     note = TextAreaField(_l("Note"), validators=[Optional()])
     submit = SubmitField(_l("Save"))

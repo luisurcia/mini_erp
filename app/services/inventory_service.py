@@ -1,10 +1,12 @@
-from app.exceptions import InsufficientStockError, NotFoundError
+from app.exceptions import InsufficientStockError, MiniErpError, NotFoundError
 from app.models.inventory import InventoryItem, StockMovement
+from app.models.warehouse import Warehouse
 from app.repositories.inventory_repository import (
     InventoryRepository,
     StockMovementRepository,
 )
 from app.repositories.product_repository import ProductRepository
+from app.repositories.warehouse_repository import WarehouseRepository
 
 
 class InventoryService:
@@ -17,10 +19,12 @@ class InventoryService:
         inventory_repo: InventoryRepository | None = None,
         movement_repo: StockMovementRepository | None = None,
         product_repo: ProductRepository | None = None,
+        warehouse_repo: WarehouseRepository | None = None,
     ):
         self.inventory_repo = inventory_repo or InventoryRepository()
         self.movement_repo = movement_repo or StockMovementRepository()
         self.product_repo = product_repo or ProductRepository()
+        self.warehouse_repo = warehouse_repo or WarehouseRepository()
 
     def create_inventory_item(
         self, product_id: int, warehouse_id: int, initial_qty: int = 0, reorder_level: int = 10
@@ -113,11 +117,15 @@ class InventoryService:
         note: str | None = None,
     ) -> tuple[InventoryItem, InventoryItem]:
         """Move stock from one warehouse to another, recorded as a matched
-        pair of StockMovements (one out, one in) — see #27."""
+        pair of StockMovements (one out, one in) — see #27. Only the flow
+        routes Fermentación→Principal and Principal→distribución are
+        allowed (#86)."""
         if quantity <= 0:
             raise ValueError("Transfer quantity must be positive")
         if from_warehouse_id == to_warehouse_id:
             raise ValueError("Source and destination warehouse must be different")
+
+        self._check_transfer_route(from_warehouse_id, to_warehouse_id)
 
         source = self._get_item_or_raise(product_id, from_warehouse_id)
         if source.quantity_on_hand < quantity:
@@ -139,6 +147,17 @@ class InventoryService:
         )
         self.inventory_repo.commit()
         return source, destination
+
+    def _check_transfer_route(self, from_warehouse_id: int, to_warehouse_id: int) -> None:
+        source = self.warehouse_repo.get(from_warehouse_id)
+        destination = self.warehouse_repo.get(to_warehouse_id)
+        if source is None or destination is None:
+            raise NotFoundError("Transfer warehouse not found")
+        if (source.stage, destination.stage) not in Warehouse.ALLOWED_TRANSFERS:
+            raise MiniErpError(
+                f"Stock can only move {Warehouse.FERMENTATION_NAME} → Bodega Principal "
+                f"→ distribution, not {source.name} → {destination.name}."
+            )
 
     def low_stock_report(self) -> list[InventoryItem]:
         return self.inventory_repo.low_stock()

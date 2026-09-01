@@ -29,6 +29,7 @@ from app.schema import (
     ensure_user_name_columns,
     ensure_user_role_column,
     ensure_warehouse_kind_column,
+    ensure_warehouse_stage_column,
 )
 
 
@@ -60,9 +61,10 @@ def _upgrade_schema() -> None:
     ensure_customer_segment_active_column()
     ensure_supply_movement_sale_column()
     CustomerSegment.ensure_defaults()
-    # `kind` column must exist before ensure_defaults() (it creates the
-    # supplies warehouse, which queries by kind).
+    # `kind`/`stage` columns must exist before ensure_defaults() (it
+    # creates the supplies + fermentation warehouses, which query by them).
     ensure_warehouse_kind_column()
+    ensure_warehouse_stage_column()
     Warehouse.ensure_defaults()
     ensure_inventory_item_warehouse_column()
     ensure_stock_movement_warehouse_column()

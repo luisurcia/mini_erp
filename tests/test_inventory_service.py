@@ -1,6 +1,6 @@
 import pytest
 
-from app.exceptions import InsufficientStockError, NotFoundError
+from app.exceptions import InsufficientStockError, MiniErpError, NotFoundError
 from app.extensions import db
 from app.models.warehouse import Warehouse
 from app.services.inventory_service import InventoryService
@@ -95,3 +95,36 @@ def test_transfer_to_same_warehouse_raises(app):
     service = InventoryService()
     with pytest.raises(ValueError):
         service.transfer(1, 1, 1, 5)
+
+
+def test_transfer_follows_the_flow_fermentation_to_main_to_distribution(
+    app, product, warehouse, fermentation_warehouse, distribution_warehouse
+):
+    service = InventoryService()
+    service.restock(product.id, fermentation_warehouse.id, 30)
+
+    # Fermentación → Principal is allowed.
+    service.transfer(product.id, fermentation_warehouse.id, warehouse.id, 30)
+    # Principal → distribución is allowed.
+    service.transfer(product.id, warehouse.id, distribution_warehouse.id, 10)
+
+    at_dist = service.inventory_repo.get_by_product_and_warehouse(
+        product.id, distribution_warehouse.id
+    )
+    assert at_dist.quantity_on_hand == 10
+
+
+def test_transfer_rejects_routes_that_skip_the_flow(
+    app, product, warehouse, fermentation_warehouse, distribution_warehouse
+):
+    service = InventoryService()
+    service.restock(product.id, fermentation_warehouse.id, 20)
+
+    # Fermentación straight to a distribution warehouse is not allowed.
+    with pytest.raises(MiniErpError):
+        service.transfer(
+            product.id, fermentation_warehouse.id, distribution_warehouse.id, 5
+        )
+    # Neither is sending stock back up the flow.
+    with pytest.raises(MiniErpError):
+        service.transfer(product.id, warehouse.id, fermentation_warehouse.id, 5)

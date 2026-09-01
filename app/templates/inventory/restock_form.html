@@ -1,12 +1,20 @@
 {% extends "base.html" %}
 {% from 'bootstrap5/form.html' import render_form %}
-{% block title %}{{ _("Restock") }}{% endblock %}
+{% block title %}{{ _("Restock") if can_restock else _("Reorder level") }}{% endblock %}
 {% block content %}
-<h1 class="h3 mb-3">{{ _("Restock: %(name)s", name=product_label(product)) }}</h1>
+<h1 class="h3 mb-3">
+  {% if can_restock %}{{ _("Restock: %(name)s", name=product_label(product)) }}
+  {% else %}{{ _("Reorder level: %(name)s", name=product_label(product)) }}{% endif %}
+</h1>
 <p class="text-muted">
   {{ _("Warehouse: %(warehouse)s", warehouse=warehouse.name) }} &middot;
   {{ _("Currently on hand: %(qty)s", qty=on_hand) }}
 </p>
+{% if not can_restock %}
+<p class="text-muted small">
+  {{ _("This warehouse receives stock only by transfer from %(name)s.", name="Bodega Principal") }}
+</p>
+{% endif %}
 <div class="card p-4" style="max-width: 480px;">
   {{ render_form(form) }}
 </div>

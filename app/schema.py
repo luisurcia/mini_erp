@@ -101,6 +101,47 @@ def ensure_warehouse_kind_column() -> None:
         db.session.commit()
 
 
+def ensure_warehouse_stage_column() -> None:
+    """Add `warehouses.stage` and classify existing warehouses into the
+    fermentation → main → distribution flow (#86).
+
+    - Bodega Principal (is_default) → `main`.
+    - A warehouse whose name contains "fermenta" (the Scoby team may have
+      created one called "En Fermentación") → renamed to
+      `Bodega de Fermentación` and set to `fermentation`.
+    - Everything else stays `distribution` (the ADD COLUMN default).
+    - `Warehouse.ensure_defaults()` runs right after and creates the
+      fermentation warehouse if none was found.
+    """
+    inspector = inspect(db.engine)
+    columns = {column["name"] for column in inspector.get_columns("warehouses")}
+    if "stage" not in columns:
+        db.session.execute(
+            text(
+                "ALTER TABLE warehouses ADD COLUMN stage "
+                "VARCHAR(20) NOT NULL DEFAULT 'distribution'"
+            )
+        )
+        db.session.commit()
+
+    ferm = Warehouse.query.filter(
+        Warehouse.stage != Warehouse.STAGE_FERMENTATION,
+        Warehouse.name.ilike("%fermenta%"),
+    ).first()
+    if ferm is not None:
+        ferm.name = Warehouse.FERMENTATION_NAME
+        ferm.stage = Warehouse.STAGE_FERMENTATION
+        ferm.kind = Warehouse.KIND_DISTRIBUTION
+
+    principal = Warehouse.query.filter_by(
+        is_default=True, kind=Warehouse.KIND_DISTRIBUTION
+    ).first()
+    if principal is not None and principal.stage != Warehouse.STAGE_MAIN:
+        principal.stage = Warehouse.STAGE_MAIN
+
+    db.session.commit()
+
+
 def consolidate_supply_stock_into_supplies_warehouse() -> None:
     """Move every SupplyItem into the single supplies warehouse, summing
     quantities, and repoint the SupplyMovement history so it stays

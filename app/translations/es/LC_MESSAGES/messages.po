@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-09-01 09:29-0400\n"
+"POT-Creation-Date: 2026-09-01 18:36-0400\n"
 "PO-Revision-Date: 2026-08-24 17:58-0400\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: es\n"
@@ -247,7 +247,7 @@ msgstr "Nombre"
 #: app/blueprints/company/forms.py:63 app/blueprints/inventory/forms.py:27
 #: app/blueprints/products/forms.py:23 app/blueprints/supplies/forms.py:16
 #: app/templates/company/segments_list.html:24
-#: app/templates/inventory/warehouses_list.html:32
+#: app/templates/inventory/warehouses_list.html:36
 #: app/templates/products/index.html:32 app/templates/supplies/index.html:34
 msgid "Active"
 msgstr "Activo"
@@ -411,6 +411,7 @@ msgid "Quantity to add"
 msgstr "Cantidad a agregar"
 
 #: app/blueprints/inventory/forms.py:19 app/templates/dashboard/index.html:87
+#: app/templates/inventory/restock_form.html:3
 msgid "Reorder level"
 msgstr "Nivel de reposición"
 
@@ -449,41 +450,41 @@ msgstr "La bodega de origen y destino deben ser distintas."
 msgid "Product or warehouse not found."
 msgstr "Producto o bodega no encontrada."
 
-#: app/blueprints/inventory/routes.py:73
+#: app/blueprints/inventory/routes.py:78
 #, python-format
 msgid "Restocked %(qty)s units of %(name)s in %(warehouse)s."
 msgstr "Se reabastecieron %(qty)s unidades de %(name)s en %(warehouse)s."
 
-#: app/blueprints/inventory/routes.py:84 app/blueprints/supplies/routes.py:139
+#: app/blueprints/inventory/routes.py:89 app/blueprints/supplies/routes.py:139
 msgid "Reorder level updated."
 msgstr "Nivel de reposición actualizado."
 
-#: app/blueprints/inventory/routes.py:133
+#: app/blueprints/inventory/routes.py:149
 #, python-format
 msgid "Transferred %(qty)s units of %(name)s from %(from_wh)s to %(to_wh)s."
 msgstr ""
 "Se traspasaron %(qty)s unidades de %(name)s desde %(from_wh)s hacia "
 "%(to_wh)s."
 
-#: app/blueprints/inventory/routes.py:156 app/blueprints/products/routes.py:100
+#: app/blueprints/inventory/routes.py:175 app/blueprints/products/routes.py:100
 #: app/blueprints/supplies/routes.py:189
 msgid "Product not found."
 msgstr "Producto no encontrado."
 
-#: app/blueprints/inventory/routes.py:181
+#: app/blueprints/inventory/routes.py:200
 #, python-format
 msgid "Warehouse '%(name)s' created."
 msgstr "Bodega '%(name)s' creada."
 
-#: app/blueprints/inventory/routes.py:193
+#: app/blueprints/inventory/routes.py:212
 msgid "Warehouse not found."
 msgstr "Bodega no encontrada."
 
-#: app/blueprints/inventory/routes.py:200
+#: app/blueprints/inventory/routes.py:219
 msgid "The supplies warehouse can't be deactivated."
 msgstr "No se puede desactivar la bodega de insumos."
 
-#: app/blueprints/inventory/routes.py:205
+#: app/blueprints/inventory/routes.py:224
 #, python-format
 msgid "Warehouse '%(name)s' updated."
 msgstr "Bodega '%(name)s' actualizada."
@@ -785,7 +786,7 @@ msgstr "Estado"
 
 #: app/templates/company/segments_list.html:26
 #: app/templates/inventory/index.html:29
-#: app/templates/inventory/warehouses_list.html:34
+#: app/templates/inventory/warehouses_list.html:38
 #: app/templates/products/index.html:34 app/templates/supplies/index.html:36
 #: app/templates/supplies/recipe_form.html:20
 #: app/templates/supplies/recipes.html:27 app/templates/supplies/stock.html:29
@@ -794,7 +795,7 @@ msgstr "Inactivo"
 
 #: app/templates/company/segments_list.html:30
 #: app/templates/customers/index.html:26
-#: app/templates/inventory/warehouses_list.html:38
+#: app/templates/inventory/warehouses_list.html:42
 #: app/templates/products/index.html:38 app/templates/supplies/index.html:40
 #: app/templates/supplies/recipes.html:38 app/templates/users/index.html:19
 msgid "Edit"
@@ -941,7 +942,7 @@ msgid "No movements yet."
 msgstr "Aún no hay movimientos."
 
 #: app/templates/inventory/history.html:25
-#: app/templates/inventory/warehouses_list.html:47
+#: app/templates/inventory/warehouses_list.html:51
 msgid "Back to inventory"
 msgstr "Volver al inventario"
 
@@ -972,25 +973,35 @@ msgstr ""
 "El stock igual o menor al nivel de reposición de esa bodega se resalta "
 "así."
 
-#: app/templates/inventory/restock_form.html:5
+#: app/templates/inventory/restock_form.html:6
 #: app/templates/supplies/restock_form.html:5
 #, python-format
 msgid "Restock: %(name)s"
 msgstr "Reabastecer: %(name)s"
 
 #: app/templates/inventory/restock_form.html:7
+#, python-format
+msgid "Reorder level: %(name)s"
+msgstr "Nivel de reposición: %(name)s"
+
+#: app/templates/inventory/restock_form.html:10
 #: app/templates/supplies/restock_form.html:7
 #, python-format
 msgid "Warehouse: %(warehouse)s"
 msgstr "Bodega: %(warehouse)s"
 
-#: app/templates/inventory/restock_form.html:8
+#: app/templates/inventory/restock_form.html:11
 #: app/templates/supplies/restock_form.html:8
 #, python-format
 msgid "Currently on hand: %(qty)s"
 msgstr "Disponible actualmente: %(qty)s"
 
-#: app/templates/inventory/transfer_form.html:31
+#: app/templates/inventory/restock_form.html:15
+#, python-format
+msgid "This warehouse receives stock only by transfer from %(name)s."
+msgstr "Esta bodega recibe stock solo por traspaso desde %(name)s."
+
+#: app/templates/inventory/transfer_form.html:32
 msgid "Current stock:"
 msgstr "Stock actual:"
 
@@ -1015,10 +1026,18 @@ msgid "Type"
 msgstr "Tipo"
 
 #: app/templates/inventory/warehouses_list.html:27
+msgid "Fermentation"
+msgstr "Fermentación"
+
+#: app/templates/inventory/warehouses_list.html:29
+msgid "Main"
+msgstr "Principal"
+
+#: app/templates/inventory/warehouses_list.html:31
 msgid "Distribution"
 msgstr "Distribución"
 
-#: app/templates/inventory/warehouses_list.html:42
+#: app/templates/inventory/warehouses_list.html:46
 msgid "No warehouses yet."
 msgstr "Aún no hay bodegas."
 

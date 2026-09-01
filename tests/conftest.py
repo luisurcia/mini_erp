@@ -29,7 +29,28 @@ def customer(app):
 
 @pytest.fixture()
 def warehouse(app):
-    w = Warehouse(name="Main Warehouse", is_active=True, is_default=True)
+    w = Warehouse(
+        name="Bodega Principal",
+        is_active=True,
+        is_default=True,
+        stage=Warehouse.STAGE_MAIN,
+    )
+    db.session.add(w)
+    db.session.commit()
+    return w
+
+
+@pytest.fixture()
+def fermentation_warehouse(app):
+    w = Warehouse(name="Bodega de Fermentación", stage=Warehouse.STAGE_FERMENTATION)
+    db.session.add(w)
+    db.session.commit()
+    return w
+
+
+@pytest.fixture()
+def distribution_warehouse(app):
+    w = Warehouse(name="Bodega Julien", stage=Warehouse.STAGE_DISTRIBUTION)
     db.session.add(w)
     db.session.commit()
     return w

@@ -54,10 +54,10 @@ def _seed_admin(app: Flask) -> None:
 
 def _seed_flavors_and_products() -> dict[str, Product]:
     inventory_service = InventoryService()
-    # Demo stock all lands in the main warehouse, same as a real upgrade
-    # from before multi-warehouse stock existed — the other two start
-    # empty until someone restocks them there.
+    # Demo stock: some fermenting, most already moved to Principal and
+    # ready to sell. Julien / Mario start empty (they fill by transfer).
     main_warehouse_id = Warehouse.query.filter_by(is_default=True).first().id
+    fermentation_warehouse_id = Warehouse.ensure_fermentation_warehouse().id
     products: dict[str, Product] = {}
 
     for name, description in FLAVORS:
@@ -79,6 +79,9 @@ def _seed_flavors_and_products() -> dict[str, Product]:
 
         inventory_service.create_inventory_item(
             product.id, main_warehouse_id, initial_qty=100, reorder_level=20
+        )
+        inventory_service.create_inventory_item(
+            product.id, fermentation_warehouse_id, initial_qty=40, reorder_level=0
         )
 
     db.session.commit()

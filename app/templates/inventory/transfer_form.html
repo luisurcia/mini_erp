@@ -28,6 +28,7 @@
 <script>
 (function () {
   var stock = {{ stock_levels|tojson }};
+  var stages = {{ warehouse_stages|tojson }};
   var LABEL = {{ _("Current stock:")|tojson }};
   var productSel = document.getElementById("product_id");
   var fromSel = document.getElementById("from_warehouse_id");
@@ -41,7 +42,21 @@
     return stock[productSel.value + "-" + warehouseId] || 0;
   }
 
+  // Keep the destination in step with the flow: Fermentación → Principal,
+  // Principal → distribución (#86). The server validates too.
+  function narrowDestination() {
+    var wantStage = stages[fromSel.value] === "fermentation" ? "main" : "distribution";
+    Array.prototype.forEach.call(toSel.options, function (opt) {
+      opt.hidden = stages[opt.value] !== wantStage;
+    });
+    if (toSel.selectedOptions[0] && toSel.selectedOptions[0].hidden) {
+      var first = Array.prototype.find.call(toSel.options, function (o) { return !o.hidden; });
+      if (first) toSel.value = first.value;
+    }
+  }
+
   function render() {
+    narrowDestination();
     var available = qtyAt(fromSel.value);
     fromHint.textContent = LABEL + " " + available;
     toHint.textContent = LABEL + " " + qtyAt(toSel.value);

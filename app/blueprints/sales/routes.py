@@ -67,7 +67,7 @@ def new_sale():
         form.sale_date.data = date.today()
 
     products = ProductRepository().get_active()
-    warehouses = WarehouseRepository().get_distribution()
+    warehouses = WarehouseRepository().get_sellable()
     stock = {
         (item.product_id, item.warehouse_id): item for item in InventoryRepository().get_all()
     }
