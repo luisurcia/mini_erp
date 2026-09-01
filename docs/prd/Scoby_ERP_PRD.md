@@ -4,11 +4,11 @@
 
 > PRD por **ingeniería inversa**: describe lo que la rama `client/scoby` efectivamente hace hoy, reconstruido a partir del código y de lo desplegado en producción (`https://titourcia.com/scobyerp`). Reemplaza como referencia viva a los documentos genéricos `Kombucha_ERP_PRD.md` / `Kombucha_ERP_PRD_Requerimientos.md`, que quedan solo como registro histórico de la evaluación inicial (25 ago 2026).
 >
-> El seguimiento del trabajo se hizo en GitHub Issues: épica [#20](https://github.com/luisurcia/mini_erp/issues/20) (personalización base, 15 sub-issues), épica [#36](https://github.com/luisurcia/mini_erp/issues/36) (segunda ronda, 8 sub-issues) y épica [#47](https://github.com/luisurcia/mini_erp/issues/47) (tercera ronda, 4 sub-issues) — todas cerradas.
+> El seguimiento del trabajo se hizo en GitHub Issues: épica [#20](https://github.com/luisurcia/mini_erp/issues/20) (personalización base, 15 sub-issues), épica [#36](https://github.com/luisurcia/mini_erp/issues/36) (segunda ronda, 8 sub-issues), épica [#47](https://github.com/luisurcia/mini_erp/issues/47) (tercera ronda, 4 sub-issues) y épica [#76](https://github.com/luisurcia/mini_erp/issues/76) (cuarta ronda, 6 sub-issues: ajustes de UX y reorganización del menú) — todas cerradas.
 
 | FECHA | ESTADO | BASE | ORIGEN |
 |---|---|---|---|
-| 30 agosto 2026 | En producción | Rama `client/scoby` (commit `1ee90c0`) | Ingeniería inversa del código |
+| 31 agosto 2026 | En producción | Rama `client/scoby` (commit `8bac182`) | Ingeniería inversa del código |
 
 ---
 
@@ -26,7 +26,7 @@ El equipo de Scoby Kombucha: producción/bodega, ventas y administración. Reemp
 
 ### MOD-01 · Productos — *catálogo*
 
-El mantenedor del producto terminado, separado del stock (el stock vive en Inventario).
+El mantenedor del producto terminado, separado del stock (el stock vive en Inventario). Es **mantención poco frecuente**: se llega desde el menú **Configuración** del navbar y **solo el administrador** tiene acceso (bodeguero y vendedor no lo necesitan — el selector de productos de la venta funciona igual sin ese permiso).
 
 - Campos: **sabor**, **nombre**, **nombre corto** (para columnas angostas), **SKU** único, **tamaño (ml)**, **precio unitario**, activo/inactivo.
 - Casi todos los campos son **opcionales de mostrar**: desde Empresa se puede apagar Sabor, Nombre corto, Tamaño, SKU y Precio. Scoby dobla el sabor dentro del nombre y no usa precio de catálogo (lo pone por venta), así que esos campos pueden ir ocultos.
@@ -40,6 +40,7 @@ El mantenedor del producto terminado, separado del stock (el stock vive en Inven
 - El stock se lleva por **(producto × bodega)**: una matriz con productos en las filas y bodegas de distribución en las columnas.
 - Por celda: **reposición** de stock y **nivel de reposición** editable. El stock igual o menor al nivel se **resalta** en la pantalla.
 - **Traspaso de stock entre bodegas de distribución**: al elegir producto + bodega origen + bodega destino, la pantalla muestra el **stock actual** de cada una (en rojo si la cantidad ingresada supera lo disponible en el origen). Valida stock suficiente y que origen ≠ destino.
+- **Gestión de bodegas** (alta / renombrar / activar-desactivar): solo administrador, desde el menú **Configuración** del navbar.
 - **Historial de movimientos** por producto: reposición, venta, ajuste, traspaso — cada uno con fecha, bodega, cantidad y nota.
 - El sistema **no deja vender más producto del que hay** en la bodega elegida.
 
@@ -47,7 +48,7 @@ El mantenedor del producto terminado, separado del stock (el stock vive en Inven
 
 - Mantenedor de insumos: nombre, unidad, precio unitario, activo/inactivo.
 - **Todo el stock de insumos vive en una única "Bodega de Insumos"** (no se puede desactivar). Pantalla de stock con reposición por celda, nivel de reposición y resaltado de bajo stock, igual que Inventario pero de una sola columna.
-- **Insumos por producto (receta):** en `Insumos → Insumos por producto` se define, por producto, cuántas unidades de cada insumo consume por unidad vendida. Un producto sin receta no descuenta nada. Un insumo desactivado que ya está en una receta se sigue descontando.
+- **Insumos por producto (receta):** en `Insumos → Insumos por producto` se define, por producto, cuántas unidades de cada insumo consume por unidad vendida. Un producto sin receta no descuenta nada. Un insumo desactivado que ya está en una receta se sigue descontando. Editar recetas es **solo administrador** (es configuración de dato maestro, igual que el catálogo de productos); el bodeguero sí administra el catálogo de insumos y su stock.
 - **Consumo automático en la venta:** al guardar una venta, por cada línea se busca la receta del producto, se suma por insumo entre todas las líneas y se descuenta de la Bodega de Insumos. Queda registrado como movimiento de insumo asociado a esa venta.
 - El consumo de insumos **nunca bloquea la venta**: si un insumo queda en negativo, la venta se registra igual y aparece un **aviso** con la lista de faltantes (además del resaltado de bajo stock en la pantalla de insumos).
 
@@ -65,7 +66,8 @@ El mantenedor del producto terminado, separado del stock (el stock vive en Inven
 
 ### MOD-05 · Clientes — *RUT, dirección de despacho, segmentación*
 
-- Campos: **nombre**, **sobrenombre**, **RUT** (único, obligatorio), **segmento**, email, teléfono, **usuario de Instagram**, **dirección de despacho estructurada** (calle, número, ciudad, comuna, región), notas.
+- Campos: **nombre**, **sobrenombre**, **RUT** (único), **segmento**, email, teléfono, **usuario de Instagram**, **dirección de despacho estructurada** (calle, número, ciudad, comuna, región), notas.
+- **Datos mínimos para crear un cliente: nombre + segmento.** El resto es opcional, incluido el RUT (no todo cliente se factura; se puede completar después). Los campos obligatorios se marcan con **asterisco rojo** y una leyenda; el selector de segmento arranca en "— Selecciona un segmento —" para que sea una elección consciente.
 - La dirección se muestra compuesta en una línea; comuna/región son texto libre (sin catálogo oficial por ahora).
 - **Segmentos de cliente** (Persona natural / Comercio / Distribuidor / Otros): catálogo simple administrado desde Empresa. Los segmentos se **desactivan**, no se borran; al editar un cliente, su segmento actual sigue seleccionable aunque esté inactivo.
 
@@ -84,14 +86,17 @@ El mantenedor del producto terminado, separado del stock (el stock vive en Inven
 ### MOD-08 · Usuarios y roles — *acceso por función y por módulo*
 
 - Tres roles: **Administrador**, **Bodeguero**, **Vendedor** (reemplazaron a Administrador/Editor/Lector).
-  - **Bodeguero:** Productos, Inventario, Insumos.
-  - **Vendedor:** Ventas, Productos, Top clientes, Clientes.
-  - **Administrador:** todo, más Usuarios y Empresa.
-- El acceso se aplica **de verdad**: un rol sin un módulo recibe error 403 si entra por URL directa, no solo se le oculta el menú. La gestión de bodegas queda restringida a administrador aunque el bodeguero tenga Inventario.
+  - **Bodeguero:** Inventario, Insumos (stock).
+  - **Vendedor:** Ventas, Top clientes, Clientes.
+  - **Administrador:** todo, más el **catálogo de productos**, las **recetas de insumos**, la **gestión de bodegas**, Usuarios y Empresa — todo lo que es dato maestro / mantención poco frecuente, agrupado en el menú **Configuración**.
+- El acceso se aplica **de verdad**: un rol sin un módulo recibe error 403 si entra por URL directa, no solo se le oculta el menú.
+- El catálogo de productos es **solo administrador** porque es dato maestro (se toca pocas veces, y un cambio se propaga a inventario, ventas, recetas y reportes). El vendedor no lo necesita: el selector de productos de la venta no depende de ese permiso.
 - El usuario tiene **nombre y apellido** (se muestran en vez del `usuario` de login) e **idioma propio**.
 - Cada persona cambia su propia contraseña y su propio idioma.
 
 ### MOD-09 · Empresa — *configuración global*
+
+Solo administrador, desde el menú **Configuración** del navbar.
 
 - **IVA:** tasa configurable (hoy 19%) y si aplica por defecto en ventas nuevas.
 - **Moneda:** código, símbolo y **cantidad de decimales** (por defecto CLP / `$` / **0 decimales** — sin centavos en toda la app). Todos los montos se formatean con esta configuración y el redondeo del IVA la respeta.
@@ -101,6 +106,11 @@ El mantenedor del producto terminado, separado del stock (el stock vive en Inven
 
 ### Transversal
 
+- **Navegación:** el navbar muestra los módulos operativos (Dashboard, Inventario, Insumos, Ventas, Top clientes, Clientes) y dos menús desplegables:
+  - **Configuración** (solo administrador): Productos, Gestionar bodegas, Usuarios, Empresa — las secciones de mantención poco frecuente.
+  - **Menú de cuenta** bajo el nombre y rol del usuario: Idioma, Cambiar contraseña, Cerrar sesión.
+  - "Dashboard" se llama así en los tres idiomas también en español (antes "Panel").
+- **Campos obligatorios:** en los formularios se marcan con **asterisco rojo** después de la etiqueta.
 - **Idioma por usuario:** español, inglés o **francés**. El idioma propio del usuario gana sobre el de la empresa. Afecta la interfaz completa (menús, KPIs, gráficos, meses, mensajes), el formato de números y las etiquetas de código (roles, estados, motivos de movimiento). Los datos ingresados (nombres de segmentos, bodegas, productos, insumos, clientes) quedan como se escribieron.
 - **Identidad visual Scoby:** nombre "Scoby ERP" en login/navbar/título, paleta corporativa (crema, tinta, rosa + acentos teal/mostaza/naranja), tema claro fijo.
 - **Móvil:** la aplicación es responsive; los controles y el menú están ajustados para verse bien en celular (Android/iPhone).
@@ -130,8 +140,9 @@ El mantenedor del producto terminado, separado del stock (el stock vive en Inven
 | Insumos | No existía como consumo | Módulo Insumos + receta por producto + descuento automático en la venta |
 | Cobranza | No existía | Estado por pagar / pagado + referencia |
 | Pre-venta | Módulo Oportunidades (embudo) | Eliminado → vista Top 10 clientes por consumo |
-| Cliente | Nombre, email, teléfono, IG, notas | + RUT, sobrenombre, segmento, dirección de despacho estructurada |
-| Roles | admin / editor / lector | admin / bodeguero / vendedor, por módulo, con 403 real |
+| Cliente | Nombre, email, teléfono, IG, notas | + RUT, sobrenombre, segmento, dirección de despacho estructurada; mínimo para crear = nombre + segmento |
+| Roles | admin / editor / lector | admin / bodeguero / vendedor, por módulo, con 403 real; catálogo de productos y recetas = solo admin |
+| Menú | Todos los ítems sueltos en el navbar | Menú "Configuración" (mantención) + menú de cuenta bajo el nombre del usuario |
 | Idioma | es / en, a nivel empresa | es / en / fr, por usuario |
 | Moneda | Formato fijo con decimales | Configurable; CLP con 0 decimales por defecto |
 | Marca | "Kombucha ERP" neutro | "Scoby ERP" + paleta corporativa |
@@ -148,10 +159,10 @@ El mantenedor del producto terminado, separado del stock (el stock vive en Inven
 ## 07 Pendientes conocidos
 
 - **Recetas de insumos en producción:** los productos existentes se migraron **sin receta**. Hasta que el equipo configure en `Insumos → Insumos por producto` qué insumos consume cada kombucha, las ventas en producción no descuentan insumos. El stock de insumos ya está consolidado en la Bodega de Insumos.
-- **Datos de usuarios en producción:** los 4 usuarios existentes (admin, Mario, Eduardo, Julien) tienen nombre/apellido en blanco y quedaron todos con rol `admin`; conviene cargar sus nombres y reasignarles rol `bodeguero` / `venta` según corresponda.
+- **Datos de usuarios en producción:** los 4 usuarios existentes (admin, Mario, Eduardo, Julien) tienen nombre/apellido en blanco y quedaron todos con rol `admin`; conviene cargar sus nombres y reasignarles rol `bodeguero` / `venta` según corresponda. Al hacerlo, tener presente que `bodeguero` y `venta` ya **no** ven el catálogo de productos ni las recetas (pasaron a solo administrador).
 - **Notificaciones** — ver spike [#52](https://github.com/luisurcia/mini_erp/issues/52).
 - **Bug francés pendiente** de housekeeping en los catálogos de traducción (entradas obsoletas del módulo Oportunidades eliminado).
 
 ---
 
-*Scoby ERP — PRD por ingeniería inversa · rama `client/scoby` · agosto 2026*
+*Scoby ERP — PRD por ingeniería inversa · rama `client/scoby` · commit `8bac182` · 31 agosto 2026*
