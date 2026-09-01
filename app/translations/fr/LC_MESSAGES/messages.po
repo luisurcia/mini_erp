@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-09-01 00:43-0400\n"
+"POT-Creation-Date: 2026-09-01 09:29-0400\n"
 "PO-Revision-Date: 2026-08-24 17:58-0400\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: fr\n"
@@ -55,62 +55,64 @@ msgstr "Ajustement"
 msgid "Transfer"
 msgstr "Transfert"
 
-#: app/reports.py:45 app/reports.py:51
+#: app/reports.py:49 app/reports.py:55
 msgid "Unpaid sales"
 msgstr "Ventes impayées"
 
-#: app/reports.py:53
+#: app/reports.py:57
 #, python-format
 msgid "Generated on %(date)s"
 msgstr "Généré le %(date)s"
 
-#: app/reports.py:61 app/templates/inventory/history.html:7
+#: app/reports.py:73
+#, python-format
+msgid "%(num)s sale"
+msgid_plural "%(num)s sales"
+msgstr[0] "%(num)s vente"
+msgstr[1] "%(num)s ventes"
+
+#: app/reports.py:77 app/templates/inventory/history.html:7
 #: app/templates/sales/index.html:25 app/templates/supplies/history.html:7
 msgid "Date"
 msgstr "Date"
 
-#: app/blueprints/sales/forms.py:38 app/reports.py:62
-#: app/templates/sales/index.html:25 app/templates/top_customers/index.html:43
-msgid "Customer"
-msgstr "Client"
-
-#: app/reports.py:63 app/templates/sales/index.html:25
+#: app/reports.py:78 app/templates/sales/index.html:25
 msgid "Invoice #"
 msgstr "N° de facture"
 
-#: app/reports.py:64 app/templates/sales/index.html:25
+#: app/reports.py:79 app/templates/sales/index.html:25
 msgid "Tax"
 msgstr "TVA"
 
-#: app/reports.py:65
+#: app/reports.py:80
 msgid "Days overdue"
 msgstr "Jours de retard"
 
-#: app/reports.py:66 app/templates/inventory/index.html:20
+#: app/reports.py:81 app/templates/inventory/index.html:20
 #: app/templates/inventory/index.html:53 app/templates/sales/detail.html:59
 #: app/templates/sales/index.html:25 app/templates/sales/sale_form.html:76
 #: app/templates/supplies/stock.html:20 app/templates/supplies/stock.html:53
 msgid "Total"
 msgstr "Total"
 
-#: app/reports.py:79 app/templates/sales/index.html:41
+#: app/reports.py:98 app/templates/sales/index.html:41
 msgid "Yes"
 msgstr "Oui"
 
-#: app/reports.py:79 app/templates/sales/index.html:41
+#: app/reports.py:98 app/templates/sales/index.html:41
 msgid "No"
 msgstr "Non"
 
-#: app/reports.py:90
-#, python-format
-msgid "%(count)s sales"
-msgstr "%(count)s ventes"
+#: app/reports.py:110 app/templates/sales/detail.html:42
+#: app/templates/sales/detail.html:55 app/templates/sales/sale_form.html:67
+msgid "Subtotal"
+msgstr "Sous-total"
 
-#: app/reports.py:94
+#: app/reports.py:121
 msgid "Total to collect"
 msgstr "Total à encaisser"
 
-#: app/reports.py:129
+#: app/reports.py:157
 msgid "No unpaid sales."
 msgstr "Aucune vente impayée."
 
@@ -538,6 +540,11 @@ msgstr "Enregistrer le paiement"
 #: app/blueprints/sales/forms.py:25
 msgid "Revert payment"
 msgstr "Annuler le paiement"
+
+#: app/blueprints/sales/forms.py:38 app/templates/sales/index.html:25
+#: app/templates/top_customers/index.html:43
+msgid "Customer"
+msgstr "Client"
 
 #: app/blueprints/sales/forms.py:40
 msgid "Sale date"
@@ -1074,11 +1081,6 @@ msgstr "Payée le :"
 #: app/templates/sales/detail.html:42
 msgid "Qty"
 msgstr "Qté"
-
-#: app/templates/sales/detail.html:42 app/templates/sales/detail.html:55
-#: app/templates/sales/sale_form.html:67
-msgid "Subtotal"
-msgstr "Sous-total"
 
 #: app/templates/sales/detail.html:57 app/templates/sales/sale_form.html:71
 #, python-format
