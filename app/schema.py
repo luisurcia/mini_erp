@@ -199,6 +199,21 @@ def ensure_company_language_column() -> None:
         db.session.commit()
 
 
+def ensure_company_name_column() -> None:
+    """Backfill `company_settings.name` for databases created before the
+    company had a display name (used on generated documents, #81)."""
+    inspector = inspect(db.engine)
+    columns = {column["name"] for column in inspector.get_columns("company_settings")}
+    if "name" not in columns:
+        db.session.execute(
+            text(
+                "ALTER TABLE company_settings ADD COLUMN name "
+                "VARCHAR(120) NOT NULL DEFAULT 'Scoby Kombucha'"
+            )
+        )
+        db.session.commit()
+
+
 def ensure_company_product_field_toggles() -> None:
     """Backfill the product-form visibility toggles for databases created
     before per-field simplification existed.

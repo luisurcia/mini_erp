@@ -11,6 +11,7 @@ from app.schema import (
     consolidate_supply_stock_into_supplies_warehouse,
     ensure_company_currency_columns,
     ensure_company_language_column,
+    ensure_company_name_column,
     ensure_company_product_field_toggles,
     ensure_customer_columns,
     ensure_customer_nickname_and_structured_address,
@@ -51,6 +52,7 @@ def _upgrade_schema() -> None:
     ensure_sale_tax_columns()
     ensure_sale_payment_columns()
     ensure_company_language_column()
+    ensure_company_name_column()
     ensure_company_product_field_toggles()
     ensure_company_currency_columns()
     ensure_customer_columns()

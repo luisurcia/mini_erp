@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-09-01 00:31-0400\n"
+"POT-Creation-Date: 2026-09-01 00:43-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -29,11 +29,11 @@ msgstr ""
 msgid "Cancelled"
 msgstr ""
 
-#: app/__init__.py:108 app/templates/sales/index.html:15
+#: app/__init__.py:108 app/templates/sales/index.html:16
 msgid "Paid"
 msgstr ""
 
-#: app/__init__.py:109 app/templates/sales/index.html:13
+#: app/__init__.py:109 app/templates/sales/index.html:14
 msgid "Unpaid"
 msgstr ""
 
@@ -52,6 +52,65 @@ msgstr ""
 
 #: app/__init__.py:129 app/blueprints/inventory/forms.py:37
 msgid "Transfer"
+msgstr ""
+
+#: app/reports.py:45 app/reports.py:51
+msgid "Unpaid sales"
+msgstr ""
+
+#: app/reports.py:53
+#, python-format
+msgid "Generated on %(date)s"
+msgstr ""
+
+#: app/reports.py:61 app/templates/inventory/history.html:7
+#: app/templates/sales/index.html:25 app/templates/supplies/history.html:7
+msgid "Date"
+msgstr ""
+
+#: app/blueprints/sales/forms.py:38 app/reports.py:62
+#: app/templates/sales/index.html:25 app/templates/top_customers/index.html:43
+msgid "Customer"
+msgstr ""
+
+#: app/reports.py:63 app/templates/sales/index.html:25
+msgid "Invoice #"
+msgstr ""
+
+#: app/reports.py:64 app/templates/sales/index.html:25
+msgid "Tax"
+msgstr ""
+
+#: app/reports.py:65
+msgid "Days overdue"
+msgstr ""
+
+#: app/reports.py:66 app/templates/inventory/index.html:20
+#: app/templates/inventory/index.html:53 app/templates/sales/detail.html:59
+#: app/templates/sales/index.html:25 app/templates/sales/sale_form.html:76
+#: app/templates/supplies/stock.html:20 app/templates/supplies/stock.html:53
+msgid "Total"
+msgstr ""
+
+#: app/reports.py:79 app/templates/sales/index.html:41
+msgid "Yes"
+msgstr ""
+
+#: app/reports.py:79 app/templates/sales/index.html:41
+msgid "No"
+msgstr ""
+
+#: app/reports.py:90
+#, python-format
+msgid "%(count)s sales"
+msgstr ""
+
+#: app/reports.py:94
+msgid "Total to collect"
+msgstr ""
+
+#: app/reports.py:129
+msgid "No unpaid sales."
 msgstr ""
 
 #: app/blueprints/auth/forms.py:10 app/blueprints/users/forms.py:19
@@ -88,7 +147,7 @@ msgstr ""
 msgid "Change password"
 msgstr ""
 
-#: app/blueprints/auth/forms.py:32 app/blueprints/company/forms.py:37
+#: app/blueprints/auth/forms.py:32 app/blueprints/company/forms.py:40
 #: app/templates/auth/change_language.html:3
 #: app/templates/auth/change_language.html:8 app/templates/base.html:59
 msgid "Language"
@@ -115,58 +174,62 @@ msgid "Language updated."
 msgstr ""
 
 #: app/blueprints/company/forms.py:18
+msgid "Company name"
+msgstr ""
+
+#: app/blueprints/company/forms.py:21
 msgid "Tax rate (%)"
 msgstr ""
 
-#: app/blueprints/company/forms.py:20
+#: app/blueprints/company/forms.py:23
 msgid "Include tax by default on new sales"
 msgstr ""
 
-#: app/blueprints/company/forms.py:22
+#: app/blueprints/company/forms.py:25
 msgid "Ask for a short name when creating a product"
 msgstr ""
 
-#: app/blueprints/company/forms.py:25
+#: app/blueprints/company/forms.py:28
 msgid "Ask for size (ml) when creating a product"
 msgstr ""
 
-#: app/blueprints/company/forms.py:28
+#: app/blueprints/company/forms.py:31
 msgid "Ask for a SKU when creating a product"
 msgstr ""
 
-#: app/blueprints/company/forms.py:31
+#: app/blueprints/company/forms.py:34
 msgid "Ask for a flavor when creating a product"
 msgstr ""
 
-#: app/blueprints/company/forms.py:34
+#: app/blueprints/company/forms.py:37
 msgid "Ask for a unit price when creating a product"
 msgstr ""
 
-#: app/blueprints/company/forms.py:42
+#: app/blueprints/company/forms.py:45
 msgid "Currency code"
 msgstr ""
 
-#: app/blueprints/company/forms.py:45
+#: app/blueprints/company/forms.py:48
 msgid "ISO code, e.g. CLP, USD, EUR."
 msgstr ""
 
-#: app/blueprints/company/forms.py:48
+#: app/blueprints/company/forms.py:51
 msgid "Currency symbol"
 msgstr ""
 
-#: app/blueprints/company/forms.py:51
+#: app/blueprints/company/forms.py:54
 msgid "Decimal places shown for amounts"
 msgstr ""
 
-#: app/blueprints/company/forms.py:53
+#: app/blueprints/company/forms.py:56
 msgid "Chilean pesos (CLP) use 0 — no decimals anywhere in the app."
 msgstr ""
 
-#: app/blueprints/company/forms.py:55
+#: app/blueprints/company/forms.py:58
 msgid "Save settings"
 msgstr ""
 
-#: app/blueprints/company/forms.py:59 app/blueprints/customers/forms.py:16
+#: app/blueprints/company/forms.py:62 app/blueprints/customers/forms.py:16
 #: app/blueprints/inventory/forms.py:26 app/blueprints/supplies/forms.py:11
 #: app/templates/company/segments_list.html:13
 #: app/templates/customers/index.html:13
@@ -176,7 +239,7 @@ msgstr ""
 msgid "Name"
 msgstr ""
 
-#: app/blueprints/company/forms.py:60 app/blueprints/inventory/forms.py:27
+#: app/blueprints/company/forms.py:63 app/blueprints/inventory/forms.py:27
 #: app/blueprints/products/forms.py:23 app/blueprints/supplies/forms.py:16
 #: app/templates/company/segments_list.html:24
 #: app/templates/inventory/warehouses_list.html:32
@@ -184,24 +247,24 @@ msgstr ""
 msgid "Active"
 msgstr ""
 
-#: app/blueprints/company/forms.py:61
+#: app/blueprints/company/forms.py:64
 msgid "Save segment"
 msgstr ""
 
-#: app/blueprints/company/routes.py:33
+#: app/blueprints/company/routes.py:34
 msgid "Company settings updated."
 msgstr ""
 
-#: app/blueprints/company/routes.py:56
+#: app/blueprints/company/routes.py:57
 #, python-format
 msgid "Segment '%(name)s' created."
 msgstr ""
 
-#: app/blueprints/company/routes.py:68
+#: app/blueprints/company/routes.py:69
 msgid "Segment not found."
 msgstr ""
 
-#: app/blueprints/company/routes.py:77
+#: app/blueprints/company/routes.py:78
 #, python-format
 msgid "Segment '%(name)s' updated."
 msgstr ""
@@ -473,11 +536,6 @@ msgstr ""
 msgid "Revert payment"
 msgstr ""
 
-#: app/blueprints/sales/forms.py:38 app/templates/sales/index.html:20
-#: app/templates/top_customers/index.html:43
-msgid "Customer"
-msgstr ""
-
 #: app/blueprints/sales/forms.py:40
 msgid "Sale date"
 msgstr ""
@@ -494,38 +552,38 @@ msgstr ""
 msgid "Record sale"
 msgstr ""
 
-#: app/blueprints/sales/routes.py:60
+#: app/blueprints/sales/routes.py:80
 msgid "Add at least one product line to the sale."
 msgstr ""
 
-#: app/blueprints/sales/routes.py:71
+#: app/blueprints/sales/routes.py:91
 #, python-format
 msgid "Sale #%(id)s recorded."
 msgstr ""
 
-#: app/blueprints/sales/routes.py:93 app/blueprints/sales/routes.py:112
-#: app/blueprints/sales/routes.py:140
+#: app/blueprints/sales/routes.py:113 app/blueprints/sales/routes.py:132
+#: app/blueprints/sales/routes.py:160
 msgid "Sale not found."
 msgstr ""
 
-#: app/blueprints/sales/routes.py:123
+#: app/blueprints/sales/routes.py:143
 #, python-format
 msgid "Payment registered for sale #%(id)s."
 msgstr ""
 
-#: app/blueprints/sales/routes.py:145
+#: app/blueprints/sales/routes.py:165
 #, python-format
 msgid "Payment reverted for sale #%(id)s."
 msgstr ""
 
-#: app/blueprints/sales/routes.py:161
+#: app/blueprints/sales/routes.py:181
 #, python-format
 msgid ""
 "The sale was recorded, but supply stock is now negative: %(detail)s. "
 "Restock the supplies warehouse."
 msgstr ""
 
-#: app/blueprints/sales/routes.py:204
+#: app/blueprints/sales/routes.py:224
 #, python-format
 msgid "Enter a unit price for %(name)s."
 msgstr ""
@@ -706,7 +764,7 @@ msgstr ""
 
 #: app/templates/company/segments_list.html:14
 #: app/templates/inventory/warehouses_list.html:15
-#: app/templates/products/index.html:18 app/templates/sales/index.html:20
+#: app/templates/products/index.html:18 app/templates/sales/index.html:25
 #: app/templates/supplies/index.html:22
 msgid "Status"
 msgstr ""
@@ -850,11 +908,6 @@ msgstr ""
 msgid "Stock history: %(name)s"
 msgstr ""
 
-#: app/templates/inventory/history.html:7 app/templates/sales/index.html:20
-#: app/templates/supplies/history.html:7
-msgid "Date"
-msgstr ""
-
 #: app/templates/inventory/history.html:7 app/templates/sales/detail.html:42
 #: app/templates/supplies/history.html:7
 msgid "Warehouse"
@@ -886,13 +939,6 @@ msgstr ""
 
 #: app/templates/inventory/index.html:16 app/templates/products/index.html:13
 msgid "Flavor / Product"
-msgstr ""
-
-#: app/templates/inventory/index.html:20 app/templates/inventory/index.html:53
-#: app/templates/sales/detail.html:59 app/templates/sales/index.html:20
-#: app/templates/sales/sale_form.html:76 app/templates/supplies/stock.html:20
-#: app/templates/supplies/stock.html:53
-msgid "Total"
 msgstr ""
 
 #: app/templates/inventory/index.html:43 app/templates/supplies/stock.html:43
@@ -1039,39 +1085,27 @@ msgstr ""
 msgid "New sale"
 msgstr ""
 
-#: app/templates/sales/index.html:9
+#: app/templates/sales/index.html:10
 msgid "Payment filter"
 msgstr ""
 
-#: app/templates/sales/index.html:11
+#: app/templates/sales/index.html:12
 msgid "All"
 msgstr ""
 
-#: app/templates/sales/index.html:20
-msgid "Invoice #"
+#: app/templates/sales/index.html:19
+msgid "Download unpaid sales PDF"
 msgstr ""
 
-#: app/templates/sales/index.html:20
+#: app/templates/sales/index.html:25
 msgid "Payment"
 msgstr ""
 
-#: app/templates/sales/index.html:20
-msgid "Tax"
-msgstr ""
-
-#: app/templates/sales/index.html:36
-msgid "Yes"
-msgstr ""
-
-#: app/templates/sales/index.html:36
-msgid "No"
-msgstr ""
-
-#: app/templates/sales/index.html:38
+#: app/templates/sales/index.html:43
 msgid "View"
 msgstr ""
 
-#: app/templates/sales/index.html:41
+#: app/templates/sales/index.html:46
 msgid "No sales recorded yet."
 msgstr ""
 

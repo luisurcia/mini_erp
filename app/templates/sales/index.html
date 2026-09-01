@@ -6,13 +6,18 @@
   <a class="btn btn-primary" href="{{ url_for('sales.new_sale') }}">+ {{ _("New sale") }}</a>
 </div>
 
-<div class="btn-group btn-group-sm mb-3" role="group" aria-label="{{ _('Payment filter') }}">
-  <a class="btn btn-outline-secondary {{ 'active' if not payment_filter }}"
-     href="{{ url_for('sales.index') }}">{{ _("All") }}</a>
-  <a class="btn btn-outline-secondary {{ 'active' if payment_filter == 'unpaid' }}"
-     href="{{ url_for('sales.index', payment='unpaid') }}">{{ _("Unpaid") }}</a>
-  <a class="btn btn-outline-secondary {{ 'active' if payment_filter == 'paid' }}"
-     href="{{ url_for('sales.index', payment='paid') }}">{{ _("Paid") }}</a>
+<div class="d-flex flex-wrap gap-2 align-items-center mb-3">
+  <div class="btn-group btn-group-sm" role="group" aria-label="{{ _('Payment filter') }}">
+    <a class="btn btn-outline-secondary {{ 'active' if not payment_filter }}"
+       href="{{ url_for('sales.index') }}">{{ _("All") }}</a>
+    <a class="btn btn-outline-secondary {{ 'active' if payment_filter == 'unpaid' }}"
+       href="{{ url_for('sales.index', payment='unpaid') }}">{{ _("Unpaid") }}</a>
+    <a class="btn btn-outline-secondary {{ 'active' if payment_filter == 'paid' }}"
+       href="{{ url_for('sales.index', payment='paid') }}">{{ _("Paid") }}</a>
+  </div>
+  <a class="btn btn-outline-secondary btn-sm" href="{{ url_for('sales.unpaid_pdf') }}">
+    {{ _("Download unpaid sales PDF") }}
+  </a>
 </div>
 
 <div class="card p-3">

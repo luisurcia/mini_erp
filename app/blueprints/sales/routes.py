@@ -1,7 +1,7 @@
 from datetime import date, datetime
 from decimal import Decimal, InvalidOperation
 
-from flask import flash, redirect, render_template, request, url_for
+from flask import Response, flash, redirect, render_template, request, url_for
 from flask_babel import gettext as _
 from flask_login import login_required
 
@@ -13,6 +13,7 @@ from app.models.company import Company
 from app.models.sales import Sale
 from app.models.user import User
 from app.permissions import admin_required, module_required
+from app.reports import build_unpaid_sales_pdf
 from app.repositories.customer_repository import CustomerRepository
 from app.repositories.inventory_repository import InventoryRepository
 from app.repositories.product_repository import ProductRepository
@@ -33,6 +34,25 @@ def index():
         sales = SalesRepository().get_all()
     return render_template(
         "sales/index.html", sales=sales, payment_filter=payment_filter
+    )
+
+
+@bp.route("/unpaid.pdf")
+@login_required
+@module_required(User.MODULE_SALES)
+def unpaid_pdf():
+    """PDF of every unpaid sale, oldest first — shared weekly with the
+    partners for collections (#81)."""
+    sales = sorted(
+        SalesRepository().by_payment_status(Sale.PAYMENT_UNPAID),
+        key=lambda sale: sale.sale_date,
+    )
+    pdf = build_unpaid_sales_pdf(sales)
+    filename = f"ventas-por-pagar-{date.today().isoformat()}.pdf"
+    return Response(
+        pdf,
+        mimetype="application/pdf",
+        headers={"Content-Disposition": f'attachment; filename="{filename}"'},
     )
 
 

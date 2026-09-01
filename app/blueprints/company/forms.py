@@ -14,6 +14,9 @@ from app.models.company import Company
 
 
 class CompanySettingsForm(FlaskForm):
+    name = StringField(
+        _l("Company name"), validators=[DataRequired(), Length(max=120)]
+    )
     tax_rate = DecimalField(
         _l("Tax rate (%)"), places=2, validators=[DataRequired(), NumberRange(min=0, max=100)]
     )
