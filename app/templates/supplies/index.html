@@ -4,7 +4,9 @@
 <div class="d-flex justify-content-between align-items-center mb-3">
   <h1 class="h3 mb-0">{{ _("Supplies") }}</h1>
   <div class="d-flex gap-2">
+    {% if current_user.is_admin %}
     <a class="btn btn-outline-secondary btn-sm" href="{{ url_for('supplies.recipes') }}">{{ _("Supplies per product") }}</a>
+    {% endif %}
     <a class="btn btn-outline-secondary btn-sm" href="{{ url_for('supplies.stock') }}">{{ _("Supplies stock") }}</a>
     <a class="btn btn-primary btn-sm" href="{{ url_for('supplies.new_supply') }}">+ {{ _("New supply") }}</a>
   </div>

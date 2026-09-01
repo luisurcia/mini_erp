@@ -10,7 +10,7 @@ from app.exceptions import MiniErpError
 from app.models.product_supply import ProductSupply
 from app.models.supply import Supply
 from app.models.user import User
-from app.permissions import module_required
+from app.permissions import admin_required, module_required
 from app.repositories.product_repository import ProductRepository
 from app.repositories.product_supply_repository import ProductSupplyRepository
 from app.repositories.supply_repository import SupplyItemRepository, SupplyRepository
@@ -166,7 +166,7 @@ def history(supply_id):
 
 @bp.route("/recipes")
 @login_required
-@module_required(User.MODULE_SUPPLIES)
+@admin_required
 def recipes():
     products = ProductRepository().get_all()
     rows = ProductSupplyRepository().for_products([p.id for p in products])
@@ -182,7 +182,7 @@ def recipes():
 
 @bp.route("/recipes/<int:product_id>", methods=["GET", "POST"])
 @login_required
-@module_required(User.MODULE_SUPPLIES)
+@admin_required
 def edit_recipe(product_id):
     product = ProductRepository().get(product_id)
     if product is None:

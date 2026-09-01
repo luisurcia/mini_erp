@@ -11,22 +11,25 @@ def test_admin_can_access_every_module():
         assert admin.can_access(module)
 
 
-def test_bodeguero_can_access_only_products_inventory_supplies():
+def test_bodeguero_can_access_only_inventory_supplies():
     bodeguero = _user(User.ROLE_BODEGUERO)
-    assert bodeguero.can_access(User.MODULE_PRODUCTS)
     assert bodeguero.can_access(User.MODULE_INVENTORY)
     assert bodeguero.can_access(User.MODULE_SUPPLIES)
+    # Products catalog is admin-only master data (#78).
+    assert not bodeguero.can_access(User.MODULE_PRODUCTS)
     assert not bodeguero.can_access(User.MODULE_SALES)
     assert not bodeguero.can_access(User.MODULE_TOP_CUSTOMERS)
     assert not bodeguero.can_access(User.MODULE_CUSTOMERS)
 
 
-def test_ventas_can_access_only_sales_products_top_customers_customers():
+def test_ventas_can_access_only_sales_top_customers_customers():
     ventas = _user(User.ROLE_VENTAS)
     assert ventas.can_access(User.MODULE_SALES)
-    assert ventas.can_access(User.MODULE_PRODUCTS)
     assert ventas.can_access(User.MODULE_TOP_CUSTOMERS)
     assert ventas.can_access(User.MODULE_CUSTOMERS)
+    # Products catalog is admin-only master data (#78); the sale form's
+    # product picker doesn't gate on it.
+    assert not ventas.can_access(User.MODULE_PRODUCTS)
     assert not ventas.can_access(User.MODULE_INVENTORY)
     assert not ventas.can_access(User.MODULE_SUPPLIES)
 

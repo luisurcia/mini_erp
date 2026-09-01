@@ -16,6 +16,11 @@ class User(BaseModel, UserMixin):
     # Per-module access — a role sees (and can reach) only these modules'
     # screens. Users/Company stay admin-only and aren't modeled here; see
     # admin_required in app/permissions.py. See #31.
+    #
+    # The Products catalog is master data (low change frequency, high blast
+    # radius) so it's admin-only: MODULE_PRODUCTS is not granted to any
+    # non-admin role. The supplies-recipe screens are admin-only the same
+    # way, gated with admin_required inside the supplies blueprint. See #78.
     MODULE_PRODUCTS = "products"
     MODULE_INVENTORY = "inventory"
     MODULE_SUPPLIES = "supplies"
@@ -34,8 +39,8 @@ class User(BaseModel, UserMixin):
 
     ROLE_MODULES = {
         ROLE_ADMIN: _ALL_MODULES,
-        ROLE_BODEGUERO: {MODULE_PRODUCTS, MODULE_INVENTORY, MODULE_SUPPLIES},
-        ROLE_VENTAS: {MODULE_SALES, MODULE_PRODUCTS, MODULE_TOP_CUSTOMERS, MODULE_CUSTOMERS},
+        ROLE_BODEGUERO: {MODULE_INVENTORY, MODULE_SUPPLIES},
+        ROLE_VENTAS: {MODULE_SALES, MODULE_TOP_CUSTOMERS, MODULE_CUSTOMERS},
     }
 
     username = db.Column(db.String(80), unique=True, nullable=False)

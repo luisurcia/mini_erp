@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-08-31 17:39-0400\n"
+"POT-Creation-Date: 2026-08-31 23:17-0400\n"
 "PO-Revision-Date: 2026-08-24 17:58-0400\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: fr\n"
@@ -174,7 +174,7 @@ msgstr "Enregistrer les paramètres"
 #: app/templates/company/segments_list.html:13
 #: app/templates/customers/index.html:13
 #: app/templates/inventory/warehouses_list.html:13
-#: app/templates/supplies/index.html:17 app/templates/supplies/stock.html:16
+#: app/templates/supplies/index.html:19 app/templates/supplies/stock.html:16
 #: app/templates/users/index.html:11
 msgid "Name"
 msgstr "Nom"
@@ -183,7 +183,7 @@ msgstr "Nom"
 #: app/blueprints/products/forms.py:23 app/blueprints/supplies/forms.py:16
 #: app/templates/company/segments_list.html:24
 #: app/templates/inventory/warehouses_list.html:32
-#: app/templates/products/index.html:32 app/templates/supplies/index.html:32
+#: app/templates/products/index.html:32 app/templates/supplies/index.html:34
 msgid "Active"
 msgstr "Actif"
 
@@ -531,7 +531,7 @@ msgstr ""
 msgid "Enter a unit price for %(name)s."
 msgstr "Saisissez un prix unitaire pour %(name)s."
 
-#: app/blueprints/supplies/forms.py:12 app/templates/supplies/index.html:18
+#: app/blueprints/supplies/forms.py:12 app/templates/supplies/index.html:20
 msgid "Unit"
 msgstr "Unité"
 
@@ -702,14 +702,14 @@ msgstr "Segments de clients"
 #: app/templates/company/segments_list.html:14
 #: app/templates/inventory/warehouses_list.html:15
 #: app/templates/products/index.html:18 app/templates/sales/index.html:20
-#: app/templates/supplies/index.html:20
+#: app/templates/supplies/index.html:22
 msgid "Status"
 msgstr "Statut"
 
 #: app/templates/company/segments_list.html:26
 #: app/templates/inventory/index.html:31
 #: app/templates/inventory/warehouses_list.html:34
-#: app/templates/products/index.html:34 app/templates/supplies/index.html:34
+#: app/templates/products/index.html:34 app/templates/supplies/index.html:36
 #: app/templates/supplies/recipe_form.html:20
 #: app/templates/supplies/recipes.html:27 app/templates/supplies/stock.html:29
 msgid "Inactive"
@@ -718,7 +718,7 @@ msgstr "Inactif"
 #: app/templates/company/segments_list.html:30
 #: app/templates/customers/index.html:36
 #: app/templates/inventory/warehouses_list.html:38
-#: app/templates/products/index.html:38 app/templates/supplies/index.html:38
+#: app/templates/products/index.html:38 app/templates/supplies/index.html:40
 #: app/templates/supplies/recipes.html:38 app/templates/users/index.html:19
 msgid "Edit"
 msgstr "Modifier"
@@ -967,7 +967,7 @@ msgstr "Nouveau produit"
 msgid "Size"
 msgstr "Taille"
 
-#: app/templates/products/index.html:17 app/templates/supplies/index.html:19
+#: app/templates/products/index.html:17 app/templates/supplies/index.html:21
 msgid "Price"
 msgstr "Prix"
 
@@ -1087,23 +1087,23 @@ msgstr "Aucun produit actif."
 msgid "Back to supplies stock"
 msgstr "Retour au stock de fournitures"
 
-#: app/templates/supplies/index.html:7 app/templates/supplies/recipes.html:2
+#: app/templates/supplies/index.html:8 app/templates/supplies/recipes.html:2
 #: app/templates/supplies/recipes.html:5 app/templates/supplies/stock.html:7
 msgid "Supplies per product"
 msgstr "Fournitures par produit"
 
-#: app/templates/supplies/index.html:8 app/templates/supplies/stock.html:2
+#: app/templates/supplies/index.html:10 app/templates/supplies/stock.html:2
 #: app/templates/supplies/stock.html:5
 msgid "Supplies stock"
 msgstr "Stock de fournitures"
 
-#: app/templates/supplies/index.html:9
+#: app/templates/supplies/index.html:11
 #: app/templates/supplies/supply_form.html:3
 #: app/templates/supplies/supply_form.html:5
 msgid "New supply"
 msgstr "Nouvelle fourniture"
 
-#: app/templates/supplies/index.html:42 app/templates/supplies/stock.html:47
+#: app/templates/supplies/index.html:44 app/templates/supplies/stock.html:47
 msgid "No supplies yet."
 msgstr "Aucune fourniture pour le moment."
 
