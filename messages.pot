@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-09-01 00:24-0400\n"
+"POT-Creation-Date: 2026-09-01 00:31-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -342,7 +342,7 @@ msgstr ""
 msgid "Quantity to add"
 msgstr ""
 
-#: app/blueprints/inventory/forms.py:19 app/templates/dashboard/index.html:75
+#: app/blueprints/inventory/forms.py:19 app/templates/dashboard/index.html:87
 msgid "Reorder level"
 msgstr ""
 
@@ -355,7 +355,7 @@ msgstr ""
 msgid "Save warehouse"
 msgstr ""
 
-#: app/blueprints/inventory/forms.py:32 app/templates/dashboard/index.html:75
+#: app/blueprints/inventory/forms.py:32 app/templates/dashboard/index.html:87
 #: app/templates/products/index.html:13 app/templates/sales/detail.html:42
 #: app/templates/supplies/recipes.html:17
 msgid "Product"
@@ -579,7 +579,7 @@ msgid "Warehouse staff"
 msgstr ""
 
 #: app/blueprints/users/forms.py:11 app/templates/base.html:32
-#: app/templates/dashboard/index.html:127 app/templates/sales/index.html:2
+#: app/templates/dashboard/index.html:139 app/templates/sales/index.html:2
 #: app/templates/sales/index.html:5 app/templates/top_customers/index.html:47
 msgid "Sales"
 msgstr ""
@@ -786,33 +786,41 @@ msgstr ""
 msgid "Average bottles per sale"
 msgstr ""
 
-#: app/templates/dashboard/index.html:51
+#: app/templates/dashboard/index.html:48
+msgid "Average net unit price"
+msgstr ""
+
+#: app/templates/dashboard/index.html:54
+msgid "Number of tickets"
+msgstr ""
+
+#: app/templates/dashboard/index.html:63
 msgid "Sales share per product"
 msgstr ""
 
-#: app/templates/dashboard/index.html:57
+#: app/templates/dashboard/index.html:69
 #, python-format
 msgid "Sales per month (%(year)s)"
 msgstr ""
 
-#: app/templates/dashboard/index.html:63
+#: app/templates/dashboard/index.html:75
 #, python-format
 msgid "Bottles sold per month (%(year)s)"
 msgstr ""
 
-#: app/templates/dashboard/index.html:72
+#: app/templates/dashboard/index.html:84
 msgid "Low stock"
 msgstr ""
 
-#: app/templates/dashboard/index.html:75
+#: app/templates/dashboard/index.html:87
 msgid "On hand"
 msgstr ""
 
-#: app/templates/dashboard/index.html:87
+#: app/templates/dashboard/index.html:99
 msgid "Everything is well stocked."
 msgstr ""
 
-#: app/templates/dashboard/index.html:136
+#: app/templates/dashboard/index.html:148
 #: app/templates/top_customers/index.html:46
 msgid "Bottles"
 msgstr ""

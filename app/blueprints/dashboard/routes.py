@@ -44,6 +44,8 @@ def index():
         "net_sales": sales_service.total_revenue(sales_this_period),
         "average_sale_total": sales_service.average_sale_total(sales_this_period),
         "average_bottles_per_sale": sales_service.average_bottles_per_sale(sales_this_period),
+        "average_unit_price": sales_service.average_unit_price(sales_this_period),
+        "ticket_count": len(sales_this_period),
     }
     low_stock_items = inventory_service.low_stock_report()
 

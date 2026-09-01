@@ -213,6 +213,25 @@ def test_average_bottles_per_sale_with_no_sales_returns_zero(app):
     assert SalesService().average_bottles_per_sale([]) == Decimal("0")
 
 
+def test_average_unit_price_is_a_simple_mean_of_the_line_prices(app, customer, product):
+    service = SalesService()
+    sale1 = service.record_sale(
+        customer_id=customer.id,
+        items=[{"product_id": product.id, "quantity": 2, "unit_price": Decimal("3.00")}],
+    )
+    sale2 = service.record_sale(
+        customer_id=customer.id,
+        items=[{"product_id": product.id, "quantity": 5, "unit_price": Decimal("6.00")}],
+    )
+
+    # Simple mean of 3.00 and 6.00 — not weighted by quantity (that would be 36/7).
+    assert service.average_unit_price([sale1, sale2]) == Decimal("4.50")
+
+
+def test_average_unit_price_with_no_sales_returns_zero(app):
+    assert SalesService().average_unit_price([]) == Decimal("0")
+
+
 def test_top_customers_by_consumption_ranks_by_total_amount(app, customer, product):
     other = Customer(name="Other Customer", email="other@example.com")
     db.session.add(other)

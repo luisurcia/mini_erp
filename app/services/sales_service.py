@@ -176,6 +176,16 @@ class SalesService:
     def invoice_count(self, sales: list[Sale]) -> int:
         return sum(1 for sale in sales if sale.invoice_number)
 
+    def average_unit_price(self, sales: list[Sale]):
+        """Simple average of the unit price on every sale line across the
+        given sales — "what price do we typically sell a unit at". The line
+        price is net (IVA is added on top of the subtotal, not the line).
+        Each line counts once, regardless of quantity. See #84."""
+        prices = [item.unit_price for sale in sales for item in sale.items]
+        if not prices:
+            return Decimal("0")
+        return sum(prices, start=Decimal("0")) / len(prices)
+
     def average_bottles_per_sale(self, sales: list[Sale]):
         """Average number of units (across all line items) per sale —
         one of Scoby's dashboard KPIs, see #30."""
