@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-08-31 23:17-0400\n"
+"POT-Creation-Date: 2026-08-31 23:23-0400\n"
 "PO-Revision-Date: 2026-08-24 17:58-0400\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: en\n"
@@ -85,13 +85,13 @@ msgid "Passwords must match."
 msgstr "Passwords must match."
 
 #: app/blueprints/auth/forms.py:27 app/templates/auth/change_password.html:3
-#: app/templates/auth/change_password.html:8 app/templates/base.html:51
+#: app/templates/auth/change_password.html:8 app/templates/base.html:60
 msgid "Change password"
 msgstr "Change password"
 
 #: app/blueprints/auth/forms.py:32 app/blueprints/company/forms.py:37
 #: app/templates/auth/change_language.html:3
-#: app/templates/auth/change_language.html:8 app/templates/base.html:50
+#: app/templates/auth/change_language.html:8 app/templates/base.html:59
 msgid "Language"
 msgstr "Language"
 
@@ -577,7 +577,7 @@ msgstr "Admin"
 msgid "Warehouse staff"
 msgstr "Warehouse staff"
 
-#: app/blueprints/users/forms.py:11 app/templates/base.html:35
+#: app/blueprints/users/forms.py:11 app/templates/base.html:32
 #: app/templates/dashboard/index.html:127 app/templates/sales/index.html:2
 #: app/templates/sales/index.html:5 app/templates/top_customers/index.html:47
 msgid "Sales"
@@ -635,41 +635,49 @@ msgstr "User '%(name)s' deleted."
 msgid "Dashboard"
 msgstr "Dashboard"
 
-#: app/templates/base.html:26 app/templates/products/index.html:2
-#: app/templates/products/index.html:5
-msgid "Products"
-msgstr "Products"
-
-#: app/templates/base.html:29 app/templates/inventory/index.html:2
+#: app/templates/base.html:26 app/templates/inventory/index.html:2
 #: app/templates/inventory/index.html:5
 msgid "Inventory"
 msgstr "Inventory"
 
-#: app/templates/base.html:32 app/templates/inventory/warehouses_list.html:25
+#: app/templates/base.html:29 app/templates/inventory/warehouses_list.html:25
 #: app/templates/supplies/index.html:2 app/templates/supplies/index.html:5
 msgid "Supplies"
 msgstr "Supplies"
 
-#: app/templates/base.html:38 app/templates/top_customers/index.html:2
+#: app/templates/base.html:35 app/templates/top_customers/index.html:2
 #: app/templates/top_customers/index.html:5
 msgid "Top customers"
 msgstr "Top customers"
 
-#: app/templates/base.html:41 app/templates/customers/index.html:2
+#: app/templates/base.html:38 app/templates/customers/index.html:2
 #: app/templates/customers/index.html:5
 msgid "Customers"
 msgstr "Customers"
 
-#: app/templates/base.html:44 app/templates/users/index.html:2
+#: app/templates/base.html:43
+msgid "Settings"
+msgstr "Settings"
+
+#: app/templates/base.html:45 app/templates/products/index.html:2
+#: app/templates/products/index.html:5
+msgid "Products"
+msgstr "Products"
+
+#: app/templates/base.html:46
+msgid "Manage warehouses"
+msgstr "Manage warehouses"
+
+#: app/templates/base.html:48 app/templates/users/index.html:2
 #: app/templates/users/index.html:5
 msgid "Users"
 msgstr "Users"
 
-#: app/templates/base.html:45
+#: app/templates/base.html:49
 msgid "Company"
 msgstr "Company"
 
-#: app/templates/base.html:52
+#: app/templates/base.html:62
 msgid "Log out"
 msgstr "Log out"
 
@@ -705,7 +713,7 @@ msgid "Status"
 msgstr "Status"
 
 #: app/templates/company/segments_list.html:26
-#: app/templates/inventory/index.html:31
+#: app/templates/inventory/index.html:29
 #: app/templates/inventory/warehouses_list.html:34
 #: app/templates/products/index.html:34 app/templates/supplies/index.html:36
 #: app/templates/supplies/recipe_form.html:20
@@ -867,37 +875,33 @@ msgstr "No movements yet."
 msgid "Back to inventory"
 msgstr "Back to inventory"
 
-#: app/templates/inventory/index.html:7
+#: app/templates/inventory/index.html:8
 #: app/templates/inventory/transfer_form.html:3
 #: app/templates/inventory/transfer_form.html:5
 msgid "Transfer stock"
 msgstr "Transfer stock"
 
-#: app/templates/inventory/index.html:9
-msgid "Manage warehouses"
-msgstr "Manage warehouses"
-
-#: app/templates/inventory/index.html:18 app/templates/products/index.html:13
+#: app/templates/inventory/index.html:16 app/templates/products/index.html:13
 msgid "Flavor / Product"
 msgstr "Flavor / Product"
 
-#: app/templates/inventory/index.html:22 app/templates/inventory/index.html:55
+#: app/templates/inventory/index.html:20 app/templates/inventory/index.html:53
 #: app/templates/sales/detail.html:59 app/templates/sales/index.html:20
 #: app/templates/sales/sale_form.html:76 app/templates/supplies/stock.html:20
 #: app/templates/supplies/stock.html:53
 msgid "Total"
 msgstr "Total"
 
-#: app/templates/inventory/index.html:45 app/templates/supplies/stock.html:43
+#: app/templates/inventory/index.html:43 app/templates/supplies/stock.html:43
 msgid "History"
 msgstr "History"
 
-#: app/templates/inventory/index.html:49 app/templates/products/index.html:42
+#: app/templates/inventory/index.html:47 app/templates/products/index.html:42
 #: app/templates/supplies/recipes.html:42
 msgid "No products yet."
 msgstr "No products yet."
 
-#: app/templates/inventory/index.html:68 app/templates/supplies/stock.html:66
+#: app/templates/inventory/index.html:66 app/templates/supplies/stock.html:66
 msgid ""
 "Stock at or below the reorder level for that warehouse is highlighted "
 "like this."

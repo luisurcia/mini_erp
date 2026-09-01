@@ -40,6 +40,28 @@ body {
   color: var(--scoby-pink);
 }
 
+/* Navbar dropdowns (Settings menu #75, account menu #46). Bootstrap's
+   default menu is light; style it dark to match the ink navbar, so it
+   reads the same on desktop and in the collapsed mobile menu. */
+.kombucha-navbar .dropdown-menu {
+  background-color: var(--scoby-ink);
+  border-color: rgba(241, 234, 221, 0.15);
+}
+
+.kombucha-navbar .dropdown-item {
+  color: var(--scoby-cream-card);
+}
+
+.kombucha-navbar .dropdown-item:hover,
+.kombucha-navbar .dropdown-item:focus {
+  background-color: rgba(241, 234, 221, 0.1);
+  color: var(--scoby-pink);
+}
+
+.kombucha-navbar .dropdown-divider {
+  border-top-color: rgba(241, 234, 221, 0.15);
+}
+
 .btn-primary {
   background-color: var(--scoby-pink);
   border-color: var(--scoby-pink);
