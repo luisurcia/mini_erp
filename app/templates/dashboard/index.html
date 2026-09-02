@@ -13,6 +13,11 @@
     {{ toggle_text }}
   </button>
   <div class="dropdown-menu p-2" style="max-height: 16rem; overflow-y: auto;">
+    <div class="d-flex justify-content-between mb-1">
+      <button type="button" class="btn btn-link btn-sm p-0 select-all">{{ _("Select all") }}</button>
+      <button type="button" class="btn btn-link btn-sm p-0 text-muted clear-all">{{ _("Clear") }}</button>
+    </div>
+    <hr class="my-1">
     {% for value, text, checked in options %}
     <div class="form-check">
       <input class="form-check-input" type="checkbox" name="{{ param }}"
@@ -26,7 +31,7 @@
 
 <div class="d-flex justify-content-between align-items-end mb-4 flex-wrap gap-2">
   <h1 class="h3 mb-0">{{ _("Dashboard") }}</h1>
-  <form method="get" class="d-flex gap-2 align-items-end flex-wrap">
+  <form method="get" id="dashboard-filters" class="d-flex gap-2 align-items-end flex-wrap">
     {{ filter_dropdown(_("Year"), "year", year_label, year_options) }}
     {{ filter_dropdown(_("Month"), "month", month_label, month_options) }}
     <button type="submit" class="btn btn-primary">{{ _("Apply") }}</button>
@@ -106,6 +111,16 @@
 {% block scripts %}
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4"></script>
 <script>
+// "Select all" / "Clear" shortcuts for each multi-select filter dropdown.
+// Clearing every box is equivalent to selecting all (the route treats an
+// empty filter as "all"), but an explicit control is far less fiddly.
+document.querySelectorAll("#dashboard-filters .dropdown-menu").forEach((menu) => {
+  const boxes = menu.querySelectorAll("input[type=checkbox]");
+  const setAll = (checked) => boxes.forEach((b) => { b.checked = checked; });
+  menu.querySelector(".select-all").addEventListener("click", () => setAll(true));
+  menu.querySelector(".clear-all").addEventListener("click", () => setAll(false));
+});
+
 const productSales = {{ charts.product_sales | tojson }};
 new Chart(document.getElementById("productSalesChart"), {
   type: "pie",
