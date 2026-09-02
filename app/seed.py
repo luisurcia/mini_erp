@@ -29,6 +29,15 @@ PRICE_BY_FLAVOR = {
     "Mixed Berry": 5.25,
     "Mango Turmeric": 5.50,
 }
+# 3-char codes (Product.short_name) — used for tight labels like the
+# per-product bar chart on the dashboard (#91).
+SHORT_BY_FLAVOR = {
+    "Original": "ORI",
+    "Ginger Lemon": "GLN",
+    "Hibiscus Rose": "HBR",
+    "Mixed Berry": "MXB",
+    "Mango Turmeric": "MGT",
+}
 
 
 def seed_demo_data(app: Flask) -> None:
@@ -68,6 +77,7 @@ def _seed_flavors_and_products() -> dict[str, Product]:
         product = Product(
             flavor_id=flavor.id,
             name="Kombucha",
+            short_name=SHORT_BY_FLAVOR[name],
             sku=f"KOMB-{name[:3].upper()}-355",
             size_ml=355,
             unit_price=PRICE_BY_FLAVOR[name],

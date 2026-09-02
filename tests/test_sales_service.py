@@ -143,8 +143,28 @@ def test_sales_by_product_returns_amount_and_percentage(app, customer, product):
     result = service.sales_by_product([sale])
 
     assert result == [
-        {"product": product_label(product), "amount": 9.0, "percentage": 100.0}
+        {
+            "product": product_label(product),
+            "product_short": product_label(product),
+            "amount": 9.0,
+            "percentage": 100.0,
+        }
     ]
+
+
+def test_sales_by_product_uses_the_short_name_when_the_product_has_one(
+    app, customer, product
+):
+    product.short_name = "ORI"
+    service = SalesService()
+    sale = service.record_sale(
+        customer_id=customer.id, items=[{"product_id": product.id, "quantity": 1}]
+    )
+
+    entry = service.sales_by_product([sale])[0]
+
+    assert entry["product"] == product_label(product)
+    assert entry["product_short"] == "ORI"
 
 
 def test_monthly_sales_counts_and_bottles_bucket_by_sale_month(app, customer, product):

@@ -2,7 +2,7 @@ from collections import defaultdict
 from datetime import UTC, datetime
 from decimal import Decimal
 
-from app.display import product_label
+from app.display import product_label, product_short_label
 from app.exceptions import MiniErpError, NotFoundError
 from app.models.company import Company
 from app.models.inventory import StockMovement
@@ -167,17 +167,26 @@ class SalesService:
         return Decimal(self.total_bottles(sales)) / len(sales)
 
     def sales_by_product(self, sales: list[Sale]) -> list[dict]:
-        """Revenue and share of total per product, across the given sales."""
+        """Revenue and share of total per product, across the given sales.
+
+        Each entry carries both the full ``product`` label (for the pie
+        legend) and a compact ``product_short`` one (for the per-product
+        bar chart, where a long label doesn't fit under the axis) — see #91.
+        """
         settings = Company.get_settings()
         totals: dict[str, Decimal] = defaultdict(lambda: Decimal("0"))
+        short_labels: dict[str, str] = {}
         for sale in sales:
             for item in sale.items:
-                totals[product_label(item.product, settings)] += item.subtotal
+                name = product_label(item.product, settings)
+                totals[name] += item.subtotal
+                short_labels[name] = product_short_label(item.product, settings)
 
         grand_total = sum(totals.values(), start=Decimal("0"))
         return [
             {
                 "product": name,
+                "product_short": short_labels[name],
                 "amount": float(amount),
                 "percentage": float(amount / grand_total * 100) if grand_total else 0,
             }

@@ -1,6 +1,10 @@
 {% extends "base.html" %}
 {% block title %}{{ _("Dashboard") }}{% endblock %}
 {% block content %}
+{# Fixed height so the four charts render at the same size regardless of
+   type (a pie left to its own devices squares itself off, see #91). #}
+<style>.chart-box { position: relative; height: 280px; }</style>
+
 {% macro filter_dropdown(label, param, toggle_text, options) %}
 <div class="dropdown">
   <label class="form-label small text-muted mb-0 d-block">{{ label }}</label>
@@ -51,25 +55,25 @@
   <div class="col-lg-6">
     <div class="card p-3">
       <h2 class="h5">{{ _("Sales share per product") }}</h2>
-      <canvas id="productSalesChart" height="200"></canvas>
+      <div class="chart-box"><canvas id="productSalesChart"></canvas></div>
     </div>
   </div>
   <div class="col-lg-6">
     <div class="card p-3">
       <h2 class="h5">{{ _("Total sales per product (%(years)s)", years=charts_years_label) }}</h2>
-      <canvas id="productRevenueChart" height="200"></canvas>
+      <div class="chart-box"><canvas id="productRevenueChart"></canvas></div>
     </div>
   </div>
   <div class="col-lg-6">
     <div class="card p-3">
       <h2 class="h5">{{ _("Total tickets (%(years)s)", years=charts_years_label) }}</h2>
-      <canvas id="salesPerMonthChart" height="200"></canvas>
+      <div class="chart-box"><canvas id="salesPerMonthChart"></canvas></div>
     </div>
   </div>
   <div class="col-lg-6">
     <div class="card p-3">
       <h2 class="h5">{{ _("Total bottles sold (%(years)s)", years=charts_years_label) }}</h2>
-      <canvas id="bottlesPerMonthChart" height="200"></canvas>
+      <div class="chart-box"><canvas id="bottlesPerMonthChart"></canvas></div>
     </div>
   </div>
 </div>
@@ -113,6 +117,7 @@ new Chart(document.getElementById("productSalesChart"), {
     }],
   },
   options: {
+    maintainAspectRatio: false,
     plugins: {
       tooltip: {
         callbacks: {
@@ -130,10 +135,11 @@ new Chart(document.getElementById("productSalesChart"), {
 new Chart(document.getElementById("productRevenueChart"), {
   type: "bar",
   data: {
-    labels: productSales.map((p) => p.product),
+    labels: productSales.map((p) => p.product_short),
     datasets: [{ label: {{ _("Total sold")|tojson }}, data: productSales.map((p) => p.amount), backgroundColor: "#2e8c93" }],
   },
   options: {
+    maintainAspectRatio: false,
     scales: { y: { beginAtZero: true, ticks: { callback: (v) => window.formatMoney(v) } } },
     plugins: { tooltip: { callbacks: { label: (ctx) => window.formatMoney(ctx.parsed.y) } } },
   },
@@ -147,7 +153,7 @@ new Chart(document.getElementById("salesPerMonthChart"), {
     labels: monthLabels,
     datasets: [{ label: {{ _("Tickets")|tojson }}, data: {{ charts.monthly_counts | tojson }}, backgroundColor: "#e27ca6" }],
   },
-  options: { scales: { y: { beginAtZero: true, ticks: { precision: 0 } } } },
+  options: { maintainAspectRatio: false, scales: { y: { beginAtZero: true, ticks: { precision: 0 } } } },
 });
 
 new Chart(document.getElementById("bottlesPerMonthChart"), {
@@ -156,7 +162,7 @@ new Chart(document.getElementById("bottlesPerMonthChart"), {
     labels: monthLabels,
     datasets: [{ label: {{ _("Bottles")|tojson }}, data: {{ charts.monthly_bottles | tojson }}, backgroundColor: "#e3b23c" }],
   },
-  options: { scales: { y: { beginAtZero: true, ticks: { precision: 0 } } } },
+  options: { maintainAspectRatio: false, scales: { y: { beginAtZero: true, ticks: { precision: 0 } } } },
 });
 </script>
 {% endblock %}
