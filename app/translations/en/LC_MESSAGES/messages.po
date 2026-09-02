@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-09-02 16:19-0400\n"
+"POT-Creation-Date: 2026-09-02 17:24-0400\n"
 "PO-Revision-Date: 2026-08-24 17:58-0400\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: en\n"
@@ -38,22 +38,26 @@ msgstr "Paid"
 msgid "Unpaid"
 msgstr "Unpaid"
 
-#: app/__init__.py:128 app/templates/inventory/restock_form.html:3
+#: app/__init__.py:131 app/templates/inventory/restock_form.html:3
 #: app/templates/supplies/restock_form.html:3
 msgid "Restock"
 msgstr "Restock"
 
-#: app/__init__.py:129
+#: app/__init__.py:132
 msgid "Sale"
 msgstr "Sale"
 
-#: app/__init__.py:130
+#: app/__init__.py:133
 msgid "Adjustment"
 msgstr "Adjustment"
 
-#: app/__init__.py:131 app/blueprints/inventory/forms.py:45
+#: app/__init__.py:134 app/blueprints/inventory/forms.py:45
 msgid "Transfer"
 msgstr "Transfer"
+
+#: app/__init__.py:136
+msgid "Assembly"
+msgstr "Assembly"
 
 #: app/reports.py:49 app/reports.py:55
 msgid "Unpaid sales"

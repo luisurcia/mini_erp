@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-09-02 16:19-0400\n"
+"POT-Creation-Date: 2026-09-02 17:24-0400\n"
 "PO-Revision-Date: 2026-08-24 17:58-0400\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: fr\n"
@@ -38,22 +38,26 @@ msgstr "Payée"
 msgid "Unpaid"
 msgstr "Impayée"
 
-#: app/__init__.py:128 app/templates/inventory/restock_form.html:3
+#: app/__init__.py:131 app/templates/inventory/restock_form.html:3
 #: app/templates/supplies/restock_form.html:3
 msgid "Restock"
 msgstr "Réapprovisionnement"
 
-#: app/__init__.py:129
+#: app/__init__.py:132
 msgid "Sale"
 msgstr "Vente"
 
-#: app/__init__.py:130
+#: app/__init__.py:133
 msgid "Adjustment"
 msgstr "Ajustement"
 
-#: app/__init__.py:131 app/blueprints/inventory/forms.py:45
+#: app/__init__.py:134 app/blueprints/inventory/forms.py:45
 msgid "Transfer"
 msgstr "Transfert"
+
+#: app/__init__.py:136
+msgid "Assembly"
+msgstr "Assemblage"
 
 #: app/reports.py:49 app/reports.py:55
 msgid "Unpaid sales"
@@ -188,7 +192,9 @@ msgstr "Nom de l'application"
 
 #: app/blueprints/company/forms.py:23
 msgid "Shown in the top bar, the page title and the login screen."
-msgstr "Affiché dans la barre supérieure, le titre de la page et l'écran de connexion."
+msgstr ""
+"Affiché dans la barre supérieure, le titre de la page et l'écran de "
+"connexion."
 
 #: app/blueprints/company/forms.py:26
 msgid "Tax rate (%)"

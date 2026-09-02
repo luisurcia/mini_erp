@@ -120,15 +120,20 @@ def _user_role_label(role: str) -> str:
 
 
 def _stock_movement_reason_label(reason: str) -> str:
+    """Label for a movement reason — shared by the product-stock history
+    (StockMovement) and the supplies history (SupplyMovement)."""
     from flask_babel import gettext as _
 
     from app.models.inventory import StockMovement
+    from app.models.supply import SupplyMovement
 
     labels = {
         StockMovement.REASON_RESTOCK: _("Restock"),
         StockMovement.REASON_SALE: _("Sale"),
         StockMovement.REASON_ADJUSTMENT: _("Adjustment"),
         StockMovement.REASON_TRANSFER: _("Transfer"),
+        # Supplies drawn when assembled bottles enter fermentation (#89).
+        SupplyMovement.REASON_ASSEMBLY: _("Assembly"),
     }
     return labels.get(reason, reason)
 
