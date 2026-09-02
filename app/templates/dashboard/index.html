@@ -145,7 +145,7 @@ new Chart(document.getElementById("productRevenueChart"), {
   },
 });
 
-const monthLabels = {{ month_names | tojson }};
+const monthLabels = {{ chart_month_labels | tojson }};
 
 new Chart(document.getElementById("salesPerMonthChart"), {
   type: "bar",

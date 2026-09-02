@@ -67,13 +67,18 @@ def index():
     }
     low_stock_items = inventory_service.low_stock_report()
 
-    # The two "per month" charts sum every selected year by calendar month
-    # (phase B turns them into one series per year).
+    # Every chart honours both filters: the per-month charts show only the
+    # selected months (all 12 when none is picked), summed across the
+    # selected years (phase B turns them into one series per year).
+    chart_months = selected_months or list(range(1, 13))
+    monthly_counts = sales_service.monthly_sales_counts(sales_this_period)
+    monthly_bottles = sales_service.monthly_bottles_sold(sales_this_period)
     charts = {
         "product_sales": sales_service.sales_by_product(sales_this_period),
-        "monthly_counts": sales_service.monthly_sales_counts(sales_scope),
-        "monthly_bottles": sales_service.monthly_bottles_sold(sales_scope),
+        "monthly_counts": [monthly_counts[m - 1] for m in chart_months],
+        "monthly_bottles": [monthly_bottles[m - 1] for m in chart_months],
     }
+    chart_month_labels = [month_names[m - 1] for m in chart_months]
 
     year_label = _filter_label(
         selected_years,
@@ -100,6 +105,7 @@ def index():
         low_stock_items=low_stock_items,
         charts=charts,
         month_names=month_names,
+        chart_month_labels=chart_month_labels,
         year_options=[(y, str(y), y in selected_years) for y in available_years],
         month_options=[
             (i, name, i in selected_months)
