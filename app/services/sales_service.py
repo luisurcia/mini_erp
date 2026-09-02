@@ -139,6 +139,16 @@ class SalesService:
     def invoice_count(self, sales: list[Sale]) -> int:
         return sum(1 for sale in sales if sale.invoice_number)
 
+    def taxed_sales_count(self, sales: list[Sale]) -> int:
+        """Number of sales that carry IVA — for Scoby a taxed sale is a
+        factura (vs. a boleta), so this is the dashboard's "N° de facturas"
+        (#91)."""
+        return sum(1 for sale in sales if sale.tax_applied)
+
+    def total_bottles(self, sales: list[Sale]) -> int:
+        """Units sold across every line of the given sales (#91)."""
+        return sum(item.quantity for sale in sales for item in sale.items)
+
     def average_unit_price(self, sales: list[Sale]):
         """Simple average of the unit price on every sale line across the
         given sales — "what price do we typically sell a unit at". The line
@@ -154,8 +164,7 @@ class SalesService:
         one of Scoby's dashboard KPIs, see #30."""
         if not sales:
             return Decimal("0")
-        total_units = sum(item.quantity for sale in sales for item in sale.items)
-        return Decimal(total_units) / len(sales)
+        return Decimal(self.total_bottles(sales)) / len(sales)
 
     def sales_by_product(self, sales: list[Sale]) -> list[dict]:
         """Revenue and share of total per product, across the given sales."""

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-09-01 20:08-0400\n"
+"POT-Creation-Date: 2026-09-01 20:56-0400\n"
 "PO-Revision-Date: 2026-08-24 17:58-0400\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: es\n"
@@ -406,30 +406,30 @@ msgstr "Nov"
 msgid "Dec"
 msgstr "Dic"
 
-#: app/blueprints/dashboard/routes.py:79
+#: app/blueprints/dashboard/routes.py:81
 msgid "All years"
 msgstr "Todos los años"
 
-#: app/blueprints/dashboard/routes.py:80
+#: app/blueprints/dashboard/routes.py:82
 #, python-format
 msgid "%(num)s year"
 msgid_plural "%(num)s years"
 msgstr[0] "%(num)s año"
 msgstr[1] "%(num)s años"
 
-#: app/blueprints/dashboard/routes.py:88
+#: app/blueprints/dashboard/routes.py:90
 #: app/templates/top_customers/index.html:19
 msgid "All months"
 msgstr "Todos los meses"
 
-#: app/blueprints/dashboard/routes.py:89
+#: app/blueprints/dashboard/routes.py:91
 #, python-format
 msgid "%(num)s month"
 msgid_plural "%(num)s months"
 msgstr[0] "%(num)s mes"
 msgstr[1] "%(num)s meses"
 
-#: app/blueprints/dashboard/routes.py:92
+#: app/blueprints/dashboard/routes.py:94
 msgid "all years"
 msgstr "todos los años"
 
@@ -437,7 +437,7 @@ msgstr "todos los años"
 msgid "Quantity to add"
 msgstr "Cantidad a agregar"
 
-#: app/blueprints/inventory/forms.py:27 app/templates/dashboard/index.html:92
+#: app/blueprints/inventory/forms.py:27 app/templates/dashboard/index.html:83
 #: app/templates/inventory/restock_form.html:3
 msgid "Reorder level"
 msgstr "Nivel de reposición"
@@ -451,7 +451,7 @@ msgstr "Nota"
 msgid "Save warehouse"
 msgstr "Guardar bodega"
 
-#: app/blueprints/inventory/forms.py:40 app/templates/dashboard/index.html:92
+#: app/blueprints/inventory/forms.py:40 app/templates/dashboard/index.html:83
 #: app/templates/products/index.html:13 app/templates/sales/detail.html:42
 #: app/templates/supplies/recipes.html:17
 msgid "Product"
@@ -679,8 +679,8 @@ msgid "Warehouse staff"
 msgstr "Bodeguero"
 
 #: app/blueprints/users/forms.py:11 app/templates/base.html:32
-#: app/templates/dashboard/index.html:144 app/templates/sales/index.html:2
-#: app/templates/sales/index.html:5 app/templates/top_customers/index.html:47
+#: app/templates/sales/index.html:2 app/templates/sales/index.html:5
+#: app/templates/top_customers/index.html:47
 msgid "Sales"
 msgstr "Ventas"
 
@@ -873,53 +873,70 @@ msgstr "Mes"
 msgid "Apply"
 msgstr "Aplicar"
 
-#: app/templates/dashboard/index.html:35
-msgid "Net sales"
-msgstr "Venta neta"
+#: app/templates/dashboard/index.html:42
+msgid "Total paid value"
+msgstr "Valor Total Pago"
 
-#: app/templates/dashboard/index.html:41
-msgid "Average sale"
-msgstr "Venta promedio"
+#: app/templates/dashboard/index.html:43
+msgid "Total bottles"
+msgstr "Total de Botellas"
 
-#: app/templates/dashboard/index.html:47
-msgid "Average bottles per sale"
-msgstr "Botellas promedio por venta"
-
-#: app/templates/dashboard/index.html:53
-msgid "Average net unit price"
-msgstr "Valor unitario neto promedio"
-
-#: app/templates/dashboard/index.html:59
+#: app/templates/dashboard/index.html:44
 msgid "Number of tickets"
 msgstr "Número de tickets"
 
-#: app/templates/dashboard/index.html:68
+#: app/templates/dashboard/index.html:45
+msgid "Number of invoices"
+msgstr "Número de Facturas"
+
+#: app/templates/dashboard/index.html:46
+msgid "Average bottles per sale"
+msgstr "Botellas promedio por venta"
+
+#: app/templates/dashboard/index.html:47
+msgid "Average net unit price"
+msgstr "Valor unitario neto promedio"
+
+#: app/templates/dashboard/index.html:53
 msgid "Sales share per product"
 msgstr "Participación de ventas por producto"
 
-#: app/templates/dashboard/index.html:74
+#: app/templates/dashboard/index.html:59
 #, python-format
-msgid "Sales per month (%(years)s)"
-msgstr "Ventas por mes (%(years)s)"
+msgid "Total sales per product (%(years)s)"
+msgstr "Total de ventas por producto (%(years)s)"
+
+#: app/templates/dashboard/index.html:65
+#, python-format
+msgid "Total tickets (%(years)s)"
+msgstr "Total de tickets (%(years)s)"
+
+#: app/templates/dashboard/index.html:71
+#, python-format
+msgid "Total bottles sold (%(years)s)"
+msgstr "Total de botellas vendidas (%(years)s)"
 
 #: app/templates/dashboard/index.html:80
-#, python-format
-msgid "Bottles sold per month (%(years)s)"
-msgstr "Botellas vendidas por mes (%(years)s)"
-
-#: app/templates/dashboard/index.html:89
 msgid "Low stock"
 msgstr "Stock bajo"
 
-#: app/templates/dashboard/index.html:92
+#: app/templates/dashboard/index.html:83
 msgid "On hand"
 msgstr "Disponible"
 
-#: app/templates/dashboard/index.html:104
+#: app/templates/dashboard/index.html:95
 msgid "Everything is well stocked."
 msgstr "Todo está bien abastecido."
 
-#: app/templates/dashboard/index.html:153
+#: app/templates/dashboard/index.html:134
+msgid "Total sold"
+msgstr "Total vendido"
+
+#: app/templates/dashboard/index.html:148
+msgid "Tickets"
+msgstr "Tickets"
+
+#: app/templates/dashboard/index.html:157
 #: app/templates/top_customers/index.html:46
 msgid "Bottles"
 msgstr "Botellas"
@@ -1449,4 +1466,10 @@ msgstr ""
 
 #~ msgid "Shipping address"
 #~ msgstr "Dirección de despacho"
+
+#~ msgid "Net sales"
+#~ msgstr "Venta neta"
+
+#~ msgid "Average sale"
+#~ msgstr "Venta promedio"
 

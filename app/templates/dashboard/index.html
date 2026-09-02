@@ -29,56 +29,47 @@
   </form>
 </div>
 
+{% macro stat_card(label, value) %}
+<div class="col-sm-6 col-lg-4">
+  <div class="card stat-card p-3">
+    <div class="text-muted small">{{ label }}</div>
+    <div class="stat-value">{{ value }}</div>
+  </div>
+</div>
+{% endmacro %}
+
 <div class="row g-3 mb-4">
-  <div class="col-sm-6 col-lg-4">
-    <div class="card stat-card p-3">
-      <div class="text-muted small">{{ _("Net sales") }}</div>
-      <div class="stat-value">{{ format_money(stats.net_sales) }}</div>
-    </div>
-  </div>
-  <div class="col-sm-6 col-lg-4">
-    <div class="card stat-card p-3">
-      <div class="text-muted small">{{ _("Average sale") }}</div>
-      <div class="stat-value">{{ format_money(stats.average_sale_total) }}</div>
-    </div>
-  </div>
-  <div class="col-sm-6 col-lg-4">
-    <div class="card stat-card p-3">
-      <div class="text-muted small">{{ _("Average bottles per sale") }}</div>
-      <div class="stat-value">{{ "%.1f"|format(stats.average_bottles_per_sale) }}</div>
-    </div>
-  </div>
-  <div class="col-sm-6 col-lg-4">
-    <div class="card stat-card p-3">
-      <div class="text-muted small">{{ _("Average net unit price") }}</div>
-      <div class="stat-value">{{ format_money(stats.average_unit_price) }}</div>
-    </div>
-  </div>
-  <div class="col-sm-6 col-lg-4">
-    <div class="card stat-card p-3">
-      <div class="text-muted small">{{ _("Number of tickets") }}</div>
-      <div class="stat-value">{{ stats.ticket_count }}</div>
-    </div>
-  </div>
+  {{ stat_card(_("Total paid value"), format_money(stats.total_paid)) }}
+  {{ stat_card(_("Total bottles"), stats.total_bottles) }}
+  {{ stat_card(_("Number of tickets"), stats.ticket_count) }}
+  {{ stat_card(_("Number of invoices"), stats.invoice_count) }}
+  {{ stat_card(_("Average bottles per sale"), "%.1f"|format(stats.average_bottles_per_sale)) }}
+  {{ stat_card(_("Average net unit price"), format_money(stats.average_unit_price)) }}
 </div>
 
 <div class="row g-4 mb-4">
-  <div class="col-lg-4">
+  <div class="col-lg-6">
     <div class="card p-3">
       <h2 class="h5">{{ _("Sales share per product") }}</h2>
-      <canvas id="productSalesChart" height="220"></canvas>
+      <canvas id="productSalesChart" height="200"></canvas>
     </div>
   </div>
-  <div class="col-lg-4">
+  <div class="col-lg-6">
     <div class="card p-3">
-      <h2 class="h5">{{ _("Sales per month (%(years)s)", years=charts_years_label) }}</h2>
-      <canvas id="salesPerMonthChart" height="220"></canvas>
+      <h2 class="h5">{{ _("Total sales per product (%(years)s)", years=charts_years_label) }}</h2>
+      <canvas id="productRevenueChart" height="200"></canvas>
     </div>
   </div>
-  <div class="col-lg-4">
+  <div class="col-lg-6">
     <div class="card p-3">
-      <h2 class="h5">{{ _("Bottles sold per month (%(years)s)", years=charts_years_label) }}</h2>
-      <canvas id="bottlesPerMonthChart" height="220"></canvas>
+      <h2 class="h5">{{ _("Total tickets (%(years)s)", years=charts_years_label) }}</h2>
+      <canvas id="salesPerMonthChart" height="200"></canvas>
+    </div>
+  </div>
+  <div class="col-lg-6">
+    <div class="card p-3">
+      <h2 class="h5">{{ _("Total bottles sold (%(years)s)", years=charts_years_label) }}</h2>
+      <canvas id="bottlesPerMonthChart" height="200"></canvas>
     </div>
   </div>
 </div>
@@ -135,13 +126,26 @@ new Chart(document.getElementById("productSalesChart"), {
   },
 });
 
+// Total sales ($, net) per product — same data as the share pie, absolute.
+new Chart(document.getElementById("productRevenueChart"), {
+  type: "bar",
+  data: {
+    labels: productSales.map((p) => p.product),
+    datasets: [{ label: {{ _("Total sold")|tojson }}, data: productSales.map((p) => p.amount), backgroundColor: "#2e8c93" }],
+  },
+  options: {
+    scales: { y: { beginAtZero: true, ticks: { callback: (v) => window.formatMoney(v) } } },
+    plugins: { tooltip: { callbacks: { label: (ctx) => window.formatMoney(ctx.parsed.y) } } },
+  },
+});
+
 const monthLabels = {{ month_names | tojson }};
 
 new Chart(document.getElementById("salesPerMonthChart"), {
   type: "bar",
   data: {
     labels: monthLabels,
-    datasets: [{ label: {{ _("Sales")|tojson }}, data: {{ charts.monthly_counts | tojson }}, backgroundColor: "#e27ca6" }],
+    datasets: [{ label: {{ _("Tickets")|tojson }}, data: {{ charts.monthly_counts | tojson }}, backgroundColor: "#e27ca6" }],
   },
   options: { scales: { y: { beginAtZero: true, ticks: { precision: 0 } } } },
 });

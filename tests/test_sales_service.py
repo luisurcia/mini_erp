@@ -181,6 +181,36 @@ def test_invoice_count_counts_only_sales_with_invoice_number(app, customer, prod
     assert service.invoice_count([with_invoice, without_invoice]) == 1
 
 
+def test_taxed_sales_count_counts_only_sales_with_iva(app, customer, product):
+    service = SalesService()
+    with_tax = service.record_sale(
+        customer_id=customer.id,
+        items=[{"product_id": product.id, "quantity": 1}],
+        include_tax=True,
+    )
+    without_tax = service.record_sale(
+        customer_id=customer.id, items=[{"product_id": product.id, "quantity": 1}]
+    )
+
+    assert service.taxed_sales_count([with_tax, without_tax]) == 1
+
+
+def test_total_bottles_sums_every_line_quantity(app, customer, product):
+    service = SalesService()
+    sale1 = service.record_sale(
+        customer_id=customer.id, items=[{"product_id": product.id, "quantity": 2}]
+    )
+    sale2 = service.record_sale(
+        customer_id=customer.id, items=[{"product_id": product.id, "quantity": 5}]
+    )
+
+    assert service.total_bottles([sale1, sale2]) == 7
+
+
+def test_total_bottles_with_no_sales_returns_zero(app):
+    assert SalesService().total_bottles([]) == 0
+
+
 def test_average_sale_total(app, customer, product):
     service = SalesService()
     sale1 = service.record_sale(
