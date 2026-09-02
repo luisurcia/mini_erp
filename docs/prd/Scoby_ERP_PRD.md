@@ -4,11 +4,11 @@
 
 > PRD por **ingeniería inversa**: describe lo que la rama `client/scoby` efectivamente hace hoy, reconstruido a partir del código y de lo desplegado en producción (`https://titourcia.com/scobyerp`). Reemplaza como referencia viva a los documentos genéricos `Kombucha_ERP_PRD.md` / `Kombucha_ERP_PRD_Requerimientos.md`, que quedan solo como registro histórico de la evaluación inicial (25 ago 2026).
 >
-> El seguimiento del trabajo se hizo en GitHub Issues: épicas [#20](https://github.com/luisurcia/mini_erp/issues/20) · [#36](https://github.com/luisurcia/mini_erp/issues/36) · [#47](https://github.com/luisurcia/mini_erp/issues/47) · [#76](https://github.com/luisurcia/mini_erp/issues/76) (personalización base + rondas de ajustes de UX), [#87](https://github.com/luisurcia/mini_erp/issues/87) (quinta ronda: PDF de cobranza, métricas de Dashboard, **flujo de bodegas Fermentación → Principal → distribución**) y [#90](https://github.com/luisurcia/mini_erp/issues/90) (feedback: PDF agrupado por cliente, **consumo de insumos al armar**) — todas cerradas. Pendientes abiertos: spike de integración bancaria (#82) y filtros de Dashboard tipo tabla dinámica (#83).
+> El seguimiento del trabajo se hizo en GitHub Issues: épicas [#20](https://github.com/luisurcia/mini_erp/issues/20) · [#36](https://github.com/luisurcia/mini_erp/issues/36) · [#47](https://github.com/luisurcia/mini_erp/issues/47) · [#76](https://github.com/luisurcia/mini_erp/issues/76) (personalización base + rondas de ajustes de UX), [#87](https://github.com/luisurcia/mini_erp/issues/87) (quinta ronda: PDF de cobranza, métricas de Dashboard, **flujo de bodegas Fermentación → Principal → distribución**), [#90](https://github.com/luisurcia/mini_erp/issues/90) (feedback: PDF agrupado por cliente, **consumo de insumos al armar**) y [#95](https://github.com/luisurcia/mini_erp/issues/95) (sexta ronda: **módulo de Compras**, columnas del grid de venta ordenadas por lo más vendido) — todas cerradas. Pendientes abiertos: spike de integración bancaria (#82), spike de notificaciones (#52) y modo comparación del Dashboard (#92).
 
 | FECHA | ESTADO | BASE | ORIGEN |
 |---|---|---|---|
-| 1 septiembre 2026 | En producción | Rama `client/scoby` (commit `82dc0a8`) | Ingeniería inversa del código |
+| 2 septiembre 2026 | En producción | Rama `client/scoby` (commit `3a0693e`) | Ingeniería inversa del código |
 
 ---
 
@@ -65,7 +65,8 @@ producción → Bodega de Fermentación → Bodega Principal → Bodega Julien /
 ### MOD-04 · Ventas — *grilla bodega × producto, precio libre, IVA, cobranza*
 
 - **Ingreso en grilla:** filas = bodegas donde se vende (**Principal + Julien + Mario**, no Fermentación), columnas = productos. Se ingresa la cantidad por celda, así una misma venta puede sacar el mismo producto de más de una bodega (se guarda como líneas separadas).
-- **Una fila de precio unitario por producto**, libre — el precio de venta lo pone el vendedor (varía por cliente/cantidad, no por bodega). Escribir el precio en la primera columna lo copia al resto de la fila.
+- **Las columnas de producto se ordenan por lo más vendido** en los últimos 90 días (más unidades = más a la izquierda); las que no tuvieron ventas en ese periodo quedan al final en orden alfabético. Así el producto más habitual queda a mano sin scroll.
+- **Una fila de precio unitario por producto**, libre — el precio de venta lo pone el vendedor (varía por cliente/cantidad, no por bodega). Escribir el precio en la primera columna (la del más vendido) lo copia al resto de la fila.
 - **Fecha de venta editable** (por defecto hoy), **N° de factura** opcional. No se pide estado ni notas al ingresar (la venta ya ocurrió → se crea como completada).
 - **IVA opcional** por venta, con la tasa configurada en Empresa. El total y el IVA se **previsualizan en vivo** mientras se ingresa. El IVA se redondea a la unidad de la moneda (0 decimales para CLP).
 - Al guardar: **descuenta el stock de producto** de cada bodega elegida. **No toca los insumos** (eso ocurre al armar — ver MOD-03).
@@ -116,9 +117,19 @@ Solo administrador, desde el menú **Configuración** del navbar.
 - **Idioma por defecto de la empresa** (lo hereda quien no eligió idioma propio).
 - **Segmentos de cliente:** alta / renombrar / activar-desactivar.
 
+### MOD-10 · Compras — *libro de gastos de planta con correlativo*
+
+- Registro de los **gastos de gestión de planta que no son insumo de producción** — alcohol gel, un repuesto de máquina, artículos de aseo/oficina. Es un **libro de gastos**, no un módulo de stock: no hay existencias, ni bodega, ni consumo. Distinto de MOD-03 Insumos (esos entran en la receta del producto).
+- Cada compra lleva un **código correlativo global** (`C-0001`, `C-0002`, …) que nunca se reinicia.
+- Campos: fecha · ítem · proveedor (texto libre) · categoría (texto libre, opcional) · N° de factura · monto · marca *"el monto incluye IVA"* (solo informativa, no calcula nada) · notas.
+- **No se elimina una compra, se anula:** conserva su número, queda tachada en la lista y sale del total. Se puede volver a activar.
+- **Lista con filtro año / mes** y el **total del periodo** al pie — para la revisión de fin de mes.
+- **Solo administrador** (dato financiero, mismo criterio que el catálogo de productos).
+- Enhancements a futuro: mantenedor de proveedores y de categorías, adjuntar el archivo de la factura, exportar el reporte a PDF/Excel.
+
 ### Transversal
 
-- **Navegación:** el navbar muestra los módulos operativos (Dashboard, Inventario, Insumos, Ventas, Top clientes, Clientes) y dos menús desplegables:
+- **Navegación:** el navbar muestra los módulos operativos (Dashboard, Inventario, Insumos, **Compras** —solo administrador—, Ventas, Top clientes, Clientes) y dos menús desplegables:
   - **Configuración** (solo administrador): Productos, Gestionar bodegas, Usuarios, Empresa — las secciones de mantención poco frecuente.
   - **Menú de cuenta** bajo el nombre y rol del usuario: Idioma, Cambiar contraseña, Cerrar sesión.
   - "Dashboard" se llama así en los tres idiomas también en español (antes "Panel").
@@ -133,7 +144,7 @@ Solo administrador, desde el menú **Configuración** del navbar.
 - ✕ **Pagos en línea / pasarela** — el pago se registra a mano con su número de transferencia; no hay cobro integrado.
 - ✕ **Notificaciones proactivas** (email / SMS / Slack) — el stock bajo o negativo de insumos y de producto se ve en pantalla (aviso al reponer Fermentación + resaltado), no llega un mensaje. → spike [#52](https://github.com/luisurcia/mini_erp/issues/52).
 - ✕ **Integración con la cuenta bancaria** para conciliar transferencias con ventas por pagar → spike [#82](https://github.com/luisurcia/mini_erp/issues/82).
-- ✕ **Órdenes de compra / proveedores** — la reposición de stock y de insumos es manual.
+- ✕ **Órdenes de compra / reposición sugerida** — la reposición de stock y de insumos es manual. (El módulo Compras registra gastos de planta ya hechos, no genera órdenes ni lleva un catálogo de proveedores.)
 - ✕ **Anular / editar / devolver una venta** — no hay pantalla para eso; si se construyera, debería devolver también el stock de producto.
 - ✕ **Precios por segmento / lista de precios** — el precio se ingresa a mano en cada venta.
 - ✕ **Pagos parciales / abonos** — el estado de pago es binario (por pagar / pagado).
@@ -152,6 +163,7 @@ Solo administrador, desde el menú **Configuración** del navbar.
 | Ingreso de venta | Lista de líneas producto+cantidad | Grilla bodega × producto |
 | Insumos | No existía como consumo | Módulo Insumos + receta por producto + descuento automático **al armar** (entrada a Fermentación) |
 | Cobranza | No existía | Estado por pagar / pagado + referencia; PDF de ventas por pagar agrupado por cliente |
+| Compras / gastos | No existía | Libro de gastos de planta con correlativo global, categoría, anulación y total mensual (solo admin) |
 | Pre-venta | Módulo Oportunidades (embudo) | Eliminado → vista Top 10 clientes por consumo |
 | Cliente | Nombre, email, teléfono, IG, notas | + RUT, sobrenombre, segmento, dirección de despacho estructurada; mínimo para crear = nombre + segmento |
 | Roles | admin / editor / lector | admin / bodeguero / vendedor, por módulo, con 403 real; catálogo de productos y recetas = solo admin |
