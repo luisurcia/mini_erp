@@ -13,11 +13,10 @@
     {{ toggle_text }}
   </button>
   <div class="dropdown-menu p-2" style="max-height: 16rem; overflow-y: auto;">
-    <div class="d-flex justify-content-between mb-1">
-      <button type="button" class="btn btn-link btn-sm p-0 select-all">{{ _("Select all") }}</button>
-      <button type="button" class="btn btn-link btn-sm p-0 text-muted clear-all">{{ _("Clear") }}</button>
+    <div class="d-flex gap-1 mb-2">
+      <button type="button" class="btn btn-sm btn-outline-secondary flex-fill select-all">{{ _("Select all") }}</button>
+      <button type="button" class="btn btn-sm btn-outline-secondary flex-fill clear-all">{{ _("Clear") }}</button>
     </div>
-    <hr class="my-1">
     {% for value, text, checked in options %}
     <div class="form-check">
       <input class="form-check-input" type="checkbox" name="{{ param }}"
