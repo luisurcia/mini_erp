@@ -4,11 +4,11 @@
 
 > PRD por **ingeniería inversa**: describe lo que la rama `client/scoby` efectivamente hace hoy, reconstruido a partir del código y de lo desplegado en producción (`https://titourcia.com/scobyerp`). Reemplaza como referencia viva a los documentos genéricos `Kombucha_ERP_PRD.md` / `Kombucha_ERP_PRD_Requerimientos.md`, que quedan solo como registro histórico de la evaluación inicial (25 ago 2026).
 >
-> El seguimiento del trabajo se hizo en GitHub Issues: épicas [#20](https://github.com/luisurcia/mini_erp/issues/20) · [#36](https://github.com/luisurcia/mini_erp/issues/36) · [#47](https://github.com/luisurcia/mini_erp/issues/47) · [#76](https://github.com/luisurcia/mini_erp/issues/76) (personalización base + rondas de ajustes de UX), [#87](https://github.com/luisurcia/mini_erp/issues/87) (quinta ronda: PDF de cobranza, métricas de Dashboard, **flujo de bodegas Fermentación → Principal → distribución**), [#90](https://github.com/luisurcia/mini_erp/issues/90) (feedback: PDF agrupado por cliente, **consumo de insumos al armar**) y [#95](https://github.com/luisurcia/mini_erp/issues/95) (sexta ronda: **módulo de Compras**, columnas del grid de venta ordenadas por lo más vendido) — todas cerradas. Pendientes abiertos: spike de integración bancaria (#82), spike de notificaciones (#52) y modo comparación del Dashboard (#92).
+> El seguimiento del trabajo se hizo en GitHub Issues: épicas [#20](https://github.com/luisurcia/mini_erp/issues/20) · [#36](https://github.com/luisurcia/mini_erp/issues/36) · [#47](https://github.com/luisurcia/mini_erp/issues/47) · [#76](https://github.com/luisurcia/mini_erp/issues/76) (personalización base + rondas de ajustes de UX), [#87](https://github.com/luisurcia/mini_erp/issues/87) (quinta ronda: PDF de cobranza, métricas de Dashboard, **flujo de bodegas Fermentación → Principal → distribución**), [#90](https://github.com/luisurcia/mini_erp/issues/90) (feedback: PDF agrupado por cliente, **consumo de insumos al armar**) y [#95](https://github.com/luisurcia/mini_erp/issues/95) (sexta ronda: **módulo de Compras**, columnas del grid de venta ordenadas por lo más vendido) — todas cerradas, más el **modo comparación del Dashboard** ([#92](https://github.com/luisurcia/mini_erp/issues/92)). Pendientes abiertos: spike de integración bancaria (#82) y spike de notificaciones (#52).
 
 | FECHA | ESTADO | BASE | ORIGEN |
 |---|---|---|---|
-| 2 septiembre 2026 | En producción | Rama `client/scoby` (commit `3a0693e`) | Ingeniería inversa del código |
+| 2 septiembre 2026 | En producción | Rama `client/scoby` (commit `a6cf9ba`) | Ingeniería inversa del código |
 
 ---
 
@@ -109,6 +109,10 @@ producción → Bodega de Fermentación → Bodega Principal → Bodega Julien /
   - **Total de tickets** por mes (barras) — cantidad de ventas por mes.
   - **Total de botellas vendidas** por mes (barras) — unidades por mes.
   - Los dos gráficos "por mes" muestran solo los meses seleccionados en el eje (los 12 si no se marcó ninguno), sumados sobre los años elegidos; el título lista esos años.
+- **Modo comparación** (toggle "Comparar", requiere 2+ años):
+  - Cada año seleccionado pasa a ser un **periodo aparte** (acotado a los meses marcados), en vez de sumarse. Ejemplo: años 2025 + 2026 + mes Septiembre → "Sep 2025" vs "Sep 2026".
+  - Los 6 indicadores se muestran como **tabla**: una columna por periodo + una columna **Δ%** (verde/rojo) cuando hay exactamente 2 periodos.
+  - Los gráficos "por mes" pasan a **una serie por año**; "Total de ventas por producto" pasa a **barras agrupadas** (producto × periodo); la torta se **oculta**.
 - Listado de **productos con stock bajo** (producto / disponible / nivel de reposición) — es el stock actual, no depende del filtro de fecha.
 - El Dashboard es visible para **todos los roles** (es la página de aterrizaje común).
 
@@ -166,7 +170,6 @@ Solo administrador, desde el menú **Configuración** del navbar.
 - ✕ **Pagos parciales / abonos** — el estado de pago es binario (por pagar / pagado).
 - ✕ **Lotes y vencimiento** — el stock se lleva por producto, no por lote ni fecha de embotellado.
 - ✕ **Catálogos oficiales de comuna/región de Chile** — son texto libre.
-- ✕ **Modo comparación en el Dashboard** (p. ej. Sep 2025 vs Sep 2026 lado a lado) — hoy el filtro multi-selección suma los periodos, no los compara → [#92](https://github.com/luisurcia/mini_erp/issues/92).
 - ✕ **Tienda online / catálogo público**, **app móvil nativa**, **multiempresa**.
 
 ## 05 Diferencias respecto del producto genérico (Kombucha ERP)
@@ -181,7 +184,7 @@ Solo administrador, desde el menú **Configuración** del navbar.
 | Insumos | No existía como consumo | Módulo Insumos + receta por producto + descuento automático **al armar** (entrada a Fermentación) |
 | Cobranza | No existía | Estado por pagar / pagado + referencia; PDF de ventas por pagar agrupado por cliente |
 | Compras / gastos | No existía | Libro de gastos de planta con correlativo global, categoría, anulación y total mensual (solo admin) |
-| Dashboard | KPIs genéricos, filtro de un año | 6 KPIs del Excel de Scoby (Valor Total Pago, Total de Botellas, N° de tickets, N° de Facturas, botellas y valor unitario promedio) + filtros multi-selección de año y mes (unión, tipo tabla dinámica) + 4 gráficos 2×2 |
+| Dashboard | KPIs genéricos, filtro de un año | 6 KPIs del Excel de Scoby (Valor Total Pago, Total de Botellas, N° de tickets, N° de Facturas, botellas y valor unitario promedio) + filtros multi-selección de año y mes (unión, tipo tabla dinámica) + 4 gráficos 2×2 + modo comparación de periodos (tabla con Δ%) |
 | Pre-venta | Módulo Oportunidades (embudo) | Eliminado → vista Top 10 clientes por consumo |
 | Cliente | Nombre, email, teléfono, IG, notas | + RUT, sobrenombre, segmento, dirección de despacho estructurada; mínimo para crear = nombre + segmento |
 | Roles | admin / editor / lector | admin / bodeguero / vendedor, por módulo, con 403 real; catálogo de productos y recetas = solo admin |
@@ -206,8 +209,7 @@ Solo administrador, desde el menú **Configuración** del navbar.
 - **Datos de usuarios en producción:** los 4 usuarios existentes (admin, Mario, Eduardo, Julien) tienen nombre/apellido en blanco y quedaron todos con rol `admin`; conviene cargar sus nombres y reasignarles rol `bodeguero` / `venta` según corresponda. Al hacerlo, tener presente que `bodeguero` y `venta` ya **no** ven el catálogo de productos ni las recetas (pasaron a solo administrador).
 - **Notificaciones** — ver spike [#52](https://github.com/luisurcia/mini_erp/issues/52).
 - **Housekeeping de traducciones:** los tres catálogos arrastran entradas obsoletas (`#~`) del módulo Oportunidades eliminado; `pybabel compile` las ignora, pero conviene limpiarlas.
-- **Dashboard — modo comparación** (#92) pendiente de definición con el cliente antes de implementar.
 
 ---
 
-*Scoby ERP — PRD por ingeniería inversa · rama `client/scoby` · commit `3a0693e` · 2 septiembre 2026*
+*Scoby ERP — PRD por ingeniería inversa · rama `client/scoby` · commit `a6cf9ba` · 2 septiembre 2026*
