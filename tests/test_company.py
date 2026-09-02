@@ -8,7 +8,7 @@ def test_get_settings_creates_default_row_with_spanish_language(app):
     settings = Company.get_settings()
 
     assert settings.id is not None
-    assert settings.name == "Scoby Kombucha"
+    assert settings.name == "Mi empresa"
     assert settings.brand_name == "Kombucha ERP"
     assert settings.language == Company.LANGUAGE_ES
     assert settings.tax_rate == Decimal("19.00")

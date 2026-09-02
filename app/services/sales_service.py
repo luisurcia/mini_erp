@@ -172,7 +172,7 @@ class SalesService:
         return sum(1 for sale in sales if sale.invoice_number)
 
     def taxed_sales_count(self, sales: list[Sale]) -> int:
-        """Number of sales that carry IVA — for Scoby a taxed sale is a
+        """Number of sales that carry IVA — a taxed sale is treated as a
         factura (vs. a boleta), so this is the dashboard's "N° de facturas"
         (#91)."""
         return sum(1 for sale in sales if sale.tax_applied)
@@ -193,7 +193,7 @@ class SalesService:
 
     def average_bottles_per_sale(self, sales: list[Sale]):
         """Average number of units (across all line items) per sale —
-        one of Scoby's dashboard KPIs, see #30."""
+        one of the dashboard KPIs, see #30."""
         if not sales:
             return Decimal("0")
         return Decimal(self.total_bottles(sales)) / len(sales)

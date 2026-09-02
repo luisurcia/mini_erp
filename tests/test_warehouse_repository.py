@@ -60,12 +60,12 @@ def test_ensure_fermentation_warehouse_is_idempotent(app):
 
 
 def test_stage_migration_classifies_and_renames_existing_warehouses(app):
-    # The state a real client/scoby database is in: no stages yet, and the
-    # team already made a warehouse called "En Fermentación" by hand.
+    # A database created before stages existed: no stages yet, and the team
+    # already made a warehouse called "En Fermentación" by hand.
     db.session.add_all(
         [
             Warehouse(name="Bodega Principal", is_default=True),
-            Warehouse(name="Bodega Julien"),
+            Warehouse(name="Bodega Norte"),
             Warehouse(name="En Fermentación"),
         ]
     )
@@ -74,9 +74,9 @@ def test_stage_migration_classifies_and_renames_existing_warehouses(app):
     ensure_warehouse_stage_column()
 
     principal = Warehouse.query.filter_by(name="Bodega Principal").one()
-    julien = Warehouse.query.filter_by(name="Bodega Julien").one()
+    norte = Warehouse.query.filter_by(name="Bodega Norte").one()
     ferm = Warehouse.query.filter_by(stage=Warehouse.STAGE_FERMENTATION).one()
 
     assert principal.stage == Warehouse.STAGE_MAIN
-    assert julien.stage == Warehouse.STAGE_DISTRIBUTION
+    assert norte.stage == Warehouse.STAGE_DISTRIBUTION
     assert ferm.name == "Bodega de Fermentación"

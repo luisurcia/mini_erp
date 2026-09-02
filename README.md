@@ -1,8 +1,9 @@
-# Mini ERP — Kombucha Scoby
+# Kombucha ERP
 
-A small ERP web app built for a kombucha producer (demo customer:
-[@kombucha_scoby](https://instagram.com/kombucha_scoby)) to manage inventory,
-record real sales, and track top customers by consumption.
+A small ERP web app for a kombucha producer — manage multi-warehouse
+inventory and the production flow, record real sales, track supplies,
+and see top customers by consumption. Configured per client from the
+Company settings screen (app name, colours, currency, tax, warehouses).
 
 Built with Python (Flask, OOP, layered architecture: models →
 repositories → services → routes), SQLAlchemy, and Bootstrap 5.

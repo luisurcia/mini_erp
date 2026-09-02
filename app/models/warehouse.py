@@ -3,22 +3,23 @@ from app.models.base import BaseModel
 
 
 class Warehouse(BaseModel):
-    """One of Scoby's physical warehouses. A simple admin-editable catalog
+    """A physical warehouse. A simple admin-editable catalog
     (rename/add/deactivate), same pattern as CustomerSegment — see #25.
 
     `kind` splits distribution warehouses (finished product) from the
     single supplies warehouse (bottles/labels/caps) — see #48.
 
-    `stage` places a finished-product warehouse in Scoby's flow (#86):
+    `stage` places a finished-product warehouse in the production flow
+    (#86):
 
-      producción → Fermentación → Principal → distribución (Julien, Mario)
+      producción → Fermentación → Principal → distribución
 
     - `fermentation`: the one warehouse assembled bottles enter (the only
       place stock can be restocked). Unique.
     - `main`: Bodega Principal. Receives from Fermentación, sends to
       distribution. Unique.
-    - `distribution`: Julien, Mario, ... — receive only by transfer from
-      Principal. Can be many.
+    - `distribution`: the outlet warehouses — receive only by transfer
+      from Principal. Can be many.
 
     `kind`/`stage` are set once and not editable from the UI.
     """
@@ -32,12 +33,12 @@ class Warehouse(BaseModel):
     STAGE_MAIN = "main"
     STAGE_DISTRIBUTION = "distribution"
 
-    # (name, stage) for a fresh database. Principal is is_default.
+    # (name, stage) for a fresh database. Principal is is_default. Clients
+    # rename/add their own distribution warehouses from the UI.
     DEFAULTS = [
         ("Bodega de Fermentación", STAGE_FERMENTATION),
         ("Bodega Principal", STAGE_MAIN),
-        ("Bodega Julien", STAGE_DISTRIBUTION),
-        ("Bodega Mario", STAGE_DISTRIBUTION),
+        ("Bodega de Distribución", STAGE_DISTRIBUTION),
     ]
     DEFAULT_NAME = "Bodega Principal"
     SUPPLIES_NAME = "Bodega de Insumos"

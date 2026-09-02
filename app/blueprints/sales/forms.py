@@ -31,7 +31,7 @@ class SaleMetaForm(FlaskForm):
 
     No `status` field: a sale recorded here already happened, so it's
     always created as completed — never exposed as an input. No `notes`
-    field either — it doesn't add value to Scoby's process, though the
+    field either — it's not part of the sale-entry flow, though the
     column stays on the model for compatibility.
     """
 

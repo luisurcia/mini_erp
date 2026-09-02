@@ -106,7 +106,7 @@ def ensure_warehouse_stage_column() -> None:
     fermentation → main → distribution flow (#86).
 
     - Bodega Principal (is_default) → `main`.
-    - A warehouse whose name contains "fermenta" (the Scoby team may have
+    - A warehouse whose name contains "fermenta" (the team may have
       created one called "En Fermentación") → renamed to
       `Bodega de Fermentación` and set to `fermentation`.
     - Everything else stays `distribution` (the ADD COLUMN default).
@@ -249,7 +249,7 @@ def ensure_company_name_column() -> None:
         db.session.execute(
             text(
                 "ALTER TABLE company_settings ADD COLUMN name "
-                "VARCHAR(120) NOT NULL DEFAULT 'Scoby Kombucha'"
+                "VARCHAR(120) NOT NULL DEFAULT 'Mi empresa'"
             )
         )
         db.session.commit()
@@ -306,8 +306,8 @@ def ensure_company_currency_columns() -> None:
     money formatting was configurable (see #39).
 
     Defaults match the model (CLP / "$" / 0 decimals) so an existing
-    `client/scoby` database picks up peso formatting on the next deploy
-    without a manual settings change.
+    database picks up peso formatting on the next deploy without a manual
+    settings change.
     """
     inspector = inspect(db.engine)
     columns = {column["name"] for column in inspector.get_columns("company_settings")}
@@ -337,7 +337,7 @@ def ensure_company_currency_columns() -> None:
 
 def ensure_customer_columns() -> None:
     """Backfill `customers.rut`/`shipping_address`/`segment_id` for
-    databases created before Scoby's customer segmentation existed.
+    databases created before customer segmentation existed.
 
     SQLite's ALTER TABLE can't add a UNIQUE constraint, so `rut`'s
     uniqueness is only enforced on fresh installs (db.create_all()), not
@@ -360,8 +360,8 @@ def ensure_customer_nickname_and_structured_address() -> None:
     region columns.
 
     The old free-text values are not parsed into the new fields — only
-    demo data ever used the column, and Scoby re-enters real addresses in
-    the structured form. SQLite 3.35+ (this deploy target is 3.45) supports
+    demo data ever used the column, and a client re-enters real addresses
+    in the structured form. SQLite 3.35+ (this deploy target is 3.45) supports
     DROP COLUMN directly, so no table rebuild is needed.
     """
     inspector = inspect(db.engine)

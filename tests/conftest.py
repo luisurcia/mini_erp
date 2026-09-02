@@ -50,7 +50,7 @@ def fermentation_warehouse(app):
 
 @pytest.fixture()
 def distribution_warehouse(app):
-    w = Warehouse(name="Bodega Julien", stage=Warehouse.STAGE_DISTRIBUTION)
+    w = Warehouse(name="Bodega de Distribución", stage=Warehouse.STAGE_DISTRIBUTION)
     db.session.add(w)
     db.session.commit()
     return w

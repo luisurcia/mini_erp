@@ -20,7 +20,7 @@ class Company(BaseModel):
 
     # Legal / trading name — shown on generated documents (e.g. the
     # unpaid-sales PDF, #81).
-    name = db.Column(db.String(120), nullable=False, default="Scoby Kombucha")
+    name = db.Column(db.String(120), nullable=False, default="Mi empresa")
     # The product name shown in the UI (navbar, page title, login). Kept
     # separate from `name`: this is "Kombucha ERP" (or a client's own
     # label), not the company's trading name. See #97.
@@ -29,11 +29,10 @@ class Company(BaseModel):
     tax_enabled_default = db.Column(db.Boolean, nullable=False, default=True)
     language = db.Column(db.String(5), nullable=False, default=LANGUAGE_ES)
 
-    # Money display. `client/scoby` bills in Chilean pesos, which have no
-    # cents — so the default here is CLP with 0 decimals, and every amount
-    # shown in the app is formatted through app.display.format_money using
-    # these settings. Tax rounding follows currency_decimals too (see
-    # Sale.recalculate_total). See #39.
+    # Money display. The default is CLP with 0 decimals (Chilean pesos have
+    # no cents); every amount shown in the app is formatted through
+    # app.display.format_money using these settings. Tax rounding follows
+    # currency_decimals too (see Sale.recalculate_total). See #39.
     currency_code = db.Column(db.String(3), nullable=False, default="CLP")
     currency_symbol = db.Column(db.String(8), nullable=False, default="$")
     currency_decimals = db.Column(db.Integer, nullable=False, default=0)
@@ -41,8 +40,9 @@ class Company(BaseModel):
     # Per-field visibility on the "new/edit product" form. A hidden field
     # is dropped from the form entirely and its column left null/derived.
     # Price can be hidden too (#38): since #23 every real Sale line carries
-    # its own price, so a catalog price is optional — Scoby enters it per
-    # sale. Flavor likewise (#37): Scoby folds the flavor into the name.
+    # its own price, so a catalog price is optional — a client can enter it
+    # per sale instead. Flavor likewise (#37): a client can fold the flavor
+    # into the product name.
     product_short_name_enabled = db.Column(db.Boolean, nullable=False, default=True)
     product_size_enabled = db.Column(db.Boolean, nullable=False, default=True)
     product_sku_enabled = db.Column(db.Boolean, nullable=False, default=True)
