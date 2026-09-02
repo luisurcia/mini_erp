@@ -17,6 +17,11 @@ class CompanySettingsForm(FlaskForm):
     name = StringField(
         _l("Company name"), validators=[DataRequired(), Length(max=120)]
     )
+    brand_name = StringField(
+        _l("App name"),
+        validators=[DataRequired(), Length(max=60)],
+        description=_l("Shown in the top bar, the page title and the login screen."),
+    )
     tax_rate = DecimalField(
         _l("Tax rate (%)"), places=2, validators=[DataRequired(), NumberRange(min=0, max=100)]
     )

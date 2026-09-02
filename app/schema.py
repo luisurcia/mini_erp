@@ -255,6 +255,29 @@ def ensure_company_name_column() -> None:
         db.session.commit()
 
 
+def ensure_company_brand_name_column() -> None:
+    """Add `company_settings.brand_name` — the product name shown in the UI,
+    separate from the trading name `name` (#97).
+
+    New databases get 'Kombucha ERP' from the model default. The one
+    pre-existing deployment (Scoby) keeps the label it has today, so the
+    team sees no change.
+    """
+    inspector = inspect(db.engine)
+    columns = {column["name"] for column in inspector.get_columns("company_settings")}
+    if "brand_name" not in columns:
+        db.session.execute(
+            text(
+                "ALTER TABLE company_settings ADD COLUMN brand_name "
+                "VARCHAR(60) NOT NULL DEFAULT 'Kombucha ERP'"
+            )
+        )
+        db.session.execute(
+            text("UPDATE company_settings SET brand_name = 'Scoby ERP'")
+        )
+        db.session.commit()
+
+
 def ensure_company_product_field_toggles() -> None:
     """Backfill the product-form visibility toggles for databases created
     before per-field simplification existed.

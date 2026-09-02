@@ -19,6 +19,7 @@ def settings():
 
     if form.validate_on_submit():
         company.name = form.name.data
+        company.brand_name = form.brand_name.data
         company.tax_rate = form.tax_rate.data
         company.tax_enabled_default = form.tax_enabled_default.data
         company.product_short_name_enabled = form.product_short_name_enabled.data

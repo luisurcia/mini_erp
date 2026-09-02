@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-09-02 14:12-0400\n"
+"POT-Creation-Date: 2026-09-02 16:19-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,40 +17,40 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.18.0\n"
 
-#: app/__init__.py:95
+#: app/__init__.py:97
 msgid "Completed"
 msgstr ""
 
-#: app/__init__.py:96
+#: app/__init__.py:98
 msgid "Pending"
 msgstr ""
 
-#: app/__init__.py:97
+#: app/__init__.py:99
 msgid "Cancelled"
 msgstr ""
 
-#: app/__init__.py:108 app/templates/sales/index.html:16
+#: app/__init__.py:110 app/templates/sales/index.html:16
 msgid "Paid"
 msgstr ""
 
-#: app/__init__.py:109 app/templates/sales/index.html:14
+#: app/__init__.py:111 app/templates/sales/index.html:14
 msgid "Unpaid"
 msgstr ""
 
-#: app/__init__.py:126 app/templates/inventory/restock_form.html:3
+#: app/__init__.py:128 app/templates/inventory/restock_form.html:3
 #: app/templates/supplies/restock_form.html:3
 msgid "Restock"
 msgstr ""
 
-#: app/__init__.py:127
+#: app/__init__.py:129
 msgid "Sale"
 msgstr ""
 
-#: app/__init__.py:128
+#: app/__init__.py:130
 msgid "Adjustment"
 msgstr ""
 
-#: app/__init__.py:129 app/blueprints/inventory/forms.py:45
+#: app/__init__.py:131 app/blueprints/inventory/forms.py:45
 msgid "Transfer"
 msgstr ""
 
@@ -151,7 +151,7 @@ msgstr ""
 msgid "Change password"
 msgstr ""
 
-#: app/blueprints/auth/forms.py:32 app/blueprints/company/forms.py:40
+#: app/blueprints/auth/forms.py:32 app/blueprints/company/forms.py:45
 #: app/templates/auth/change_language.html:3
 #: app/templates/auth/change_language.html:8 app/templates/base.html:62
 msgid "Language"
@@ -182,58 +182,66 @@ msgid "Company name"
 msgstr ""
 
 #: app/blueprints/company/forms.py:21
-msgid "Tax rate (%)"
+msgid "App name"
 msgstr ""
 
 #: app/blueprints/company/forms.py:23
-msgid "Include tax by default on new sales"
+msgid "Shown in the top bar, the page title and the login screen."
 msgstr ""
 
-#: app/blueprints/company/forms.py:25
-msgid "Ask for a short name when creating a product"
+#: app/blueprints/company/forms.py:26
+msgid "Tax rate (%)"
 msgstr ""
 
 #: app/blueprints/company/forms.py:28
+msgid "Include tax by default on new sales"
+msgstr ""
+
+#: app/blueprints/company/forms.py:30
+msgid "Ask for a short name when creating a product"
+msgstr ""
+
+#: app/blueprints/company/forms.py:33
 msgid "Ask for size (ml) when creating a product"
 msgstr ""
 
-#: app/blueprints/company/forms.py:31
+#: app/blueprints/company/forms.py:36
 msgid "Ask for a SKU when creating a product"
 msgstr ""
 
-#: app/blueprints/company/forms.py:34
+#: app/blueprints/company/forms.py:39
 msgid "Ask for a flavor when creating a product"
 msgstr ""
 
-#: app/blueprints/company/forms.py:37
+#: app/blueprints/company/forms.py:42
 msgid "Ask for a unit price when creating a product"
 msgstr ""
 
-#: app/blueprints/company/forms.py:45
+#: app/blueprints/company/forms.py:50
 msgid "Currency code"
 msgstr ""
 
-#: app/blueprints/company/forms.py:48
+#: app/blueprints/company/forms.py:53
 msgid "ISO code, e.g. CLP, USD, EUR."
 msgstr ""
 
-#: app/blueprints/company/forms.py:51
+#: app/blueprints/company/forms.py:56
 msgid "Currency symbol"
 msgstr ""
 
-#: app/blueprints/company/forms.py:54
+#: app/blueprints/company/forms.py:59
 msgid "Decimal places shown for amounts"
 msgstr ""
 
-#: app/blueprints/company/forms.py:56
+#: app/blueprints/company/forms.py:61
 msgid "Chilean pesos (CLP) use 0 — no decimals anywhere in the app."
 msgstr ""
 
-#: app/blueprints/company/forms.py:58
+#: app/blueprints/company/forms.py:63
 msgid "Save settings"
 msgstr ""
 
-#: app/blueprints/company/forms.py:62 app/blueprints/customers/forms.py:16
+#: app/blueprints/company/forms.py:67 app/blueprints/customers/forms.py:16
 #: app/blueprints/inventory/forms.py:34 app/blueprints/supplies/forms.py:11
 #: app/templates/company/segments_list.html:13
 #: app/templates/customers/index.html:13
@@ -243,7 +251,7 @@ msgstr ""
 msgid "Name"
 msgstr ""
 
-#: app/blueprints/company/forms.py:63 app/blueprints/inventory/forms.py:35
+#: app/blueprints/company/forms.py:68 app/blueprints/inventory/forms.py:35
 #: app/blueprints/products/forms.py:23 app/blueprints/supplies/forms.py:16
 #: app/templates/company/segments_list.html:24
 #: app/templates/inventory/warehouses_list.html:36
@@ -251,24 +259,24 @@ msgstr ""
 msgid "Active"
 msgstr ""
 
-#: app/blueprints/company/forms.py:64
+#: app/blueprints/company/forms.py:69
 msgid "Save segment"
 msgstr ""
 
-#: app/blueprints/company/routes.py:34
+#: app/blueprints/company/routes.py:35
 msgid "Company settings updated."
 msgstr ""
 
-#: app/blueprints/company/routes.py:57
+#: app/blueprints/company/routes.py:58
 #, python-format
 msgid "Segment '%(name)s' created."
 msgstr ""
 
-#: app/blueprints/company/routes.py:69
+#: app/blueprints/company/routes.py:70
 msgid "Segment not found."
 msgstr ""
 
-#: app/blueprints/company/routes.py:78
+#: app/blueprints/company/routes.py:79
 #, python-format
 msgid "Segment '%(name)s' updated."
 msgstr ""

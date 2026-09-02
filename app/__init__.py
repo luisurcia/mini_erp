@@ -45,6 +45,8 @@ def create_app(config_class: type = Config) -> Flask:
         settings = Company.get_settings()
         return {
             "current_locale": str(get_locale()),
+            # Product name in the navbar / page title / login (#97).
+            "brand_name": settings.brand_name,
             # Exposed for client-side money formatting (Intl.NumberFormat)
             # in the few templates that compute totals in JS. Server-side
             # rendering uses format_money() instead.

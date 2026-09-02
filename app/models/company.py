@@ -18,8 +18,13 @@ class Company(BaseModel):
     # current UI language is).
     LANGUAGE_LABELS = {LANGUAGE_ES: "Español", LANGUAGE_EN: "English", LANGUAGE_FR: "Français"}
 
-    # Shown on generated documents (e.g. the unpaid-sales PDF, #81).
+    # Legal / trading name — shown on generated documents (e.g. the
+    # unpaid-sales PDF, #81).
     name = db.Column(db.String(120), nullable=False, default="Scoby Kombucha")
+    # The product name shown in the UI (navbar, page title, login). Kept
+    # separate from `name`: this is "Kombucha ERP" (or a client's own
+    # label), not the company's trading name. See #97.
+    brand_name = db.Column(db.String(60), nullable=False, default="Kombucha ERP")
     tax_rate = db.Column(db.Numeric(5, 2), nullable=False, default=Decimal("19.00"))
     tax_enabled_default = db.Column(db.Boolean, nullable=False, default=True)
     language = db.Column(db.String(5), nullable=False, default=LANGUAGE_ES)
