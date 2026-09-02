@@ -28,6 +28,14 @@ class SalesRepository(Repository[Sale]):
             Sale.sale_date <= end,
         ).all()
 
+    def completed_since(self, start: datetime) -> list[Sale]:
+        """Completed sales on or after `start` — the New Sale grid's
+        demand-ranking window (#94)."""
+        return Sale.query.filter(
+            Sale.status == Sale.STATUS_COMPLETED,
+            Sale.sale_date >= start,
+        ).all()
+
     def completed_in_year(self, year: int) -> list[Sale]:
         return Sale.query.filter(
             Sale.status == Sale.STATUS_COMPLETED,

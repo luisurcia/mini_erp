@@ -1,4 +1,4 @@
-from datetime import UTC, date, datetime
+from datetime import UTC, date, datetime, timedelta
 from decimal import Decimal
 
 import pytest
@@ -8,6 +8,7 @@ from app.exceptions import InsufficientStockError, MiniErpError
 from app.extensions import db
 from app.models.company import Company
 from app.models.customer import Customer
+from app.models.product import Product
 from app.models.product_supply import ProductSupply
 from app.models.supply import Supply, SupplyMovement
 from app.repositories.sales_repository import SalesRepository
@@ -185,6 +186,78 @@ def test_monthly_sales_counts_and_bottles_bucket_by_sale_month(app, customer, pr
 
     assert counts == [1, 0, 1] + [0] * 9
     assert bottles == [1, 0, 4] + [0] * 9
+
+
+def _product(name, warehouse, stock=1000):
+    p = Product(name=name, sku=f"SKU-{name}", unit_price=Decimal("1000"), is_active=True)
+    db.session.add(p)
+    db.session.flush()
+    InventoryService().create_inventory_item(
+        p.id, warehouse.id, initial_qty=stock, reorder_level=10
+    )
+    db.session.commit()
+    return p
+
+
+def test_active_products_by_demand_orders_by_units_sold_in_the_window(
+    app, customer, warehouse
+):
+    aaa = _product("Aaa", warehouse)
+    bbb = _product("Bbb", warehouse)  # noqa: F841 — no sales, expected last
+    ccc = _product("Ccc", warehouse)
+    service = SalesService()
+    now = datetime(2026, 6, 1, tzinfo=UTC)
+
+    service.record_sale(
+        customer_id=customer.id,
+        items=[{"product_id": ccc.id, "quantity": 10, "warehouse_id": warehouse.id}],
+        sale_date=now - timedelta(days=5),
+    )
+    service.record_sale(
+        customer_id=customer.id,
+        items=[{"product_id": aaa.id, "quantity": 3, "warehouse_id": warehouse.id}],
+        sale_date=now - timedelta(days=5),
+    )
+
+    ordered = service.active_products_by_demand(now=now)
+
+    # Ccc (10 units) then Aaa (3), then Bbb — no recent sales, alphabetical.
+    assert [p.name for p in ordered] == ["Ccc", "Aaa", "Bbb"]
+
+
+def test_active_products_by_demand_ignores_sales_outside_the_window(
+    app, customer, warehouse
+):
+    old = _product("Old", warehouse)
+    new = _product("New", warehouse)
+    service = SalesService()
+    now = datetime(2026, 6, 1, tzinfo=UTC)
+
+    service.record_sale(
+        customer_id=customer.id,
+        items=[{"product_id": old.id, "quantity": 50, "warehouse_id": warehouse.id}],
+        sale_date=now - timedelta(days=100),
+    )
+    service.record_sale(
+        customer_id=customer.id,
+        items=[{"product_id": new.id, "quantity": 1, "warehouse_id": warehouse.id}],
+        sale_date=now - timedelta(days=1),
+    )
+
+    ordered = service.active_products_by_demand(now=now)
+
+    # "Old" sold more, but 100 days ago — outside the 90-day window, so it
+    # falls back behind the recently-sold "New".
+    assert [p.name for p in ordered] == ["New", "Old"]
+
+
+def test_active_products_by_demand_without_sales_is_alphabetical(app, warehouse):
+    _product("Zeta", warehouse)
+    _product("Alpha", warehouse)
+
+    ordered = SalesService().active_products_by_demand()
+
+    assert [p.name for p in ordered] == ["Alpha", "Zeta"]
 
 
 def test_invoice_count_counts_only_sales_with_invoice_number(app, customer, product):

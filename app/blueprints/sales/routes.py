@@ -16,7 +16,6 @@ from app.permissions import admin_required, module_required
 from app.reports import build_unpaid_sales_pdf
 from app.repositories.customer_repository import CustomerRepository
 from app.repositories.inventory_repository import InventoryRepository
-from app.repositories.product_repository import ProductRepository
 from app.repositories.sales_repository import SalesRepository
 from app.repositories.warehouse_repository import WarehouseRepository
 from app.services.sales_service import SalesService
@@ -60,13 +59,16 @@ def unpaid_pdf():
 @login_required
 @module_required(User.MODULE_SALES)
 def new_sale():
+    sales_service = SalesService()
     form = SaleMetaForm()
     form.customer_id.choices = _customer_choices()
     if not form.is_submitted():
         form.include_tax.data = Company.get_settings().tax_enabled_default
         form.sale_date.data = date.today()
 
-    products = ProductRepository().get_active()
+    # Columns are ordered by what's been selling — the top seller sits in
+    # the leftmost column so it's on screen without scrolling (#94).
+    products = sales_service.active_products_by_demand()
     warehouses = WarehouseRepository().get_sellable()
     stock = {
         (item.product_id, item.warehouse_id): item for item in InventoryRepository().get_all()
@@ -80,7 +82,7 @@ def new_sale():
             flash(_("Add at least one product line to the sale."), "danger")
         elif not errors:
             try:
-                sale = SalesService().record_sale(
+                sale = sales_service.record_sale(
                     customer_id=form.customer_id.data,
                     items=items,
                     sale_date=datetime.combine(form.sale_date.data, datetime.now().time()),

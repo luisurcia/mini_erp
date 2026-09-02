@@ -1,11 +1,12 @@
 from collections import defaultdict
-from datetime import UTC, datetime
+from datetime import UTC, datetime, timedelta
 from decimal import Decimal
 
 from app.display import product_label, product_short_label
 from app.exceptions import MiniErpError, NotFoundError
 from app.models.company import Company
 from app.models.inventory import StockMovement
+from app.models.product import Product
 from app.models.sales import Sale, SaleItem
 from app.repositories.product_repository import ProductRepository
 from app.repositories.sales_repository import SalesRepository
@@ -127,6 +128,37 @@ class SalesService:
         sale.paid_at = None
         self.sales_repo.commit()
         return sale
+
+    def active_products_by_demand(
+        self, window_days: int = 90, now: datetime | None = None
+    ) -> list[Product]:
+        """Active products ordered for the New Sale grid (#94): the ones
+        sold in the last `window_days`, most units first, then the rest in
+        the catalog's default (alphabetical) order.
+
+        Ranking is by units sold (sum of SaleItem.quantity), not revenue —
+        the grid is a data-entry aid, so "what we ship most" is a better
+        predictor of the next line than "what bills most". The rolling
+        window keeps the order tracking current demand instead of freezing
+        on all-time history.
+        """
+        reference = now or datetime.now(UTC)
+        # Stored sale_date values are naive (SQLite drops tzinfo); compare
+        # against a naive UTC cutoff so the filter behaves.
+        cutoff = (reference - timedelta(days=window_days)).replace(tzinfo=None)
+
+        units: dict[int, int] = defaultdict(int)
+        for sale in self.sales_repo.completed_since(cutoff):
+            for item in sale.items:
+                units[item.product_id] += item.quantity
+
+        # Stable sort: get_active() is already alphabetical, so products
+        # with no recent sales keep that order and ties break the same way.
+        return sorted(
+            self.product_repo.get_active(),
+            key=lambda product: units.get(product.id, 0),
+            reverse=True,
+        )
 
     def total_revenue(self, sales: list[Sale]):
         return sum((sale.total_amount for sale in sales), start=0)
