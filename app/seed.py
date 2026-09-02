@@ -227,6 +227,23 @@ def _seed_sales(customers: dict[str, Customer], products: dict[str, Product]) ->
         notes="First trial order before committing to a recurring contract.",
     )
 
+    # Two sales roughly a year back, so the Dashboard's year-over-year
+    # comparison mode has something to show (#92).
+    sales_service.record_sale(
+        customer_id=customers["green_leaf"].id,
+        items=[
+            {"product_id": products["Original"].id, "quantity": 12},
+            {"product_id": products["Mango Turmeric"].id, "quantity": 6},
+        ],
+        sale_date=now - timedelta(days=6 + 365),
+        include_tax=True,
+    )
+    sales_service.record_sale(
+        customer_id=customers["fresh_market"].id,
+        items=[{"product_id": products["Mixed Berry"].id, "quantity": 24}],
+        sale_date=now - timedelta(days=45 + 365),
+    )
+
 
 def _seed_purchases() -> None:
     """Plant-overhead expenses — not production inputs (#93)."""

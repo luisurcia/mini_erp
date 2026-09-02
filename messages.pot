@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-09-02 13:46-0400\n"
+"POT-Creation-Date: 2026-09-02 14:12-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -345,90 +345,114 @@ msgstr ""
 msgid "Customer '%(name)s' updated."
 msgstr ""
 
-#: app/blueprints/dashboard/routes.py:16 app/blueprints/purchases/routes.py:20
+#: app/blueprints/dashboard/routes.py:24 app/blueprints/purchases/routes.py:20
 #: app/blueprints/top_customers/routes.py:17
 msgid "Jan"
 msgstr ""
 
-#: app/blueprints/dashboard/routes.py:16 app/blueprints/purchases/routes.py:20
+#: app/blueprints/dashboard/routes.py:24 app/blueprints/purchases/routes.py:20
 #: app/blueprints/top_customers/routes.py:17
 msgid "Feb"
 msgstr ""
 
-#: app/blueprints/dashboard/routes.py:16 app/blueprints/purchases/routes.py:20
+#: app/blueprints/dashboard/routes.py:24 app/blueprints/purchases/routes.py:20
 #: app/blueprints/top_customers/routes.py:17
 msgid "Mar"
 msgstr ""
 
-#: app/blueprints/dashboard/routes.py:16 app/blueprints/purchases/routes.py:20
+#: app/blueprints/dashboard/routes.py:24 app/blueprints/purchases/routes.py:20
 #: app/blueprints/top_customers/routes.py:17
 msgid "Apr"
 msgstr ""
 
-#: app/blueprints/dashboard/routes.py:16 app/blueprints/purchases/routes.py:20
+#: app/blueprints/dashboard/routes.py:24 app/blueprints/purchases/routes.py:20
 #: app/blueprints/top_customers/routes.py:17
 msgid "May"
 msgstr ""
 
-#: app/blueprints/dashboard/routes.py:16 app/blueprints/purchases/routes.py:20
+#: app/blueprints/dashboard/routes.py:24 app/blueprints/purchases/routes.py:20
 #: app/blueprints/top_customers/routes.py:17
 msgid "Jun"
 msgstr ""
 
-#: app/blueprints/dashboard/routes.py:17 app/blueprints/purchases/routes.py:21
+#: app/blueprints/dashboard/routes.py:25 app/blueprints/purchases/routes.py:21
 #: app/blueprints/top_customers/routes.py:18
 msgid "Jul"
 msgstr ""
 
-#: app/blueprints/dashboard/routes.py:17 app/blueprints/purchases/routes.py:21
+#: app/blueprints/dashboard/routes.py:25 app/blueprints/purchases/routes.py:21
 #: app/blueprints/top_customers/routes.py:18
 msgid "Aug"
 msgstr ""
 
-#: app/blueprints/dashboard/routes.py:17 app/blueprints/purchases/routes.py:21
+#: app/blueprints/dashboard/routes.py:25 app/blueprints/purchases/routes.py:21
 #: app/blueprints/top_customers/routes.py:18
 msgid "Sep"
 msgstr ""
 
-#: app/blueprints/dashboard/routes.py:17 app/blueprints/purchases/routes.py:21
+#: app/blueprints/dashboard/routes.py:25 app/blueprints/purchases/routes.py:21
 #: app/blueprints/top_customers/routes.py:18
 msgid "Oct"
 msgstr ""
 
-#: app/blueprints/dashboard/routes.py:17 app/blueprints/purchases/routes.py:21
+#: app/blueprints/dashboard/routes.py:25 app/blueprints/purchases/routes.py:21
 #: app/blueprints/top_customers/routes.py:18
 msgid "Nov"
 msgstr ""
 
-#: app/blueprints/dashboard/routes.py:17 app/blueprints/purchases/routes.py:21
+#: app/blueprints/dashboard/routes.py:25 app/blueprints/purchases/routes.py:21
 #: app/blueprints/top_customers/routes.py:18
 msgid "Dec"
 msgstr ""
 
-#: app/blueprints/dashboard/routes.py:86
+#: app/blueprints/dashboard/routes.py:92 app/templates/dashboard/index.html:119
+msgid "Total paid value"
+msgstr ""
+
+#: app/blueprints/dashboard/routes.py:93 app/templates/dashboard/index.html:120
+msgid "Total bottles"
+msgstr ""
+
+#: app/blueprints/dashboard/routes.py:94 app/templates/dashboard/index.html:121
+msgid "Number of tickets"
+msgstr ""
+
+#: app/blueprints/dashboard/routes.py:95 app/templates/dashboard/index.html:122
+msgid "Number of invoices"
+msgstr ""
+
+#: app/blueprints/dashboard/routes.py:96 app/templates/dashboard/index.html:123
+msgid "Average bottles per sale"
+msgstr ""
+
+#: app/blueprints/dashboard/routes.py:97 app/templates/dashboard/index.html:124
+msgid "Average net unit price"
+msgstr ""
+
+#: app/blueprints/dashboard/routes.py:210
 msgid "All years"
 msgstr ""
 
-#: app/blueprints/dashboard/routes.py:87
+#: app/blueprints/dashboard/routes.py:211
 #, python-format
 msgid "%(num)s year"
 msgid_plural "%(num)s years"
 msgstr[0] ""
 msgstr[1] ""
 
-#: app/blueprints/dashboard/routes.py:95 app/templates/purchases/index.html:19
+#: app/blueprints/dashboard/routes.py:219 app/templates/purchases/index.html:19
 #: app/templates/top_customers/index.html:19
 msgid "All months"
 msgstr ""
 
-#: app/blueprints/dashboard/routes.py:96
+#: app/blueprints/dashboard/routes.py:220
 #, python-format
 msgid "%(num)s month"
 msgid_plural "%(num)s months"
 msgstr[0] ""
 msgstr[1] ""
 
-#: app/blueprints/dashboard/routes.py:99
+#: app/blueprints/dashboard/routes.py:223
 msgid "all years"
 msgstr ""
 
@@ -436,7 +460,7 @@ msgstr ""
 msgid "Quantity to add"
 msgstr ""
 
-#: app/blueprints/inventory/forms.py:27 app/templates/dashboard/index.html:91
+#: app/blueprints/inventory/forms.py:27 app/templates/dashboard/index.html:161
 #: app/templates/inventory/restock_form.html:3
 msgid "Reorder level"
 msgstr ""
@@ -450,7 +474,7 @@ msgstr ""
 msgid "Save warehouse"
 msgstr ""
 
-#: app/blueprints/inventory/forms.py:40 app/templates/dashboard/index.html:91
+#: app/blueprints/inventory/forms.py:40 app/templates/dashboard/index.html:161
 #: app/templates/products/index.html:13 app/templates/sales/detail.html:42
 #: app/templates/supplies/recipes.html:17
 msgid "Product"
@@ -931,74 +955,74 @@ msgstr ""
 msgid "Month"
 msgstr ""
 
-#: app/templates/dashboard/index.html:36
+#: app/templates/dashboard/index.html:39
+msgid "Compare"
+msgstr ""
+
+#: app/templates/dashboard/index.html:41
 msgid "Apply"
 msgstr ""
 
-#: app/templates/dashboard/index.html:50
-msgid "Total paid value"
+#: app/templates/dashboard/index.html:46
+msgid "Select at least two years to compare."
 msgstr ""
 
-#: app/templates/dashboard/index.html:51
-msgid "Total bottles"
+#: app/templates/dashboard/index.html:63
+msgid "Metric"
 msgstr ""
 
-#: app/templates/dashboard/index.html:52
-msgid "Number of tickets"
+#: app/templates/dashboard/index.html:89
+msgid "Total sales per product"
 msgstr ""
 
-#: app/templates/dashboard/index.html:53
-msgid "Number of invoices"
+#: app/templates/dashboard/index.html:95
+msgid "Tickets per month"
 msgstr ""
 
-#: app/templates/dashboard/index.html:54
-msgid "Average bottles per sale"
+#: app/templates/dashboard/index.html:101
+msgid "Bottles sold per month"
 msgstr ""
 
-#: app/templates/dashboard/index.html:55
-msgid "Average net unit price"
-msgstr ""
-
-#: app/templates/dashboard/index.html:61
+#: app/templates/dashboard/index.html:130
 msgid "Sales share per product"
 msgstr ""
 
-#: app/templates/dashboard/index.html:67
+#: app/templates/dashboard/index.html:136
 #, python-format
 msgid "Total sales per product (%(years)s)"
 msgstr ""
 
-#: app/templates/dashboard/index.html:73
+#: app/templates/dashboard/index.html:142
 #, python-format
 msgid "Total tickets (%(years)s)"
 msgstr ""
 
-#: app/templates/dashboard/index.html:79
+#: app/templates/dashboard/index.html:148
 #, python-format
 msgid "Total bottles sold (%(years)s)"
 msgstr ""
 
-#: app/templates/dashboard/index.html:88
+#: app/templates/dashboard/index.html:158
 msgid "Low stock"
 msgstr ""
 
-#: app/templates/dashboard/index.html:91
+#: app/templates/dashboard/index.html:161
 msgid "On hand"
 msgstr ""
 
-#: app/templates/dashboard/index.html:103
+#: app/templates/dashboard/index.html:173
 msgid "Everything is well stocked."
 msgstr ""
 
-#: app/templates/dashboard/index.html:153
+#: app/templates/dashboard/index.html:249
 msgid "Total sold"
 msgstr ""
 
-#: app/templates/dashboard/index.html:168
+#: app/templates/dashboard/index.html:264
 msgid "Tickets"
 msgstr ""
 
-#: app/templates/dashboard/index.html:177
+#: app/templates/dashboard/index.html:273
 #: app/templates/top_customers/index.html:46
 msgid "Bottles"
 msgstr ""
