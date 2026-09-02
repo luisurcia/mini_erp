@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+{% block title %}{{ _("Purchases") }}{% endblock %}
+{% block content %}
+<div class="d-flex justify-content-between align-items-end mb-3 flex-wrap gap-2">
+  <h1 class="h3 mb-0">{{ _("Purchases") }}</h1>
+  <div class="d-flex gap-2 align-items-end flex-wrap">
+    <form method="get" class="d-flex gap-2 align-items-end">
+      <div>
+        <label class="form-label small text-muted mb-0" for="year">{{ _("Year") }}</label>
+        <select class="form-select" id="year" name="year" onchange="this.form.submit()">
+          {% for y in available_years %}
+          <option value="{{ y }}" {{ "selected" if y == selected_year }}>{{ y }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div>
+        <label class="form-label small text-muted mb-0" for="month">{{ _("Month") }}</label>
+        <select class="form-select" id="month" name="month" onchange="this.form.submit()">
+          <option value="">{{ _("All months") }}</option>
+          {% for name in month_names %}
+          <option value="{{ loop.index }}" {{ "selected" if loop.index == selected_month }}>{{ name }}</option>
+          {% endfor %}
+        </select>
+      </div>
+    </form>
+    <a class="btn btn-primary btn-sm" href="{{ url_for('purchases.new_purchase') }}">+ {{ _("New purchase") }}</a>
+  </div>
+</div>
+
+<p class="text-muted small mb-2">
+  {{ ngettext("%(num)d purchase in this period", "%(num)d purchases in this period", active_count, num=active_count) }}
+</p>
+
+<div class="card p-3">
+  <table class="table align-middle mb-0">
+    <thead>
+      <tr>
+        <th>{{ _("Code") }}</th>
+        <th>{{ _("Date") }}</th>
+        <th>{{ _("Item") }}</th>
+        <th>{{ _("Supplier") }}</th>
+        <th>{{ _("Category") }}</th>
+        <th>{{ _("Invoice #") }}</th>
+        <th class="text-end">{{ _("Amount") }}</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for p in purchases %}
+      <tr class="{{ 'text-muted text-decoration-line-through' if p.voided }}">
+        <td>{{ p.code }}</td>
+        <td>{{ p.purchase_date.strftime("%Y-%m-%d") }}</td>
+        <td>{{ p.item }}</td>
+        <td>{{ p.supplier }}</td>
+        <td>{{ p.category or "—" }}</td>
+        <td>{{ p.invoice_number or "—" }}</td>
+        <td class="text-end">
+          {{ format_money(p.amount) }}
+          {% if p.includes_tax %}<span class="badge bg-secondary ms-1">{{ _("incl. IVA") }}</span>{% endif %}
+        </td>
+        <td class="text-end">
+          <a class="btn btn-sm btn-outline-secondary" href="{{ url_for('purchases.edit_purchase', purchase_id=p.id) }}">{{ _("Edit") }}</a>
+        </td>
+      </tr>
+      {% else %}
+      <tr><td colspan="100%" class="text-muted text-center py-4">{{ _("No purchases in this period.") }}</td></tr>
+      {% endfor %}
+    </tbody>
+    {% if purchases %}
+    <tfoot>
+      <tr class="fw-bold border-top">
+        <td colspan="6" class="text-end">{{ _("Period total") }}</td>
+        <td class="text-end">{{ format_money(period_total) }}</td>
+        <td></td>
+      </tr>
+    </tfoot>
+    {% endif %}
+  </table>
+</div>
+{% endblock %}

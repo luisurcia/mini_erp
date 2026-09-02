@@ -1,4 +1,5 @@
-from datetime import UTC, datetime, timedelta
+from datetime import UTC, date, datetime, timedelta
+from decimal import Decimal
 
 from flask import Flask
 
@@ -11,6 +12,7 @@ from app.models.supply import Supply
 from app.models.user import User
 from app.models.warehouse import Warehouse
 from app.services.inventory_service import InventoryService
+from app.services.purchase_service import PurchaseService
 from app.services.sales_service import SalesService
 from app.services.supply_service import SupplyService
 
@@ -50,6 +52,7 @@ def seed_demo_data(app: Flask) -> None:
     _seed_recipes(products, supplies)
     customers = _seed_customers()
     _seed_sales(customers, products)
+    _seed_purchases()
 
 
 def _seed_admin(app: Flask) -> None:
@@ -222,4 +225,36 @@ def _seed_sales(customers: dict[str, Customer], products: dict[str, Product]) ->
         items=[{"product_id": products["Mixed Berry"].id, "quantity": 36}],
         sale_date=now - timedelta(days=45),
         notes="First trial order before committing to a recurring contract.",
+    )
+
+
+def _seed_purchases() -> None:
+    """Plant-overhead expenses — not production inputs (#93)."""
+    service = PurchaseService()
+    today = date.today()
+    service.record_purchase(
+        purchase_date=today - timedelta(days=10),
+        item="Alcohol gel 5 L",
+        supplier="Distribuidora Aseo Ltda.",
+        category="Aseo",
+        invoice_number="12345",
+        amount=Decimal("18990"),
+        includes_tax=True,
+    )
+    service.record_purchase(
+        purchase_date=today - timedelta(days=4),
+        item="Repuesto bomba de llenado",
+        supplier="Servicio Técnico Maquinaria SpA",
+        category="Mantención",
+        invoice_number="A-778",
+        amount=Decimal("64500"),
+        includes_tax=False,
+    )
+    service.record_purchase(
+        purchase_date=today - timedelta(days=1),
+        item="Resma de papel y artículos de oficina",
+        supplier="Librería Central",
+        category="Oficina",
+        amount=Decimal("9200"),
+        includes_tax=True,
     )

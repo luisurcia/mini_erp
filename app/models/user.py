@@ -21,12 +21,15 @@ class User(BaseModel, UserMixin):
     # radius) so it's admin-only: MODULE_PRODUCTS is not granted to any
     # non-admin role. The supplies-recipe screens are admin-only the same
     # way, gated with admin_required inside the supplies blueprint. See #78.
+    # The Purchases ledger (plant-overhead expenses) is admin-only too for
+    # now — financial data; extend to bodeguero later if needed (#93).
     MODULE_PRODUCTS = "products"
     MODULE_INVENTORY = "inventory"
     MODULE_SUPPLIES = "supplies"
     MODULE_SALES = "sales"
     MODULE_TOP_CUSTOMERS = "top_customers"
     MODULE_CUSTOMERS = "customers"
+    MODULE_PURCHASES = "purchases"
 
     _ALL_MODULES = {
         MODULE_PRODUCTS,
@@ -35,6 +38,7 @@ class User(BaseModel, UserMixin):
         MODULE_SALES,
         MODULE_TOP_CUSTOMERS,
         MODULE_CUSTOMERS,
+        MODULE_PURCHASES,
     }
 
     ROLE_MODULES = {

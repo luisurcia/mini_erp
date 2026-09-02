@@ -20,6 +20,8 @@ def test_bodeguero_can_access_only_inventory_supplies():
     assert not bodeguero.can_access(User.MODULE_SALES)
     assert not bodeguero.can_access(User.MODULE_TOP_CUSTOMERS)
     assert not bodeguero.can_access(User.MODULE_CUSTOMERS)
+    # Purchases ledger is admin-only financial data (#93).
+    assert not bodeguero.can_access(User.MODULE_PURCHASES)
 
 
 def test_ventas_can_access_only_sales_top_customers_customers():
@@ -32,6 +34,7 @@ def test_ventas_can_access_only_sales_top_customers_customers():
     assert not ventas.can_access(User.MODULE_PRODUCTS)
     assert not ventas.can_access(User.MODULE_INVENTORY)
     assert not ventas.can_access(User.MODULE_SUPPLIES)
+    assert not ventas.can_access(User.MODULE_PURCHASES)
 
 
 def test_is_admin_only_true_for_admin_role():

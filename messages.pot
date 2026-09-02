@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-09-01 21:40-0400\n"
+"POT-Creation-Date: 2026-09-02 13:46-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -70,12 +70,14 @@ msgid_plural "%(num)s sales"
 msgstr[0] ""
 msgstr[1] ""
 
-#: app/reports.py:77 app/templates/inventory/history.html:7
+#: app/blueprints/purchases/forms.py:12 app/reports.py:77
+#: app/templates/inventory/history.html:7 app/templates/purchases/index.html:39
 #: app/templates/sales/index.html:25 app/templates/supplies/history.html:7
 msgid "Date"
 msgstr ""
 
-#: app/reports.py:78 app/templates/sales/index.html:25
+#: app/reports.py:78 app/templates/purchases/index.html:43
+#: app/templates/sales/index.html:25
 msgid "Invoice #"
 msgstr ""
 
@@ -145,13 +147,13 @@ msgid "Passwords must match."
 msgstr ""
 
 #: app/blueprints/auth/forms.py:27 app/templates/auth/change_password.html:3
-#: app/templates/auth/change_password.html:8 app/templates/base.html:60
+#: app/templates/auth/change_password.html:8 app/templates/base.html:63
 msgid "Change password"
 msgstr ""
 
 #: app/blueprints/auth/forms.py:32 app/blueprints/company/forms.py:40
 #: app/templates/auth/change_language.html:3
-#: app/templates/auth/change_language.html:8 app/templates/base.html:59
+#: app/templates/auth/change_language.html:8 app/templates/base.html:62
 msgid "Language"
 msgstr ""
 
@@ -317,7 +319,7 @@ msgstr ""
 msgid "Instagram handle"
 msgstr ""
 
-#: app/blueprints/customers/forms.py:35
+#: app/blueprints/customers/forms.py:35 app/blueprints/purchases/forms.py:24
 msgid "Notes"
 msgstr ""
 
@@ -343,62 +345,62 @@ msgstr ""
 msgid "Customer '%(name)s' updated."
 msgstr ""
 
-#: app/blueprints/dashboard/routes.py:16
+#: app/blueprints/dashboard/routes.py:16 app/blueprints/purchases/routes.py:20
 #: app/blueprints/top_customers/routes.py:17
 msgid "Jan"
 msgstr ""
 
-#: app/blueprints/dashboard/routes.py:16
+#: app/blueprints/dashboard/routes.py:16 app/blueprints/purchases/routes.py:20
 #: app/blueprints/top_customers/routes.py:17
 msgid "Feb"
 msgstr ""
 
-#: app/blueprints/dashboard/routes.py:16
+#: app/blueprints/dashboard/routes.py:16 app/blueprints/purchases/routes.py:20
 #: app/blueprints/top_customers/routes.py:17
 msgid "Mar"
 msgstr ""
 
-#: app/blueprints/dashboard/routes.py:16
+#: app/blueprints/dashboard/routes.py:16 app/blueprints/purchases/routes.py:20
 #: app/blueprints/top_customers/routes.py:17
 msgid "Apr"
 msgstr ""
 
-#: app/blueprints/dashboard/routes.py:16
+#: app/blueprints/dashboard/routes.py:16 app/blueprints/purchases/routes.py:20
 #: app/blueprints/top_customers/routes.py:17
 msgid "May"
 msgstr ""
 
-#: app/blueprints/dashboard/routes.py:16
+#: app/blueprints/dashboard/routes.py:16 app/blueprints/purchases/routes.py:20
 #: app/blueprints/top_customers/routes.py:17
 msgid "Jun"
 msgstr ""
 
-#: app/blueprints/dashboard/routes.py:17
+#: app/blueprints/dashboard/routes.py:17 app/blueprints/purchases/routes.py:21
 #: app/blueprints/top_customers/routes.py:18
 msgid "Jul"
 msgstr ""
 
-#: app/blueprints/dashboard/routes.py:17
+#: app/blueprints/dashboard/routes.py:17 app/blueprints/purchases/routes.py:21
 #: app/blueprints/top_customers/routes.py:18
 msgid "Aug"
 msgstr ""
 
-#: app/blueprints/dashboard/routes.py:17
+#: app/blueprints/dashboard/routes.py:17 app/blueprints/purchases/routes.py:21
 #: app/blueprints/top_customers/routes.py:18
 msgid "Sep"
 msgstr ""
 
-#: app/blueprints/dashboard/routes.py:17
+#: app/blueprints/dashboard/routes.py:17 app/blueprints/purchases/routes.py:21
 #: app/blueprints/top_customers/routes.py:18
 msgid "Oct"
 msgstr ""
 
-#: app/blueprints/dashboard/routes.py:17
+#: app/blueprints/dashboard/routes.py:17 app/blueprints/purchases/routes.py:21
 #: app/blueprints/top_customers/routes.py:18
 msgid "Nov"
 msgstr ""
 
-#: app/blueprints/dashboard/routes.py:17
+#: app/blueprints/dashboard/routes.py:17 app/blueprints/purchases/routes.py:21
 #: app/blueprints/top_customers/routes.py:18
 msgid "Dec"
 msgstr ""
@@ -414,7 +416,7 @@ msgid_plural "%(num)s years"
 msgstr[0] ""
 msgstr[1] ""
 
-#: app/blueprints/dashboard/routes.py:95
+#: app/blueprints/dashboard/routes.py:95 app/templates/purchases/index.html:19
 #: app/templates/top_customers/index.html:19
 msgid "All months"
 msgstr ""
@@ -557,6 +559,63 @@ msgstr ""
 msgid "Product '%(name)s' updated."
 msgstr ""
 
+#: app/blueprints/purchases/forms.py:14 app/templates/purchases/index.html:40
+msgid "Item"
+msgstr ""
+
+#: app/blueprints/purchases/forms.py:15 app/templates/purchases/index.html:41
+msgid "Supplier"
+msgstr ""
+
+#: app/blueprints/purchases/forms.py:16 app/templates/purchases/index.html:42
+msgid "Category"
+msgstr ""
+
+#: app/blueprints/purchases/forms.py:18 app/blueprints/sales/forms.py:44
+msgid "Invoice number"
+msgstr ""
+
+#: app/blueprints/purchases/forms.py:21 app/templates/purchases/index.html:44
+msgid "Amount"
+msgstr ""
+
+#: app/blueprints/purchases/forms.py:23
+msgid "Amount includes tax (IVA)"
+msgstr ""
+
+#: app/blueprints/purchases/forms.py:25
+msgid "Save purchase"
+msgstr ""
+
+#: app/blueprints/purchases/forms.py:31
+msgid "Void"
+msgstr ""
+
+#: app/blueprints/purchases/routes.py:75
+#, python-format
+msgid "Purchase %(code)s recorded."
+msgstr ""
+
+#: app/blueprints/purchases/routes.py:87 app/blueprints/purchases/routes.py:125
+#: app/blueprints/purchases/routes.py:138
+msgid "Purchase not found."
+msgstr ""
+
+#: app/blueprints/purchases/routes.py:104
+#, python-format
+msgid "Purchase %(code)s updated."
+msgstr ""
+
+#: app/blueprints/purchases/routes.py:123
+#, python-format
+msgid "Purchase %(code)s voided."
+msgstr ""
+
+#: app/blueprints/purchases/routes.py:136
+#, python-format
+msgid "Purchase %(code)s restored."
+msgstr ""
+
 #: app/blueprints/sales/forms.py:13
 msgid "Transfer / reference number"
 msgstr ""
@@ -586,39 +645,35 @@ msgstr ""
 msgid "Include tax (IVA)"
 msgstr ""
 
-#: app/blueprints/sales/forms.py:44
-msgid "Invoice number"
-msgstr ""
-
 #: app/blueprints/sales/forms.py:46
 msgid "Record sale"
 msgstr ""
 
-#: app/blueprints/sales/routes.py:80
+#: app/blueprints/sales/routes.py:82
 msgid "Add at least one product line to the sale."
 msgstr ""
 
-#: app/blueprints/sales/routes.py:90
+#: app/blueprints/sales/routes.py:92
 #, python-format
 msgid "Sale #%(id)s recorded."
 msgstr ""
 
-#: app/blueprints/sales/routes.py:111 app/blueprints/sales/routes.py:130
-#: app/blueprints/sales/routes.py:158
+#: app/blueprints/sales/routes.py:113 app/blueprints/sales/routes.py:132
+#: app/blueprints/sales/routes.py:160
 msgid "Sale not found."
 msgstr ""
 
-#: app/blueprints/sales/routes.py:141
+#: app/blueprints/sales/routes.py:143
 #, python-format
 msgid "Payment registered for sale #%(id)s."
 msgstr ""
 
-#: app/blueprints/sales/routes.py:163
+#: app/blueprints/sales/routes.py:165
 #, python-format
 msgid "Payment reverted for sale #%(id)s."
 msgstr ""
 
-#: app/blueprints/sales/routes.py:206
+#: app/blueprints/sales/routes.py:208
 #, python-format
 msgid "Enter a unit price for %(name)s."
 msgstr ""
@@ -671,7 +726,7 @@ msgstr ""
 msgid "Warehouse staff"
 msgstr ""
 
-#: app/blueprints/users/forms.py:11 app/templates/base.html:32
+#: app/blueprints/users/forms.py:11 app/templates/base.html:35
 #: app/templates/sales/index.html:2 app/templates/sales/index.html:5
 #: app/templates/top_customers/index.html:47
 msgid "Sales"
@@ -739,39 +794,44 @@ msgstr ""
 msgid "Supplies"
 msgstr ""
 
-#: app/templates/base.html:35 app/templates/top_customers/index.html:2
+#: app/templates/base.html:32 app/templates/purchases/index.html:2
+#: app/templates/purchases/index.html:5
+msgid "Purchases"
+msgstr ""
+
+#: app/templates/base.html:38 app/templates/top_customers/index.html:2
 #: app/templates/top_customers/index.html:5
 msgid "Top customers"
 msgstr ""
 
-#: app/templates/base.html:38 app/templates/customers/index.html:2
+#: app/templates/base.html:41 app/templates/customers/index.html:2
 #: app/templates/customers/index.html:5
 msgid "Customers"
 msgstr ""
 
-#: app/templates/base.html:43
+#: app/templates/base.html:46
 msgid "Settings"
 msgstr ""
 
-#: app/templates/base.html:45 app/templates/products/index.html:2
+#: app/templates/base.html:48 app/templates/products/index.html:2
 #: app/templates/products/index.html:5
 msgid "Products"
 msgstr ""
 
-#: app/templates/base.html:46
+#: app/templates/base.html:49
 msgid "Manage warehouses"
 msgstr ""
 
-#: app/templates/base.html:48 app/templates/users/index.html:2
+#: app/templates/base.html:51 app/templates/users/index.html:2
 #: app/templates/users/index.html:5
 msgid "Users"
 msgstr ""
 
-#: app/templates/base.html:49
+#: app/templates/base.html:52
 msgid "Company"
 msgstr ""
 
-#: app/templates/base.html:62
+#: app/templates/base.html:65
 msgid "Log out"
 msgstr ""
 
@@ -816,8 +876,9 @@ msgstr ""
 #: app/templates/company/segments_list.html:30
 #: app/templates/customers/index.html:26
 #: app/templates/inventory/warehouses_list.html:42
-#: app/templates/products/index.html:38 app/templates/supplies/index.html:40
-#: app/templates/supplies/recipes.html:38 app/templates/users/index.html:19
+#: app/templates/products/index.html:38 app/templates/purchases/index.html:62
+#: app/templates/supplies/index.html:40 app/templates/supplies/recipes.html:38
+#: app/templates/users/index.html:19
 msgid "Edit"
 msgstr ""
 
@@ -860,12 +921,12 @@ msgstr ""
 msgid "Clear"
 msgstr ""
 
-#: app/templates/dashboard/index.html:34
+#: app/templates/dashboard/index.html:34 app/templates/purchases/index.html:9
 #: app/templates/top_customers/index.html:8
 msgid "Year"
 msgstr ""
 
-#: app/templates/dashboard/index.html:35
+#: app/templates/dashboard/index.html:35 app/templates/purchases/index.html:17
 #: app/templates/top_customers/index.html:17
 msgid "Month"
 msgstr ""
@@ -1100,6 +1161,56 @@ msgstr ""
 #: app/templates/products/product_form.html:3
 #: app/templates/products/product_form.html:5
 msgid "Edit product"
+msgstr ""
+
+#: app/templates/purchases/index.html:26
+#: app/templates/purchases/purchase_form.html:3
+#: app/templates/purchases/purchase_form.html:6
+msgid "New purchase"
+msgstr ""
+
+#: app/templates/purchases/index.html:31
+#, python-format
+msgid "%(num)d purchase in this period"
+msgid_plural "%(num)d purchases in this period"
+msgstr[0] ""
+msgstr[1] ""
+
+#: app/templates/purchases/index.html:38
+msgid "Code"
+msgstr ""
+
+#: app/templates/purchases/index.html:59
+msgid "incl. IVA"
+msgstr ""
+
+#: app/templates/purchases/index.html:66
+msgid "No purchases in this period."
+msgstr ""
+
+#: app/templates/purchases/index.html:72
+msgid "Period total"
+msgstr ""
+
+#: app/templates/purchases/purchase_form.html:3
+#: app/templates/purchases/purchase_form.html:6
+msgid "Edit purchase"
+msgstr ""
+
+#: app/templates/purchases/purchase_form.html:9
+msgid "Voided"
+msgstr ""
+
+#: app/templates/purchases/purchase_form.html:22
+msgid "Restore purchase"
+msgstr ""
+
+#: app/templates/purchases/purchase_form.html:27
+msgid "Void purchase"
+msgstr ""
+
+#: app/templates/purchases/purchase_form.html:30
+msgid "A voided purchase keeps its number and drops out of the period total."
 msgstr ""
 
 #: app/templates/sales/detail.html:3 app/templates/sales/detail.html:5

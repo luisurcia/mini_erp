@@ -28,6 +28,9 @@
           {% if current_user.can_access("supplies") %}
           <li class="nav-item"><a class="nav-link" href="{{ url_for('supplies.index') }}">{{ _("Supplies") }}</a></li>
           {% endif %}
+          {% if current_user.can_access("purchases") %}
+          <li class="nav-item"><a class="nav-link" href="{{ url_for('purchases.index') }}">{{ _("Purchases") }}</a></li>
+          {% endif %}
           {% if current_user.can_access("sales") %}
           <li class="nav-item"><a class="nav-link" href="{{ url_for('sales.index') }}">{{ _("Sales") }}</a></li>
           {% endif %}

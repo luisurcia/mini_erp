@@ -5,6 +5,7 @@ from app.extensions import db
 from app.models.company import Company  # noqa: F401 (registers table for create_all)
 from app.models.customer_segment import CustomerSegment
 from app.models.product_supply import ProductSupply  # noqa: F401 (create_all)
+from app.models.purchase import Purchase  # noqa: F401 (create_all)
 from app.models.user import User
 from app.models.warehouse import Warehouse
 from app.schema import (
