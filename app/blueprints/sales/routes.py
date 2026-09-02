@@ -21,18 +21,35 @@ from app.repositories.warehouse_repository import WarehouseRepository
 from app.services.sales_service import SalesService
 
 
+def _payment_filter_arg() -> str | None:
+    value = request.args.get("payment")
+    return value if value in (Sale.PAYMENT_PAID, Sale.PAYMENT_UNPAID) else None
+
+
+def _customer_filter_arg(customers) -> int | None:
+    """The `?customer=` id, but only if it's one of the customers that
+    actually have sales."""
+    customer_id = request.args.get("customer", type=int)
+    return customer_id if any(c.id == customer_id for c in customers) else None
+
+
 @bp.route("/")
 @login_required
 @module_required(User.MODULE_SALES)
 def index():
-    payment_filter = request.args.get("payment")
-    if payment_filter in (Sale.PAYMENT_PAID, Sale.PAYMENT_UNPAID):
-        sales = SalesRepository().by_payment_status(payment_filter)
-    else:
-        payment_filter = None
-        sales = SalesRepository().get_all()
+    repo = SalesRepository()
+    customers = repo.customers_with_sales()
+    payment_filter = _payment_filter_arg()
+    customer_filter = _customer_filter_arg(customers)
+    sales = repo.list_sales(
+        payment_status=payment_filter, customer_id=customer_filter
+    )
     return render_template(
-        "sales/index.html", sales=sales, payment_filter=payment_filter
+        "sales/index.html",
+        sales=sales,
+        payment_filter=payment_filter,
+        customers=customers,
+        customer_filter=customer_filter,
     )
 
 
@@ -41,9 +58,14 @@ def index():
 @module_required(User.MODULE_SALES)
 def unpaid_pdf():
     """PDF of every unpaid sale, oldest first — shared weekly with the
-    partners for collections (#81)."""
+    partners for collections (#81). Honours the Sales list's customer
+    filter (#108)."""
+    repo = SalesRepository()
+    customer_filter = _customer_filter_arg(repo.customers_with_sales())
     sales = sorted(
-        SalesRepository().by_payment_status(Sale.PAYMENT_UNPAID),
+        repo.list_sales(
+            payment_status=Sale.PAYMENT_UNPAID, customer_id=customer_filter
+        ),
         key=lambda sale: sale.sale_date,
     )
     pdf = build_unpaid_sales_pdf(sales)

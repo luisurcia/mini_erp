@@ -3,6 +3,7 @@ from datetime import datetime
 from sqlalchemy import extract
 
 from app.extensions import db
+from app.models.customer import Customer
 from app.models.sales import Sale
 from app.repositories.base_repository import Repository
 
@@ -18,6 +19,28 @@ class SalesRepository(Repository[Sale]):
         return (
             Sale.query.filter(Sale.payment_status == payment_status)
             .order_by(Sale.sale_date.desc())
+            .all()
+        )
+
+    def list_sales(
+        self, *, payment_status: str | None = None, customer_id: int | None = None
+    ) -> list[Sale]:
+        """The Sales list, newest first, optionally narrowed by payment
+        status and/or customer (#108)."""
+        query = Sale.query
+        if payment_status is not None:
+            query = query.filter(Sale.payment_status == payment_status)
+        if customer_id is not None:
+            query = query.filter(Sale.customer_id == customer_id)
+        return query.order_by(Sale.sale_date.desc()).all()
+
+    def customers_with_sales(self) -> list[Customer]:
+        """Customers that have at least one sale, by name — the options
+        for the Sales list's customer filter (#108)."""
+        return (
+            Customer.query.join(Sale, Sale.customer_id == Customer.id)
+            .distinct()
+            .order_by(Customer.name)
             .all()
         )
 

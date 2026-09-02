@@ -9,13 +9,28 @@
 <div class="d-flex flex-wrap gap-2 align-items-center mb-3">
   <div class="btn-group btn-group-sm" role="group" aria-label="{{ _('Payment filter') }}">
     <a class="btn btn-outline-secondary {{ 'active' if not payment_filter }}"
-       href="{{ url_for('sales.index') }}">{{ _("All") }}</a>
+       href="{{ url_for('sales.index', customer=customer_filter or None) }}">{{ _("All") }}</a>
     <a class="btn btn-outline-secondary {{ 'active' if payment_filter == 'unpaid' }}"
-       href="{{ url_for('sales.index', payment='unpaid') }}">{{ _("Unpaid") }}</a>
+       href="{{ url_for('sales.index', payment='unpaid', customer=customer_filter or None) }}">{{ _("Unpaid") }}</a>
     <a class="btn btn-outline-secondary {{ 'active' if payment_filter == 'paid' }}"
-       href="{{ url_for('sales.index', payment='paid') }}">{{ _("Paid") }}</a>
+       href="{{ url_for('sales.index', payment='paid', customer=customer_filter or None) }}">{{ _("Paid") }}</a>
   </div>
-  <a class="btn btn-outline-secondary btn-sm" href="{{ url_for('sales.unpaid_pdf') }}">
+
+  {% if customers %}
+  <form method="get" class="d-flex align-items-center gap-1">
+    <input type="hidden" name="payment" value="{{ payment_filter or '' }}">
+    <label class="form-label small text-muted mb-0" for="customer">{{ _("Customer") }}</label>
+    <select class="form-select form-select-sm" id="customer" name="customer"
+            style="width: auto;" onchange="this.form.submit()">
+      <option value="">{{ _("All customers") }}</option>
+      {% for c in customers %}
+      <option value="{{ c.id }}" {{ "selected" if c.id == customer_filter }}>{{ c.name }}</option>
+      {% endfor %}
+    </select>
+  </form>
+  {% endif %}
+
+  <a class="btn btn-outline-secondary btn-sm" href="{{ url_for('sales.unpaid_pdf', customer=customer_filter or None) }}">
     {{ _("Download unpaid sales PDF") }}
   </a>
 </div>

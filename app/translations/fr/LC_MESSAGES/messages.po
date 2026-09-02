@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-09-02 17:24-0400\n"
+"POT-Creation-Date: 2026-09-02 17:39-0400\n"
 "PO-Revision-Date: 2026-08-24 17:58-0400\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: fr\n"
@@ -77,16 +77,16 @@ msgstr[1] "%(num)s ventes"
 
 #: app/blueprints/purchases/forms.py:12 app/reports.py:77
 #: app/templates/inventory/history.html:7 app/templates/purchases/index.html:39
-#: app/templates/sales/index.html:25 app/templates/supplies/history.html:7
+#: app/templates/sales/index.html:40 app/templates/supplies/history.html:7
 msgid "Date"
 msgstr "Date"
 
 #: app/reports.py:78 app/templates/purchases/index.html:43
-#: app/templates/sales/index.html:25
+#: app/templates/sales/index.html:40
 msgid "Invoice #"
 msgstr "N° de facture"
 
-#: app/reports.py:79 app/templates/sales/index.html:25
+#: app/reports.py:79 app/templates/sales/index.html:40
 msgid "Tax"
 msgstr "TVA"
 
@@ -96,16 +96,16 @@ msgstr "Jours de retard"
 
 #: app/reports.py:81 app/templates/inventory/index.html:20
 #: app/templates/inventory/index.html:53 app/templates/sales/detail.html:59
-#: app/templates/sales/index.html:25 app/templates/sales/sale_form.html:76
+#: app/templates/sales/index.html:40 app/templates/sales/sale_form.html:76
 #: app/templates/supplies/stock.html:20 app/templates/supplies/stock.html:53
 msgid "Total"
 msgstr "Total"
 
-#: app/reports.py:98 app/templates/sales/index.html:41
+#: app/reports.py:98 app/templates/sales/index.html:56
 msgid "Yes"
 msgstr "Oui"
 
-#: app/reports.py:98 app/templates/sales/index.html:41
+#: app/reports.py:98 app/templates/sales/index.html:56
 msgid "No"
 msgstr "Non"
 
@@ -675,8 +675,8 @@ msgstr "Enregistrer le paiement"
 msgid "Revert payment"
 msgstr "Annuler le paiement"
 
-#: app/blueprints/sales/forms.py:38 app/templates/sales/index.html:25
-#: app/templates/top_customers/index.html:43
+#: app/blueprints/sales/forms.py:38 app/templates/sales/index.html:22
+#: app/templates/sales/index.html:40 app/templates/top_customers/index.html:43
 msgid "Customer"
 msgstr "Client"
 
@@ -692,31 +692,31 @@ msgstr "Inclure la taxe (IVA)"
 msgid "Record sale"
 msgstr "Enregistrer la vente"
 
-#: app/blueprints/sales/routes.py:82
+#: app/blueprints/sales/routes.py:104
 msgid "Add at least one product line to the sale."
 msgstr "Ajoutez au moins une ligne de produit à la vente."
 
-#: app/blueprints/sales/routes.py:92
+#: app/blueprints/sales/routes.py:114
 #, python-format
 msgid "Sale #%(id)s recorded."
 msgstr "Vente n°%(id)s enregistrée."
 
-#: app/blueprints/sales/routes.py:113 app/blueprints/sales/routes.py:132
-#: app/blueprints/sales/routes.py:160
+#: app/blueprints/sales/routes.py:135 app/blueprints/sales/routes.py:154
+#: app/blueprints/sales/routes.py:182
 msgid "Sale not found."
 msgstr "Vente introuvable."
 
-#: app/blueprints/sales/routes.py:143
+#: app/blueprints/sales/routes.py:165
 #, python-format
 msgid "Payment registered for sale #%(id)s."
 msgstr "Paiement enregistré pour la vente #%(id)s."
 
-#: app/blueprints/sales/routes.py:165
+#: app/blueprints/sales/routes.py:187
 #, python-format
 msgid "Payment reverted for sale #%(id)s."
 msgstr "Paiement annulé pour la vente #%(id)s."
 
-#: app/blueprints/sales/routes.py:208
+#: app/blueprints/sales/routes.py:230
 #, python-format
 msgid "Enter a unit price for %(name)s."
 msgstr "Saisissez un prix unitaire pour %(name)s."
@@ -904,7 +904,7 @@ msgstr "Segments de clients"
 
 #: app/templates/company/segments_list.html:14
 #: app/templates/inventory/warehouses_list.html:15
-#: app/templates/products/index.html:18 app/templates/sales/index.html:25
+#: app/templates/products/index.html:18 app/templates/sales/index.html:40
 #: app/templates/supplies/index.html:22
 msgid "Status"
 msgstr "Statut"
@@ -1323,19 +1323,23 @@ msgstr "Filtre de paiement"
 msgid "All"
 msgstr "Toutes"
 
-#: app/templates/sales/index.html:19
+#: app/templates/sales/index.html:25
+msgid "All customers"
+msgstr "Tous les clients"
+
+#: app/templates/sales/index.html:34
 msgid "Download unpaid sales PDF"
 msgstr "Télécharger le PDF des ventes impayées"
 
-#: app/templates/sales/index.html:25
+#: app/templates/sales/index.html:40
 msgid "Payment"
 msgstr "Paiement"
 
-#: app/templates/sales/index.html:43
+#: app/templates/sales/index.html:58
 msgid "View"
 msgstr "Voir"
 
-#: app/templates/sales/index.html:46
+#: app/templates/sales/index.html:61
 msgid "No sales recorded yet."
 msgstr "Aucune vente enregistrée pour le moment."
 
