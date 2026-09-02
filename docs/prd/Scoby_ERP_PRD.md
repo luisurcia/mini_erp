@@ -89,12 +89,28 @@ producción → Bodega de Fermentación → Bodega Principal → Bodega Julien /
 - El módulo de Oportunidades del sistema genérico **se eliminó** en `client/scoby`. En su lugar: ranking de los **10 clientes por consumo** (monto total, botellas, número de ventas, fecha de última compra).
 - Filtros: **año + mes**, o **"Todo el tiempo"**; y **filtro por segmento** (independiente del filtro de fecha).
 
-### MOD-07 · Dashboard — *KPIs de Scoby*
+### MOD-07 · Dashboard — *KPIs de Scoby, alineados a su Excel*
 
-- Filtros de **año y mes** arriba de la página. Por defecto: año más reciente con ventas, **todos los meses**.
-- 5 indicadores, todos del periodo filtrado: **venta neta**, **venta promedio**, **botellas promedio por venta**, **valor unitario neto promedio** (promedio de los precios de línea usados) y **número de tickets** (cantidad de ventas).
-- Gráficos: participación de ventas por producto (torta, del periodo); ventas por mes y botellas vendidas por mes (barras, del año completo).
-- Listado de **productos con stock bajo**.
+- **Filtros multi-selección de año y mes** arriba de la página, como una tabla dinámica de Excel:
+  - Cada uno es un desplegable con **casillas** — se marcan varios años y/o varios meses a la vez — más un botón **"Aplicar"** que recarga.
+  - Cada desplegable tiene atajos **"Seleccionar todos"** y **"Limpiar"**.
+  - **Sin filtro = todo.** Por defecto (primera carga) el Dashboard muestra **todos los años y todos los meses**. La etiqueta del desplegable dice "Todos los años" / el valor único / "N años" (y equivalente para meses).
+  - Todo se agrega sobre la **unión** de lo seleccionado (años × meses). El estado queda en la URL (`?year=2025&year=2026&month=9`), así se puede compartir o recargar.
+- **6 indicadores**, en el orden del Excel de Scoby, todos del periodo filtrado:
+  1. **Valor Total Pago** — suma del total (con IVA) de las ventas del periodo.
+  2. **Total de Botellas** — unidades sumadas de todas las líneas.
+  3. **Número de tickets** — cantidad de ventas.
+  4. **Número de Facturas** — ventas que llevan IVA (una venta con IVA = factura; sin IVA = boleta).
+  5. **Botellas promedio por venta**.
+  6. **Valor unitario neto promedio** — promedio simple del precio unitario (neto) de todas las líneas del periodo, cada línea cuenta una vez.
+- **4 gráficos** en cuadrícula 2×2, todos respetan ambos filtros:
+  - **Participación de ventas por producto** (torta) — reparto del monto neto por producto.
+  - **Total de ventas por producto** (barras) — monto neto por producto, con el nombre corto en el eje.
+  - **Total de tickets** por mes (barras) — cantidad de ventas por mes.
+  - **Total de botellas vendidas** por mes (barras) — unidades por mes.
+  - Los dos gráficos "por mes" muestran solo los meses seleccionados en el eje (los 12 si no se marcó ninguno), sumados sobre los años elegidos; el título lista esos años.
+- Listado de **productos con stock bajo** (producto / disponible / nivel de reposición) — es el stock actual, no depende del filtro de fecha.
+- El Dashboard es visible para **todos los roles** (es la página de aterrizaje común).
 
 ### MOD-08 · Usuarios y roles — *acceso por función y por módulo*
 
@@ -150,6 +166,7 @@ Solo administrador, desde el menú **Configuración** del navbar.
 - ✕ **Pagos parciales / abonos** — el estado de pago es binario (por pagar / pagado).
 - ✕ **Lotes y vencimiento** — el stock se lleva por producto, no por lote ni fecha de embotellado.
 - ✕ **Catálogos oficiales de comuna/región de Chile** — son texto libre.
+- ✕ **Modo comparación en el Dashboard** (p. ej. Sep 2025 vs Sep 2026 lado a lado) — hoy el filtro multi-selección suma los periodos, no los compara → [#92](https://github.com/luisurcia/mini_erp/issues/92).
 - ✕ **Tienda online / catálogo público**, **app móvil nativa**, **multiempresa**.
 
 ## 05 Diferencias respecto del producto genérico (Kombucha ERP)
@@ -164,6 +181,7 @@ Solo administrador, desde el menú **Configuración** del navbar.
 | Insumos | No existía como consumo | Módulo Insumos + receta por producto + descuento automático **al armar** (entrada a Fermentación) |
 | Cobranza | No existía | Estado por pagar / pagado + referencia; PDF de ventas por pagar agrupado por cliente |
 | Compras / gastos | No existía | Libro de gastos de planta con correlativo global, categoría, anulación y total mensual (solo admin) |
+| Dashboard | KPIs genéricos, filtro de un año | 6 KPIs del Excel de Scoby (Valor Total Pago, Total de Botellas, N° de tickets, N° de Facturas, botellas y valor unitario promedio) + filtros multi-selección de año y mes (unión, tipo tabla dinámica) + 4 gráficos 2×2 |
 | Pre-venta | Módulo Oportunidades (embudo) | Eliminado → vista Top 10 clientes por consumo |
 | Cliente | Nombre, email, teléfono, IG, notas | + RUT, sobrenombre, segmento, dirección de despacho estructurada; mínimo para crear = nombre + segmento |
 | Roles | admin / editor / lector | admin / bodeguero / vendedor, por módulo, con 403 real; catálogo de productos y recetas = solo admin |
@@ -187,8 +205,9 @@ Solo administrador, desde el menú **Configuración** del navbar.
 - **Bodega de Fermentación en producción:** la que el equipo había creado a mano ("En Fermentación") se renombró a **"Bodega de Fermentación"** y quedó con su rol de flujo; conviene confirmar en `Configuración → Bodegas` que el stock que tuviera se conservó.
 - **Datos de usuarios en producción:** los 4 usuarios existentes (admin, Mario, Eduardo, Julien) tienen nombre/apellido en blanco y quedaron todos con rol `admin`; conviene cargar sus nombres y reasignarles rol `bodeguero` / `venta` según corresponda. Al hacerlo, tener presente que `bodeguero` y `venta` ya **no** ven el catálogo de productos ni las recetas (pasaron a solo administrador).
 - **Notificaciones** — ver spike [#52](https://github.com/luisurcia/mini_erp/issues/52).
-- **Bug francés pendiente** de housekeeping en los catálogos de traducción (entradas obsoletas del módulo Oportunidades eliminado).
+- **Housekeeping de traducciones:** los tres catálogos arrastran entradas obsoletas (`#~`) del módulo Oportunidades eliminado; `pybabel compile` las ignora, pero conviene limpiarlas.
+- **Dashboard — modo comparación** (#92) pendiente de definición con el cliente antes de implementar.
 
 ---
 
-*Scoby ERP — PRD por ingeniería inversa · rama `client/scoby` · commit `82dc0a8` · 1 septiembre 2026*
+*Scoby ERP — PRD por ingeniería inversa · rama `client/scoby` · commit `3a0693e` · 2 septiembre 2026*
