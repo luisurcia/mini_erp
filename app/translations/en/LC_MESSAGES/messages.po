@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-09-01 18:55-0400\n"
+"POT-Creation-Date: 2026-09-01 20:08-0400\n"
 "PO-Revision-Date: 2026-08-24 17:58-0400\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: en\n"
@@ -344,71 +344,98 @@ msgstr "Customer not found."
 msgid "Customer '%(name)s' updated."
 msgstr "Customer '%(name)s' updated."
 
-#: app/blueprints/dashboard/routes.py:15
+#: app/blueprints/dashboard/routes.py:16
 #: app/blueprints/top_customers/routes.py:17
 msgid "Jan"
 msgstr "Jan"
 
-#: app/blueprints/dashboard/routes.py:15
+#: app/blueprints/dashboard/routes.py:16
 #: app/blueprints/top_customers/routes.py:17
 msgid "Feb"
 msgstr "Feb"
 
-#: app/blueprints/dashboard/routes.py:15
+#: app/blueprints/dashboard/routes.py:16
 #: app/blueprints/top_customers/routes.py:17
 msgid "Mar"
 msgstr "Mar"
 
-#: app/blueprints/dashboard/routes.py:15
+#: app/blueprints/dashboard/routes.py:16
 #: app/blueprints/top_customers/routes.py:17
 msgid "Apr"
 msgstr "Apr"
 
-#: app/blueprints/dashboard/routes.py:15
+#: app/blueprints/dashboard/routes.py:16
 #: app/blueprints/top_customers/routes.py:17
 msgid "May"
 msgstr "May"
 
-#: app/blueprints/dashboard/routes.py:15
+#: app/blueprints/dashboard/routes.py:16
 #: app/blueprints/top_customers/routes.py:17
 msgid "Jun"
 msgstr "Jun"
 
-#: app/blueprints/dashboard/routes.py:16
+#: app/blueprints/dashboard/routes.py:17
 #: app/blueprints/top_customers/routes.py:18
 msgid "Jul"
 msgstr "Jul"
 
-#: app/blueprints/dashboard/routes.py:16
+#: app/blueprints/dashboard/routes.py:17
 #: app/blueprints/top_customers/routes.py:18
 msgid "Aug"
 msgstr "Aug"
 
-#: app/blueprints/dashboard/routes.py:16
+#: app/blueprints/dashboard/routes.py:17
 #: app/blueprints/top_customers/routes.py:18
 msgid "Sep"
 msgstr "Sep"
 
-#: app/blueprints/dashboard/routes.py:16
+#: app/blueprints/dashboard/routes.py:17
 #: app/blueprints/top_customers/routes.py:18
 msgid "Oct"
 msgstr "Oct"
 
-#: app/blueprints/dashboard/routes.py:16
+#: app/blueprints/dashboard/routes.py:17
 #: app/blueprints/top_customers/routes.py:18
 msgid "Nov"
 msgstr "Nov"
 
-#: app/blueprints/dashboard/routes.py:16
+#: app/blueprints/dashboard/routes.py:17
 #: app/blueprints/top_customers/routes.py:18
 msgid "Dec"
 msgstr "Dec"
+
+#: app/blueprints/dashboard/routes.py:79
+msgid "All years"
+msgstr "All years"
+
+#: app/blueprints/dashboard/routes.py:80
+#, python-format
+msgid "%(num)s year"
+msgid_plural "%(num)s years"
+msgstr[0] "%(num)s year"
+msgstr[1] "%(num)s years"
+
+#: app/blueprints/dashboard/routes.py:88
+#: app/templates/top_customers/index.html:19
+msgid "All months"
+msgstr "All months"
+
+#: app/blueprints/dashboard/routes.py:89
+#, python-format
+msgid "%(num)s month"
+msgid_plural "%(num)s months"
+msgstr[0] "%(num)s month"
+msgstr[1] "%(num)s months"
+
+#: app/blueprints/dashboard/routes.py:92
+msgid "all years"
+msgstr "all years"
 
 #: app/blueprints/inventory/forms.py:23
 msgid "Quantity to add"
 msgstr "Quantity to add"
 
-#: app/blueprints/inventory/forms.py:27 app/templates/dashboard/index.html:87
+#: app/blueprints/inventory/forms.py:27 app/templates/dashboard/index.html:92
 #: app/templates/inventory/restock_form.html:3
 msgid "Reorder level"
 msgstr "Reorder level"
@@ -422,7 +449,7 @@ msgstr "Note"
 msgid "Save warehouse"
 msgstr "Save warehouse"
 
-#: app/blueprints/inventory/forms.py:40 app/templates/dashboard/index.html:87
+#: app/blueprints/inventory/forms.py:40 app/templates/dashboard/index.html:92
 #: app/templates/products/index.html:13 app/templates/sales/detail.html:42
 #: app/templates/supplies/recipes.html:17
 msgid "Product"
@@ -472,7 +499,9 @@ msgstr "Product not found."
 msgid ""
 "Stock was received, but supply stock is now negative: %(detail)s. Restock"
 " the supplies warehouse."
-msgstr "Stock was received, but supply stock is now negative: %(detail)s. Restock the supplies warehouse."
+msgstr ""
+"Stock was received, but supply stock is now negative: %(detail)s. Restock"
+" the supplies warehouse."
 
 #: app/blueprints/inventory/routes.py:219
 #, python-format
@@ -646,7 +675,7 @@ msgid "Warehouse staff"
 msgstr "Warehouse staff"
 
 #: app/blueprints/users/forms.py:11 app/templates/base.html:32
-#: app/templates/dashboard/index.html:139 app/templates/sales/index.html:2
+#: app/templates/dashboard/index.html:144 app/templates/sales/index.html:2
 #: app/templates/sales/index.html:5 app/templates/top_customers/index.html:47
 msgid "Sales"
 msgstr "Sales"
@@ -699,7 +728,7 @@ msgid "User '%(name)s' deleted."
 msgstr "User '%(name)s' deleted."
 
 #: app/templates/base.html:24 app/templates/dashboard/index.html:2
-#: app/templates/dashboard/index.html:5
+#: app/templates/dashboard/index.html:24
 msgid "Dashboard"
 msgstr "Dashboard"
 
@@ -828,68 +857,67 @@ msgstr "Fields marked with * are required."
 msgid "No customers yet."
 msgstr "No customers yet."
 
-#: app/templates/dashboard/index.html:8
+#: app/templates/dashboard/index.html:26
 #: app/templates/top_customers/index.html:8
 msgid "Year"
 msgstr "Year"
 
-#: app/templates/dashboard/index.html:16
+#: app/templates/dashboard/index.html:27
 #: app/templates/top_customers/index.html:17
 msgid "Month"
 msgstr "Month"
 
-#: app/templates/dashboard/index.html:18
-#: app/templates/top_customers/index.html:19
-msgid "All months"
-msgstr "All months"
+#: app/templates/dashboard/index.html:28
+msgid "Apply"
+msgstr "Apply"
 
-#: app/templates/dashboard/index.html:30
+#: app/templates/dashboard/index.html:35
 msgid "Net sales"
 msgstr "Net sales"
 
-#: app/templates/dashboard/index.html:36
+#: app/templates/dashboard/index.html:41
 msgid "Average sale"
 msgstr "Average sale"
 
-#: app/templates/dashboard/index.html:42
+#: app/templates/dashboard/index.html:47
 msgid "Average bottles per sale"
 msgstr "Average bottles per sale"
 
-#: app/templates/dashboard/index.html:48
+#: app/templates/dashboard/index.html:53
 msgid "Average net unit price"
 msgstr "Average net unit price"
 
-#: app/templates/dashboard/index.html:54
+#: app/templates/dashboard/index.html:59
 msgid "Number of tickets"
 msgstr "Number of tickets"
 
-#: app/templates/dashboard/index.html:63
+#: app/templates/dashboard/index.html:68
 msgid "Sales share per product"
 msgstr "Sales share per product"
 
-#: app/templates/dashboard/index.html:69
+#: app/templates/dashboard/index.html:74
 #, python-format
-msgid "Sales per month (%(year)s)"
-msgstr "Sales per month (%(year)s)"
+msgid "Sales per month (%(years)s)"
+msgstr "Sales per month (%(years)s)"
 
-#: app/templates/dashboard/index.html:75
+#: app/templates/dashboard/index.html:80
 #, python-format
-msgid "Bottles sold per month (%(year)s)"
-msgstr "Bottles sold per month (%(year)s)"
+msgid "Bottles sold per month (%(years)s)"
+msgstr "Bottles sold per month (%(years)s)"
 
-#: app/templates/dashboard/index.html:84
+#: app/templates/dashboard/index.html:89
 msgid "Low stock"
 msgstr "Low stock"
 
-#: app/templates/dashboard/index.html:87
+#: app/templates/dashboard/index.html:92
 msgid "On hand"
 msgstr "On hand"
 
-#: app/templates/dashboard/index.html:99
+#: app/templates/dashboard/index.html:104
 msgid "Everything is well stocked."
 msgstr "Everything is well stocked."
 
-#: app/templates/dashboard/index.html:148
+#: app/templates/dashboard/index.html:153
 #: app/templates/top_customers/index.html:46
 msgid "Bottles"
 msgstr "Bottles"
@@ -1193,7 +1221,10 @@ msgid ""
 "How many of each supply are consumed per unit of this product assembled "
 "(drawn from supplies when it enters the fermentation warehouse). Leave at"
 " 0 for supplies this product doesn't use."
-msgstr "How many of each supply are consumed per unit of this product assembled (drawn from supplies when it enters the fermentation warehouse). Leave at 0 for supplies this product doesn't use."
+msgstr ""
+"How many of each supply are consumed per unit of this product assembled "
+"(drawn from supplies when it enters the fermentation warehouse). Leave at"
+" 0 for supplies this product doesn't use."
 
 #: app/templates/supplies/recipe_form.html:13
 msgid "Supply"
@@ -1221,7 +1252,11 @@ msgid ""
 "bottle, a label, a cap...). They're drawn from the supplies warehouse "
 "when the product enters the fermentation warehouse; products with no "
 "supplies here don't affect supply stock."
-msgstr "Associate the supplies each product consumes per unit assembled (a bottle, a label, a cap...). They're drawn from the supplies warehouse when the product enters the fermentation warehouse; products with no supplies here don't affect supply stock."
+msgstr ""
+"Associate the supplies each product consumes per unit assembled (a "
+"bottle, a label, a cap...). They're drawn from the supplies warehouse "
+"when the product enters the fermentation warehouse; products with no "
+"supplies here don't affect supply stock."
 
 #: app/templates/supplies/recipes.html:18
 msgid "Supplies per unit"

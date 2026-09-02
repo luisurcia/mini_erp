@@ -1,26 +1,31 @@
 {% extends "base.html" %}
 {% block title %}{{ _("Dashboard") }}{% endblock %}
 {% block content %}
-<div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
+{% macro filter_dropdown(label, param, toggle_text, options) %}
+<div class="dropdown">
+  <label class="form-label small text-muted mb-0 d-block">{{ label }}</label>
+  <button class="btn btn-outline-secondary dropdown-toggle text-start" type="button"
+          style="min-width: 9rem;" data-bs-toggle="dropdown" data-bs-auto-close="outside">
+    {{ toggle_text }}
+  </button>
+  <div class="dropdown-menu p-2" style="max-height: 16rem; overflow-y: auto;">
+    {% for value, text, checked in options %}
+    <div class="form-check">
+      <input class="form-check-input" type="checkbox" name="{{ param }}"
+             value="{{ value }}" id="{{ param }}-{{ value }}" {{ "checked" if checked }}>
+      <label class="form-check-label" for="{{ param }}-{{ value }}">{{ text }}</label>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+{% endmacro %}
+
+<div class="d-flex justify-content-between align-items-end mb-4 flex-wrap gap-2">
   <h1 class="h3 mb-0">{{ _("Dashboard") }}</h1>
-  <form method="get" class="d-flex gap-2 align-items-end">
-    <div>
-      <label class="form-label small text-muted mb-0" for="year">{{ _("Year") }}</label>
-      <select class="form-select" id="year" name="year" onchange="this.form.submit()">
-        {% for y in available_years %}
-        <option value="{{ y }}" {{ "selected" if y == selected_year else "" }}>{{ y }}</option>
-        {% endfor %}
-      </select>
-    </div>
-    <div>
-      <label class="form-label small text-muted mb-0" for="month">{{ _("Month") }}</label>
-      <select class="form-select" id="month" name="month" onchange="this.form.submit()">
-        <option value="">{{ _("All months") }}</option>
-        {% for name in month_names %}
-        <option value="{{ loop.index }}" {{ "selected" if loop.index == selected_month else "" }}>{{ name }}</option>
-        {% endfor %}
-      </select>
-    </div>
+  <form method="get" class="d-flex gap-2 align-items-end flex-wrap">
+    {{ filter_dropdown(_("Year"), "year", year_label, year_options) }}
+    {{ filter_dropdown(_("Month"), "month", month_label, month_options) }}
+    <button type="submit" class="btn btn-primary">{{ _("Apply") }}</button>
   </form>
 </div>
 
@@ -66,13 +71,13 @@
   </div>
   <div class="col-lg-4">
     <div class="card p-3">
-      <h2 class="h5">{{ _("Sales per month (%(year)s)", year=selected_year) }}</h2>
+      <h2 class="h5">{{ _("Sales per month (%(years)s)", years=charts_years_label) }}</h2>
       <canvas id="salesPerMonthChart" height="220"></canvas>
     </div>
   </div>
   <div class="col-lg-4">
     <div class="card p-3">
-      <h2 class="h5">{{ _("Bottles sold per month (%(year)s)", year=selected_year) }}</h2>
+      <h2 class="h5">{{ _("Bottles sold per month (%(years)s)", years=charts_years_label) }}</h2>
       <canvas id="bottlesPerMonthChart" height="220"></canvas>
     </div>
   </div>

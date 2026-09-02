@@ -34,6 +34,16 @@ class SalesRepository(Repository[Sale]):
             extract("year", Sale.sale_date) == year,
         ).all()
 
+    def completed_in_years(self, years: list[int]) -> list[Sale]:
+        """Completed sales across any of the given calendar years — the
+        Dashboard's multi-year filter (#83). Empty list = every year."""
+        if not years:
+            return self.completed_all()
+        return Sale.query.filter(
+            Sale.status == Sale.STATUS_COMPLETED,
+            extract("year", Sale.sale_date).in_(years),
+        ).all()
+
     def completed_all(self) -> list[Sale]:
         return Sale.query.filter(Sale.status == Sale.STATUS_COMPLETED).all()
 

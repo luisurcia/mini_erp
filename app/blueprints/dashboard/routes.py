@@ -2,6 +2,7 @@ from datetime import UTC, datetime
 
 from flask import render_template, request
 from flask_babel import gettext as _
+from flask_babel import ngettext
 from flask_login import login_required
 
 from app.blueprints.dashboard import bp
@@ -17,6 +18,16 @@ def _month_names() -> list[str]:
     ]
 
 
+def _filter_label(selected: list, total: int, all_text: str, some_text) -> str:
+    """Text on a multi-select dropdown's toggle: 'all', the single value,
+    or 'N selected'."""
+    if not selected or len(selected) == total:
+        return all_text
+    if len(selected) == 1:
+        return str(selected[0])
+    return some_text(len(selected))
+
+
 @bp.route("/")
 @login_required
 def index():
@@ -26,19 +37,24 @@ def index():
 
     now = datetime.now(UTC)
     available_years = sales_repo.distinct_years() or [now.year]
-    selected_year = request.args.get("year", type=int, default=available_years[0])
-    if selected_year not in available_years:
-        available_years = sorted({*available_years, selected_year}, reverse=True)
-    selected_month = request.args.get("month", type=int)
+    month_names = _month_names()
 
-    # Everything on this page is scoped to this same year (+ month, if one
-    # is picked) — no metric or chart falls back to all-time data. See #30.
-    sales_this_year = sales_repo.completed_in_year(selected_year)
-    sales_this_period = (
-        [s for s in sales_this_year if s.sale_date.month == selected_month]
-        if selected_month
-        else sales_this_year
+    # Multi-select filters (#83, phase A): pick any set of years and any
+    # set of months; everything aggregates over the union. Empty = all.
+    selected_years = sorted(
+        (y for y in request.args.getlist("year", type=int) if y in available_years),
+        reverse=True,
     )
+    selected_months = sorted(
+        m for m in request.args.getlist("month", type=int) if 1 <= m <= 12
+    )
+
+    sales_scope = sales_repo.completed_in_years(selected_years)
+    sales_this_period = [
+        s
+        for s in sales_scope
+        if not selected_months or s.sale_date.month in selected_months
+    ]
 
     stats = {
         "net_sales": sales_service.total_revenue(sales_this_period),
@@ -49,19 +65,45 @@ def index():
     }
     low_stock_items = inventory_service.low_stock_report()
 
+    # The two "per month" charts sum every selected year by calendar month
+    # (phase B turns them into one series per year).
     charts = {
         "product_sales": sales_service.sales_by_product(sales_this_period),
-        "monthly_counts": sales_service.monthly_sales_counts(sales_this_year),
-        "monthly_bottles": sales_service.monthly_bottles_sold(sales_this_year),
+        "monthly_counts": sales_service.monthly_sales_counts(sales_scope),
+        "monthly_bottles": sales_service.monthly_bottles_sold(sales_scope),
     }
+
+    year_label = _filter_label(
+        selected_years,
+        len(available_years),
+        _("All years"),
+        lambda n: ngettext("%(num)s year", "%(num)s years", n),
+    )
+    if len(selected_months) == 1:
+        month_label = month_names[selected_months[0] - 1]
+    else:
+        month_label = _filter_label(
+            selected_months,
+            12,
+            _("All months"),
+            lambda n: ngettext("%(num)s month", "%(num)s months", n),
+        )
+    charts_years_label = (
+        ", ".join(str(y) for y in selected_years) if selected_years else _("all years")
+    )
 
     return render_template(
         "dashboard/index.html",
         stats=stats,
         low_stock_items=low_stock_items,
         charts=charts,
-        available_years=available_years,
-        selected_year=selected_year,
-        selected_month=selected_month,
-        month_names=_month_names(),
+        month_names=month_names,
+        year_options=[(y, str(y), y in selected_years) for y in available_years],
+        month_options=[
+            (i, name, i in selected_months)
+            for i, name in enumerate(month_names, start=1)
+        ],
+        year_label=year_label,
+        month_label=month_label,
+        charts_years_label=charts_years_label,
     )
