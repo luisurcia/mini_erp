@@ -4,11 +4,11 @@
 
 > PRD por **ingeniería inversa**: describe lo que la rama `client/scoby` efectivamente hace hoy, reconstruido a partir del código y de lo desplegado en producción (`https://titourcia.com/scobyerp`). Reemplaza como referencia viva a los documentos genéricos `Kombucha_ERP_PRD.md` / `Kombucha_ERP_PRD_Requerimientos.md`, que quedan solo como registro histórico de la evaluación inicial (25 ago 2026).
 >
-> El seguimiento del trabajo se hizo en GitHub Issues: épicas [#20](https://github.com/luisurcia/mini_erp/issues/20) · [#36](https://github.com/luisurcia/mini_erp/issues/36) · [#47](https://github.com/luisurcia/mini_erp/issues/47) · [#76](https://github.com/luisurcia/mini_erp/issues/76) (personalización base + rondas de ajustes de UX), [#87](https://github.com/luisurcia/mini_erp/issues/87) (quinta ronda: PDF de cobranza, métricas de Dashboard, **flujo de bodegas Fermentación → Principal → distribución**), [#90](https://github.com/luisurcia/mini_erp/issues/90) (feedback: PDF agrupado por cliente, **consumo de insumos al armar**) y [#95](https://github.com/luisurcia/mini_erp/issues/95) (sexta ronda: **módulo de Compras**, columnas del grid de venta ordenadas por lo más vendido) — todas cerradas, más el **modo comparación del Dashboard** ([#92](https://github.com/luisurcia/mini_erp/issues/92)). Pendientes abiertos: spike de integración bancaria (#82) y spike de notificaciones (#52).
+> El seguimiento del trabajo se hizo en GitHub Issues: épicas [#20](https://github.com/luisurcia/mini_erp/issues/20) · [#36](https://github.com/luisurcia/mini_erp/issues/36) · [#47](https://github.com/luisurcia/mini_erp/issues/47) · [#76](https://github.com/luisurcia/mini_erp/issues/76) (personalización base + rondas de ajustes de UX), [#87](https://github.com/luisurcia/mini_erp/issues/87) (quinta ronda: PDF de cobranza, métricas de Dashboard, **flujo de bodegas Fermentación → Principal → distribución**), [#90](https://github.com/luisurcia/mini_erp/issues/90) (feedback: PDF agrupado por cliente, **consumo de insumos al armar**), [#95](https://github.com/luisurcia/mini_erp/issues/95) (sexta ronda: **módulo de Compras**, columnas del grid de venta ordenadas por lo más vendido), [#112](https://github.com/luisurcia/mini_erp/issues/112) (séptima ronda: **categoría de Compras como selector + mantenedor**, **ticket de despacho**) y [#115](https://github.com/luisurcia/mini_erp/issues/115) (feedback del ticket de despacho: RUT/email, unificar líneas por producto) — todas cerradas, más el **modo comparación del Dashboard** ([#92](https://github.com/luisurcia/mini_erp/issues/92)) y el comando **`flask reset-data`** ([#116](https://github.com/luisurcia/mini_erp/issues/116)). Pendientes abiertos: spike de integración bancaria (#82) y spike de notificaciones (#52).
 
 | FECHA | ESTADO | BASE | ORIGEN |
 |---|---|---|---|
-| 2 septiembre 2026 | En producción | Rama `client/scoby` (commit `a6cf9ba`) | Ingeniería inversa del código |
+| 9 septiembre 2026 | En producción | Rama `client/scoby` (commit `dfdaf18`) | Ingeniería inversa del código |
 
 ---
 
@@ -70,8 +70,9 @@ producción → Bodega de Fermentación → Bodega Principal → Bodega Julien /
 - **Fecha de venta editable** (por defecto hoy), **N° de factura** opcional. No se pide estado ni notas al ingresar (la venta ya ocurrió → se crea como completada).
 - **IVA opcional** por venta, con la tasa configurada en Empresa. El total y el IVA se **previsualizan en vivo** mientras se ingresa. El IVA se redondea a la unidad de la moneda (0 decimales para CLP).
 - Al guardar: **descuenta el stock de producto** de cada bodega elegida. **No toca los insumos** (eso ocurre al armar — ver MOD-03).
-- **Lista de Ventas:** # · fecha · cliente · N° factura · estado · pago · **IVA (Sí/No)** · total. Filtro por estado de pago (Todas / Por pagar / Pagado) y botón **"Descargar PDF de ventas por pagar"** — un PDF agrupado por cliente (ventas más antiguas arriba, subtotal por cliente y total a cobrar) que se comparte semanalmente con los socios para la cobranza.
-- **Estado de pago:** cada venta es *por pagar* o *pagada* (eje aparte del estado de despacho). En el detalle de la venta:
+- **Lista de Ventas:** # · fecha · cliente · N° factura · estado · pago · **IVA (Sí/No)** · total, con botones **"Ver"** y **"Ticket de despacho"** por fila. Filtro por cliente y por estado de pago (Todas / Por pagar / Pagado) y botón **"Descargar PDF de ventas por pagar"** — un PDF agrupado por cliente (ventas más antiguas arriba, subtotal por cliente y total a cobrar) que se comparte semanalmente con los socios para la cobranza.
+- **Ticket de despacho (PDF):** desde la lista de Ventas o el detalle de la venta se genera un PDF A4 por venta para el reparto. Incluye: **número de venta** (y N° de factura si tiene), **cliente con RUT, email, teléfono y dirección de despacho**, y el detalle en **unidades × nombre de producto** más el total de unidades. Un mismo producto sacado de varias bodegas se **suma en una sola línea** (al cliente no le importa de qué bodega salió), y las líneas van ordenadas por nombre de producto. **No lleva precios** (es un documento de reparto). Se puede generar en cualquier momento, sin importar el estado de pago. Formato A4; un ticket térmico 80 mm para pegar en las cajas es un pendiente futuro.
+- **Estado de pago:** cada venta es *por pagar* o *pagada* (eje aparte del despacho). En el detalle de la venta:
   - Si está por pagar: formulario "Registrar pago" con **número de transferencia/referencia obligatorio** + fecha.
   - Si está pagada: se muestra la referencia y la fecha de pago, y **solo el administrador** puede revertir el pago.
   - Registrar un pago lo puede hacer un vendedor o un administrador; revertirlo, solo administrador.
@@ -136,16 +137,18 @@ Solo administrador, desde el menú **Configuración** del navbar.
 - **Campos del producto:** los toggles de mostrar/ocultar Sabor, Nombre corto, Tamaño, SKU, Precio.
 - **Idioma por defecto de la empresa** (lo hereda quien no eligió idioma propio).
 - **Segmentos de cliente:** alta / renombrar / activar-desactivar.
+- **Categorías de compra:** ídem (la categoría "No definido" es fija).
 
 ### MOD-10 · Compras — *libro de gastos de planta con correlativo*
 
 - Registro de los **gastos de gestión de planta que no son insumo de producción** — alcohol gel, un repuesto de máquina, artículos de aseo/oficina. Es un **libro de gastos**, no un módulo de stock: no hay existencias, ni bodega, ni consumo. Distinto de MOD-03 Insumos (esos entran en la receta del producto).
 - Cada compra lleva un **código correlativo global** (`C-0001`, `C-0002`, …) que nunca se reinicia.
-- Campos: fecha · ítem · proveedor (texto libre) · categoría (texto libre, opcional) · N° de factura · monto · marca *"el monto incluye IVA"* (solo informativa, no calcula nada) · notas.
+- Campos: fecha · ítem · proveedor (texto libre) · **categoría (selector, opcional)** · N° de factura · monto · marca *"el monto incluye IVA"* (solo informativa, no calcula nada) · notas.
+- **Categoría con catálogo:** el campo es un selector contra un mantenedor de **categorías de compra** (Insumos, Repuestos, Artículos de Limpieza, Otros de fábrica; Scoby puede crear más). Se administra desde **Empresa**, solo administrador, con la misma lógica que los segmentos de cliente (alta / renombrar / activar-desactivar, no se borran). Es **opcional** para no frenar la carga rápida: si no se elige categoría, la compra queda en **"No definido"** (una categoría fija que no se puede editar ni desactivar) — así en el reporte se ve de inmediato cuáles faltan clasificar.
 - **No se elimina una compra, se anula:** conserva su número, queda tachada en la lista y sale del total. Se puede volver a activar.
 - **Lista con filtro año / mes** y el **total del periodo** al pie — para la revisión de fin de mes.
 - **Solo administrador** (dato financiero, mismo criterio que el catálogo de productos).
-- Enhancements a futuro: mantenedor de proveedores y de categorías, adjuntar el archivo de la factura, exportar el reporte a PDF/Excel.
+- Enhancements a futuro: mantenedor de proveedores, adjuntar el archivo de la factura, exportar el reporte a PDF/Excel, total del periodo desglosado por categoría.
 
 ### Transversal
 
@@ -166,6 +169,7 @@ Solo administrador, desde el menú **Configuración** del navbar.
 - ✕ **Integración con la cuenta bancaria** para conciliar transferencias con ventas por pagar → spike [#82](https://github.com/luisurcia/mini_erp/issues/82).
 - ✕ **Órdenes de compra / reposición sugerida** — la reposición de stock y de insumos es manual. (El módulo Compras registra gastos de planta ya hechos, no genera órdenes ni lleva un catálogo de proveedores.)
 - ✕ **Anular / editar / devolver una venta** — no hay pantalla para eso; si se construyera, debería devolver también el stock de producto.
+- ✕ **Estado de despacho / seguimiento de entregas** — el ticket de despacho se genera cuando se necesita, pero la venta no pasa a un estado "despachada" ni hay tracking del reparto.
 - ✕ **Precios por segmento / lista de precios** — el precio se ingresa a mano en cada venta.
 - ✕ **Pagos parciales / abonos** — el estado de pago es binario (por pagar / pagado).
 - ✕ **Lotes y vencimiento** — el stock se lleva por producto, no por lote ni fecha de embotellado.
@@ -183,7 +187,8 @@ Solo administrador, desde el menú **Configuración** del navbar.
 | Ingreso de venta | Lista de líneas producto+cantidad | Grilla bodega × producto |
 | Insumos | No existía como consumo | Módulo Insumos + receta por producto + descuento automático **al armar** (entrada a Fermentación) |
 | Cobranza | No existía | Estado por pagar / pagado + referencia; PDF de ventas por pagar agrupado por cliente |
-| Compras / gastos | No existía | Libro de gastos de planta con correlativo global, categoría, anulación y total mensual (solo admin) |
+| Ticket de despacho | No existía | PDF A4 por venta con datos del cliente (RUT / email / teléfono / dirección) y unidades × producto sumadas entre bodegas, sin precios |
+| Compras / gastos | No existía | Libro de gastos de planta con correlativo global, **categoría con catálogo/mantenedor**, anulación y total mensual (solo admin) |
 | Dashboard | KPIs genéricos, filtro de un año | 6 KPIs del Excel de Scoby (Valor Total Pago, Total de Botellas, N° de tickets, N° de Facturas, botellas y valor unitario promedio) + filtros multi-selección de año y mes (unión, tipo tabla dinámica) + 4 gráficos 2×2 + modo comparación de periodos (tabla con Δ%) |
 | Pre-venta | Módulo Oportunidades (embudo) | Eliminado → vista Top 10 clientes por consumo |
 | Cliente | Nombre, email, teléfono, IG, notas | + RUT, sobrenombre, segmento, dirección de despacho estructurada; mínimo para crear = nombre + segmento |
@@ -201,15 +206,17 @@ Solo administrador, desde el menú **Configuración** del navbar.
   - Python 3.12, base de datos **SQLite** propia (`~/scobyerp/instance/mini_erp.db`).
   - **Despliegue automático** desde la rama `client/scoby` vía GitHub Actions (corre los tests, hace backup de la base, actualiza el código, aplica migraciones de esquema y reinicia la app). Ambiente de GitHub separado (`scoby-production`).
 - **Migraciones:** el esquema se actualiza solo en cada deploy (`flask init-db` → `_upgrade_schema`); las cargas nuevas usan `flask seed-demo` (datos de demo).
+- **Reseteo para carga real (`flask reset-data`):** vacía todas las tablas operativas (clientes, ventas, productos, inventario, insumos, compras, y los catálogos de segmentos / categorías / bodegas) **dejando solo los usuarios y la configuración de la empresa**, y vuelve a sembrar las bodegas, segmentos y categorías de compra por defecto. Se corre a mano en el servidor (pide confirmación; `--yes` la salta), con backup previo — **no está en el pipeline**. Es el paso previo a cargar los datos reales de Scoby.
 
 ## 07 Pendientes conocidos
 
 - **Recetas de insumos en producción:** los productos existentes están **sin receta**. Ahora que el consumo ocurre al armar (entrada a Fermentación), el equipo puede cargar en `Insumos → Insumos por producto` cuántos insumos lleva cada kombucha y a partir de ahí cada reposición de Fermentación descontará botella + etiqueta + tapa.
 - **Bodega de Fermentación en producción:** la que el equipo había creado a mano ("En Fermentación") se renombró a **"Bodega de Fermentación"** y quedó con su rol de flujo; conviene confirmar en `Configuración → Bodegas` que el stock que tuviera se conservó.
 - **Datos de usuarios en producción:** los 4 usuarios existentes (admin, Mario, Eduardo, Julien) tienen nombre/apellido en blanco y quedaron todos con rol `admin`; conviene cargar sus nombres y reasignarles rol `bodeguero` / `venta` según corresponda. Al hacerlo, tener presente que `bodeguero` y `venta` ya **no** ven el catálogo de productos ni las recetas (pasaron a solo administrador).
+- **Datos de demo en producción:** producción todavía corre con los datos de demo del seed inicial (clientes, ventas y productos de ejemplo). Antes de la carga de datos reales de Scoby se ejecutará `flask reset-data` para dejar solo los usuarios y la configuración; después se cargan los datos reales (el formato de origen se definirá en su momento).
 - **Notificaciones** — ver spike [#52](https://github.com/luisurcia/mini_erp/issues/52).
 - **Housekeeping de traducciones:** los tres catálogos arrastran entradas obsoletas (`#~`) del módulo Oportunidades eliminado; `pybabel compile` las ignora, pero conviene limpiarlas.
 
 ---
 
-*Scoby ERP — PRD por ingeniería inversa · rama `client/scoby` · commit `a6cf9ba` · 2 septiembre 2026*
+*Scoby ERP — PRD por ingeniería inversa · rama `client/scoby` · commit `dfdaf18` · 9 septiembre 2026*
