@@ -7,3 +7,6 @@ instance/
 .pytest_cache/
 *.egg-info/
 .DS_Store
+
+# Source data for the Scoby migration — real customer data, kept local only
+datos a migrar/
