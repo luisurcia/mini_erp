@@ -3,6 +3,7 @@ from decimal import Decimal
 
 from app.exceptions import NotFoundError
 from app.models.purchase import Purchase
+from app.models.purchase_category import PurchaseCategory
 from app.repositories.purchase_repository import PurchaseRepository
 
 
@@ -21,7 +22,7 @@ class PurchaseService:
         item: str,
         supplier: str,
         amount: Decimal,
-        category: str | None = None,
+        category_id: int | None = None,
         invoice_number: str | None = None,
         includes_tax: bool = False,
         notes: str | None = None,
@@ -31,7 +32,7 @@ class PurchaseService:
             purchase_date=purchase_date,
             item=item,
             supplier=supplier,
-            category=category or None,
+            category_id=self._resolve_category_id(category_id),
             invoice_number=invoice_number or None,
             amount=amount,
             includes_tax=includes_tax,
@@ -49,7 +50,7 @@ class PurchaseService:
         item: str,
         supplier: str,
         amount: Decimal,
-        category: str | None = None,
+        category_id: int | None = None,
         invoice_number: str | None = None,
         includes_tax: bool = False,
         notes: str | None = None,
@@ -59,7 +60,7 @@ class PurchaseService:
         purchase.item = item
         purchase.supplier = supplier
         purchase.amount = amount
-        purchase.category = category or None
+        purchase.category_id = self._resolve_category_id(category_id)
         purchase.invoice_number = invoice_number or None
         purchase.includes_tax = includes_tax
         purchase.notes = notes or None
@@ -77,6 +78,13 @@ class PurchaseService:
         return sum(
             (p.amount for p in purchases if not p.voided), start=Decimal("0")
         )
+
+    def _resolve_category_id(self, category_id: int | None) -> int:
+        """Every purchase gets a real category — the chosen one, or the
+        "No definido" fallback when none was picked (#110)."""
+        if category_id is not None:
+            return category_id
+        return PurchaseCategory.get_fallback().id
 
     def _get(self, purchase_id: int) -> Purchase:
         purchase = self.repo.get(purchase_id)

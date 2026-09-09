@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-09-02 17:39-0400\n"
+"POT-Creation-Date: 2026-09-09 13:27-0300\n"
 "PO-Revision-Date: 2026-08-24 17:58-0400\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: es\n"
@@ -63,7 +63,7 @@ msgstr "Armado"
 msgid "Unpaid sales"
 msgstr "Ventas por pagar"
 
-#: app/reports.py:57
+#: app/reports.py:57 app/reports.py:191
 #, python-format
 msgid "Generated on %(date)s"
 msgstr "Generado el %(date)s"
@@ -75,13 +75,13 @@ msgid_plural "%(num)s sales"
 msgstr[0] "%(num)s venta"
 msgstr[1] "%(num)s ventas"
 
-#: app/blueprints/purchases/forms.py:12 app/reports.py:77
+#: app/blueprints/purchases/forms.py:22 app/reports.py:77
 #: app/templates/inventory/history.html:7 app/templates/purchases/index.html:39
 #: app/templates/sales/index.html:40 app/templates/supplies/history.html:7
 msgid "Date"
 msgstr "Fecha"
 
-#: app/reports.py:78 app/templates/purchases/index.html:43
+#: app/reports.py:78 app/reports.py:199 app/templates/purchases/index.html:43
 #: app/templates/sales/index.html:40
 msgid "Invoice #"
 msgstr "N° factura"
@@ -121,6 +121,55 @@ msgstr "Total a cobrar"
 #: app/reports.py:157
 msgid "No unpaid sales."
 msgstr "No hay ventas por pagar."
+
+#: app/reports.py:181 app/reports.py:189 app/templates/sales/detail.html:65
+#: app/templates/sales/index.html:60
+msgid "Dispatch ticket"
+msgstr "Ticket de despacho"
+
+#: app/reports.py:197 app/templates/sales/detail.html:3
+#: app/templates/sales/detail.html:5
+#, python-format
+msgid "Sale #%(id)s"
+msgstr "Venta #%(id)s"
+
+#: app/reports.py:203 app/templates/sales/detail.html:8
+msgid "Date:"
+msgstr "Fecha:"
+
+#: app/reports.py:209
+msgid "Delivery"
+msgstr "Entrega"
+
+#: app/reports.py:210 app/templates/sales/detail.html:7
+msgid "Customer:"
+msgstr "Cliente:"
+
+#: app/reports.py:212
+msgid "Phone:"
+msgstr "Teléfono:"
+
+#: app/reports.py:216
+msgid "Address:"
+msgstr "Dirección:"
+
+#: app/reports.py:222
+msgid "Units"
+msgstr "Unidades"
+
+#: app/blueprints/inventory/forms.py:40 app/reports.py:222
+#: app/templates/dashboard/index.html:161 app/templates/products/index.html:13
+#: app/templates/sales/detail.html:42 app/templates/supplies/recipes.html:17
+msgid "Product"
+msgstr "Producto"
+
+#: app/reports.py:227
+msgid "Total units"
+msgstr "Total de unidades"
+
+#: app/reports.py:252 app/templates/sales/detail.html:11
+msgid "Notes:"
+msgstr "Notas:"
 
 #: app/blueprints/auth/forms.py:10 app/blueprints/users/forms.py:19
 #: app/templates/users/index.html:11
@@ -250,8 +299,10 @@ msgstr ""
 msgid "Save settings"
 msgstr "Guardar configuración"
 
-#: app/blueprints/company/forms.py:67 app/blueprints/customers/forms.py:16
-#: app/blueprints/inventory/forms.py:34 app/blueprints/supplies/forms.py:11
+#: app/blueprints/company/forms.py:67 app/blueprints/company/forms.py:73
+#: app/blueprints/customers/forms.py:11 app/blueprints/inventory/forms.py:34
+#: app/blueprints/supplies/forms.py:11
+#: app/templates/company/purchase_categories_list.html:13
 #: app/templates/company/segments_list.html:13
 #: app/templates/customers/index.html:13
 #: app/templates/inventory/warehouses_list.html:13
@@ -260,8 +311,10 @@ msgstr "Guardar configuración"
 msgid "Name"
 msgstr "Nombre"
 
-#: app/blueprints/company/forms.py:68 app/blueprints/inventory/forms.py:35
-#: app/blueprints/products/forms.py:23 app/blueprints/supplies/forms.py:16
+#: app/blueprints/company/forms.py:68 app/blueprints/company/forms.py:74
+#: app/blueprints/inventory/forms.py:35 app/blueprints/products/forms.py:23
+#: app/blueprints/supplies/forms.py:16
+#: app/templates/company/purchase_categories_list.html:27
 #: app/templates/company/segments_list.html:24
 #: app/templates/inventory/warehouses_list.html:36
 #: app/templates/products/index.html:32 app/templates/supplies/index.html:34
@@ -272,79 +325,101 @@ msgstr "Activo"
 msgid "Save segment"
 msgstr "Guardar segmento"
 
-#: app/blueprints/company/routes.py:35
+#: app/blueprints/company/forms.py:75
+msgid "Save category"
+msgstr "Guardar categoría"
+
+#: app/blueprints/company/routes.py:40
 msgid "Company settings updated."
 msgstr "Configuración de la empresa actualizada."
 
-#: app/blueprints/company/routes.py:58
+#: app/blueprints/company/routes.py:63
 #, python-format
 msgid "Segment '%(name)s' created."
 msgstr "Segmento '%(name)s' creado."
 
-#: app/blueprints/company/routes.py:70
+#: app/blueprints/company/routes.py:75
 msgid "Segment not found."
 msgstr "Segmento no encontrado."
 
-#: app/blueprints/company/routes.py:79
+#: app/blueprints/company/routes.py:84
 #, python-format
 msgid "Segment '%(name)s' updated."
 msgstr "Segmento '%(name)s' actualizado."
 
-#: app/blueprints/customers/forms.py:17
+#: app/blueprints/company/routes.py:113
+#, python-format
+msgid "Category '%(name)s' created."
+msgstr "Categoría '%(name)s' creada."
+
+#: app/blueprints/company/routes.py:127
+msgid "Category not found."
+msgstr "Categoría no encontrada."
+
+#: app/blueprints/company/routes.py:134
+msgid "The default category can't be edited."
+msgstr "La categoría por defecto no se puede editar."
+
+#: app/blueprints/company/routes.py:143
+#, python-format
+msgid "Category '%(name)s' updated."
+msgstr "Categoría '%(name)s' actualizada."
+
+#: app/blueprints/customers/forms.py:12
 msgid "Nickname"
 msgstr "Sobrenombre"
 
-#: app/blueprints/customers/forms.py:21 app/templates/customers/index.html:15
+#: app/blueprints/customers/forms.py:16 app/templates/customers/index.html:15
 msgid "RUT"
 msgstr "RUT"
 
-#: app/blueprints/customers/forms.py:23 app/templates/customers/index.html:14
+#: app/blueprints/customers/forms.py:18 app/templates/customers/index.html:14
 #: app/templates/top_customers/index.html:26
 #: app/templates/top_customers/index.html:44
 msgid "Segment"
 msgstr "Segmento"
 
-#: app/blueprints/customers/forms.py:25
+#: app/blueprints/customers/forms.py:20
 msgid "Email"
 msgstr "Correo electrónico"
 
-#: app/blueprints/customers/forms.py:26
+#: app/blueprints/customers/forms.py:21
 msgid "Phone"
 msgstr "Teléfono"
 
-#: app/blueprints/customers/forms.py:27
+#: app/blueprints/customers/forms.py:22
 msgid "Street"
 msgstr "Calle"
 
-#: app/blueprints/customers/forms.py:28
+#: app/blueprints/customers/forms.py:23
 msgid "Number"
 msgstr "Número"
 
-#: app/blueprints/customers/forms.py:29
+#: app/blueprints/customers/forms.py:24
 msgid "City"
 msgstr "Ciudad"
 
-#: app/blueprints/customers/forms.py:30
+#: app/blueprints/customers/forms.py:25
 msgid "Commune"
 msgstr "Comuna"
 
-#: app/blueprints/customers/forms.py:31
+#: app/blueprints/customers/forms.py:26
 msgid "Region"
 msgstr "Región"
 
-#: app/blueprints/customers/forms.py:33
+#: app/blueprints/customers/forms.py:28
 msgid "Instagram handle"
 msgstr "Usuario de Instagram"
 
-#: app/blueprints/customers/forms.py:35 app/blueprints/purchases/forms.py:24
+#: app/blueprints/customers/forms.py:30 app/blueprints/purchases/forms.py:38
 msgid "Notes"
 msgstr "Notas"
 
-#: app/blueprints/customers/forms.py:36
+#: app/blueprints/customers/forms.py:31
 msgid "Save customer"
 msgstr "Guardar cliente"
 
-#: app/blueprints/customers/forms.py:48
+#: app/blueprints/customers/forms.py:43
 msgid "— Select a segment —"
 msgstr "— Selecciona un segmento —"
 
@@ -491,12 +566,6 @@ msgstr "Nota"
 msgid "Save warehouse"
 msgstr "Guardar bodega"
 
-#: app/blueprints/inventory/forms.py:40 app/templates/dashboard/index.html:161
-#: app/templates/products/index.html:13 app/templates/sales/detail.html:42
-#: app/templates/supplies/recipes.html:17
-msgid "Product"
-msgstr "Producto"
-
 #: app/blueprints/inventory/forms.py:41
 msgid "From warehouse"
 msgstr "Desde bodega"
@@ -604,35 +673,35 @@ msgstr "Producto '%(name)s' creado."
 msgid "Product '%(name)s' updated."
 msgstr "Producto '%(name)s' actualizado."
 
-#: app/blueprints/purchases/forms.py:14 app/templates/purchases/index.html:40
+#: app/blueprints/purchases/forms.py:24 app/templates/purchases/index.html:40
 msgid "Item"
 msgstr "Ítem"
 
-#: app/blueprints/purchases/forms.py:15 app/templates/purchases/index.html:41
+#: app/blueprints/purchases/forms.py:25 app/templates/purchases/index.html:41
 msgid "Supplier"
 msgstr "Proveedor"
 
-#: app/blueprints/purchases/forms.py:16 app/templates/purchases/index.html:42
+#: app/blueprints/purchases/forms.py:29 app/templates/purchases/index.html:42
 msgid "Category"
 msgstr "Categoría"
 
-#: app/blueprints/purchases/forms.py:18 app/blueprints/sales/forms.py:44
+#: app/blueprints/purchases/forms.py:32 app/blueprints/sales/forms.py:44
 msgid "Invoice number"
 msgstr "Número de factura"
 
-#: app/blueprints/purchases/forms.py:21 app/templates/purchases/index.html:44
+#: app/blueprints/purchases/forms.py:35 app/templates/purchases/index.html:44
 msgid "Amount"
 msgstr "Monto"
 
-#: app/blueprints/purchases/forms.py:23
+#: app/blueprints/purchases/forms.py:37
 msgid "Amount includes tax (IVA)"
 msgstr "El monto incluye IVA"
 
-#: app/blueprints/purchases/forms.py:25
+#: app/blueprints/purchases/forms.py:39
 msgid "Save purchase"
 msgstr "Guardar compra"
 
-#: app/blueprints/purchases/forms.py:31
+#: app/blueprints/purchases/forms.py:61
 msgid "Void"
 msgstr "Anular"
 
@@ -694,31 +763,31 @@ msgstr "Incluir impuesto (IVA)"
 msgid "Record sale"
 msgstr "Registrar venta"
 
-#: app/blueprints/sales/routes.py:104
+#: app/blueprints/sales/routes.py:88 app/blueprints/sales/routes.py:154
+#: app/blueprints/sales/routes.py:173 app/blueprints/sales/routes.py:201
+msgid "Sale not found."
+msgstr "Venta no encontrada."
+
+#: app/blueprints/sales/routes.py:123
 msgid "Add at least one product line to the sale."
 msgstr "Agrega al menos una línea de producto a la venta."
 
-#: app/blueprints/sales/routes.py:114
+#: app/blueprints/sales/routes.py:133
 #, python-format
 msgid "Sale #%(id)s recorded."
 msgstr "Venta #%(id)s registrada."
 
-#: app/blueprints/sales/routes.py:135 app/blueprints/sales/routes.py:154
-#: app/blueprints/sales/routes.py:182
-msgid "Sale not found."
-msgstr "Venta no encontrada."
-
-#: app/blueprints/sales/routes.py:165
+#: app/blueprints/sales/routes.py:184
 #, python-format
 msgid "Payment registered for sale #%(id)s."
 msgstr "Pago registrado para la venta #%(id)s."
 
-#: app/blueprints/sales/routes.py:187
+#: app/blueprints/sales/routes.py:206
 #, python-format
 msgid "Payment reverted for sale #%(id)s."
 msgstr "Pago revertido para la venta #%(id)s."
 
-#: app/blueprints/sales/routes.py:230
+#: app/blueprints/sales/routes.py:249
 #, python-format
 msgid "Enter a unit price for %(name)s."
 msgstr "Ingresa un precio unitario para %(name)s."
@@ -886,6 +955,58 @@ msgid ""
 "account."
 msgstr "Elige el idioma con el que ves la aplicación. Solo afecta a tu cuenta."
 
+#: app/templates/company/purchase_categories_list.html:2
+#: app/templates/company/purchase_categories_list.html:5
+msgid "Purchase categories"
+msgstr "Categorías de compra"
+
+#: app/templates/company/purchase_categories_list.html:6
+#: app/templates/company/purchase_category_form.html:3
+#: app/templates/company/purchase_category_form.html:5
+msgid "New category"
+msgstr "Nueva categoría"
+
+#: app/templates/company/purchase_categories_list.html:14
+#: app/templates/company/segments_list.html:14
+#: app/templates/inventory/warehouses_list.html:15
+#: app/templates/products/index.html:18 app/templates/sales/index.html:40
+#: app/templates/supplies/index.html:22
+msgid "Status"
+msgstr "Estado"
+
+#: app/templates/company/purchase_categories_list.html:23
+msgid "default"
+msgstr "por defecto"
+
+#: app/templates/company/purchase_categories_list.html:29
+#: app/templates/company/segments_list.html:26
+#: app/templates/inventory/index.html:29
+#: app/templates/inventory/warehouses_list.html:38
+#: app/templates/products/index.html:34 app/templates/supplies/index.html:36
+#: app/templates/supplies/recipe_form.html:20
+#: app/templates/supplies/recipes.html:27 app/templates/supplies/stock.html:29
+msgid "Inactive"
+msgstr "Inactivo"
+
+#: app/templates/company/purchase_categories_list.html:34
+#: app/templates/company/segments_list.html:30
+#: app/templates/customers/index.html:26
+#: app/templates/inventory/warehouses_list.html:42
+#: app/templates/products/index.html:38 app/templates/purchases/index.html:62
+#: app/templates/supplies/index.html:40 app/templates/supplies/recipes.html:38
+#: app/templates/users/index.html:19
+msgid "Edit"
+msgstr "Editar"
+
+#: app/templates/company/purchase_categories_list.html:39
+msgid "No categories yet."
+msgstr "Aún no hay categorías."
+
+#: app/templates/company/purchase_category_form.html:3
+#: app/templates/company/purchase_category_form.html:5
+msgid "Edit category"
+msgstr "Editar categoría"
+
 #: app/templates/company/segment_form.html:3
 #: app/templates/company/segment_form.html:5
 msgid "Edit segment"
@@ -902,31 +1023,6 @@ msgstr "Nuevo segmento"
 msgid "Customer segments"
 msgstr "Segmentos de clientes"
 
-#: app/templates/company/segments_list.html:14
-#: app/templates/inventory/warehouses_list.html:15
-#: app/templates/products/index.html:18 app/templates/sales/index.html:40
-#: app/templates/supplies/index.html:22
-msgid "Status"
-msgstr "Estado"
-
-#: app/templates/company/segments_list.html:26
-#: app/templates/inventory/index.html:29
-#: app/templates/inventory/warehouses_list.html:38
-#: app/templates/products/index.html:34 app/templates/supplies/index.html:36
-#: app/templates/supplies/recipe_form.html:20
-#: app/templates/supplies/recipes.html:27 app/templates/supplies/stock.html:29
-msgid "Inactive"
-msgstr "Inactivo"
-
-#: app/templates/company/segments_list.html:30
-#: app/templates/customers/index.html:26
-#: app/templates/inventory/warehouses_list.html:42
-#: app/templates/products/index.html:38 app/templates/purchases/index.html:62
-#: app/templates/supplies/index.html:40 app/templates/supplies/recipes.html:38
-#: app/templates/users/index.html:19
-msgid "Edit"
-msgstr "Editar"
-
 #: app/templates/company/segments_list.html:34
 msgid "No segments yet."
 msgstr "Aún no hay segmentos."
@@ -938,6 +1034,10 @@ msgstr "Configuración de la empresa"
 #: app/templates/company/settings.html:11
 msgid "Manage customer segments"
 msgstr "Gestionar segmentos de clientes"
+
+#: app/templates/company/settings.html:13
+msgid "Manage purchase categories"
+msgstr "Gestionar categorías de compra"
 
 #: app/templates/customers/customer_form.html:3
 #: app/templates/customers/customer_form.html:5
@@ -1260,19 +1360,6 @@ msgstr "Anular compra"
 msgid "A voided purchase keeps its number and drops out of the period total."
 msgstr "Una compra anulada conserva su número y queda fuera del total del período."
 
-#: app/templates/sales/detail.html:3 app/templates/sales/detail.html:5
-#, python-format
-msgid "Sale #%(id)s"
-msgstr "Venta #%(id)s"
-
-#: app/templates/sales/detail.html:7
-msgid "Customer:"
-msgstr "Cliente:"
-
-#: app/templates/sales/detail.html:8
-msgid "Date:"
-msgstr "Fecha:"
-
 #: app/templates/sales/detail.html:9
 msgid "Status:"
 msgstr "Estado:"
@@ -1280,10 +1367,6 @@ msgstr "Estado:"
 #: app/templates/sales/detail.html:10
 msgid "Invoice number:"
 msgstr "Número de factura:"
-
-#: app/templates/sales/detail.html:11
-msgid "Notes:"
-msgstr "Notas:"
 
 #: app/templates/sales/detail.html:16 app/templates/sales/detail.html:29
 msgid "Payment:"
@@ -1306,7 +1389,7 @@ msgstr "Cant."
 msgid "IVA (%(rate)s%%)"
 msgstr "IVA (%(rate)s%%)"
 
-#: app/templates/sales/detail.html:63
+#: app/templates/sales/detail.html:64
 msgid "Back to sales"
 msgstr "Volver a ventas"
 
@@ -1335,11 +1418,11 @@ msgstr "Descargar PDF de ventas por pagar"
 msgid "Payment"
 msgstr "Pago"
 
-#: app/templates/sales/index.html:58
+#: app/templates/sales/index.html:59
 msgid "View"
 msgstr "Ver"
 
-#: app/templates/sales/index.html:61
+#: app/templates/sales/index.html:64
 msgid "No sales recorded yet."
 msgstr "Aún no hay ventas registradas."
 

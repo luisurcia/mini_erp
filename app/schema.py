@@ -400,6 +400,64 @@ def ensure_customer_segment_active_column() -> None:
         db.session.commit()
 
 
+def ensure_purchase_category_catalog() -> None:
+    """Move `purchases.category` from a free-text string to a FK against
+    the PurchaseCategory catalog (#110).
+
+    `PurchaseCategory.ensure_defaults()` must have run first (it seeds the
+    "No definido" fallback + the initial list). Every distinct free-text
+    value already in the ledger becomes a real category (case-insensitive
+    match against the existing ones, created otherwise) so nothing the
+    client typed is lost; rows with no category go to "No definido".
+    SQLite 3.35+ (deploy target is 3.45) supports DROP COLUMN directly.
+    """
+    from app.models.purchase_category import PurchaseCategory
+
+    inspector = inspect(db.engine)
+    columns = {column["name"] for column in inspector.get_columns("purchases")}
+    if "category_id" not in columns:
+        db.session.execute(
+            text(
+                "ALTER TABLE purchases ADD COLUMN category_id INTEGER "
+                "REFERENCES purchase_categories(id)"
+            )
+        )
+        db.session.commit()
+
+    if "category" not in columns:
+        return  # already migrated (or a fresh database)
+
+    by_lower_name = {
+        c.name.lower(): c for c in PurchaseCategory.query.all()
+    }
+    rows = db.session.execute(
+        text(
+            "SELECT DISTINCT category FROM purchases "
+            "WHERE category IS NOT NULL AND TRIM(category) != ''"
+        )
+    ).fetchall()
+    for (value,) in rows:
+        name = value.strip()
+        category = by_lower_name.get(name.lower())
+        if category is None:
+            category = PurchaseCategory(name=name, is_active=True)
+            db.session.add(category)
+            db.session.flush()
+            by_lower_name[name.lower()] = category
+        db.session.execute(
+            text("UPDATE purchases SET category_id = :cid WHERE category = :val"),
+            {"cid": category.id, "val": value},
+        )
+
+    fallback = PurchaseCategory.get_fallback()
+    db.session.execute(
+        text("UPDATE purchases SET category_id = :cid WHERE category_id IS NULL"),
+        {"cid": fallback.id},
+    )
+    db.session.execute(text("ALTER TABLE purchases DROP COLUMN category"))
+    db.session.commit()
+
+
 def ensure_inventory_item_warehouse_column() -> None:
     """Migrate `inventory_items` from one row per product to one row per
     (product, warehouse) pair, for databases created before multi-warehouse

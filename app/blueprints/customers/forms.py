@@ -3,13 +3,8 @@ from flask_wtf import FlaskForm
 from wtforms import SelectField, StringField, SubmitField, TextAreaField
 from wtforms.validators import DataRequired, Email, Length, Optional
 
+from app.forms import optional_int as _optional_int
 from app.models.customer_segment import CustomerSegment
-
-
-def _optional_int(value):
-    """Coerce a select value to int, or None for the empty placeholder
-    option — so DataRequired fires when no segment is chosen (#77)."""
-    return int(value) if value not in ("", None) else None
 
 
 class CustomerForm(FlaskForm):

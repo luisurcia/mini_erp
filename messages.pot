@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-09-02 16:19-0400\n"
+"POT-Creation-Date: 2026-09-09 13:27-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -37,28 +37,32 @@ msgstr ""
 msgid "Unpaid"
 msgstr ""
 
-#: app/__init__.py:128 app/templates/inventory/restock_form.html:3
+#: app/__init__.py:131 app/templates/inventory/restock_form.html:3
 #: app/templates/supplies/restock_form.html:3
 msgid "Restock"
 msgstr ""
 
-#: app/__init__.py:129
+#: app/__init__.py:132
 msgid "Sale"
 msgstr ""
 
-#: app/__init__.py:130
+#: app/__init__.py:133
 msgid "Adjustment"
 msgstr ""
 
-#: app/__init__.py:131 app/blueprints/inventory/forms.py:45
+#: app/__init__.py:134 app/blueprints/inventory/forms.py:45
 msgid "Transfer"
+msgstr ""
+
+#: app/__init__.py:136
+msgid "Assembly"
 msgstr ""
 
 #: app/reports.py:49 app/reports.py:55
 msgid "Unpaid sales"
 msgstr ""
 
-#: app/reports.py:57
+#: app/reports.py:57 app/reports.py:191
 #, python-format
 msgid "Generated on %(date)s"
 msgstr ""
@@ -70,18 +74,18 @@ msgid_plural "%(num)s sales"
 msgstr[0] ""
 msgstr[1] ""
 
-#: app/blueprints/purchases/forms.py:12 app/reports.py:77
+#: app/blueprints/purchases/forms.py:22 app/reports.py:77
 #: app/templates/inventory/history.html:7 app/templates/purchases/index.html:39
-#: app/templates/sales/index.html:25 app/templates/supplies/history.html:7
+#: app/templates/sales/index.html:40 app/templates/supplies/history.html:7
 msgid "Date"
 msgstr ""
 
-#: app/reports.py:78 app/templates/purchases/index.html:43
-#: app/templates/sales/index.html:25
+#: app/reports.py:78 app/reports.py:199 app/templates/purchases/index.html:43
+#: app/templates/sales/index.html:40
 msgid "Invoice #"
 msgstr ""
 
-#: app/reports.py:79 app/templates/sales/index.html:25
+#: app/reports.py:79 app/templates/sales/index.html:40
 msgid "Tax"
 msgstr ""
 
@@ -91,16 +95,16 @@ msgstr ""
 
 #: app/reports.py:81 app/templates/inventory/index.html:20
 #: app/templates/inventory/index.html:53 app/templates/sales/detail.html:59
-#: app/templates/sales/index.html:25 app/templates/sales/sale_form.html:76
+#: app/templates/sales/index.html:40 app/templates/sales/sale_form.html:76
 #: app/templates/supplies/stock.html:20 app/templates/supplies/stock.html:53
 msgid "Total"
 msgstr ""
 
-#: app/reports.py:98 app/templates/sales/index.html:41
+#: app/reports.py:98 app/templates/sales/index.html:56
 msgid "Yes"
 msgstr ""
 
-#: app/reports.py:98 app/templates/sales/index.html:41
+#: app/reports.py:98 app/templates/sales/index.html:56
 msgid "No"
 msgstr ""
 
@@ -115,6 +119,55 @@ msgstr ""
 
 #: app/reports.py:157
 msgid "No unpaid sales."
+msgstr ""
+
+#: app/reports.py:181 app/reports.py:189 app/templates/sales/detail.html:65
+#: app/templates/sales/index.html:60
+msgid "Dispatch ticket"
+msgstr ""
+
+#: app/reports.py:197 app/templates/sales/detail.html:3
+#: app/templates/sales/detail.html:5
+#, python-format
+msgid "Sale #%(id)s"
+msgstr ""
+
+#: app/reports.py:203 app/templates/sales/detail.html:8
+msgid "Date:"
+msgstr ""
+
+#: app/reports.py:209
+msgid "Delivery"
+msgstr ""
+
+#: app/reports.py:210 app/templates/sales/detail.html:7
+msgid "Customer:"
+msgstr ""
+
+#: app/reports.py:212
+msgid "Phone:"
+msgstr ""
+
+#: app/reports.py:216
+msgid "Address:"
+msgstr ""
+
+#: app/reports.py:222
+msgid "Units"
+msgstr ""
+
+#: app/blueprints/inventory/forms.py:40 app/reports.py:222
+#: app/templates/dashboard/index.html:161 app/templates/products/index.html:13
+#: app/templates/sales/detail.html:42 app/templates/supplies/recipes.html:17
+msgid "Product"
+msgstr ""
+
+#: app/reports.py:227
+msgid "Total units"
+msgstr ""
+
+#: app/reports.py:252 app/templates/sales/detail.html:11
+msgid "Notes:"
 msgstr ""
 
 #: app/blueprints/auth/forms.py:10 app/blueprints/users/forms.py:19
@@ -241,8 +294,10 @@ msgstr ""
 msgid "Save settings"
 msgstr ""
 
-#: app/blueprints/company/forms.py:67 app/blueprints/customers/forms.py:16
-#: app/blueprints/inventory/forms.py:34 app/blueprints/supplies/forms.py:11
+#: app/blueprints/company/forms.py:67 app/blueprints/company/forms.py:73
+#: app/blueprints/customers/forms.py:11 app/blueprints/inventory/forms.py:34
+#: app/blueprints/supplies/forms.py:11
+#: app/templates/company/purchase_categories_list.html:13
 #: app/templates/company/segments_list.html:13
 #: app/templates/customers/index.html:13
 #: app/templates/inventory/warehouses_list.html:13
@@ -251,8 +306,10 @@ msgstr ""
 msgid "Name"
 msgstr ""
 
-#: app/blueprints/company/forms.py:68 app/blueprints/inventory/forms.py:35
-#: app/blueprints/products/forms.py:23 app/blueprints/supplies/forms.py:16
+#: app/blueprints/company/forms.py:68 app/blueprints/company/forms.py:74
+#: app/blueprints/inventory/forms.py:35 app/blueprints/products/forms.py:23
+#: app/blueprints/supplies/forms.py:16
+#: app/templates/company/purchase_categories_list.html:27
 #: app/templates/company/segments_list.html:24
 #: app/templates/inventory/warehouses_list.html:36
 #: app/templates/products/index.html:32 app/templates/supplies/index.html:34
@@ -263,79 +320,101 @@ msgstr ""
 msgid "Save segment"
 msgstr ""
 
-#: app/blueprints/company/routes.py:35
+#: app/blueprints/company/forms.py:75
+msgid "Save category"
+msgstr ""
+
+#: app/blueprints/company/routes.py:40
 msgid "Company settings updated."
 msgstr ""
 
-#: app/blueprints/company/routes.py:58
+#: app/blueprints/company/routes.py:63
 #, python-format
 msgid "Segment '%(name)s' created."
 msgstr ""
 
-#: app/blueprints/company/routes.py:70
+#: app/blueprints/company/routes.py:75
 msgid "Segment not found."
 msgstr ""
 
-#: app/blueprints/company/routes.py:79
+#: app/blueprints/company/routes.py:84
 #, python-format
 msgid "Segment '%(name)s' updated."
 msgstr ""
 
-#: app/blueprints/customers/forms.py:17
+#: app/blueprints/company/routes.py:113
+#, python-format
+msgid "Category '%(name)s' created."
+msgstr ""
+
+#: app/blueprints/company/routes.py:127
+msgid "Category not found."
+msgstr ""
+
+#: app/blueprints/company/routes.py:134
+msgid "The default category can't be edited."
+msgstr ""
+
+#: app/blueprints/company/routes.py:143
+#, python-format
+msgid "Category '%(name)s' updated."
+msgstr ""
+
+#: app/blueprints/customers/forms.py:12
 msgid "Nickname"
 msgstr ""
 
-#: app/blueprints/customers/forms.py:21 app/templates/customers/index.html:15
+#: app/blueprints/customers/forms.py:16 app/templates/customers/index.html:15
 msgid "RUT"
 msgstr ""
 
-#: app/blueprints/customers/forms.py:23 app/templates/customers/index.html:14
+#: app/blueprints/customers/forms.py:18 app/templates/customers/index.html:14
 #: app/templates/top_customers/index.html:26
 #: app/templates/top_customers/index.html:44
 msgid "Segment"
 msgstr ""
 
-#: app/blueprints/customers/forms.py:25
+#: app/blueprints/customers/forms.py:20
 msgid "Email"
 msgstr ""
 
-#: app/blueprints/customers/forms.py:26
+#: app/blueprints/customers/forms.py:21
 msgid "Phone"
 msgstr ""
 
-#: app/blueprints/customers/forms.py:27
+#: app/blueprints/customers/forms.py:22
 msgid "Street"
 msgstr ""
 
-#: app/blueprints/customers/forms.py:28
+#: app/blueprints/customers/forms.py:23
 msgid "Number"
 msgstr ""
 
-#: app/blueprints/customers/forms.py:29
+#: app/blueprints/customers/forms.py:24
 msgid "City"
 msgstr ""
 
-#: app/blueprints/customers/forms.py:30
+#: app/blueprints/customers/forms.py:25
 msgid "Commune"
 msgstr ""
 
-#: app/blueprints/customers/forms.py:31
+#: app/blueprints/customers/forms.py:26
 msgid "Region"
 msgstr ""
 
-#: app/blueprints/customers/forms.py:33
+#: app/blueprints/customers/forms.py:28
 msgid "Instagram handle"
 msgstr ""
 
-#: app/blueprints/customers/forms.py:35 app/blueprints/purchases/forms.py:24
+#: app/blueprints/customers/forms.py:30 app/blueprints/purchases/forms.py:38
 msgid "Notes"
 msgstr ""
 
-#: app/blueprints/customers/forms.py:36
+#: app/blueprints/customers/forms.py:31
 msgid "Save customer"
 msgstr ""
 
-#: app/blueprints/customers/forms.py:48
+#: app/blueprints/customers/forms.py:43
 msgid "— Select a segment —"
 msgstr ""
 
@@ -482,12 +561,6 @@ msgstr ""
 msgid "Save warehouse"
 msgstr ""
 
-#: app/blueprints/inventory/forms.py:40 app/templates/dashboard/index.html:161
-#: app/templates/products/index.html:13 app/templates/sales/detail.html:42
-#: app/templates/supplies/recipes.html:17
-msgid "Product"
-msgstr ""
-
 #: app/blueprints/inventory/forms.py:41
 msgid "From warehouse"
 msgstr ""
@@ -591,35 +664,35 @@ msgstr ""
 msgid "Product '%(name)s' updated."
 msgstr ""
 
-#: app/blueprints/purchases/forms.py:14 app/templates/purchases/index.html:40
+#: app/blueprints/purchases/forms.py:24 app/templates/purchases/index.html:40
 msgid "Item"
 msgstr ""
 
-#: app/blueprints/purchases/forms.py:15 app/templates/purchases/index.html:41
+#: app/blueprints/purchases/forms.py:25 app/templates/purchases/index.html:41
 msgid "Supplier"
 msgstr ""
 
-#: app/blueprints/purchases/forms.py:16 app/templates/purchases/index.html:42
+#: app/blueprints/purchases/forms.py:29 app/templates/purchases/index.html:42
 msgid "Category"
 msgstr ""
 
-#: app/blueprints/purchases/forms.py:18 app/blueprints/sales/forms.py:44
+#: app/blueprints/purchases/forms.py:32 app/blueprints/sales/forms.py:44
 msgid "Invoice number"
 msgstr ""
 
-#: app/blueprints/purchases/forms.py:21 app/templates/purchases/index.html:44
+#: app/blueprints/purchases/forms.py:35 app/templates/purchases/index.html:44
 msgid "Amount"
 msgstr ""
 
-#: app/blueprints/purchases/forms.py:23
+#: app/blueprints/purchases/forms.py:37
 msgid "Amount includes tax (IVA)"
 msgstr ""
 
-#: app/blueprints/purchases/forms.py:25
+#: app/blueprints/purchases/forms.py:39
 msgid "Save purchase"
 msgstr ""
 
-#: app/blueprints/purchases/forms.py:31
+#: app/blueprints/purchases/forms.py:61
 msgid "Void"
 msgstr ""
 
@@ -664,8 +737,8 @@ msgstr ""
 msgid "Revert payment"
 msgstr ""
 
-#: app/blueprints/sales/forms.py:38 app/templates/sales/index.html:25
-#: app/templates/top_customers/index.html:43
+#: app/blueprints/sales/forms.py:38 app/templates/sales/index.html:22
+#: app/templates/sales/index.html:40 app/templates/top_customers/index.html:43
 msgid "Customer"
 msgstr ""
 
@@ -681,31 +754,31 @@ msgstr ""
 msgid "Record sale"
 msgstr ""
 
-#: app/blueprints/sales/routes.py:82
+#: app/blueprints/sales/routes.py:88 app/blueprints/sales/routes.py:154
+#: app/blueprints/sales/routes.py:173 app/blueprints/sales/routes.py:201
+msgid "Sale not found."
+msgstr ""
+
+#: app/blueprints/sales/routes.py:123
 msgid "Add at least one product line to the sale."
 msgstr ""
 
-#: app/blueprints/sales/routes.py:92
+#: app/blueprints/sales/routes.py:133
 #, python-format
 msgid "Sale #%(id)s recorded."
 msgstr ""
 
-#: app/blueprints/sales/routes.py:113 app/blueprints/sales/routes.py:132
-#: app/blueprints/sales/routes.py:160
-msgid "Sale not found."
-msgstr ""
-
-#: app/blueprints/sales/routes.py:143
+#: app/blueprints/sales/routes.py:184
 #, python-format
 msgid "Payment registered for sale #%(id)s."
 msgstr ""
 
-#: app/blueprints/sales/routes.py:165
+#: app/blueprints/sales/routes.py:206
 #, python-format
 msgid "Payment reverted for sale #%(id)s."
 msgstr ""
 
-#: app/blueprints/sales/routes.py:208
+#: app/blueprints/sales/routes.py:249
 #, python-format
 msgid "Enter a unit price for %(name)s."
 msgstr ""
@@ -873,6 +946,58 @@ msgid ""
 "account."
 msgstr ""
 
+#: app/templates/company/purchase_categories_list.html:2
+#: app/templates/company/purchase_categories_list.html:5
+msgid "Purchase categories"
+msgstr ""
+
+#: app/templates/company/purchase_categories_list.html:6
+#: app/templates/company/purchase_category_form.html:3
+#: app/templates/company/purchase_category_form.html:5
+msgid "New category"
+msgstr ""
+
+#: app/templates/company/purchase_categories_list.html:14
+#: app/templates/company/segments_list.html:14
+#: app/templates/inventory/warehouses_list.html:15
+#: app/templates/products/index.html:18 app/templates/sales/index.html:40
+#: app/templates/supplies/index.html:22
+msgid "Status"
+msgstr ""
+
+#: app/templates/company/purchase_categories_list.html:23
+msgid "default"
+msgstr ""
+
+#: app/templates/company/purchase_categories_list.html:29
+#: app/templates/company/segments_list.html:26
+#: app/templates/inventory/index.html:29
+#: app/templates/inventory/warehouses_list.html:38
+#: app/templates/products/index.html:34 app/templates/supplies/index.html:36
+#: app/templates/supplies/recipe_form.html:20
+#: app/templates/supplies/recipes.html:27 app/templates/supplies/stock.html:29
+msgid "Inactive"
+msgstr ""
+
+#: app/templates/company/purchase_categories_list.html:34
+#: app/templates/company/segments_list.html:30
+#: app/templates/customers/index.html:26
+#: app/templates/inventory/warehouses_list.html:42
+#: app/templates/products/index.html:38 app/templates/purchases/index.html:62
+#: app/templates/supplies/index.html:40 app/templates/supplies/recipes.html:38
+#: app/templates/users/index.html:19
+msgid "Edit"
+msgstr ""
+
+#: app/templates/company/purchase_categories_list.html:39
+msgid "No categories yet."
+msgstr ""
+
+#: app/templates/company/purchase_category_form.html:3
+#: app/templates/company/purchase_category_form.html:5
+msgid "Edit category"
+msgstr ""
+
 #: app/templates/company/segment_form.html:3
 #: app/templates/company/segment_form.html:5
 msgid "Edit segment"
@@ -889,31 +1014,6 @@ msgstr ""
 msgid "Customer segments"
 msgstr ""
 
-#: app/templates/company/segments_list.html:14
-#: app/templates/inventory/warehouses_list.html:15
-#: app/templates/products/index.html:18 app/templates/sales/index.html:25
-#: app/templates/supplies/index.html:22
-msgid "Status"
-msgstr ""
-
-#: app/templates/company/segments_list.html:26
-#: app/templates/inventory/index.html:29
-#: app/templates/inventory/warehouses_list.html:38
-#: app/templates/products/index.html:34 app/templates/supplies/index.html:36
-#: app/templates/supplies/recipe_form.html:20
-#: app/templates/supplies/recipes.html:27 app/templates/supplies/stock.html:29
-msgid "Inactive"
-msgstr ""
-
-#: app/templates/company/segments_list.html:30
-#: app/templates/customers/index.html:26
-#: app/templates/inventory/warehouses_list.html:42
-#: app/templates/products/index.html:38 app/templates/purchases/index.html:62
-#: app/templates/supplies/index.html:40 app/templates/supplies/recipes.html:38
-#: app/templates/users/index.html:19
-msgid "Edit"
-msgstr ""
-
 #: app/templates/company/segments_list.html:34
 msgid "No segments yet."
 msgstr ""
@@ -924,6 +1024,10 @@ msgstr ""
 
 #: app/templates/company/settings.html:11
 msgid "Manage customer segments"
+msgstr ""
+
+#: app/templates/company/settings.html:13
+msgid "Manage purchase categories"
 msgstr ""
 
 #: app/templates/customers/customer_form.html:3
@@ -1245,29 +1349,12 @@ msgstr ""
 msgid "A voided purchase keeps its number and drops out of the period total."
 msgstr ""
 
-#: app/templates/sales/detail.html:3 app/templates/sales/detail.html:5
-#, python-format
-msgid "Sale #%(id)s"
-msgstr ""
-
-#: app/templates/sales/detail.html:7
-msgid "Customer:"
-msgstr ""
-
-#: app/templates/sales/detail.html:8
-msgid "Date:"
-msgstr ""
-
 #: app/templates/sales/detail.html:9
 msgid "Status:"
 msgstr ""
 
 #: app/templates/sales/detail.html:10
 msgid "Invoice number:"
-msgstr ""
-
-#: app/templates/sales/detail.html:11
-msgid "Notes:"
 msgstr ""
 
 #: app/templates/sales/detail.html:16 app/templates/sales/detail.html:29
@@ -1291,7 +1378,7 @@ msgstr ""
 msgid "IVA (%(rate)s%%)"
 msgstr ""
 
-#: app/templates/sales/detail.html:63
+#: app/templates/sales/detail.html:64
 msgid "Back to sales"
 msgstr ""
 
@@ -1308,19 +1395,23 @@ msgstr ""
 msgid "All"
 msgstr ""
 
-#: app/templates/sales/index.html:19
+#: app/templates/sales/index.html:25
+msgid "All customers"
+msgstr ""
+
+#: app/templates/sales/index.html:34
 msgid "Download unpaid sales PDF"
 msgstr ""
 
-#: app/templates/sales/index.html:25
+#: app/templates/sales/index.html:40
 msgid "Payment"
 msgstr ""
 
-#: app/templates/sales/index.html:43
+#: app/templates/sales/index.html:59
 msgid "View"
 msgstr ""
 
-#: app/templates/sales/index.html:46
+#: app/templates/sales/index.html:64
 msgid "No sales recorded yet."
 msgstr ""
 

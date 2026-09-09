@@ -67,3 +67,9 @@ class CustomerSegmentForm(FlaskForm):
     name = StringField(_l("Name"), validators=[DataRequired(), Length(max=60)])
     is_active = BooleanField(_l("Active"), default=True)
     submit = SubmitField(_l("Save segment"))
+
+
+class PurchaseCategoryForm(FlaskForm):
+    name = StringField(_l("Name"), validators=[DataRequired(), Length(max=80)])
+    is_active = BooleanField(_l("Active"), default=True)
+    submit = SubmitField(_l("Save category"))

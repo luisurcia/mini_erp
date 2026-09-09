@@ -6,6 +6,7 @@ from app.models.company import Company  # noqa: F401 (registers table for create
 from app.models.customer_segment import CustomerSegment
 from app.models.product_supply import ProductSupply  # noqa: F401 (create_all)
 from app.models.purchase import Purchase  # noqa: F401 (create_all)
+from app.models.purchase_category import PurchaseCategory
 from app.models.user import User
 from app.models.warehouse import Warehouse
 from app.schema import (
@@ -21,6 +22,7 @@ from app.schema import (
     ensure_inventory_item_warehouse_column,
     ensure_product_short_name_column,
     ensure_products_optional_columns_nullable,
+    ensure_purchase_category_catalog,
     ensure_sale_invoice_number_column,
     ensure_sale_item_warehouse_column,
     ensure_sale_payment_columns,
@@ -64,6 +66,8 @@ def _upgrade_schema() -> None:
     ensure_customer_segment_active_column()
     ensure_supply_movement_sale_column()
     CustomerSegment.ensure_defaults()
+    PurchaseCategory.ensure_defaults()
+    ensure_purchase_category_catalog()
     # `kind`/`stage` columns must exist before ensure_defaults() (it
     # creates the supplies + fermentation warehouses, which query by them).
     ensure_warehouse_kind_column()

@@ -67,7 +67,7 @@ def new_purchase():
             item=form.item.data,
             supplier=form.supplier.data,
             amount=form.amount.data,
-            category=form.category.data,
+            category_id=form.category_id.data,
             invoice_number=form.invoice_number.data,
             includes_tax=form.includes_tax.data,
             notes=form.notes.data,
@@ -87,7 +87,7 @@ def edit_purchase(purchase_id):
         flash(_("Purchase not found."), "danger")
         return redirect(url_for("purchases.index"))
 
-    form = PurchaseForm(obj=purchase)
+    form = PurchaseForm(obj=purchase, purchase=purchase)
 
     if form.validate_on_submit():
         PurchaseService().update_purchase(
@@ -96,7 +96,7 @@ def edit_purchase(purchase_id):
             item=form.item.data,
             supplier=form.supplier.data,
             amount=form.amount.data,
-            category=form.category.data,
+            category_id=form.category_id.data,
             invoice_number=form.invoice_number.data,
             includes_tax=form.includes_tax.data,
             notes=form.notes.data,

@@ -19,7 +19,7 @@ from reportlab.platypus import (
     TableStyle,
 )
 
-from app.display import format_money
+from app.display import format_money, product_label
 from app.models.company import Company
 
 _INK = colors.HexColor("#1a1816")
@@ -155,6 +155,101 @@ def build_unpaid_sales_pdf(sales, generated_on: date | None = None) -> bytes:
     if not ordered_sales:
         story.append(Spacer(1, 6 * mm))
         story.append(Paragraph(_("No unpaid sales."), styles["Normal"]))
+
+    doc.build(story)
+    return buffer.getvalue()
+
+
+def build_dispatch_ticket_pdf(sale, generated_on: date | None = None) -> bytes:
+    """Render one sale's dispatch ticket as an A4 PDF (#111): who and where
+    to deliver, and what — quantities and product names, no prices. Handed
+    to the courier or attached to the box. Text follows the request locale.
+    """
+    generated_on = generated_on or date.today()
+    company = Company.get_settings()
+    styles = getSampleStyleSheet()
+    cell = styles["BodyText"]
+
+    buffer = BytesIO()
+    doc = SimpleDocTemplate(
+        buffer,
+        pagesize=A4,
+        leftMargin=18 * mm,
+        rightMargin=18 * mm,
+        topMargin=18 * mm,
+        bottomMargin=18 * mm,
+        title=_("Dispatch ticket"),
+    )
+
+    title_style = styles["Title"]
+    title_style.textColor = _INK
+    label_style = styles["Normal"]
+
+    story = [
+        Paragraph(f"{company.name} — {_('Dispatch ticket')}", title_style),
+        Paragraph(
+            _("Generated on %(date)s", date=generated_on.isoformat()),
+            label_style,
+        ),
+        Spacer(1, 6 * mm),
+    ]
+
+    sale_ref = _("Sale #%(id)s", id=sale.id)
+    if sale.invoice_number:
+        sale_ref += f" · {_('Invoice #')} {sale.invoice_number}"
+    story.append(Paragraph(sale_ref, styles["Heading3"]))
+    story.append(
+        Paragraph(
+            f"{_('Date:')} {sale.sale_date.strftime('%Y-%m-%d')}", label_style
+        )
+    )
+    story.append(Spacer(1, 4 * mm))
+
+    customer = sale.customer
+    story.append(Paragraph(_("Delivery"), styles["Heading4"]))
+    story.append(Paragraph(f"<b>{_('Customer:')}</b> {customer.name}", label_style))
+    story.append(
+        Paragraph(f"<b>{_('Phone:')}</b> {customer.phone or '—'}", label_style)
+    )
+    story.append(
+        Paragraph(
+            f"<b>{_('Address:')}</b> {customer.shipping_address_line or '—'}",
+            label_style,
+        )
+    )
+    story.append(Spacer(1, 6 * mm))
+
+    rows = [[_("Units"), _("Product")]]
+    total_units = 0
+    for item in sale.items:
+        total_units += item.quantity
+        rows.append([str(item.quantity), Paragraph(product_label(item.product), cell)])
+    rows.append([str(total_units), _("Total units")])
+
+    last = len(rows) - 1
+    table = Table(rows, colWidths=[24 * mm, 150 * mm], repeatRows=1)
+    table.setStyle(
+        TableStyle(
+            [
+                ("BACKGROUND", (0, 0), (-1, 0), _HEADER_BG),
+                ("TEXTCOLOR", (0, 0), (-1, -1), _INK),
+                ("FONTNAME", (0, 0), (-1, 0), "Helvetica-Bold"),
+                ("FONTSIZE", (0, 0), (-1, -1), 9),
+                ("ALIGN", (0, 0), (0, -1), "CENTER"),
+                ("VALIGN", (0, 0), (-1, -1), "MIDDLE"),
+                ("LINEBELOW", (0, 0), (-1, 0), 0.75, _INK),
+                ("LINEABOVE", (0, last), (-1, last), 0.75, _INK),
+                ("FONTNAME", (0, last), (-1, last), "Helvetica-Bold"),
+                ("TOPPADDING", (0, 0), (-1, -1), 5),
+                ("BOTTOMPADDING", (0, 0), (-1, -1), 5),
+            ]
+        )
+    )
+    story.append(table)
+
+    if sale.notes:
+        story.append(Spacer(1, 6 * mm))
+        story.append(Paragraph(f"<b>{_('Notes:')}</b> {sale.notes}", label_style))
 
     doc.build(story)
     return buffer.getvalue()

@@ -55,7 +55,10 @@
         </td>
         <td>{{ _("Yes") if sale.tax_applied else _("No") }}</td>
         <td>{{ format_money(sale.total_amount) }}</td>
-        <td class="text-end"><a class="btn btn-sm btn-outline-secondary" href="{{ url_for('sales.detail', sale_id=sale.id) }}">{{ _("View") }}</a></td>
+        <td class="text-end text-nowrap">
+          <a class="btn btn-sm btn-outline-secondary" href="{{ url_for('sales.detail', sale_id=sale.id) }}">{{ _("View") }}</a>
+          <a class="btn btn-sm btn-outline-secondary" href="{{ url_for('sales.dispatch_pdf', sale_id=sale.id) }}">{{ _("Dispatch ticket") }}</a>
+        </td>
       </tr>
       {% else %}
       <tr><td colspan="9" class="text-muted text-center py-4">{{ _("No sales recorded yet.") }}</td></tr>

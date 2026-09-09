@@ -4,6 +4,8 @@ from decimal import Decimal
 import pytest
 
 from app.exceptions import NotFoundError
+from app.extensions import db
+from app.models.purchase_category import PurchaseCategory
 from app.repositories.purchase_repository import PurchaseRepository
 from app.services.purchase_service import PurchaseService
 
@@ -14,7 +16,7 @@ def _record(service, *, day=1, month=6, year=2026, amount="1000", **kw):
         item=kw.get("item", "Alcohol gel"),
         supplier=kw.get("supplier", "Proveedor X"),
         amount=Decimal(amount),
-        category=kw.get("category"),
+        category_id=kw.get("category_id"),
         invoice_number=kw.get("invoice_number"),
         includes_tax=kw.get("includes_tax", False),
     )
@@ -68,6 +70,9 @@ def test_set_voided_on_missing_purchase_raises(app):
 
 def test_update_purchase_changes_the_fields_but_not_the_code(app):
     service = PurchaseService()
+    category = PurchaseCategory(name="Repuestos")
+    db.session.add(category)
+    db.session.commit()
     purchase = _record(service, amount="1000")
 
     service.update_purchase(
@@ -76,7 +81,7 @@ def test_update_purchase_changes_the_fields_but_not_the_code(app):
         item="Repuesto bomba",
         supplier="Servicio Técnico",
         amount=Decimal("64500"),
-        category="Mantención",
+        category_id=category.id,
         invoice_number="A-778",
         includes_tax=True,
     )
@@ -84,8 +89,28 @@ def test_update_purchase_changes_the_fields_but_not_the_code(app):
     updated = PurchaseRepository().get(purchase.id)
     assert updated.code == "C-0001"
     assert updated.amount == Decimal("64500")
-    assert updated.category == "Mantención"
+    assert updated.category_name == "Repuestos"
     assert updated.includes_tax is True
+
+
+def test_purchase_without_a_category_gets_the_no_definido_fallback(app):
+    service = PurchaseService()
+    purchase = _record(service)
+
+    assert purchase.category is not None
+    assert purchase.category.name == PurchaseCategory.FALLBACK_NAME
+
+
+def test_get_fallback_reuses_the_existing_no_definido_row(app):
+    first = PurchaseCategory.get_fallback()
+    db.session.commit()
+    second = PurchaseCategory.get_fallback()
+
+    assert first.id == second.id
+    assert (
+        PurchaseCategory.query.filter_by(name=PurchaseCategory.FALLBACK_NAME).count()
+        == 1
+    )
 
 
 def test_in_period_filters_by_year_and_optional_month(app):

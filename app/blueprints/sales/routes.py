@@ -13,7 +13,7 @@ from app.models.company import Company
 from app.models.sales import Sale
 from app.models.user import User
 from app.permissions import admin_required, module_required
-from app.reports import build_unpaid_sales_pdf
+from app.reports import build_dispatch_ticket_pdf, build_unpaid_sales_pdf
 from app.repositories.customer_repository import CustomerRepository
 from app.repositories.inventory_repository import InventoryRepository
 from app.repositories.sales_repository import SalesRepository
@@ -70,6 +70,25 @@ def unpaid_pdf():
     )
     pdf = build_unpaid_sales_pdf(sales)
     filename = f"ventas-por-pagar-{date.today().isoformat()}.pdf"
+    return Response(
+        pdf,
+        mimetype="application/pdf",
+        headers={"Content-Disposition": f'attachment; filename="{filename}"'},
+    )
+
+
+@bp.route("/<int:sale_id>/dispatch.pdf")
+@login_required
+@module_required(User.MODULE_SALES)
+def dispatch_pdf(sale_id):
+    """One sale's dispatch ticket (#111): customer, phone, address and the
+    quantities to deliver. Independent of payment/fulfilment status."""
+    sale = SalesRepository().get(sale_id)
+    if sale is None:
+        flash(_("Sale not found."), "danger")
+        return redirect(url_for("sales.index"))
+    pdf = build_dispatch_ticket_pdf(sale)
+    filename = f"ticket-despacho-venta-{sale.id}.pdf"
     return Response(
         pdf,
         mimetype="application/pdf",

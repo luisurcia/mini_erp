@@ -19,8 +19,13 @@ class Purchase(BaseModel):
     purchase_date = db.Column(db.Date, nullable=False)
     item = db.Column(db.String(200), nullable=False)
     supplier = db.Column(db.String(160), nullable=False)
-    # Free text for now — a category catalog is a future enhancement (#93).
-    category = db.Column(db.String(80), nullable=True)
+    # Classified against the PurchaseCategory catalog (#110). Kept nullable
+    # in the schema to avoid a NOT NULL migration on SQLite, but in
+    # practice the service always assigns one — the "No definido" fallback
+    # when none is chosen.
+    category_id = db.Column(
+        db.Integer, db.ForeignKey("purchase_categories.id"), nullable=True
+    )
     invoice_number = db.Column(db.String(60), nullable=True)
     amount = db.Column(db.Numeric(12, 2), nullable=False)
     # Purely informational: whether `amount` was entered tax-inclusive. No
@@ -32,9 +37,15 @@ class Purchase(BaseModel):
     # the row and its number stay (struck through, out of the total).
     voided = db.Column(db.Boolean, nullable=False, default=False)
 
+    category = db.relationship("PurchaseCategory")
+
     @property
     def code(self) -> str:
         return f"C-{self.sequence:04d}"
+
+    @property
+    def category_name(self) -> str | None:
+        return self.category.name if self.category is not None else None
 
     def __repr__(self) -> str:
         return f"<Purchase {self.code} {self.supplier} {self.amount}>"

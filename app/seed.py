@@ -8,6 +8,7 @@ from app.models.customer import Customer
 from app.models.customer_segment import CustomerSegment
 from app.models.product import Flavor, Product
 from app.models.product_supply import ProductSupply
+from app.models.purchase_category import PurchaseCategory
 from app.models.supply import Supply
 from app.models.user import User
 from app.models.warehouse import Warehouse
@@ -247,14 +248,19 @@ def _seed_sales(customers: dict[str, Customer], products: dict[str, Product]) ->
 
 
 def _seed_purchases() -> None:
-    """Plant-overhead expenses — not production inputs (#93)."""
+    """Plant-overhead expenses — not production inputs (#93). Classified
+    against the PurchaseCategory catalog (#110)."""
     service = PurchaseService()
     today = date.today()
+
+    def category(name: str) -> int:
+        return PurchaseCategory.query.filter_by(name=name).one().id
+
     service.record_purchase(
         purchase_date=today - timedelta(days=10),
         item="Alcohol gel 5 L",
         supplier="Distribuidora Aseo Ltda.",
-        category="Aseo",
+        category_id=category("Artículos de Limpieza"),
         invoice_number="12345",
         amount=Decimal("18990"),
         includes_tax=True,
@@ -263,16 +269,16 @@ def _seed_purchases() -> None:
         purchase_date=today - timedelta(days=4),
         item="Repuesto bomba de llenado",
         supplier="Servicio Técnico Maquinaria SpA",
-        category="Mantención",
+        category_id=category("Repuestos"),
         invoice_number="A-778",
         amount=Decimal("64500"),
         includes_tax=False,
     )
+    # Left uncategorized on purpose — shows up as "No definido".
     service.record_purchase(
         purchase_date=today - timedelta(days=1),
         item="Resma de papel y artículos de oficina",
         supplier="Librería Central",
-        category="Oficina",
         amount=Decimal("9200"),
         includes_tax=True,
     )
