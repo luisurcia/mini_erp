@@ -96,6 +96,31 @@ def register_cli(app: Flask) -> None:
         seed_demo_data(app)
         click.echo("Demo data seeded.")
 
+    @app.cli.command("reset-data")
+    @click.option("--yes", is_flag=True, help="Skip the confirmation prompt.")
+    def reset_data_command(yes):
+        """Delete all operational data, keeping only users and company settings.
+
+        Use before loading a client's real data into a database that still
+        has demo data. Take a backup first. See #116.
+        """
+        from app.maintenance import reset_data
+
+        if not yes:
+            click.confirm(
+                "This deletes ALL customers, sales, products, inventory, "
+                "supplies, purchases and warehouses. Users and company "
+                "settings are kept. Continue?",
+                abort=True,
+            )
+        deleted = reset_data()
+        total = sum(deleted.values())
+        click.echo(f"Deleted {total} rows across {len(deleted)} tables.")
+        click.echo("Kept: users, company settings.")
+        click.echo(
+            "Recreated defaults: warehouses, customer segments, purchase categories."
+        )
+
     @app.cli.command("create-admin")
     @click.option("--username", prompt=True)
     @click.option("--password", prompt=True, hide_input=True, confirmation_prompt=True)
