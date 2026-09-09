@@ -160,6 +160,22 @@ def build_unpaid_sales_pdf(sales, generated_on: date | None = None) -> bytes:
     return buffer.getvalue()
 
 
+def dispatch_line_items(sale) -> list[tuple[int, str]]:
+    """The sale's lines as they appear on the dispatch ticket: one entry
+    per product with the quantities summed across warehouses (#114),
+    ordered by product label. Warehouse and price are dropped — they don't
+    belong on a picking/delivery slip."""
+    quantities: dict[int, int] = {}
+    labels: dict[int, str] = {}
+    for item in sale.items:
+        quantities[item.product_id] = quantities.get(item.product_id, 0) + item.quantity
+        labels.setdefault(item.product_id, product_label(item.product))
+    return [
+        (quantities[pid], labels[pid])
+        for pid in sorted(labels, key=lambda pid: labels[pid].lower())
+    ]
+
+
 def build_dispatch_ticket_pdf(sale, generated_on: date | None = None) -> bytes:
     """Render one sale's dispatch ticket as an A4 PDF (#111): who and where
     to deliver, and what — quantities and product names, no prices. Handed
@@ -207,24 +223,21 @@ def build_dispatch_ticket_pdf(sale, generated_on: date | None = None) -> bytes:
 
     customer = sale.customer
     story.append(Paragraph(_("Delivery"), styles["Heading4"]))
-    story.append(Paragraph(f"<b>{_('Customer:')}</b> {customer.name}", label_style))
-    story.append(
-        Paragraph(f"<b>{_('Phone:')}</b> {customer.phone or '—'}", label_style)
-    )
-    story.append(
-        Paragraph(
-            f"<b>{_('Address:')}</b> {customer.shipping_address_line or '—'}",
-            label_style,
-        )
-    )
+    for label, value in (
+        (_("Customer:"), customer.name),
+        (_("RUT:"), customer.rut or "—"),
+        (_("Email:"), customer.email or "—"),
+        (_("Phone:"), customer.phone or "—"),
+        (_("Address:"), customer.shipping_address_line or "—"),
+    ):
+        story.append(Paragraph(f"<b>{label}</b> {value}", label_style))
     story.append(Spacer(1, 6 * mm))
 
+    line_items = dispatch_line_items(sale)
     rows = [[_("Units"), _("Product")]]
-    total_units = 0
-    for item in sale.items:
-        total_units += item.quantity
-        rows.append([str(item.quantity), Paragraph(product_label(item.product), cell)])
-    rows.append([str(total_units), _("Total units")])
+    for quantity, label in line_items:
+        rows.append([str(quantity), Paragraph(label, cell)])
+    rows.append([str(sum(q for q, _label in line_items)), _("Total units")])
 
     last = len(rows) - 1
     table = Table(rows, colWidths=[24 * mm, 150 * mm], repeatRows=1)
