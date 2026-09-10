@@ -1,17 +1,19 @@
 # Plan de migración — carga de datos reales de Scoby a producción
 
-> Estado: **planificación** (2026-09-09). No implementado. Épica GitHub asociada:
-> ver el issue enlazado. Requiere `flask reset-data` (#116) ejecutado antes.
+> Estado (2026-09-10): **decisiones cerradas con Scoby, herramienta lista**.
+> Falta el conteo de inventario (#119) y la ejecución en producción (#120).
+> `flask reset-data` (#116) y `flask import-ventas` (#118) ya están desplegados.
+> Épica: [#121](https://github.com/luisurcia/mini_erp/issues/121).
 
 ## 1. Fuente
 
 `datos a migrar/Migrar.xlsm` — hoja única **`Ventas`**, **1026 filas de datos**
 (fila 1 = encabezados), ventas del **2025-06-04 al 2026-09-09**.
 
-La planilla **sigue viva** (la última fila es de hoy). Antes de migrar hay que
-**congelarla**: Scoby fija una fecha de corte, deja de editarla, y exporta un
-`.xlsx` limpio (sin macros). Las ventas entre el corte y el go-live se ingresan
-a mano en el ERP.
+**Congelada:** fecha de corte **2026-09-09** (última fila de la planilla). Desde
+el corte no se edita más; las ventas del 10-09 en adelante se ingresan a mano en
+el ERP (§6, paso 9). El importador acepta el `.xlsm` directo (no hace falta
+exportar a `.xlsx`).
 
 ### Columnas
 
@@ -76,101 +78,153 @@ Por cada fila:
 - `Sale.status = "completed"`
 - `Sale.sale_date` = col A
 - `Sale.invoice_number` = col P (texto, o null)
-- `Sale.notes` = col S (o null); para la fila "una parte" se antepone `IVA parcial (planilla original)`
-- `Sale.tax_applied`:
-  - `no` → `False`
-  - `si` / `sí` → `True`
-  - `una parte` → `True` (1 fila, ver §4)
-- `Sale.tax_rate_applied` = `19` si `tax_applied`, salvo "una parte" → `null`
-- `Sale.tax_amount` = `total pago − neto` (col Q − col M). Maneja bien las ~20
-  filas con la col `Iva` errónea, las 2 filas "IVA marcado pero no cobrado"
-  (queda 0) y la fila "una parte" (queda 1.590).
-- `Sale.total_amount` = col Q (`total pago`)
+- `Sale.notes` = col S; para las filas con corrección (§4) se agrega una nota `[Migración] …`
+- `Sale.tax_applied` = `True` si `con iva?` empieza con "s" (`si` / `sí` / `Sí`),
+  salvo las filas con `force_no_tax` en §4 (rows 2 / 275 / 384 → sin IVA).
+- `Sale.tax_rate_applied` = `19` si `tax_applied`, si no `null`.
+- `Sale.tax_amount` = `Sale.total_amount − subtotal` (subtotal = Σ líneas).
+  Absorbe las ~20 filas con la col `Iva` errónea y deja 0 en las filas sin IVA.
+- `Sale.total_amount` = col Q (`total pago`) redondeada a peso, **salvo** las
+  filas con `total_amount` fijo en §4 (rows 2 / 224 / 566 / 815 / 871).
 - `Sale.payment_status` / `paid_at` / `payment_reference`:
-  - col R presente → `paid`, `paid_at` = col R, `payment_reference` = `"Migración planilla"` (o null — a confirmar)
+  - col R presente → `paid`, `paid_at` = col R **tal cual** (sin corregir las
+    23 fechas previas a la venta), `payment_reference` = `"Migración planilla"`
   - col R ausente → `unpaid`
 - Una `SaleItem` por cada columna D–K con valor > 0:
   - `product_id` → producto por nombre corto
   - `quantity` = valor de la celda
-  - `unit_price` = col L (`valor unitario`), igual para todas las líneas de la venta
+  - `unit_price` = col L (`valor unitario`) **redondeada a peso**, igual para todas las líneas de la venta
   - `warehouse_id` = **null** (línea histórica, sin bodega — igual que las líneas previas a #24)
 
 `Sale.subtotal_amount` es una propiedad calculada (Σ `unit_price × quantity`);
-para las filas donde eso no cuadra con el neto (2 filas, §4) hay una diferencia
-menor que solo se ve en el detalle de la venta, no en los agregados (que usan
-`total_amount`).
+para 4 filas (22, 195, 815, 871) no cuadra con el `total_amount` — diferencia
+menor, solo visible en el detalle de la venta, no en los agregados (que usan
+`total_amount`). El log del import las lista como advertencia.
 
-### 3.2 Clientes — 308
+### 3.2 Clientes
 
-- `name` = col B **normalizada** (trim + colapsar espacios dobles: `"Dafne  Gato"` → `"Dafne Gato"`)
-- Dedup **exacto** tras normalizar
-- `segment_id` = segmento **"Otros"** por defecto (a confirmar — ver §4). El
-  resto de los campos (RUT, email, teléfono, dirección, IG) quedan **vacíos**;
-  Scoby los completa con el tiempo (mínimo del sistema para crear = nombre + segmento).
-- La lista completa de 308 nombres se entrega a Scoby para revisión previa
-  (posibles duplicados no exactos, nombres internos — ver §4).
+- `name` = col B **normalizada** (trim + colapsar espacios: `"Dafne  Gato"` → `"Dafne Gato"`)
+- Dedup **case-insensitive** tras normalizar → **308 nombres en la planilla → 295 clientes**
+  (13 se fusionan por diferencias de mayúsculas/espacios). Los casi-duplicados por
+  typo (`Gonzales`/`Gonzalez`, `Prisila`/`Prisilla`) quedan separados; Scoby los
+  fusiona a mano después.
+- `segment_id` = segmento **"Otros"** para todos. RUT / email / teléfono /
+  dirección / IG quedan vacíos (Scoby los completa con el tiempo).
+- La lista de los 295 clientes va en el log del import para revisión de Scoby.
 
 ### 3.3 Productos — 8
 
 Creación directa: `name`, `short_name`, `is_active = True`. SKU derivado
 (`product_sku_enabled = 0`). Sin sabor, precio, tamaño.
 
-### 3.4 Inventario inicial — **dato aparte, lo entrega Scoby**
+### 3.4 Inventario inicial — **se carga DESPUÉS de las ventas** (#119)
 
-La planilla no tiene stock. Scoby debe entregar el **conteo real de existencias
-por producto** al momento del corte. Se carga como reposición a la Bodega de
-Fermentación o como ajuste directo por `(producto, bodega)`. Sub-issue propio;
-bloquea el go-live pero no la carga de ventas.
+La planilla no tiene stock, y **la carga de ventas no toca el inventario** (§3.1):
+inserta `Sale` / `SaleItem` sin `StockMovement`. Entonces el orden es:
 
-## 4. Decisiones a confirmar con Scoby
+1. `flask reset-data` deja el inventario **vacío** (= 0 en todas las bodegas;
+   un producto sin `InventoryItem` se trata como stock 0).
+2. `flask import-ventas` carga las 1.026 ventas — el stock sigue en 0.
+3. Scoby entrega el **conteo físico de existencias por producto** (a la fecha de
+   corte) y se carga como saldo inicial: reposición a Bodega de Fermentación /
+   traspaso, o ajuste directo por `(producto, bodega)`. Pocas celdas (8 productos
+   × 1–3 bodegas) → alcanza con la UI.
 
-| # | Tema | Filas | Propuesta |
-|---|---|---|---|
-| 1 | **"Mario" / "Julien" / "Jota" como clientes** — son también usuarios del ERP. 42 + 41 + 15 = 98 filas. ¿Ventas reales o consignación / traspaso a socios? | 98 | Si es consignación: decidir si se migran como cliente igual, se excluyen, o se marcan con un segmento aparte. Afectan los KPIs de venta. |
-| 2 | **`con iva?` = "una parte"** (Claudio Milla, 2025-06-04): IVA parcial de $1.590 sobre neto $30.240. | 1 | `tax_applied = True`, `tax_amount = 1.590` exacto, `tax_rate_applied = null`, nota "IVA parcial". Cuenta como 1 factura en el Dashboard. |
-| 3 | **Segmento de los 308 clientes** — sin dato. | 308 | Todos a **"Otros"**; Scoby reclasifica. (Alternativa: crear segmento "Sin clasificar".) |
-| 4 | **`cantidad` ≠ Σ columnas de sabor** | 2 | **Mario 2025-09-30**: cols suman 16, `cantidad`/`neto` dicen 14 → decisión de Scoby (¿sobran 2 unidades en las columnas o falta ajustar el neto?). **Julien 2026-07-13**: cols suman 30, `neto` = 30.000 → usar **30**, ignorar `cantidad` = 40 (typo). |
-| 5 | **`valor unitario` con decimales** (Mama amparo $2.158,33; Liliana Lopez y Maria Jesus Allende $1.466,4) | 3 | Importar con decimales tal cual (el neto es entero) o redondear el unitario. |
-| 6 | **`con iva?` = "no" pero `total pago` ≠ `neto`** (Pedro Philippi ×2, Mariel Saez — diferencias de ±$5.000) | 3 | Parecen pagos adelantados / a cuenta. Decisión por fila: ¿`total_amount` = `total pago` (lo efectivamente movido) o = `neto`? |
-| 7 | **`con iva?` = "sí" pero IVA $0** (Mauricio Celda $143.000; Mario $10.000) | 2 | Se importan con `tax_applied = True`, `tax_amount = 0`. ¿O corresponde `tax_applied = False`? |
-| 8 | **`Fecha de pago` anterior a `Fecha`** | 23 | 22 son de 1 día (probable typo inocuo); Dafne Gato es de ~90 días. ¿Importar tal cual (fidelidad) o ajustar `paid_at = max(paid_at, sale_date)`? |
-| 9 | **Referencia de pago** — la planilla no la tiene. | 970 | `payment_reference = "Migración planilla"` para todas las pagadas (o dejarla null). |
-| 10 | **Fecha de corte** de la planilla y ventana de transición. | — | Scoby define; desde el corte no se toca más el Excel. |
+**Por qué las históricas no consumen stock:** esas ventas ya ocurrieron y su
+efecto ya está reflejado en el conteo físico de hoy. Si además se descontara el
+stock por las 1.026 ventas, se restaría dos veces y el inventario quedaría muy
+negativo. El conteo físico **es** el saldo de partida.
 
-## 5. Herramienta
+**Ventana sin poder vender:** entre el paso 2 y el paso 3, el equipo no puede
+registrar ventas nuevas en el ERP (el sistema bloquea vender sin stock). Por eso
+el conteo de inventario se carga **el mismo día, justo después** del import,
+antes de que empiecen a operar. Scoby debe indicar **a qué bodega** va el stock
+(probablemente Principal) y, si lo tienen, el **nivel de reposición** por
+producto (para el panel de stock bajo).
 
-Comando `flask import-ventas <archivo.xlsx> [--dry-run]`:
+## 4. Decisiones (cerradas con Scoby el 2026-09-10)
 
-- Lee el `.xlsx` con **`openpyxl`** (nueva dependencia — precedente: `reportlab`
-  en #81; instala como wheel en el hosting sin problema). Alternativa: Scoby
-  exporta CSV y se usa `csv` de stdlib (más frágil con fechas/acentos).
-- `--dry-run`: valida y reporta (filas OK, filas con inconsistencia, totales a
-  reconciliar) **sin escribir**. Se corre primero, siempre.
-- **Guardas:** aborta si la tabla `sales` no está vacía (se corre una sola vez,
-  sobre la BD recién reseteada por `flask reset-data`).
-- Las ~9 filas de §4 se resuelven con un pequeño archivo de correcciones
-  (overrides por número de fila) o se corrigen en el `.xlsx` antes de exportar.
-- Reporte final: filas insertadas, clientes creados, Σ `total_amount`, Σ
-  botellas, N° de facturas, por pagar — para comparar 1:1 con §2.
+Implementadas en `ROW_OVERRIDES` / `NOTE_ONLY_ROWS` de `app/migration.py`.
 
-## 6. Secuencia de ejecución en producción
+**Generales:**
 
-1. Scoby congela la planilla (fecha de corte) y entrega el `.xlsx` + el conteo
-   de inventario inicial.
-2. Resolver las decisiones de §4; preparar el archivo de correcciones si hace falta.
-3. Backup manual de la BD de producción (además del que hace el pipeline).
-4. `flask reset-data` (deja solo usuarios + configuración).
-5. Verificar configuración de `Company` (IVA 19%, CLP 0 decimales, toggles de
-   producto) y que estén las bodegas / segmentos / categorías base.
-6. `flask import-ventas archivo.xlsx --dry-run` → revisar el reporte.
-7. `flask import-ventas archivo.xlsx` → carga real.
-8. Cargar el inventario inicial.
-9. **Reconciliación:** comparar los totales del reporte contra §2; abrir el
-   Dashboard y contrastar con el Excel de Scoby (Valor Total Pago, botellas,
-   facturas, por mes); spot-check de 5–10 ventas en la UI (incluida la de "IVA
-   parcial" y alguna multi-producto).
-10. Ventana de transición: las ventas hechas entre el corte y este punto se
-    ingresan a mano en el ERP. Desde acá, Scoby opera solo en el ERP.
+| Tema | Decisión |
+|---|---|
+| "Mario" / "Julien" / "Jota" como clientes (98 filas) | Se migran como **clientes normales**, sin marca ni exclusión. |
+| Segmento de los ~295 clientes | Todos a **"Otros"**; Scoby reclasifica después. |
+| Fecha de corte | **2026-09-09**. El `Migrar.xlsm` actual (última fila 09-09) ya es el definitivo. |
+| Referencia de pago | `"Migración planilla"` + `paid_at` de la planilla. |
+| Fechas de pago anteriores a la venta (23) | Se importan **tal cual**, sin ajustar. |
+
+**Filas puntuales:**
+
+| Fila(s) | Cliente | Decisión |
+|---|---|---|
+| 2 | Claudio Milla | `con iva? = "una parte"` → **sin IVA**, `total_amount = $30.240` (el neto). |
+| 224 | Mario | 16 unidades (de las columnas de sabor), `total_amount = $16.000`. |
+| 887 | Julien | 30 unidades (de las columnas de sabor); se ignora `cantidad = 40`. |
+| 22, 34, 35 | Mama amparo / Liliana Lopez / Maria Jesus Allende | Precio unitario **redondeado a peso** (regla que además aplica a todas las filas). |
+| 566, 815, 871 | Pedro Philippi / Mariel Saez / Pedro Philippi | Las tres al **neto $30.000, sin IVA**. La diferencia de $5.000 de la 871 es por despacho. |
+| 275, 384 | Mauricio Celda / Mario | Marcadas `con iva? = "sí"` sin IVA cobrado → **sin IVA** (no cuentan como factura). |
+
+## 5. Herramienta — `flask import-ventas` (#118, commit `cccbe0d`, desplegado)
+
+```
+flask import-ventas <archivo.xlsx|xlsm> [--dry-run]
+```
+
+- Lee la hoja `Ventas` con **`openpyxl`** (dependencia agregada, ya instalada en
+  producción). Acepta `.xlsm` y `.xlsx`.
+- **`--dry-run`** (correr **siempre primero**): recorre todo, arma el log y hace
+  rollback — no escribe nada.
+- **Guarda:** el import real aborta si la tabla `sales` no está vacía. Se corre
+  una sola vez, sobre la BD recién reseteada con `flask reset-data`.
+- **Log** en markdown, guardado en `instance/migracion-ventas-<timestamp>-<modo>.md`
+  y también impreso: resumen, **reconciliación vs los totales crudos de la
+  planilla**, ventas por mes, botellas por producto, las 11 filas con
+  tratamiento especial, advertencias (fechas de pago previas, subtotal≠total) y
+  la lista de clientes creados.
+
+**Resultado del dry-run contra `Migrar.xlsm` (SHA-256 `bd8b02f0…`):**
+
+| Métrica | Planilla (cruda) | Cargado |
+|---|---|---|
+| Ventas | 1.026 | **1.026** |
+| Líneas de venta | — | 3.443 |
+| Clientes | 308 nombres | **295** |
+| Σ total | $47.441.444 | **$47.436.854** (Δ −$4.590 por las correcciones de §4) |
+| Botellas | 28.732 | **28.732** |
+| Facturas | 497 | **495** (−2 por filas 275/384) |
+| Pagadas / por pagar | 970 / 56 | **970 / 56** |
+| Filas omitidas | — | 0 |
+
+## 6. Secuencia de ejecución en producción (#120)
+
+1. Scoby entrega el conteo físico de inventario (#119) e indica a qué bodega va.
+2. **Backup manual** de la BD de producción (además del que hace el pipeline).
+3. `flask reset-data` → borra los datos de prueba, deja usuarios + configuración,
+   re-siembra bodegas / segmentos / categorías. Inventario queda en 0.
+4. Verificar `Company` (IVA 19%, CLP 0 decimales, sabor/precio/SKU/tamaño ocultos,
+   nombre corto activo) y que estén las 4 bodegas + segmento "Otros".
+5. `flask import-ventas "Migrar.xlsm" --dry-run` → revisar el log (cuadrar con la
+   tabla de §5).
+6. `flask import-ventas "Migrar.xlsm"` → carga real. **El stock sigue en 0.**
+7. **Cargar el conteo de inventario** (§3.4), el **mismo día**, antes de que el
+   equipo empiece a operar.
+8. **Reconciliación:** log del import vs §5; abrir el Dashboard y contrastar con
+   el Excel de Scoby (Valor Total Pago, botellas, facturas, por mes); spot-check
+   de 5–10 ventas en la UI (la de "sin IVA / una parte" = Claudio Milla, una
+   multi-producto, una por pagar, una de Mario/Julien, la de precio con
+   decimales); probar la lista de Ventas, el PDF de por pagar y un ticket de
+   despacho.
+9. **Ventana de transición:** cargar a mano en el ERP las ventas hechas entre el
+   corte (2026-09-09) y este punto. Desde acá, Scoby opera solo en el ERP; la
+   planilla queda archivada como respaldo.
+
+### Rollback
+
+Si la reconciliación falla feo: restaurar el backup del paso 2. El import es
+todo-o-nada (aborta si `sales` no está vacía), no hay medias cargas.
 
 ## 7. Fuera de alcance
 
