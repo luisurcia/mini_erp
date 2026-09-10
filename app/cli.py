@@ -121,6 +121,35 @@ def register_cli(app: Flask) -> None:
             "Recreated defaults: warehouses, customer segments, purchase categories."
         )
 
+    @app.cli.command("import-ventas")
+    @click.argument("archivo")
+    @click.option("--dry-run", is_flag=True, help="Recorre y reporta sin escribir nada.")
+    def import_ventas_command(archivo, dry_run):
+        """Carga el historial de ventas de Scoby desde la planilla (#118).
+
+        Correr SIEMPRE primero con --dry-run, sobre una base recién
+        reseteada con `flask reset-data`. Escribe un log en instance/.
+        """
+        from datetime import datetime
+        from pathlib import Path
+
+        from app.migration import build_report, import_ventas
+
+        result = import_ventas(archivo, dry_run=dry_run)
+        report = build_report(result)
+
+        instance = Path(app.instance_path)
+        instance.mkdir(parents=True, exist_ok=True)
+        stamp = datetime.now().strftime("%Y%m%d-%H%M%S")
+        suffix = "dry-run" if dry_run else "carga"
+        log_path = instance / f"migracion-ventas-{stamp}-{suffix}.md"
+        log_path.write_text(report, encoding="utf-8")
+
+        click.echo(report)
+        click.echo(f"\nLog guardado en: {log_path}")
+        if dry_run:
+            click.echo("Fue una simulación — no se escribió nada en la base.")
+
     @app.cli.command("create-admin")
     @click.option("--username", prompt=True)
     @click.option("--password", prompt=True, hide_input=True, confirmation_prompt=True)
