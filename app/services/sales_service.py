@@ -118,6 +118,24 @@ class SalesService:
         self.sales_repo.commit()
         return sale
 
+    def update_invoice_number(
+        self, sale_id: int, invoice_number: str | None
+    ) -> Sale:
+        """Replace a sale's invoice number after the fact (#133).
+
+        The team records a sale with a provisional number and later swaps
+        in the real correlativo from their accounting system. Admin-only
+        in the UI; only this field is touched — the sale is otherwise
+        immutable. An empty value clears it back to NULL.
+        """
+        sale = self.sales_repo.get(sale_id)
+        if sale is None:
+            raise NotFoundError(f"Sale #{sale_id} not found")
+        value = (invoice_number or "").strip()
+        sale.invoice_number = value or None
+        self.sales_repo.commit()
+        return sale
+
     def revert_payment(self, sale_id: int) -> Sale:
         """Undo a payment, back to unpaid (admin-only in the UI, see #51)."""
         sale = self.sales_repo.get(sale_id)
@@ -263,15 +281,32 @@ class SalesService:
                     "total_units": 0,
                     "sale_count": 0,
                     "last_purchase": None,
+                    "first_in_period": None,
+                    "last_in_period": None,
+                    "purchase_frequency_days": None,
                 },
             )
             entry["total_amount"] += sale.total_amount
             entry["total_units"] += sum(item.quantity for item in sale.items)
             entry["sale_count"] += 1
+            if entry["first_in_period"] is None or sale.sale_date < entry["first_in_period"]:
+                entry["first_in_period"] = sale.sale_date
+            if entry["last_in_period"] is None or sale.sale_date > entry["last_in_period"]:
+                entry["last_in_period"] = sale.sale_date
 
         for customer_id, entry in totals.items():
             if last_purchase_by_customer is not None:
                 entry["last_purchase"] = last_purchase_by_customer.get(customer_id)
+
+            # Average days between purchases, over the *filtered* period —
+            # the same year/month/segment scope the rest of the row uses
+            # (#134). Needs at least two purchases to have an interval.
+            count = entry["sale_count"]
+            if count > 1:
+                span_days = (
+                    entry["last_in_period"] - entry["first_in_period"]
+                ).days
+                entry["purchase_frequency_days"] = round(span_days / (count - 1))
 
         ranked = sorted(totals.values(), key=lambda entry: entry["total_amount"], reverse=True)
         return ranked[:limit]

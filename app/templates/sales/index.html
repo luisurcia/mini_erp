@@ -44,7 +44,14 @@
         <td>{{ sale.id }}</td>
         <td>{{ sale.sale_date.strftime("%Y-%m-%d") }}</td>
         <td>{{ sale.customer.name }}</td>
-        <td>{{ sale.invoice_number or "-" }}</td>
+        <td>
+          {{ sale.invoice_number or "-" }}
+          {% if current_user.is_admin %}
+          <button type="button" class="btn btn-sm btn-link p-0 ms-1 align-baseline edit-invoice"
+                  data-sale-id="{{ sale.id }}" data-invoice="{{ sale.invoice_number or '' }}"
+                  title="{{ _('Edit invoice number') }}">✎</button>
+          {% endif %}
+        </td>
         <td><span class="badge bg-secondary">{{ sale_status_label(sale.status) }}</span></td>
         <td>
           {% if sale.is_paid %}
@@ -66,4 +73,50 @@
     </tbody>
   </table>
 </div>
+
+{% if current_user.is_admin %}
+<div class="modal fade" id="invoiceModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog">
+    <form method="post" id="invoiceModalForm">
+      {{ invoice_form.hidden_tag() }}
+      <input type="hidden" name="next" value="{{ request.full_path }}">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">{{ _("Edit invoice number") }}</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="{{ _('Close') }}"></button>
+        </div>
+        <div class="modal-body">
+          {{ invoice_form.invoice_number(class="form-control", id="invoiceModalInput", placeholder=_("Invoice number")) }}
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">{{ _("Cancel") }}</button>
+          {{ invoice_form.submit(class="btn btn-primary") }}
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+{% endif %}
+{% endblock %}
+
+{% block scripts %}
+{% if current_user.is_admin %}
+<script>
+(function () {
+  var modalEl = document.getElementById("invoiceModal");
+  if (!modalEl) return;
+  var modal = new bootstrap.Modal(modalEl);
+  var form = document.getElementById("invoiceModalForm");
+  var input = document.getElementById("invoiceModalInput");
+  var actionTemplate = {{ url_for('sales.update_invoice_number', sale_id=0)|tojson }};
+  document.querySelectorAll(".edit-invoice").forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      form.action = actionTemplate.replace("/0/", "/" + btn.dataset.saleId + "/");
+      input.value = btn.dataset.invoice;
+      modal.show();
+    });
+  });
+})();
+</script>
+{% endif %}
 {% endblock %}

@@ -46,6 +46,8 @@
         <th>{{ _("Bottles") }}</th>
         <th>{{ _("Sales") }}</th>
         <th>{{ _("Last purchase") }}</th>
+        <th>{{ _("Purchase frequency") }}</th>
+        <th>{{ _("Days since last purchase") }}</th>
       </tr>
     </thead>
     <tbody>
@@ -57,7 +59,17 @@
         <td>{{ format_money(entry.total_amount) }}</td>
         <td>{{ entry.total_units }}</td>
         <td>{{ entry.sale_count }}</td>
-        <td>{{ entry.last_purchase.strftime("%Y-%m-%d") if entry.last_purchase else "-" }}</td>
+        <td>{{ entry.last_purchase.strftime("%d-%m-%Y") if entry.last_purchase else "-" }}</td>
+        <td>
+          {%- if entry.purchase_frequency_days is not none -%}
+          {{ _("every %(n)s days", n=entry.purchase_frequency_days) }}
+          {%- else -%}-{%- endif -%}
+        </td>
+        <td>
+          {%- if entry.last_purchase -%}
+          {{ (today - entry.last_purchase.date()).days }}
+          {%- else -%}-{%- endif -%}
+        </td>
       </tr>
     {% endfor %}
     </tbody>

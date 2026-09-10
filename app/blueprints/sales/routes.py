@@ -6,7 +6,12 @@ from flask_babel import gettext as _
 from flask_login import login_required
 
 from app.blueprints.sales import bp
-from app.blueprints.sales.forms import PaymentForm, RevertPaymentForm, SaleMetaForm
+from app.blueprints.sales.forms import (
+    InvoiceNumberForm,
+    PaymentForm,
+    RevertPaymentForm,
+    SaleMetaForm,
+)
 from app.display import product_label
 from app.exceptions import MiniErpError
 from app.models.company import Company
@@ -50,6 +55,7 @@ def index():
         payment_filter=payment_filter,
         customers=customers,
         customer_filter=customer_filter,
+        invoice_form=InvoiceNumberForm(),
     )
 
 
@@ -161,7 +167,37 @@ def detail(sale_id):
         sale=sale,
         payment_form=payment_form,
         revert_form=RevertPaymentForm(),
+        invoice_form=InvoiceNumberForm(obj=sale),
     )
+
+
+@bp.route("/<int:sale_id>/invoice-number", methods=["POST"])
+@login_required
+@module_required(User.MODULE_SALES)
+@admin_required
+def update_invoice_number(sale_id):
+    """Edit just the invoice number of an existing sale (#133) — admin
+    only. Everything else on the sale stays immutable."""
+    sale = SalesRepository().get(sale_id)
+    if sale is None:
+        flash(_("Sale not found."), "danger")
+        return redirect(url_for("sales.index"))
+
+    form = InvoiceNumberForm()
+    if form.validate_on_submit():
+        SalesService().update_invoice_number(sale_id, form.invoice_number.data)
+        flash(_("Invoice number updated for sale #%(id)s.", id=sale_id), "success")
+    else:
+        for errors in form.errors.values():
+            for error in errors:
+                flash(error, "danger")
+
+    # Come back to wherever the edit was triggered (the list keeps its
+    # filters, the detail page stays on the detail page).
+    next_url = request.form.get("next", "")
+    if not next_url.startswith("/") or next_url.startswith("//"):
+        next_url = url_for("sales.detail", sale_id=sale_id)
+    return redirect(next_url)
 
 
 @bp.route("/<int:sale_id>/payment", methods=["POST"])
@@ -208,7 +244,9 @@ def revert_payment(sale_id):
 
 
 def _customer_choices():
-    return [(c.id, c.name) for c in CustomerRepository().get_all()]
+    # Alphabetical, so the <select> (and its Tom Select search box) reads
+    # the way a person scans it (#132).
+    return [(c.id, c.name) for c in CustomerRepository().all_by_name()]
 
 
 def _parse_line_items(products, warehouses) -> tuple[list[dict], list[str]]:

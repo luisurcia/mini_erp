@@ -49,3 +49,9 @@ def test_customer_repository_search_orders_by_name(app):
     _customers(app)
     names = [c.name for c in CustomerRepository().search("")]
     assert names == sorted(names, key=str.lower) or names == sorted(names)
+
+
+def test_customer_repository_all_by_name_is_case_insensitive_alphabetical(app):
+    _customers(app)  # inserted: Claudio, Inspira, La Farine, "milla y cia"
+    names = [c.name for c in CustomerRepository().all_by_name()]
+    assert names == ["Claudio Milla", "Inspira Sport", "La Farine", "milla y cia"]

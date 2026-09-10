@@ -7,7 +7,16 @@
   <p><strong>{{ _("Customer:") }}</strong> {{ sale.customer.name }}</p>
   <p><strong>{{ _("Date:") }}</strong> {{ sale.sale_date.strftime("%Y-%m-%d %H:%M") }}</p>
   <p><strong>{{ _("Status:") }}</strong> <span class="badge bg-secondary">{{ sale_status_label(sale.status) }}</span></p>
-  <p><strong>{{ _("Invoice number:") }}</strong> {{ sale.invoice_number or "-" }}</p>
+  <p class="mb-1"><strong>{{ _("Invoice number:") }}</strong> {{ sale.invoice_number or "-" }}</p>
+  {% if current_user.is_admin %}
+  <form method="post" action="{{ url_for('sales.update_invoice_number', sale_id=sale.id) }}"
+        class="d-flex gap-2 align-items-start mb-2" style="max-width: 360px;">
+    {{ invoice_form.hidden_tag() }}
+    <input type="hidden" name="next" value="{{ url_for('sales.detail', sale_id=sale.id) }}">
+    {{ invoice_form.invoice_number(class="form-control form-control-sm", placeholder=_("Invoice number")) }}
+    {{ invoice_form.submit(class="btn btn-sm btn-outline-secondary text-nowrap") }}
+  </form>
+  {% endif %}
   {% if sale.notes %}<p><strong>{{ _("Notes:") }}</strong> {{ sale.notes }}</p>{% endif %}
 
   <div class="border-top pt-3 mt-2">

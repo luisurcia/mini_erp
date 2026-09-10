@@ -25,6 +25,19 @@ class RevertPaymentForm(FlaskForm):
     submit = SubmitField(_l("Revert payment"))
 
 
+class InvoiceNumberForm(FlaskForm):
+    """Admin-only edit of a sale's invoice number after the fact (#133):
+    the team types a provisional value (e.g. ``F01``) when recording the
+    sale and later replaces it with the real correlativo coming from their
+    accounting system. Only this field changes — the sale is otherwise
+    immutable."""
+
+    invoice_number = StringField(
+        _l("Invoice number"), validators=[Optional(), Length(max=40)]
+    )
+    submit = SubmitField(_l("Save"))
+
+
 class SaleMetaForm(FlaskForm):
     """Holds the sale-level fields; line items are handled as dynamic rows
     in the template/JS and read from request.form directly in the route.
@@ -35,7 +48,9 @@ class SaleMetaForm(FlaskForm):
     column stays on the model for compatibility.
     """
 
-    customer_id = SelectField(_l("Customer"), coerce=int)
+    customer_id = SelectField(
+        _l("Customer"), coerce=int, render_kw={"data-tomselect": "1"}
+    )
     sale_date = DateField(
         _l("Sale date"), validators=[DataRequired()], render_kw={"type": "date"}
     )

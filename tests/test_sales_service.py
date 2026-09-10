@@ -405,6 +405,48 @@ def test_top_customers_by_consumption_fills_last_purchase_from_history(app, cust
     assert ranked[0]["last_purchase"].date() == date(2026, 6, 20)
 
 
+def test_top_customers_by_consumption_purchase_frequency_over_period(app, customer, product):
+    service = SalesService()
+    for day in (1, 11, 21):  # three sales, 10 days apart
+        service.record_sale(
+            customer_id=customer.id,
+            items=[{"product_id": product.id, "quantity": 1}],
+            sale_date=datetime(2026, 3, day, tzinfo=UTC),
+        )
+    sales = SalesRepository().completed_all()
+
+    ranked = service.top_customers_by_consumption(sales)
+
+    # span 20 days / 2 intervals = 10
+    assert ranked[0]["purchase_frequency_days"] == 10
+
+
+def test_top_customers_by_consumption_frequency_none_with_single_purchase(app, customer, product):
+    service = SalesService()
+    sale = service.record_sale(
+        customer_id=customer.id, items=[{"product_id": product.id, "quantity": 1}]
+    )
+
+    ranked = service.top_customers_by_consumption([sale])
+
+    assert ranked[0]["purchase_frequency_days"] is None
+
+
+def test_update_invoice_number_sets_and_clears(app, customer, product):
+    service = SalesService()
+    sale = service.record_sale(
+        customer_id=customer.id,
+        items=[{"product_id": product.id, "quantity": 1}],
+        invoice_number="F01",
+    )
+
+    service.update_invoice_number(sale.id, "  A-2045  ")
+    assert sale.invoice_number == "A-2045"
+
+    service.update_invoice_number(sale.id, "")
+    assert sale.invoice_number is None
+
+
 def test_top_customers_by_consumption_respects_limit(app, customer, product):
     customers = [customer]
     for i in range(2):

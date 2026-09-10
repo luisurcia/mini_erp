@@ -76,6 +76,10 @@
         <span>{{ _("Total") }}</span>
         <span id="sale-total">{{ format_money(0) }}</span>
       </div>
+      <div class="d-flex justify-content-between">
+        <span>{{ _("Total units") }}</span>
+        <span id="sale-total-units">0</span>
+      </div>
     </div>
 
     <div>{{ form.submit(class="btn btn-primary") }}</div>
@@ -102,10 +106,12 @@
 
   function updateTotals() {
     var qtyByProduct = {};
+    var totalUnits = 0;
     qtyInputs.forEach(function (input) {
       var pid = productIdOf(input);
       var qty = parseInt(input.value, 10) || 0;
       qtyByProduct[pid] = (qtyByProduct[pid] || 0) + qty;
+      totalUnits += qty;
     });
 
     var subtotal = 0;
@@ -124,6 +130,7 @@
     document.getElementById("sale-subtotal").textContent = window.formatMoney(subtotal);
     document.getElementById("sale-tax").textContent = window.formatMoney(tax);
     document.getElementById("sale-total").textContent = window.formatMoney(total);
+    document.getElementById("sale-total-units").textContent = totalUnits.toLocaleString(window.MONEY.locale);
     if (taxRow) taxRow.style.display = applyTax ? "flex" : "none";
   }
 

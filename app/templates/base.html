@@ -9,6 +9,7 @@
   <meta name="color-scheme" content="only light">
   <title>{% block title %}{% endblock %} · {{ brand_name }}</title>
   {{ bootstrap.load_css() }}
+  <link rel="stylesheet" href="{{ url_for('static', filename='vendor/tom-select/tom-select.bootstrap5.min.css') }}">
   <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
@@ -87,6 +88,24 @@
   </main>
 
   {{ bootstrap.load_js() }}
+  <script src="{{ url_for('static', filename='vendor/tom-select/tom-select.complete.min.js') }}"></script>
+  <script>
+    // Turn any <select data-tomselect> into a searchable dropdown (#131).
+    // Matches on the option text (substring), keeps the server-provided
+    // order, and falls back to a plain <select> if this script fails.
+    document.querySelectorAll("select[data-tomselect]").forEach(function (el) {
+      new TomSelect(el, {
+        create: false,
+        maxOptions: null,
+        sortField: { field: "$order" },
+        render: {
+          no_results: function () {
+            return '<div class="no-results">' + {{ _("No results found")|tojson }} + "</div>";
+          },
+        },
+      });
+    });
+  </script>
   <script>
     // Money formatting for the few places that compute totals in the
     // browser. Mirrors app.display.format_money: currency symbol +

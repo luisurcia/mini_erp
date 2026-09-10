@@ -1,3 +1,5 @@
+from datetime import date
+
 from flask import render_template, request
 from flask_babel import gettext as _
 from flask_login import login_required
@@ -56,7 +58,7 @@ def index():
 
     top_customers = sales_service.top_customers_by_consumption(
         sales,
-        limit=10,
+        limit=30,
         last_purchase_by_customer=sales_repo.last_purchase_by_customer(),
     )
 
@@ -70,4 +72,5 @@ def index():
         all_time_value=ALL_TIME,
         segments=segments,
         selected_segment=selected_segment,
+        today=date.today(),
     )
