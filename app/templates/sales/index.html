@@ -37,21 +37,23 @@
 
 <div class="card p-3">
   <table class="table align-middle mb-0">
-    <thead><tr><th>#</th><th>{{ _("Date") }}</th><th>{{ _("Customer") }}</th><th>{{ _("Invoice #") }}</th><th>{{ _("Status") }}</th><th>{{ _("Payment") }}</th><th>{{ _("Tax") }}</th><th>{{ _("Total") }}</th><th></th></tr></thead>
+    <thead><tr><th>#</th><th>{{ _("Date") }}</th><th>{{ _("Customer") }}</th><th>{{ _("Invoice #") }}</th>{% if current_user.is_admin %}<th></th>{% endif %}<th>{{ _("Status") }}</th><th>{{ _("Payment") }}</th><th>{{ _("Tax") }}</th><th>{{ _("Total") }}</th><th></th></tr></thead>
     <tbody>
       {% for sale in sales %}
       <tr>
         <td>{{ sale.id }}</td>
         <td>{{ sale.sale_date.strftime("%Y-%m-%d") }}</td>
         <td>{{ sale.customer.name }}</td>
+        <td>{{ sale.invoice_number or "-" }}</td>
+        {% if current_user.is_admin %}
         <td>
-          {{ sale.invoice_number or "-" }}
-          {% if current_user.is_admin %}
-          <button type="button" class="btn btn-sm btn-link p-0 ms-1 align-baseline edit-invoice"
+          <button type="button" class="btn btn-sm btn-outline-secondary text-nowrap edit-invoice"
                   data-sale-id="{{ sale.id }}" data-invoice="{{ sale.invoice_number or '' }}"
-                  title="{{ _('Edit invoice number') }}">✎</button>
-          {% endif %}
+                  title="{{ _('Edit invoice number') }}" aria-label="{{ _('Edit invoice number') }}">
+            ✎ {{ _("Edit") }}
+          </button>
         </td>
+        {% endif %}
         <td><span class="badge bg-secondary">{{ sale_status_label(sale.status) }}</span></td>
         <td>
           {% if sale.is_paid %}
@@ -68,7 +70,7 @@
         </td>
       </tr>
       {% else %}
-      <tr><td colspan="9" class="text-muted text-center py-4">{{ _("No sales recorded yet.") }}</td></tr>
+      <tr><td colspan="{{ 10 if current_user.is_admin else 9 }}" class="text-muted text-center py-4">{{ _("No sales recorded yet.") }}</td></tr>
       {% endfor %}
     </tbody>
   </table>
