@@ -45,7 +45,7 @@ corto**, sin sabor, sin precio de catálogo, sin SKU ni tamaño (el SKU se deriv
 | `J` | Kombucha Jengibre | 6.600 |
 | `M` | Kombucha Maracuyá | 6.785 |
 | `O` | Kombucha Original | 4.647 |
-| `C` | Café | 879 |
+| `C` | Kombucha Café | 879 |
 | `EL` | Kombucha Edición Limitada | 1.308 |
 | `FM` | Kombucha Frambuesa | 1.502 |
 | `GB` | Ginger Beer | 3.281 |

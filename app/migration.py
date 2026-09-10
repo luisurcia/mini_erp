@@ -30,7 +30,7 @@ PRODUCTS = {
     "J": "Kombucha Jengibre",
     "M": "Kombucha Maracuyá",
     "O": "Kombucha Original",
-    "C": "Café",
+    "C": "Kombucha Café",
     "EL": "Kombucha Edición Limitada",
     "FM": "Kombucha Frambuesa",
     "GB": "Ginger Beer",
