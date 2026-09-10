@@ -199,27 +199,34 @@ class SalesService:
         return Decimal(self.total_bottles(sales)) / len(sales)
 
     def sales_by_product(self, sales: list[Sale]) -> list[dict]:
-        """Revenue and share of total per product, across the given sales.
+        """Per product, across the given sales: net revenue + share (for
+        the pie), bottles sold (for the bar chart, #127), and the
+        product's colour (#126). Ordered by revenue, descending.
 
-        Each entry carries both the full ``product`` label (for the pie
-        legend) and a compact ``product_short`` one (for the per-product
-        bar chart, where a long label doesn't fit under the axis) — see #91.
+        Each entry also carries the full ``product`` label (pie legend)
+        and a compact ``product_short`` one (bar-chart axis) — see #91.
         """
         settings = Company.get_settings()
         totals: dict[str, Decimal] = defaultdict(lambda: Decimal("0"))
+        bottles: dict[str, int] = defaultdict(int)
         short_labels: dict[str, str] = {}
+        colors: dict[str, str | None] = {}
         for sale in sales:
             for item in sale.items:
                 name = product_label(item.product, settings)
                 totals[name] += item.subtotal
+                bottles[name] += item.quantity
                 short_labels[name] = product_short_label(item.product, settings)
+                colors[name] = item.product.color
 
         grand_total = sum(totals.values(), start=Decimal("0"))
         return [
             {
                 "product": name,
                 "product_short": short_labels[name],
+                "color": colors[name],
                 "amount": float(amount),
+                "bottles": bottles[name],
                 "percentage": float(amount / grand_total * 100) if grand_total else 0,
             }
             for name, amount in sorted(totals.items(), key=lambda kv: kv[1], reverse=True)

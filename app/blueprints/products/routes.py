@@ -81,6 +81,7 @@ def new_product():
             sku=sku,
             size_ml=size_ml,
             unit_price=form.unit_price.data if settings.product_price_enabled else None,
+            color=form.color.data,
             is_active=form.is_active.data,
         )
         ProductRepository().add(product)
@@ -119,6 +120,7 @@ def edit_product(product_id):
             product.size_ml = form.size_ml.data
         if settings.product_price_enabled:
             product.unit_price = form.unit_price.data
+        product.color = form.color.data
         product.is_active = form.is_active.data
         ProductRepository().commit()
         flash(_("Product '%(name)s' updated.", name=product_label(product)), "success")

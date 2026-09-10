@@ -36,16 +36,30 @@ def ensure_products_optional_columns_nullable() -> None:
     if already_nullable:
         return
 
-    cols = (
+    base_cols = (
         "id, flavor_id, name, short_name, sku, size_ml, unit_price, is_active, "
         "created_at, updated_at"
     )
+    # `color` (#126) may or may not exist yet on the old table.
+    has_color = "color" in by_name
+    cols = base_cols + (", color" if has_color else "")
     db.session.execute(text("ALTER TABLE products RENAME TO products_old"))
     db.session.commit()
     db.create_all()
     db.session.execute(text(f"INSERT INTO products ({cols}) SELECT {cols} FROM products_old"))
     db.session.execute(text("DROP TABLE products_old"))
     db.session.commit()
+
+
+def ensure_product_color_column() -> None:
+    """Add `products.color` ('#RRGGBB') for databases created before the
+    Dashboard charts became per-product colored (#126). Existing products
+    keep `color = NULL` until someone edits them."""
+    inspector = inspect(db.engine)
+    columns = {column["name"] for column in inspector.get_columns("products")}
+    if "color" not in columns:
+        db.session.execute(text("ALTER TABLE products ADD COLUMN color VARCHAR(7)"))
+        db.session.commit()
 
 
 def ensure_sale_invoice_number_column() -> None:

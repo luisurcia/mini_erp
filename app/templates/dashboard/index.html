@@ -133,7 +133,7 @@
   </div>
   <div class="col-lg-6">
     <div class="card p-3">
-      <h2 class="h5">{{ _("Total sales per product (%(years)s)", years=charts_years_label) }}</h2>
+      <h2 class="h5">{{ _("Bottles sold per product (%(years)s)", years=charts_years_label) }}</h2>
       <div class="chart-box"><canvas id="productRevenueChart"></canvas></div>
     </div>
   </div>
@@ -217,13 +217,18 @@ new Chart(document.getElementById("cmpBottlesChart"), {
 
 {% else %}
 const productSales = {{ charts.product_sales | tojson }};
+// Each product carries its own colour (#126); this palette only fills in
+// for products that don't have one set yet.
+const FALLBACK_COLORS = ["#e27ca6", "#e3b23c", "#2e8c93", "#e0762e", "#a34a63", "#9a968c"];
+const productColors = productSales.map((p, i) => p.color || FALLBACK_COLORS[i % FALLBACK_COLORS.length]);
+
 new Chart(document.getElementById("productSalesChart"), {
   type: "pie",
   data: {
     labels: productSales.map((p) => p.product),
     datasets: [{
       data: productSales.map((p) => p.amount),
-      backgroundColor: ["#e27ca6", "#e3b23c", "#2e8c93", "#e0762e", "#a34a63", "#9a968c"],
+      backgroundColor: productColors,
     }],
   },
   options: {
@@ -241,17 +246,20 @@ new Chart(document.getElementById("productSalesChart"), {
   },
 });
 
-// Total sales ($, net) per product — same data as the share pie, absolute.
+// Bottles sold per product (#127), coloured by product like the pie.
 new Chart(document.getElementById("productRevenueChart"), {
   type: "bar",
   data: {
     labels: productSales.map((p) => p.product_short),
-    datasets: [{ label: {{ _("Total sold")|tojson }}, data: productSales.map((p) => p.amount), backgroundColor: "#2e8c93" }],
+    datasets: [{ label: {{ _("Bottles")|tojson }}, data: productSales.map((p) => p.bottles), backgroundColor: productColors }],
   },
   options: {
     maintainAspectRatio: false,
-    scales: { y: { beginAtZero: true, ticks: { callback: (v) => window.formatMoney(v) } } },
-    plugins: { tooltip: { callbacks: { label: (ctx) => window.formatMoney(ctx.parsed.y) } } },
+    scales: { y: { beginAtZero: true, ticks: { precision: 0 } } },
+    plugins: {
+      legend: { display: false },
+      tooltip: { callbacks: { label: (ctx) => ctx.parsed.y + " " + {{ _("bottles")|tojson }} } },
+    },
   },
 });
 

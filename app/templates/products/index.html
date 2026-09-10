@@ -22,7 +22,14 @@
     <tbody>
       {% for product in products %}
       <tr>
-        <td>{{ product_label(product) }}</td>
+        <td>
+          {% if product.color %}
+          <span class="d-inline-block rounded-circle align-middle me-2"
+                style="width: 0.9em; height: 0.9em; background-color: {{ product.color }}; border: 1px solid rgba(0,0,0,0.15);"
+                title="{{ product.color }}"></span>
+          {% endif %}
+          {{ product_label(product) }}
+        </td>
         {% if settings.product_short_name_enabled %}<td>{{ product.short_name or "-" }}</td>{% endif %}
         {% if settings.product_sku_enabled %}<td>{{ product.sku }}</td>{% endif %}
         {% if settings.product_size_enabled %}<td>{{ product.size_ml }} ml</td>{% endif %}

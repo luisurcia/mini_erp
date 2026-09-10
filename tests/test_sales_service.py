@@ -147,7 +147,9 @@ def test_sales_by_product_returns_amount_and_percentage(app, customer, product):
         {
             "product": product_label(product),
             "product_short": product_label(product),
+            "color": None,
             "amount": 9.0,
+            "bottles": 2,
             "percentage": 100.0,
         }
     ]
@@ -488,3 +490,30 @@ def test_recording_a_sale_never_touches_supply_stock(
         reason=SupplyMovement.REASON_ASSEMBLY
     ).count() == 0
     assert SupplyMovement.query.filter_by(reason=SupplyMovement.REASON_SALE).count() == 0
+
+
+def test_sales_by_product_reports_bottles_amount_and_color(app, customer, product):
+    product.color = "#E0762E"
+    other = Product(name="Café", sku="CAF-1", size_ml=355, unit_price=Decimal("2"))
+    db.session.add(other)
+    db.session.flush()
+    InventoryService().create_inventory_item(
+        other.id, product.inventory_items[0].warehouse_id, initial_qty=50
+    )
+    db.session.commit()
+
+    service = SalesService()
+    service.record_sale(
+        customer_id=customer.id,
+        items=[
+            {"product_id": product.id, "quantity": 3},
+            {"product_id": other.id, "quantity": 5},
+        ],
+    )
+    rows = {r["product"]: r for r in service.sales_by_product(SalesRepository().completed_all())}
+
+    kombucha = rows[product_label(product)]
+    assert kombucha["bottles"] == 3
+    assert kombucha["color"] == "#E0762E"
+    assert rows[product_label(other)]["bottles"] == 5
+    assert rows[product_label(other)]["color"] is None

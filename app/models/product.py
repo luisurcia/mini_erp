@@ -27,6 +27,10 @@ class Product(BaseModel):
     size_ml = db.Column(db.Integer, nullable=False, default=355)
     unit_price = db.Column(db.Numeric(10, 2), nullable=True)
     is_active = db.Column(db.Boolean, nullable=False, default=True)
+    # "#RRGGBB" — shown for this product in the Dashboard charts and also
+    # used on the physical label. Required on the form; nullable in the DB
+    # for products that predate the field (#126).
+    color = db.Column(db.String(7), nullable=True)
 
     flavor = db.relationship("Flavor", back_populates="products")
     inventory_items = db.relationship(

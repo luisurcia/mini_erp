@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-09-10 10:34-0300\n"
+"POT-Creation-Date: 2026-09-10 12:35-0300\n"
 "PO-Revision-Date: 2026-08-24 17:58-0400\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: fr\n"
@@ -320,12 +320,12 @@ msgid "Name"
 msgstr "Nom"
 
 #: app/blueprints/company/forms.py:68 app/blueprints/company/forms.py:74
-#: app/blueprints/inventory/forms.py:35 app/blueprints/products/forms.py:23
+#: app/blueprints/inventory/forms.py:35 app/blueprints/products/forms.py:34
 #: app/blueprints/supplies/forms.py:16
 #: app/templates/company/purchase_categories_list.html:27
 #: app/templates/company/segments_list.html:24
 #: app/templates/inventory/warehouses_list.html:36
-#: app/templates/products/index.html:32 app/templates/supplies/index.html:34
+#: app/templates/products/index.html:39 app/templates/supplies/index.html:34
 msgid "Active"
 msgstr "Actif"
 
@@ -608,7 +608,7 @@ msgstr "Seuil de réapprovisionnement mis à jour."
 msgid "Transferred %(qty)s units of %(name)s from %(from_wh)s to %(to_wh)s."
 msgstr "%(qty)s unités de %(name)s transférées de %(from_wh)s vers %(to_wh)s."
 
-#: app/blueprints/inventory/routes.py:179 app/blueprints/products/routes.py:100
+#: app/blueprints/inventory/routes.py:179 app/blueprints/products/routes.py:101
 #: app/blueprints/supplies/routes.py:189
 msgid "Product not found."
 msgstr "Produit introuvable."
@@ -665,26 +665,36 @@ msgstr "Taille (ml)"
 msgid "Unit price"
 msgstr "Prix unitaire"
 
-#: app/blueprints/products/forms.py:24
+#: app/blueprints/products/forms.py:26
+msgid "Color"
+msgstr "Couleur"
+
+#: app/blueprints/products/forms.py:30
+msgid "Enter a colour like #E0762E."
+msgstr "Saisis une couleur comme #E0762E."
+
+#: app/blueprints/products/forms.py:35
 msgid "Save product"
 msgstr "Enregistrer le produit"
 
-#: app/blueprints/products/routes.py:88
+#: app/blueprints/products/routes.py:89
 #, python-format
 msgid "Product '%(name)s' created."
 msgstr "Produit '%(name)s' créé."
 
-#: app/blueprints/products/routes.py:124
+#: app/blueprints/products/routes.py:126
 #, python-format
 msgid "Product '%(name)s' updated."
 msgstr "Produit '%(name)s' mis à jour."
 
-#: app/blueprints/products/routes.py:130
+#: app/blueprints/products/routes.py:132
 #, python-format
 msgid ""
 "'%(name)s' still has %(qty)s units in stock — that stock is hidden from "
 "Inventory while the product is inactive."
-msgstr "« %(name)s » a encore %(qty)s unités en stock — ce stock est masqué dans l'Inventaire tant que le produit est inactif."
+msgstr ""
+"« %(name)s » a encore %(qty)s unités en stock — ce stock est masqué dans "
+"l'Inventaire tant que le produit est inactif."
 
 #: app/blueprints/purchases/forms.py:24 app/templates/purchases/index.html:40
 msgid "Item"
@@ -1004,7 +1014,7 @@ msgstr "par défaut"
 #: app/templates/company/purchase_categories_list.html:29
 #: app/templates/company/segments_list.html:26
 #: app/templates/inventory/warehouses_list.html:38
-#: app/templates/products/index.html:34 app/templates/supplies/index.html:36
+#: app/templates/products/index.html:41 app/templates/supplies/index.html:36
 #: app/templates/supplies/recipe_form.html:20
 #: app/templates/supplies/recipes.html:27 app/templates/supplies/stock.html:29
 msgid "Inactive"
@@ -1014,7 +1024,7 @@ msgstr "Inactif"
 #: app/templates/company/segments_list.html:30
 #: app/templates/customers/index.html:35
 #: app/templates/inventory/warehouses_list.html:42
-#: app/templates/products/index.html:38 app/templates/purchases/index.html:62
+#: app/templates/products/index.html:45 app/templates/purchases/index.html:62
 #: app/templates/supplies/index.html:40 app/templates/supplies/recipes.html:38
 #: app/templates/users/index.html:19
 msgid "Edit"
@@ -1147,8 +1157,8 @@ msgstr "Part des ventes par produit"
 
 #: app/templates/dashboard/index.html:136
 #, python-format
-msgid "Total sales per product (%(years)s)"
-msgstr "Total des ventes par produit (%(years)s)"
+msgid "Bottles sold per product (%(years)s)"
+msgstr "Bouteilles vendues par produit (%(years)s)"
 
 #: app/templates/dashboard/index.html:142
 #, python-format
@@ -1172,18 +1182,19 @@ msgstr "En stock"
 msgid "Everything is well stocked."
 msgstr "Tout est bien approvisionné."
 
-#: app/templates/dashboard/index.html:249
-msgid "Total sold"
-msgstr "Total vendu"
-
-#: app/templates/dashboard/index.html:264
-msgid "Tickets"
-msgstr "Tickets"
-
-#: app/templates/dashboard/index.html:273
+#: app/templates/dashboard/index.html:254
+#: app/templates/dashboard/index.html:281
 #: app/templates/top_customers/index.html:46
 msgid "Bottles"
 msgstr "Bouteilles"
+
+#: app/templates/dashboard/index.html:261
+msgid "bottles"
+msgstr "bouteilles"
+
+#: app/templates/dashboard/index.html:272
+msgid "Tickets"
+msgstr "Tickets"
 
 #: app/templates/errors/403.html:2
 msgid "Forbidden"
@@ -1247,7 +1258,7 @@ msgstr "Saveur / Produit"
 msgid "History"
 msgstr "Historique"
 
-#: app/templates/inventory/index.html:44 app/templates/products/index.html:42
+#: app/templates/inventory/index.html:44 app/templates/products/index.html:49
 #: app/templates/supplies/recipes.html:42
 msgid "No products yet."
 msgstr "Aucun produit pour le moment."
@@ -1755,4 +1766,7 @@ msgstr ""
 
 #~ msgid "Average sale"
 #~ msgstr "Vente moyenne"
+
+#~ msgid "Total sold"
+#~ msgstr "Total vendu"
 

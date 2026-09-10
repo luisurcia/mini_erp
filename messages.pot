@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-09-10 10:34-0300\n"
+"POT-Creation-Date: 2026-09-10 12:35-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -315,12 +315,12 @@ msgid "Name"
 msgstr ""
 
 #: app/blueprints/company/forms.py:68 app/blueprints/company/forms.py:74
-#: app/blueprints/inventory/forms.py:35 app/blueprints/products/forms.py:23
+#: app/blueprints/inventory/forms.py:35 app/blueprints/products/forms.py:34
 #: app/blueprints/supplies/forms.py:16
 #: app/templates/company/purchase_categories_list.html:27
 #: app/templates/company/segments_list.html:24
 #: app/templates/inventory/warehouses_list.html:36
-#: app/templates/products/index.html:32 app/templates/supplies/index.html:34
+#: app/templates/products/index.html:39 app/templates/supplies/index.html:34
 msgid "Active"
 msgstr ""
 
@@ -603,7 +603,7 @@ msgstr ""
 msgid "Transferred %(qty)s units of %(name)s from %(from_wh)s to %(to_wh)s."
 msgstr ""
 
-#: app/blueprints/inventory/routes.py:179 app/blueprints/products/routes.py:100
+#: app/blueprints/inventory/routes.py:179 app/blueprints/products/routes.py:101
 #: app/blueprints/supplies/routes.py:189
 msgid "Product not found."
 msgstr ""
@@ -658,21 +658,29 @@ msgstr ""
 msgid "Unit price"
 msgstr ""
 
-#: app/blueprints/products/forms.py:24
+#: app/blueprints/products/forms.py:26
+msgid "Color"
+msgstr ""
+
+#: app/blueprints/products/forms.py:30
+msgid "Enter a colour like #E0762E."
+msgstr ""
+
+#: app/blueprints/products/forms.py:35
 msgid "Save product"
 msgstr ""
 
-#: app/blueprints/products/routes.py:88
+#: app/blueprints/products/routes.py:89
 #, python-format
 msgid "Product '%(name)s' created."
 msgstr ""
 
-#: app/blueprints/products/routes.py:124
+#: app/blueprints/products/routes.py:126
 #, python-format
 msgid "Product '%(name)s' updated."
 msgstr ""
 
-#: app/blueprints/products/routes.py:130
+#: app/blueprints/products/routes.py:132
 #, python-format
 msgid ""
 "'%(name)s' still has %(qty)s units in stock — that stock is hidden from "
@@ -995,7 +1003,7 @@ msgstr ""
 #: app/templates/company/purchase_categories_list.html:29
 #: app/templates/company/segments_list.html:26
 #: app/templates/inventory/warehouses_list.html:38
-#: app/templates/products/index.html:34 app/templates/supplies/index.html:36
+#: app/templates/products/index.html:41 app/templates/supplies/index.html:36
 #: app/templates/supplies/recipe_form.html:20
 #: app/templates/supplies/recipes.html:27 app/templates/supplies/stock.html:29
 msgid "Inactive"
@@ -1005,7 +1013,7 @@ msgstr ""
 #: app/templates/company/segments_list.html:30
 #: app/templates/customers/index.html:35
 #: app/templates/inventory/warehouses_list.html:42
-#: app/templates/products/index.html:38 app/templates/purchases/index.html:62
+#: app/templates/products/index.html:45 app/templates/purchases/index.html:62
 #: app/templates/supplies/index.html:40 app/templates/supplies/recipes.html:38
 #: app/templates/users/index.html:19
 msgid "Edit"
@@ -1138,7 +1146,7 @@ msgstr ""
 
 #: app/templates/dashboard/index.html:136
 #, python-format
-msgid "Total sales per product (%(years)s)"
+msgid "Bottles sold per product (%(years)s)"
 msgstr ""
 
 #: app/templates/dashboard/index.html:142
@@ -1163,17 +1171,18 @@ msgstr ""
 msgid "Everything is well stocked."
 msgstr ""
 
-#: app/templates/dashboard/index.html:249
-msgid "Total sold"
-msgstr ""
-
-#: app/templates/dashboard/index.html:264
-msgid "Tickets"
-msgstr ""
-
-#: app/templates/dashboard/index.html:273
+#: app/templates/dashboard/index.html:254
+#: app/templates/dashboard/index.html:281
 #: app/templates/top_customers/index.html:46
 msgid "Bottles"
+msgstr ""
+
+#: app/templates/dashboard/index.html:261
+msgid "bottles"
+msgstr ""
+
+#: app/templates/dashboard/index.html:272
+msgid "Tickets"
 msgstr ""
 
 #: app/templates/errors/403.html:2
@@ -1238,7 +1247,7 @@ msgstr ""
 msgid "History"
 msgstr ""
 
-#: app/templates/inventory/index.html:44 app/templates/products/index.html:42
+#: app/templates/inventory/index.html:44 app/templates/products/index.html:49
 #: app/templates/supplies/recipes.html:42
 msgid "No products yet."
 msgstr ""

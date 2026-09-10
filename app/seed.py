@@ -41,6 +41,14 @@ SHORT_BY_FLAVOR = {
     "Mixed Berry": "MXB",
     "Mango Turmeric": "MGT",
 }
+# Per-product colour shown in the Dashboard charts (#126).
+COLOR_BY_FLAVOR = {
+    "Original": "#E3B23C",
+    "Ginger Lemon": "#8A6D3B",
+    "Hibiscus Rose": "#B5304F",
+    "Mixed Berry": "#7D6B91",
+    "Mango Turmeric": "#E0762E",
+}
 
 
 def seed_demo_data(app: Flask) -> None:
@@ -86,6 +94,7 @@ def _seed_flavors_and_products() -> dict[str, Product]:
             sku=f"KOMB-{name[:3].upper()}-355",
             size_ml=355,
             unit_price=PRICE_BY_FLAVOR[name],
+            color=COLOR_BY_FLAVOR[name],
             is_active=True,
         )
         db.session.add(product)
