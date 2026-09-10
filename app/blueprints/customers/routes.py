@@ -1,4 +1,4 @@
-from flask import flash, redirect, render_template, url_for
+from flask import flash, redirect, render_template, request, url_for
 from flask_babel import gettext as _
 from flask_login import login_required
 
@@ -14,8 +14,9 @@ from app.repositories.customer_repository import CustomerRepository
 @login_required
 @module_required(User.MODULE_CUSTOMERS)
 def index():
-    customers = CustomerRepository().get_all()
-    return render_template("customers/index.html", customers=customers)
+    q = request.args.get("q", "").strip()
+    customers = CustomerRepository().search(q)
+    return render_template("customers/index.html", customers=customers, q=q)
 
 
 @bp.route("/new", methods=["GET", "POST"])

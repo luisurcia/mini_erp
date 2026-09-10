@@ -36,5 +36,10 @@ class Product(BaseModel):
         "ProductSupply", back_populates="product", cascade="all, delete-orphan"
     )
 
+    @property
+    def total_stock(self) -> int:
+        """Units on hand across every warehouse."""
+        return sum(item.quantity_on_hand for item in self.inventory_items)
+
     def __repr__(self) -> str:
         return f"<Product {self.name} ({self.sku})>"

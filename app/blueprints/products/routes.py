@@ -107,6 +107,7 @@ def edit_product(product_id):
         form.flavor_id.choices = _flavor_choices()
 
     if form.validate_on_submit():
+        was_active = product.is_active
         product.name = form.name.data
         if settings.product_flavor_enabled:
             product.flavor_id = form.flavor_id.data
@@ -121,6 +122,18 @@ def edit_product(product_id):
         product.is_active = form.is_active.data
         ProductRepository().commit()
         flash(_("Product '%(name)s' updated.", name=product_label(product)), "success")
+        # A deactivated product drops out of Inventory (#122), so its stock
+        # would silently disappear from the matrix — warn if there's any.
+        if was_active and not product.is_active and product.total_stock > 0:
+            flash(
+                _(
+                    "'%(name)s' still has %(qty)s units in stock — that stock is "
+                    "hidden from Inventory while the product is inactive.",
+                    name=product_label(product),
+                    qty=product.total_stock,
+                ),
+                "warning",
+            )
         return redirect(url_for("products.index"))
 
     return render_template(

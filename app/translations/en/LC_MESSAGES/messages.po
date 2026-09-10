@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-09-09 14:28-0300\n"
+"POT-Creation-Date: 2026-09-10 10:34-0300\n"
 "PO-Revision-Date: 2026-08-24 17:58-0400\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: en\n"
@@ -95,7 +95,7 @@ msgid "Days overdue"
 msgstr "Days overdue"
 
 #: app/reports.py:81 app/templates/inventory/index.html:20
-#: app/templates/inventory/index.html:53 app/templates/sales/detail.html:59
+#: app/templates/inventory/index.html:50 app/templates/sales/detail.html:59
 #: app/templates/sales/index.html:40 app/templates/sales/sale_form.html:76
 #: app/templates/supplies/stock.html:20 app/templates/supplies/stock.html:53
 msgid "Total"
@@ -308,7 +308,7 @@ msgstr "Save settings"
 #: app/blueprints/supplies/forms.py:11
 #: app/templates/company/purchase_categories_list.html:13
 #: app/templates/company/segments_list.html:13
-#: app/templates/customers/index.html:13
+#: app/templates/customers/index.html:22
 #: app/templates/inventory/warehouses_list.html:13
 #: app/templates/supplies/index.html:19 app/templates/supplies/stock.html:16
 #: app/templates/users/index.html:11
@@ -373,11 +373,11 @@ msgstr "Category '%(name)s' updated."
 msgid "Nickname"
 msgstr "Nickname"
 
-#: app/blueprints/customers/forms.py:16 app/templates/customers/index.html:15
+#: app/blueprints/customers/forms.py:16 app/templates/customers/index.html:24
 msgid "RUT"
 msgstr "RUT"
 
-#: app/blueprints/customers/forms.py:18 app/templates/customers/index.html:14
+#: app/blueprints/customers/forms.py:18 app/templates/customers/index.html:23
 #: app/templates/top_customers/index.html:26
 #: app/templates/top_customers/index.html:44
 msgid "Segment"
@@ -427,16 +427,16 @@ msgstr "Save customer"
 msgid "— Select a segment —"
 msgstr "— Select a segment —"
 
-#: app/blueprints/customers/routes.py:45
+#: app/blueprints/customers/routes.py:46
 #, python-format
 msgid "Customer '%(name)s' created."
 msgstr "Customer '%(name)s' created."
 
-#: app/blueprints/customers/routes.py:57
+#: app/blueprints/customers/routes.py:58
 msgid "Customer not found."
 msgstr "Customer not found."
 
-#: app/blueprints/customers/routes.py:77
+#: app/blueprints/customers/routes.py:78
 #, python-format
 msgid "Customer '%(name)s' updated."
 msgstr "Customer '%(name)s' updated."
@@ -586,30 +586,30 @@ msgstr "Quantity"
 msgid "Source and destination warehouse must be different."
 msgstr "Source and destination warehouse must be different."
 
-#: app/blueprints/inventory/routes.py:53
+#: app/blueprints/inventory/routes.py:55
 msgid "Product or warehouse not found."
 msgstr "Product or warehouse not found."
 
-#: app/blueprints/inventory/routes.py:79
+#: app/blueprints/inventory/routes.py:81
 #, python-format
 msgid "Restocked %(qty)s units of %(name)s in %(warehouse)s."
 msgstr "Restocked %(qty)s units of %(name)s in %(warehouse)s."
 
-#: app/blueprints/inventory/routes.py:91 app/blueprints/supplies/routes.py:139
+#: app/blueprints/inventory/routes.py:93 app/blueprints/supplies/routes.py:139
 msgid "Reorder level updated."
 msgstr "Reorder level updated."
 
-#: app/blueprints/inventory/routes.py:151
+#: app/blueprints/inventory/routes.py:153
 #, python-format
 msgid "Transferred %(qty)s units of %(name)s from %(from_wh)s to %(to_wh)s."
 msgstr "Transferred %(qty)s units of %(name)s from %(from_wh)s to %(to_wh)s."
 
-#: app/blueprints/inventory/routes.py:177 app/blueprints/products/routes.py:100
+#: app/blueprints/inventory/routes.py:179 app/blueprints/products/routes.py:100
 #: app/blueprints/supplies/routes.py:189
 msgid "Product not found."
 msgstr "Product not found."
 
-#: app/blueprints/inventory/routes.py:193
+#: app/blueprints/inventory/routes.py:195
 #, python-format
 msgid ""
 "Stock was received, but supply stock is now negative: %(detail)s. Restock"
@@ -618,20 +618,20 @@ msgstr ""
 "Stock was received, but supply stock is now negative: %(detail)s. Restock"
 " the supplies warehouse."
 
-#: app/blueprints/inventory/routes.py:219
+#: app/blueprints/inventory/routes.py:221
 #, python-format
 msgid "Warehouse '%(name)s' created."
 msgstr "Warehouse '%(name)s' created."
 
-#: app/blueprints/inventory/routes.py:231
+#: app/blueprints/inventory/routes.py:233
 msgid "Warehouse not found."
 msgstr "Warehouse not found."
 
-#: app/blueprints/inventory/routes.py:238
+#: app/blueprints/inventory/routes.py:240
 msgid "The supplies warehouse can't be deactivated."
 msgstr "The supplies warehouse can't be deactivated."
 
-#: app/blueprints/inventory/routes.py:243
+#: app/blueprints/inventory/routes.py:245
 #, python-format
 msgid "Warehouse '%(name)s' updated."
 msgstr "Warehouse '%(name)s' updated."
@@ -670,10 +670,17 @@ msgstr "Save product"
 msgid "Product '%(name)s' created."
 msgstr "Product '%(name)s' created."
 
-#: app/blueprints/products/routes.py:123
+#: app/blueprints/products/routes.py:124
 #, python-format
 msgid "Product '%(name)s' updated."
 msgstr "Product '%(name)s' updated."
+
+#: app/blueprints/products/routes.py:130
+#, python-format
+msgid ""
+"'%(name)s' still has %(qty)s units in stock — that stock is hidden from "
+"Inventory while the product is inactive."
+msgstr "'%(name)s' still has %(qty)s units in stock — that stock is hidden from Inventory while the product is inactive."
 
 #: app/blueprints/purchases/forms.py:24 app/templates/purchases/index.html:40
 msgid "Item"
@@ -895,6 +902,14 @@ msgstr "You cannot delete your own account."
 msgid "User '%(name)s' deleted."
 msgstr "User '%(name)s' deleted."
 
+#: app/templates/_search_box.html:7
+msgid "Search"
+msgstr "Search"
+
+#: app/templates/_search_box.html:9 app/templates/dashboard/index.html:18
+msgid "Clear"
+msgstr "Clear"
+
 #: app/templates/base.html:24 app/templates/dashboard/index.html:2
 #: app/templates/dashboard/index.html:32
 msgid "Dashboard"
@@ -984,7 +999,6 @@ msgstr "default"
 
 #: app/templates/company/purchase_categories_list.html:29
 #: app/templates/company/segments_list.html:26
-#: app/templates/inventory/index.html:29
 #: app/templates/inventory/warehouses_list.html:38
 #: app/templates/products/index.html:34 app/templates/supplies/index.html:36
 #: app/templates/supplies/recipe_form.html:20
@@ -994,7 +1008,7 @@ msgstr "Inactive"
 
 #: app/templates/company/purchase_categories_list.html:34
 #: app/templates/company/segments_list.html:30
-#: app/templates/customers/index.html:26
+#: app/templates/customers/index.html:35
 #: app/templates/inventory/warehouses_list.html:42
 #: app/templates/products/index.html:38 app/templates/purchases/index.html:62
 #: app/templates/supplies/index.html:40 app/templates/supplies/recipes.html:38
@@ -1058,17 +1072,32 @@ msgstr "New customer"
 msgid "Fields marked with * are required."
 msgstr "Fields marked with * are required."
 
-#: app/templates/customers/index.html:30
+#: app/templates/customers/index.html:9
+msgid "Search by name, RUT or nickname"
+msgstr "Search by name, RUT or nickname"
+
+#: app/templates/customers/index.html:14
+#, python-format
+msgid "%(num)s customer"
+msgid_plural "%(num)s customers"
+msgstr[0] "%(num)s customer"
+msgstr[1] "%(num)s customers"
+
+#: app/templates/customers/index.html:15
+msgid "show all"
+msgstr "show all"
+
+#: app/templates/customers/index.html:40
+msgid "No customers match your search."
+msgstr "No customers match your search."
+
+#: app/templates/customers/index.html:40
 msgid "No customers yet."
 msgstr "No customers yet."
 
 #: app/templates/dashboard/index.html:17
 msgid "Select all"
 msgstr "Select all"
-
-#: app/templates/dashboard/index.html:18
-msgid "Clear"
-msgstr "Clear"
 
 #: app/templates/dashboard/index.html:34 app/templates/purchases/index.html:9
 #: app/templates/top_customers/index.html:8
@@ -1210,16 +1239,16 @@ msgstr "Transfer stock"
 msgid "Flavor / Product"
 msgstr "Flavor / Product"
 
-#: app/templates/inventory/index.html:43 app/templates/supplies/stock.html:43
+#: app/templates/inventory/index.html:40 app/templates/supplies/stock.html:43
 msgid "History"
 msgstr "History"
 
-#: app/templates/inventory/index.html:47 app/templates/products/index.html:42
+#: app/templates/inventory/index.html:44 app/templates/products/index.html:42
 #: app/templates/supplies/recipes.html:42
 msgid "No products yet."
 msgstr "No products yet."
 
-#: app/templates/inventory/index.html:66 app/templates/supplies/stock.html:66
+#: app/templates/inventory/index.html:63 app/templates/supplies/stock.html:66
 msgid ""
 "Stock at or below the reorder level for that warehouse is highlighted "
 "like this."

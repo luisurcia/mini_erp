@@ -20,7 +20,9 @@ from app.services.supply_service import SupplyService
 @login_required
 @module_required(User.MODULE_INVENTORY)
 def index():
-    products = ProductRepository().get_all()
+    # Inactive products are left out of the matrix entirely (#122) — a
+    # discontinued flavor shouldn't clutter the stock view.
+    products = ProductRepository().get_active()
     warehouses = WarehouseRepository().get_stock_locations()
     stock = {
         (item.product_id, item.warehouse_id): item for item in InventoryRepository().get_all()

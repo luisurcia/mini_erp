@@ -6,6 +6,15 @@
   <a class="btn btn-primary" href="{{ url_for('customers.new_customer') }}">+ {{ _("New customer") }}</a>
 </div>
 
+{% with action = url_for('customers.index'), placeholder = _("Search by name, RUT or nickname") %}
+  {% include "_search_box.html" %}
+{% endwith %}
+
+<p class="text-muted small mb-2">
+  {{ ngettext("%(num)s customer", "%(num)s customers", customers|length, num=customers|length) }}
+  {% if q %} · <a href="{{ url_for('customers.index') }}">{{ _("show all") }}</a>{% endif %}
+</p>
+
 <div class="card p-3">
   <table class="table align-middle mb-0">
     <thead>
@@ -27,7 +36,9 @@
         </td>
       </tr>
       {% else %}
-      <tr><td colspan="100%" class="text-muted text-center py-4">{{ _("No customers yet.") }}</td></tr>
+      <tr><td colspan="100%" class="text-muted text-center py-4">
+        {{ _("No customers match your search.") if q else _("No customers yet.") }}
+      </td></tr>
       {% endfor %}
     </tbody>
   </table>

@@ -1,0 +1,11 @@
+{# Reusable search box for list screens (#123).
+   Wrap in {% with action=..., placeholder=..., q=q %} before including. #}
+<form method="get" action="{{ action }}" class="d-flex gap-2 mb-3" style="max-width: 460px;">
+  <input type="search" name="q" value="{{ q or '' }}"
+         class="form-control form-control-sm"
+         placeholder="{{ placeholder }}" aria-label="{{ placeholder }}">
+  <button type="submit" class="btn btn-sm btn-outline-secondary">{{ _("Search") }}</button>
+  {% if q %}
+  <a href="{{ action }}" class="btn btn-sm btn-outline-secondary">{{ _("Clear") }}</a>
+  {% endif %}
+</form>

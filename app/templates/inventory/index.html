@@ -24,10 +24,7 @@
     <tbody>
       {% for product in products %}
       <tr>
-        <td>
-          {{ product_label(product) }}
-          {% if not product.is_active %}<span class="badge bg-secondary">{{ _("Inactive") }}</span>{% endif %}
-        </td>
+        <td>{{ product_label(product) }}</td>
         {% set total = namespace(qty=0) %}
         {% for warehouse in warehouses %}
         {% set item = stock.get((product.id, warehouse.id)) %}
