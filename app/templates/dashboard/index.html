@@ -86,7 +86,7 @@
 <div class="row g-4 mb-4">
   <div class="col-lg-6">
     <div class="card p-3">
-      <h2 class="h5">{{ _("Total sales per product") }}</h2>
+      <h2 class="h5">{{ _("Bottles sold per product") }}</h2>
       <div class="chart-box"><canvas id="cmpProductChart"></canvas></div>
     </div>
   </div>
@@ -198,8 +198,8 @@ new Chart(document.getElementById("cmpProductChart"), {
   data: { labels: cmp.products, datasets: cmp.product_sales },
   options: {
     maintainAspectRatio: false,
-    scales: { y: { beginAtZero: true, ticks: { callback: (v) => window.formatMoney(v) } } },
-    plugins: { tooltip: { callbacks: { label: (ctx) => `${ctx.dataset.label}: ${window.formatMoney(ctx.parsed.y)}` } } },
+    scales: { y: { beginAtZero: true, ticks: { precision: 0 } } },
+    plugins: { tooltip: { callbacks: { label: (ctx) => ctx.dataset.label + ": " + ctx.parsed.y + " " + {{ _("bottles")|tojson }} } } },
   },
 });
 

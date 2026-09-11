@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-09-10 19:31-0300\n"
+"POT-Creation-Date: 2026-09-11 15:54-0300\n"
 "PO-Revision-Date: 2026-08-24 17:58-0400\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: es\n"
@@ -101,11 +101,11 @@ msgstr "Días de atraso"
 msgid "Total"
 msgstr "Total"
 
-#: app/reports.py:98 app/templates/sales/index.html:63
+#: app/reports.py:98 app/templates/sales/index.html:65
 msgid "Yes"
 msgstr "Sí"
 
-#: app/reports.py:98 app/templates/sales/index.html:63
+#: app/reports.py:98 app/templates/sales/index.html:65
 msgid "No"
 msgstr "No"
 
@@ -123,7 +123,7 @@ msgid "No unpaid sales."
 msgstr "No hay ventas por pagar."
 
 #: app/reports.py:197 app/reports.py:205 app/templates/sales/detail.html:74
-#: app/templates/sales/index.html:67
+#: app/templates/sales/index.html:69
 msgid "Dispatch ticket"
 msgstr "Ticket de despacho"
 
@@ -530,30 +530,30 @@ msgstr "Botellas promedio por venta"
 msgid "Average net unit price"
 msgstr "Valor unitario neto promedio"
 
-#: app/blueprints/dashboard/routes.py:210
+#: app/blueprints/dashboard/routes.py:213
 msgid "All years"
 msgstr "Todos los años"
 
-#: app/blueprints/dashboard/routes.py:211
+#: app/blueprints/dashboard/routes.py:214
 #, python-format
 msgid "%(num)s year"
 msgid_plural "%(num)s years"
 msgstr[0] "%(num)s año"
 msgstr[1] "%(num)s años"
 
-#: app/blueprints/dashboard/routes.py:219 app/templates/purchases/index.html:19
+#: app/blueprints/dashboard/routes.py:222 app/templates/purchases/index.html:19
 #: app/templates/top_customers/index.html:19
 msgid "All months"
 msgstr "Todos los meses"
 
-#: app/blueprints/dashboard/routes.py:220
+#: app/blueprints/dashboard/routes.py:223
 #, python-format
 msgid "%(num)s month"
 msgid_plural "%(num)s months"
 msgstr[0] "%(num)s mes"
 msgstr[1] "%(num)s meses"
 
-#: app/blueprints/dashboard/routes.py:223
+#: app/blueprints/dashboard/routes.py:226
 msgid "all years"
 msgstr "todos los años"
 
@@ -612,7 +612,7 @@ msgstr ""
 "%(to_wh)s."
 
 #: app/blueprints/inventory/routes.py:179 app/blueprints/products/routes.py:101
-#: app/blueprints/supplies/routes.py:189
+#: app/blueprints/supplies/routes.py:190
 msgid "Product not found."
 msgstr "Producto no encontrado."
 
@@ -713,7 +713,7 @@ msgstr "Categoría"
 
 #: app/blueprints/purchases/forms.py:32 app/blueprints/sales/forms.py:36
 #: app/blueprints/sales/forms.py:59 app/templates/sales/detail.html:16
-#: app/templates/sales/index.html:89
+#: app/templates/sales/index.html:91
 msgid "Invoice number"
 msgstr "Número de factura"
 
@@ -861,7 +861,7 @@ msgstr "Insumo o bodega no encontrada."
 msgid "Restocked %(qty)s %(unit)s of %(name)s in %(warehouse)s."
 msgstr "Se reabastecieron %(qty)s %(unit)s de %(name)s en %(warehouse)s."
 
-#: app/blueprints/supplies/routes.py:230
+#: app/blueprints/supplies/routes.py:231
 #, python-format
 msgid "Supplies recipe updated for %(name)s."
 msgstr "Receta de insumos actualizada para %(name)s."
@@ -1029,7 +1029,7 @@ msgstr "por defecto"
 #: app/templates/inventory/warehouses_list.html:38
 #: app/templates/products/index.html:41 app/templates/supplies/index.html:36
 #: app/templates/supplies/recipe_form.html:20
-#: app/templates/supplies/recipes.html:27 app/templates/supplies/stock.html:29
+#: app/templates/supplies/stock.html:29
 msgid "Inactive"
 msgstr "Inactivo"
 
@@ -1038,8 +1038,8 @@ msgstr "Inactivo"
 #: app/templates/customers/index.html:35
 #: app/templates/inventory/warehouses_list.html:42
 #: app/templates/products/index.html:45 app/templates/purchases/index.html:62
-#: app/templates/supplies/index.html:40 app/templates/supplies/recipes.html:38
-#: app/templates/users/index.html:19
+#: app/templates/sales/index.html:53 app/templates/supplies/index.html:40
+#: app/templates/supplies/recipes.html:35 app/templates/users/index.html:19
 msgid "Edit"
 msgstr "Editar"
 
@@ -1153,8 +1153,8 @@ msgid "Metric"
 msgstr "Métrica"
 
 #: app/templates/dashboard/index.html:89
-msgid "Total sales per product"
-msgstr "Total de ventas por producto"
+msgid "Bottles sold per product"
+msgstr "Botellas vendidas por producto"
 
 #: app/templates/dashboard/index.html:95
 msgid "Tickets per month"
@@ -1195,15 +1195,16 @@ msgstr "Disponible"
 msgid "Everything is well stocked."
 msgstr "Todo está bien abastecido."
 
+#: app/templates/dashboard/index.html:202
+#: app/templates/dashboard/index.html:261
+msgid "bottles"
+msgstr "botellas"
+
 #: app/templates/dashboard/index.html:254
 #: app/templates/dashboard/index.html:281
 #: app/templates/top_customers/index.html:46
 msgid "Bottles"
 msgstr "Botellas"
-
-#: app/templates/dashboard/index.html:261
-msgid "bottles"
-msgstr "botellas"
 
 #: app/templates/dashboard/index.html:272
 msgid "Tickets"
@@ -1272,7 +1273,7 @@ msgid "History"
 msgstr "Historial"
 
 #: app/templates/inventory/index.html:44 app/templates/products/index.html:49
-#: app/templates/supplies/recipes.html:42
+#: app/templates/supplies/recipes.html:39
 msgid "No products yet."
 msgstr "Aún no hay productos."
 
@@ -1479,23 +1480,23 @@ msgstr "Descargar PDF de ventas por pagar"
 msgid "Payment"
 msgstr "Pago"
 
-#: app/templates/sales/index.html:52 app/templates/sales/index.html:85
+#: app/templates/sales/index.html:52 app/templates/sales/index.html:87
 msgid "Edit invoice number"
 msgstr "Editar número de factura"
 
-#: app/templates/sales/index.html:66
+#: app/templates/sales/index.html:68
 msgid "View"
 msgstr "Ver"
 
-#: app/templates/sales/index.html:71
+#: app/templates/sales/index.html:73
 msgid "No sales recorded yet."
 msgstr "Aún no hay ventas registradas."
 
-#: app/templates/sales/index.html:86
+#: app/templates/sales/index.html:88
 msgid "Close"
 msgstr "Cerrar"
 
-#: app/templates/sales/index.html:92 app/templates/supplies/recipe_form.html:35
+#: app/templates/sales/index.html:94 app/templates/supplies/recipe_form.html:35
 msgid "Cancel"
 msgstr "Cancelar"
 
@@ -1594,7 +1595,7 @@ msgstr ""
 msgid "Supplies per unit"
 msgstr "Insumos por unidad"
 
-#: app/templates/supplies/recipes.html:34
+#: app/templates/supplies/recipes.html:31
 msgid "None"
 msgstr "Ninguno"
 
@@ -1801,4 +1802,7 @@ msgstr ""
 
 #~ msgid "Total sold"
 #~ msgstr "Total vendido"
+
+#~ msgid "Total sales per product"
+#~ msgstr "Total de ventas por producto"
 

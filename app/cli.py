@@ -152,6 +152,45 @@ def register_cli(app: Flask) -> None:
         if dry_run:
             click.echo("Fue una simulación — no se escribió nada en la base.")
 
+    @app.cli.command("merge-customers")
+    @click.argument("discard_id", type=int)
+    @click.argument("canonical_id", type=int)
+    @click.option("--yes", is_flag=True, help="Skip the confirmation prompt.")
+    def merge_customers_command(discard_id, canonical_id, yes):
+        """Fusiona dos clientes duplicados (#138).
+
+        DISCARD_ID pierde todas sus ventas (se reasignan a CANONICAL_ID) y
+        se borra; CANONICAL_ID queda con el historial combinado y una nota
+        con el nombre del cliente descartado. Pensado para los duplicados
+        de nombre que dejó la migración de datos reales (#121) — nombres
+        casi idénticos, sin RUT/teléfono/email para verificarlos de otra
+        forma, así que cada fusión se confirma a mano.
+        """
+        from app.repositories.customer_repository import CustomerRepository
+        from app.services.customer_service import CustomerService
+
+        repo = CustomerRepository()
+        discard = repo.get(discard_id)
+        canonical = repo.get(canonical_id)
+        if discard is None or canonical is None:
+            missing = discard_id if discard is None else canonical_id
+            click.echo(f"Cliente #{missing} no existe.", err=True)
+            raise SystemExit(1)
+
+        if not yes:
+            click.confirm(
+                f"¿Fusionar «{discard.name}» (#{discard_id}, se borra) dentro de "
+                f"«{canonical.name}» (#{canonical_id}, queda con el historial)?",
+                abort=True,
+            )
+
+        result = CustomerService().merge(discard_id, canonical_id)
+        click.echo(
+            f"OK: {result['reassigned_sales']} venta(s) de "
+            f"«{result['discarded_name']}» pasaron a "
+            f"«{result['canonical'].name}» (#{canonical_id})."
+        )
+
     @app.cli.command("create-admin")
     @click.option("--username", prompt=True)
     @click.option("--password", prompt=True, hide_input=True, confirmation_prompt=True)

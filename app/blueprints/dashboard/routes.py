@@ -160,16 +160,19 @@ def index():
             )
 
         # Grouped product bar: products on the x-axis (union, ordered by
-        # total across every period), one bar per period.
+        # total across every period), one bar per period. Bottles, not
+        # money (#137) — same metric as the normal-mode product chart
+        # (#127); colors here still distinguish the compared period, not
+        # the product, since that's the dimension this chart is about.
         product_totals: dict[str, float] = defaultdict(float)
         short_by_name: dict[str, str] = {}
         per_period_products: list[dict[str, float]] = []
         for period in periods:
             by_product: dict[str, float] = {}
             for row in sales_service.sales_by_product(period["_sales"]):
-                by_product[row["product"]] = row["amount"]
+                by_product[row["product"]] = row["bottles"]
                 short_by_name[row["product"]] = row["product_short"]
-                product_totals[row["product"]] += row["amount"]
+                product_totals[row["product"]] += row["bottles"]
             per_period_products.append(by_product)
         product_names = [
             name for name, _total in sorted(
