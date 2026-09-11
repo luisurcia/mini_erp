@@ -4,11 +4,11 @@
 
 > PRD por **ingeniería inversa**: describe lo que la rama `client/scoby` efectivamente hace hoy, reconstruido a partir del código y de lo desplegado en producción (`https://titourcia.com/scobyerp`). Reemplaza como referencia viva a los documentos genéricos `Kombucha_ERP_PRD.md` / `Kombucha_ERP_PRD_Requerimientos.md`, que quedan solo como registro histórico de la evaluación inicial (25 ago 2026).
 >
-> El seguimiento del trabajo se hizo en GitHub Issues: épicas [#20](https://github.com/luisurcia/mini_erp/issues/20) · [#36](https://github.com/luisurcia/mini_erp/issues/36) · [#47](https://github.com/luisurcia/mini_erp/issues/47) · [#76](https://github.com/luisurcia/mini_erp/issues/76) (personalización base + rondas de ajustes de UX), [#87](https://github.com/luisurcia/mini_erp/issues/87) (quinta ronda: PDF de cobranza, métricas de Dashboard, **flujo de bodegas Fermentación → Principal → distribución**), [#90](https://github.com/luisurcia/mini_erp/issues/90) (feedback: PDF agrupado por cliente, **consumo de insumos al armar**), [#95](https://github.com/luisurcia/mini_erp/issues/95) (sexta ronda: **módulo de Compras**, columnas del grid de venta ordenadas por lo más vendido), [#112](https://github.com/luisurcia/mini_erp/issues/112) (séptima ronda: **categoría de Compras como selector + mantenedor**, **ticket de despacho**) y [#115](https://github.com/luisurcia/mini_erp/issues/115) (feedback del ticket de despacho: RUT/email, unificar líneas por producto) — todas cerradas, más el **modo comparación del Dashboard** ([#92](https://github.com/luisurcia/mini_erp/issues/92)) y el comando **`flask reset-data`** ([#116](https://github.com/luisurcia/mini_erp/issues/116)). Pendientes abiertos: spike de integración bancaria (#82) y spike de notificaciones (#52).
+> El seguimiento del trabajo se hizo en GitHub Issues: épicas [#20](https://github.com/luisurcia/mini_erp/issues/20) · [#36](https://github.com/luisurcia/mini_erp/issues/36) · [#47](https://github.com/luisurcia/mini_erp/issues/47) · [#76](https://github.com/luisurcia/mini_erp/issues/76) (personalización base + rondas de ajustes de UX), [#87](https://github.com/luisurcia/mini_erp/issues/87) (quinta ronda: PDF de cobranza, métricas de Dashboard, **flujo de bodegas Fermentación → Principal → distribución**), [#90](https://github.com/luisurcia/mini_erp/issues/90) (feedback: PDF agrupado por cliente, **consumo de insumos al armar**), [#95](https://github.com/luisurcia/mini_erp/issues/95) (sexta ronda: **módulo de Compras**, columnas del grid de venta ordenadas por lo más vendido), [#112](https://github.com/luisurcia/mini_erp/issues/112) (séptima ronda: **categoría de Compras como selector + mantenedor**, **ticket de despacho**), [#115](https://github.com/luisurcia/mini_erp/issues/115) (feedback del ticket de despacho: RUT/email, unificar líneas por producto) y [#135](https://github.com/luisurcia/mini_erp/issues/135) (octava ronda: **total de unidades y buscador de cliente en Nueva Venta**, **N° de factura editable** después de creada la venta, **Top clientes ampliado** a 30 con frecuencia de compra y días desde la última compra) — todas cerradas, más el **modo comparación del Dashboard** ([#92](https://github.com/luisurcia/mini_erp/issues/92)) y el comando **`flask reset-data`** ([#116](https://github.com/luisurcia/mini_erp/issues/116)). Pendientes abiertos: spike de integración bancaria (#82) y spike de notificaciones (#52).
 
 | FECHA | ESTADO | BASE | ORIGEN |
 |---|---|---|---|
-| 9 septiembre 2026 | En producción | Rama `client/scoby` (commit `dfdaf18`) | Ingeniería inversa del código |
+| 10 septiembre 2026 | En producción | Rama `client/scoby` (commit `79ba7fb`) | Ingeniería inversa del código |
 
 ---
 
@@ -64,13 +64,15 @@ producción → Bodega de Fermentación → Bodega Principal → Bodega Julien /
 
 ### MOD-04 · Ventas — *grilla bodega × producto, precio libre, IVA, cobranza*
 
+- **Cliente:** selector con **búsqueda por escritura** (filtra a medida que se tipea, por contenido) y ordenado **alfabéticamente** — pensado para un padrón de cientos de clientes.
 - **Ingreso en grilla:** filas = bodegas donde se vende (**Principal + Julien + Mario**, no Fermentación), columnas = productos. Se ingresa la cantidad por celda, así una misma venta puede sacar el mismo producto de más de una bodega (se guarda como líneas separadas).
 - **Las columnas de producto se ordenan por lo más vendido** en los últimos 90 días (más unidades = más a la izquierda); las que no tuvieron ventas en ese periodo quedan al final en orden alfabético. Así el producto más habitual queda a mano sin scroll.
 - **Una fila de precio unitario por producto**, libre — el precio de venta lo pone el vendedor (varía por cliente/cantidad, no por bodega). Escribir el precio en la primera columna (la del más vendido) lo copia al resto de la fila.
 - **Fecha de venta editable** (por defecto hoy), **N° de factura** opcional. No se pide estado ni notas al ingresar (la venta ya ocurrió → se crea como completada).
-- **IVA opcional** por venta, con la tasa configurada en Empresa. El total y el IVA se **previsualizan en vivo** mientras se ingresa. El IVA se redondea a la unidad de la moneda (0 decimales para CLP).
+- **IVA opcional** por venta, con la tasa configurada en Empresa. El **subtotal, IVA, total y total de unidades** se **previsualizan en vivo** mientras se ingresa. El IVA se redondea a la unidad de la moneda (0 decimales para CLP).
 - Al guardar: **descuenta el stock de producto** de cada bodega elegida. **No toca los insumos** (eso ocurre al armar — ver MOD-03).
-- **Lista de Ventas:** # · fecha · cliente · N° factura · estado · pago · **IVA (Sí/No)** · total, con botones **"Ver"** y **"Ticket de despacho"** por fila. Filtro por cliente y por estado de pago (Todas / Por pagar / Pagado) y botón **"Descargar PDF de ventas por pagar"** — un PDF agrupado por cliente (ventas más antiguas arriba, subtotal por cliente y total a cobrar) que se comparte semanalmente con los socios para la cobranza.
+- **N° de factura editable después de creada la venta** (solo **administrador**): pensado para cuando se anota un número provisorio al vender y luego llega el correlativo real desde el sistema contable. Se edita desde el detalle de la venta o desde un botón "Editar" en su propia columna de la lista. Es el único dato de una venta ya creada que se puede modificar — fecha, líneas y montos siguen fijos.
+- **Lista de Ventas:** # · fecha · cliente · N° factura (+ botón "Editar" para administrador) · estado · pago · **IVA (Sí/No)** · total, con botones **"Ver"** y **"Ticket de despacho"** por fila. Filtro por cliente (con el mismo selector con búsqueda) y por estado de pago (Todas / Por pagar / Pagado) y botón **"Descargar PDF de ventas por pagar"** — un PDF agrupado por cliente (ventas más antiguas arriba, subtotal por cliente y total a cobrar) que se comparte semanalmente con los socios para la cobranza.
 - **Ticket de despacho (PDF):** desde la lista de Ventas o el detalle de la venta se genera un PDF A4 por venta para el reparto. Incluye: **número de venta** (y N° de factura si tiene), **cliente con RUT, email, teléfono y dirección de despacho**, y el detalle en **unidades × nombre de producto** más el total de unidades. Un mismo producto sacado de varias bodegas se **suma en una sola línea** (al cliente no le importa de qué bodega salió), y las líneas van ordenadas por nombre de producto. **No lleva precios** (es un documento de reparto). Se puede generar en cualquier momento, sin importar el estado de pago. Formato A4; un ticket térmico 80 mm para pegar en las cajas es un pendiente futuro.
 - **Estado de pago:** cada venta es *por pagar* o *pagada* (eje aparte del despacho). En el detalle de la venta:
   - Si está por pagar: formulario "Registrar pago" con **número de transferencia/referencia obligatorio** + fecha.
@@ -87,7 +89,9 @@ producción → Bodega de Fermentación → Bodega Principal → Bodega Julien /
 
 ### MOD-06 · Top clientes — *reemplazó a Oportunidades*
 
-- El módulo de Oportunidades del sistema genérico **se eliminó** en `client/scoby`. En su lugar: ranking de los **10 clientes por consumo** (monto total, botellas, número de ventas, fecha de última compra).
+- El módulo de Oportunidades del sistema genérico **se eliminó** en `client/scoby`. En su lugar: ranking de los **top 30 clientes por consumo** (monto total, botellas, número de ventas).
+- **Última compra** (fecha en formato `dd-mm-aaaa`) y **días desde la última compra**: ambas sobre **todo el historial** del cliente, no solo el período filtrado — para que la columna siga mostrando su compra real aunque se esté mirando un mes puntual.
+- **Frecuencia de compra**: cada cuántos días compra en promedio, calculada **sobre el período filtrado** (los mismos filtros de año/mes/segmento de la tabla). Necesita al menos 2 compras en el período; con una sola compra muestra "—".
 - Filtros: **año + mes**, o **"Todo el tiempo"**; y **filtro por segmento** (independiente del filtro de fecha).
 
 ### MOD-07 · Dashboard — *KPIs de Scoby, alineados a su Excel*
@@ -168,7 +172,7 @@ Solo administrador, desde el menú **Configuración** del navbar.
 - ✕ **Notificaciones proactivas** (email / SMS / Slack) — el stock bajo o negativo de insumos y de producto se ve en pantalla (aviso al reponer Fermentación + resaltado), no llega un mensaje. → spike [#52](https://github.com/luisurcia/mini_erp/issues/52).
 - ✕ **Integración con la cuenta bancaria** para conciliar transferencias con ventas por pagar → spike [#82](https://github.com/luisurcia/mini_erp/issues/82).
 - ✕ **Órdenes de compra / reposición sugerida** — la reposición de stock y de insumos es manual. (El módulo Compras registra gastos de planta ya hechos, no genera órdenes ni lleva un catálogo de proveedores.)
-- ✕ **Anular / editar / devolver una venta** — no hay pantalla para eso; si se construyera, debería devolver también el stock de producto.
+- ✕ **Anular / editar / devolver una venta** — no hay pantalla para eso; si se construyera, debería devolver también el stock de producto. (Única excepción: el **N° de factura** se puede corregir después de creada la venta, solo administrador — ver MOD-04.)
 - ✕ **Estado de despacho / seguimiento de entregas** — el ticket de despacho se genera cuando se necesita, pero la venta no pasa a un estado "despachada" ni hay tracking del reparto.
 - ✕ **Precios por segmento / lista de precios** — el precio se ingresa a mano en cada venta.
 - ✕ **Pagos parciales / abonos** — el estado de pago es binario (por pagar / pagado).
@@ -184,13 +188,14 @@ Solo administrador, desde el menú **Configuración** del navbar.
 |---|---|---|
 | Bodegas | Una sola, stock global | Flujo Fermentación → Principal → distribución + una de insumos; reposición solo a Fermentación, traspasos por el flujo |
 | Precio de venta | Precio de catálogo del producto | Libre por línea de venta; catálogo opcional |
-| Ingreso de venta | Lista de líneas producto+cantidad | Grilla bodega × producto |
+| Ingreso de venta | Lista de líneas producto+cantidad | Grilla bodega × producto; selector de cliente con búsqueda por escritura y orden alfabético; total de unidades en el resumen |
+| N° de factura | Fijo una vez creada la venta | Editable después de creada (solo administrador) |
 | Insumos | No existía como consumo | Módulo Insumos + receta por producto + descuento automático **al armar** (entrada a Fermentación) |
 | Cobranza | No existía | Estado por pagar / pagado + referencia; PDF de ventas por pagar agrupado por cliente |
 | Ticket de despacho | No existía | PDF A4 por venta con datos del cliente (RUT / email / teléfono / dirección) y unidades × producto sumadas entre bodegas, sin precios |
 | Compras / gastos | No existía | Libro de gastos de planta con correlativo global, **categoría con catálogo/mantenedor**, anulación y total mensual (solo admin) |
 | Dashboard | KPIs genéricos, filtro de un año | 6 KPIs del Excel de Scoby (Valor Total Pago, Total de Botellas, N° de tickets, N° de Facturas, botellas y valor unitario promedio) + filtros multi-selección de año y mes (unión, tipo tabla dinámica) + 4 gráficos 2×2 + modo comparación de periodos (tabla con Δ%) |
-| Pre-venta | Módulo Oportunidades (embudo) | Eliminado → vista Top 10 clientes por consumo |
+| Pre-venta | Módulo Oportunidades (embudo) | Eliminado → vista Top 30 clientes por consumo, con frecuencia de compra y días desde la última compra |
 | Cliente | Nombre, email, teléfono, IG, notas | + RUT, sobrenombre, segmento, dirección de despacho estructurada; mínimo para crear = nombre + segmento |
 | Roles | admin / editor / lector | admin / bodeguero / vendedor, por módulo, con 403 real; catálogo de productos y recetas = solo admin |
 | Menú | Todos los ítems sueltos en el navbar | Menú "Configuración" (mantención) + menú de cuenta bajo el nombre del usuario |
@@ -219,4 +224,4 @@ Solo administrador, desde el menú **Configuración** del navbar.
 
 ---
 
-*Scoby ERP — PRD por ingeniería inversa · rama `client/scoby` · commit `dfdaf18` · 9 septiembre 2026*
+*Scoby ERP — PRD por ingeniería inversa · rama `client/scoby` · commit `79ba7fb` · 10 septiembre 2026*
