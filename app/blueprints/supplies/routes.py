@@ -168,7 +168,8 @@ def history(supply_id):
 @login_required
 @admin_required
 def recipes():
-    products = ProductRepository().get_all()
+    # Inactive products don't show here, same as Inventario (#122, #136).
+    products = ProductRepository().get_active()
     rows = ProductSupplyRepository().for_products([p.id for p in products])
     recipe_by_product: dict[int, list[ProductSupply]] = {}
     for row in rows:
