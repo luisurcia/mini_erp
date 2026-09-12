@@ -191,6 +191,41 @@ def register_cli(app: Flask) -> None:
             f"«{result['canonical'].name}» (#{canonical_id})."
         )
 
+    @app.cli.command("update-customer-contacts")
+    @click.argument("archivo")
+    @click.argument("mapeo")
+    @click.option("--dry-run", is_flag=True, help="Recorre y reporta sin escribir nada.")
+    @click.option(
+        "--force", is_flag=True, help="Permite sobrescribir campos ya cargados a mano."
+    )
+    def update_customer_contacts_command(archivo, mapeo, dry_run, force):
+        """Aplica RUT/dirección/región/teléfono desde la planilla de Scoby (#141).
+
+        ARCHIVO es la planilla `.xlsx`; MAPEO es el CSV
+        (`hoja,nombre_excel,customer_id`) con las filas ya confirmadas en
+        #140. Solo completa campos vacíos salvo --force. Escribe un log en
+        instance/.
+        """
+        from datetime import datetime
+        from pathlib import Path
+
+        from app.customer_contacts import build_report, update_customer_contacts
+
+        result = update_customer_contacts(archivo, mapeo, dry_run=dry_run, force=force)
+        report = build_report(result)
+
+        instance = Path(app.instance_path)
+        instance.mkdir(parents=True, exist_ok=True)
+        stamp = datetime.now().strftime("%Y%m%d-%H%M%S")
+        suffix = "dry-run" if dry_run else "carga"
+        log_path = instance / f"contactos-clientes-{stamp}-{suffix}.md"
+        log_path.write_text(report, encoding="utf-8")
+
+        click.echo(report)
+        click.echo(f"\nLog guardado en: {log_path}")
+        if dry_run:
+            click.echo("Fue una simulación — no se escribió nada en la base.")
+
     @app.cli.command("create-admin")
     @click.option("--username", prompt=True)
     @click.option("--password", prompt=True, hide_input=True, confirmation_prompt=True)
